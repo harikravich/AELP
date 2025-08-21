@@ -1,0 +1,23 @@
+{
+  "demo_agent_20250821_153158_8168fe36": {
+    "model_id": "demo_agent_20250821_153158_8168fe36",
+    "version": "v1.0.0",
+    "git_commit": "unknown",
+    "git_branch": "unknown",
+    "timestamp": "2025-08-21T15:31:58.129431+00:00",
+    "status": "training",
+    "experiment_id": "training_20250821_153158",
+    "model_path": "models/demo_agent_20250821_153158_8168fe36/model.pkl",
+    "config": {
+      "lr": 0.001
+    },
+    "metrics": {
+      "roas": 3.5,
+      "reward": 1200
+    },
+    "tags": [],
+    "parent_version": null,
+    "description": "",
+    "author": "hariravichandran"
+  }
+}
