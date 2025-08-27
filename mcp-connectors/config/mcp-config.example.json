@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "name": "meta-ads-connector",
+    "description": "Meta (Facebook/Instagram) Ads MCP Connector",
+    "config": {
+      "appId": "YOUR_META_APP_ID",
+      "appSecret": "YOUR_META_APP_SECRET",
+      "accessToken": "YOUR_LONG_LIVED_ACCESS_TOKEN",
+      "accountId": "act_YOUR_AD_ACCOUNT_ID",
+      "businessAccountId": "YOUR_BUSINESS_ACCOUNT_ID",
+      "rateLimitPerSecond": 10,
+      "retryAttempts": 3,
+      "timeout": 30000,
+      "apiVersion": "v18.0"
+    },
+    "spendingLimits": {
+      "dailyLimit": 100,
+      "monthlyLimit": 3000,
+      "campaignLimit": 500,
+      "currency": "USD",
+      "alertThresholds": {
+        "warning": 80,
+        "critical": 95
+      }
+    }
+  },
+  "google": {
+    "name": "google-ads-connector",
+    "description": "Google Ads MCP Connector",
+    "config": {
+      "customerId": "YOUR_CUSTOMER_ID",
+      "developerToken": "YOUR_DEVELOPER_TOKEN",
+      "accessToken": "YOUR_OAUTH_ACCESS_TOKEN",
+      "refreshToken": "YOUR_OAUTH_REFRESH_TOKEN",
+      "clientId": "YOUR_OAUTH_CLIENT_ID",
+      "clientSecret": "YOUR_OAUTH_CLIENT_SECRET",
+      "loginCustomerId": "YOUR_LOGIN_CUSTOMER_ID",
+      "rateLimitPerSecond": 10,
+      "retryAttempts": 3,
+      "timeout": 30000,
+      "apiVersion": "v14"
+    },
+    "spendingLimits": {
+      "dailyLimit": 100,
+      "monthlyLimit": 3000,
+      "campaignLimit": 500,
+      "currency": "USD",
+      "alertThresholds": {
+        "warning": 80,
+        "critical": 95
+      }
+    }
+  }
+}

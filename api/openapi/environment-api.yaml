@@ -1,0 +1,580 @@
+openapi: 3.0.3
+info:
+  title: GAELP Environment API
+  description: API for managing ad campaign learning environments (both simulated and real)
+  version: 1.0.0
+  contact:
+    name: GAELP Platform Team
+    email: api@gaelp.dev
+
+servers:
+  - url: https://api.gaelp.dev/v1/environments
+    description: Production server
+  - url: https://staging-api.gaelp.dev/v1/environments
+    description: Staging server
+
+security:
+  - apiKey: []
+  - bearerAuth: []
+
+paths:
+  /{environment_id}/reset:
+    post:
+      summary: Reset environment to initial state
+      description: Resets the ad campaign environment with specified seed and persona configuration
+      parameters:
+        - name: environment_id
+          in: path
+          required: true
+          description: Unique identifier for the environment
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                seed:
+                  type: integer
+                  description: Random seed for reproducible environments
+                  example: 42
+                persona_config:
+                  type: object
+                  properties:
+                    demographics:
+                      type: object
+                      properties:
+                        age_range:
+                          type: array
+                          items:
+                            type: integer
+                          example: [25, 45]
+                        gender:
+                          type: array
+                          items:
+                            type: string
+                            enum: [male, female, non-binary, all]
+                          example: ["male", "female"]
+                        income_range:
+                          type: array
+                          items:
+                            type: integer
+                          example: [50000, 100000]
+                        location:
+                          type: array
+                          items:
+                            type: string
+                          example: ["US", "CA", "UK"]
+                    interests:
+                      type: array
+                      items:
+                        type: string
+                      example: ["technology", "fitness", "travel"]
+                    behavior_patterns:
+                      type: object
+                      properties:
+                        engagement_likelihood:
+                          type: number
+                          format: float
+                          minimum: 0
+                          maximum: 1
+                          example: 0.3
+                        conversion_rate:
+                          type: number
+                          format: float
+                          minimum: 0
+                          maximum: 1
+                          example: 0.05
+                        time_to_convert:
+                          type: integer
+                          description: Average time to convert in hours
+                          example: 48
+              required:
+                - persona_config
+      responses:
+        '200':
+          description: Environment successfully reset
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  initial_state:
+                    type: object
+                    properties:
+                      market_context:
+                        type: object
+                        properties:
+                          competition_level:
+                            type: number
+                            format: float
+                            example: 0.7
+                          market_saturation:
+                            type: number
+                            format: float
+                            example: 0.4
+                          seasonal_factor:
+                            type: number
+                            format: float
+                            example: 1.2
+                      audience_size:
+                        type: integer
+                        example: 1000000
+                      available_budget:
+                        type: number
+                        format: float
+                        example: 10000.0
+                      environment_type:
+                        type: string
+                        enum: [simulated, real]
+                        example: "simulated"
+                  reset_id:
+                    type: string
+                    format: uuid
+                    example: "123e4567-e89b-12d3-a456-426614174000"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  /{environment_id}/step:
+    post:
+      summary: Execute ad campaign step
+      description: Execute an ad campaign action and return performance metrics
+      parameters:
+        - name: environment_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ad_campaign:
+                  type: object
+                  properties:
+                    creative:
+                      type: object
+                      properties:
+                        headline:
+                          type: string
+                          example: "Discover the Future of Fitness"
+                        description:
+                          type: string
+                          example: "Transform your workout routine with AI-powered fitness tracking"
+                        image_url:
+                          type: string
+                          format: uri
+                          example: "https://cdn.gaelp.dev/ads/fitness-tracker.jpg"
+                        video_url:
+                          type: string
+                          format: uri
+                          example: "https://cdn.gaelp.dev/ads/fitness-video.mp4"
+                        call_to_action:
+                          type: string
+                          enum: [learn_more, shop_now, sign_up, download, get_quote]
+                          example: "shop_now"
+                    targeting:
+                      type: object
+                      properties:
+                        demographics:
+                          type: object
+                          properties:
+                            age_range:
+                              type: array
+                              items:
+                                type: integer
+                              example: [25, 45]
+                            gender:
+                              type: array
+                              items:
+                                type: string
+                              example: ["male", "female"]
+                            income_range:
+                              type: array
+                              items:
+                                type: integer
+                              example: [40000, 80000]
+                        interests:
+                          type: array
+                          items:
+                            type: string
+                          example: ["fitness", "health", "technology"]
+                        behavioral:
+                          type: object
+                          properties:
+                            purchase_intent:
+                              type: string
+                              enum: [low, medium, high]
+                              example: "high"
+                            device_usage:
+                              type: array
+                              items:
+                                type: string
+                                enum: [mobile, desktop, tablet]
+                              example: ["mobile", "desktop"]
+                    budget:
+                      type: object
+                      properties:
+                        daily_budget:
+                          type: number
+                          format: float
+                          example: 100.0
+                        total_budget:
+                          type: number
+                          format: float
+                          example: 1000.0
+                        bid_strategy:
+                          type: string
+                          enum: [cpc, cpm, cpa, roas]
+                          example: "cpc"
+                        max_bid:
+                          type: number
+                          format: float
+                          example: 2.50
+              required:
+                - ad_campaign
+      responses:
+        '200':
+          description: Campaign step executed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  performance_metrics:
+                    type: object
+                    properties:
+                      impressions:
+                        type: integer
+                        example: 10000
+                      clicks:
+                        type: integer
+                        example: 300
+                      conversions:
+                        type: integer
+                        example: 15
+                      ctr:
+                        type: number
+                        format: float
+                        description: Click-through rate
+                        example: 0.03
+                      conversion_rate:
+                        type: number
+                        format: float
+                        example: 0.05
+                      cost_per_click:
+                        type: number
+                        format: float
+                        example: 2.33
+                      cost_per_conversion:
+                        type: number
+                        format: float
+                        example: 46.67
+                      return_on_ad_spend:
+                        type: number
+                        format: float
+                        example: 3.2
+                      total_spend:
+                        type: number
+                        format: float
+                        example: 700.0
+                      revenue:
+                        type: number
+                        format: float
+                        example: 2240.0
+                  reward:
+                    type: number
+                    format: float
+                    description: Normalized reward signal for RL training
+                    example: 0.85
+                  done:
+                    type: boolean
+                    description: Whether the campaign/episode is complete
+                    example: false
+                  info:
+                    type: object
+                    properties:
+                      campaign_duration:
+                        type: integer
+                        description: Duration in hours
+                        example: 24
+                      audience_reached:
+                        type: integer
+                        example: 8500
+                      budget_remaining:
+                        type: number
+                        format: float
+                        example: 300.0
+                      next_recommended_action:
+                        type: string
+                        example: "increase_budget"
+                      market_feedback:
+                        type: object
+                        properties:
+                          sentiment_score:
+                            type: number
+                            format: float
+                            minimum: -1
+                            maximum: 1
+                            example: 0.7
+                          brand_awareness_lift:
+                            type: number
+                            format: float
+                            example: 0.15
+
+  /{environment_id}/render:
+    get:
+      summary: Get campaign visualization
+      description: Returns visual representation of current campaign performance
+      parameters:
+        - name: environment_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: format
+          in: query
+          schema:
+            type: string
+            enum: [json, png, svg]
+            default: json
+      responses:
+        '200':
+          description: Campaign visualization data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  campaign_visualization:
+                    type: object
+                    properties:
+                      performance_chart:
+                        type: object
+                        properties:
+                          metrics_over_time:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                timestamp:
+                                  type: string
+                                  format: date-time
+                                impressions:
+                                  type: integer
+                                clicks:
+                                  type: integer
+                                conversions:
+                                  type: integer
+                                spend:
+                                  type: number
+                                  format: float
+                      audience_heatmap:
+                        type: object
+                        properties:
+                          demographic_breakdown:
+                            type: object
+                          geographic_distribution:
+                            type: object
+                          engagement_by_segment:
+                            type: object
+                      creative_performance:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            creative_id:
+                              type: string
+                            performance_score:
+                              type: number
+                              format: float
+                            engagement_metrics:
+                              type: object
+
+  /{environment_id}/audience-feedback:
+    post:
+      summary: Get simulated audience feedback
+      description: Get user responses for specific ad creative
+      parameters:
+        - name: environment_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ad_creative:
+                  type: object
+                  properties:
+                    creative_id:
+                      type: string
+                      example: "creative_001"
+                    headline:
+                      type: string
+                    description:
+                      type: string
+                    image_url:
+                      type: string
+                      format: uri
+                sample_size:
+                  type: integer
+                  minimum: 10
+                  maximum: 10000
+                  default: 1000
+              required:
+                - ad_creative
+      responses:
+        '200':
+          description: Audience feedback generated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_responses:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        user_id:
+                          type: string
+                          format: uuid
+                        response_type:
+                          type: string
+                          enum: [impression, click, conversion, ignore]
+                        engagement_score:
+                          type: number
+                          format: float
+                          minimum: 0
+                          maximum: 1
+                        sentiment:
+                          type: string
+                          enum: [positive, neutral, negative]
+                        feedback_text:
+                          type: string
+                          nullable: true
+                        timestamp:
+                          type: string
+                          format: date-time
+                  aggregated_feedback:
+                    type: object
+                    properties:
+                      overall_sentiment:
+                        type: number
+                        format: float
+                        minimum: -1
+                        maximum: 1
+                      predicted_ctr:
+                        type: number
+                        format: float
+                      predicted_conversion_rate:
+                        type: number
+                        format: float
+                      audience_fit_score:
+                        type: number
+                        format: float
+                        minimum: 0
+                        maximum: 1
+
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  responses:
+    BadRequest:
+      description: Invalid request format or parameters
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Invalid persona configuration"
+              code:
+                type: string
+                example: "INVALID_REQUEST"
+              details:
+                type: object
+
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Invalid API key"
+              code:
+                type: string
+                example: "UNAUTHORIZED"
+
+    NotFound:
+      description: Environment not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Environment not found"
+              code:
+                type: string
+                example: "ENVIRONMENT_NOT_FOUND"
+
+    RateLimited:
+      description: Rate limit exceeded
+      headers:
+        X-RateLimit-Limit:
+          schema:
+            type: integer
+          description: Request limit per time window
+        X-RateLimit-Remaining:
+          schema:
+            type: integer
+          description: Remaining requests in current window
+        X-RateLimit-Reset:
+          schema:
+            type: integer
+          description: Time when rate limit resets (Unix timestamp)
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Rate limit exceeded"
+              code:
+                type: string
+                example: "RATE_LIMITED"

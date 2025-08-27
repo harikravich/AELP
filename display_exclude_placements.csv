@@ -1,0 +1,4 @@
+url,reason,sessions_saved
+suspicious-ads-network.com,Bot score: 0.90,45000
+fake-traffic-source.tk,Bot score: 0.90,30000
+bot-generated-content.ml,Bot score: 0.90,25000

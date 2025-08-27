@@ -1,0 +1,113 @@
+{
+  "demonstration_timestamp": "2025-08-21T15:31:35.617291",
+  "features_tested": {
+    "hourly_allocation": {
+      "even_distribution": {
+        "peak_hours": [],
+        "variance": 4.333342374871281e-34,
+        "max_hourly_pct": 0.041666666666666685
+      },
+      "performance_weighted": {
+        "peak_hours": [],
+        "variance": 4.333342374871281e-34,
+        "max_hourly_pct": 0.041666666666666685
+      },
+      "historical_pattern": {
+        "peak_hours": [],
+        "variance": 4.333342374871281e-34,
+        "max_hourly_pct": 0.041666666666666685
+      },
+      "predictive_ml": {
+        "peak_hours": [
+          10,
+          11,
+          12,
+          14,
+          15
+        ],
+        "variance": 0.00024592534279469294,
+        "max_hourly_pct": 0.06920415224913495
+      },
+      "adaptive_hybrid": {
+        "peak_hours": [],
+        "variance": 4.333342374871281e-34,
+        "max_hourly_pct": 0.041666666666666685
+      }
+    },
+    "frontload_protection": [
+      [
+        0,
+        false,
+        "Would exceed hourly pacing limit"
+      ],
+      [
+        1,
+        false,
+        "Would exceed hourly pacing limit"
+      ],
+      [
+        2,
+        false,
+        "Would exceed hourly pacing limit"
+      ],
+      [
+        3,
+        false,
+        "Would exceed hourly pacing limit"
+      ],
+      [
+        4,
+        false,
+        "Would exceed hourly pacing limit"
+      ],
+      [
+        5,
+        false,
+        "Would exceed hourly pacing limit"
+      ]
+    ],
+    "dynamic_reallocation": {},
+    "circuit_breakers": true,
+    "emergency_controls": true,
+    "ml_predictions": {
+      "business_hours_pct": 0.37500000000000017,
+      "off_hours_pct": 0.6250000000000004,
+      "historical_data_points": 1344
+    }
+  },
+  "system_statistics": {
+    "total_campaigns": 3,
+    "total_transactions": 1376,
+    "total_spend": 88619.50999999998,
+    "total_conversions": 2136,
+    "alerts_generated": 1
+  },
+  "performance_summary": {
+    "reallocation_demo": {
+      "transactions": 24,
+      "total_spend": 1000.0,
+      "total_clicks": 646,
+      "total_conversions": 72,
+      "avg_ctr": 0.11145510835913312,
+      "avg_cpc": 1.5479876160990713,
+      "avg_cpa": 13.88888888888889
+    },
+    "ml_prediction_demo": {
+      "transactions": 1344,
+      "total_spend": 87059.51,
+      "total_clicks": 34173,
+      "total_conversions": 2056,
+      "avg_ctr": 0.060164457320106515,
+      "avg_cpc": 2.5476109794282036,
+      "avg_cpa": 42.34411964980544
+    }
+  },
+  "alerts_received": [
+    {
+      "alert_type": "emergency_stop",
+      "campaign_id": "emergency_test",
+      "severity": "critical",
+      "recommended_action": "All spending stopped - manual review required"
+    }
+  ]
+}

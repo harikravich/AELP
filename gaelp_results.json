@@ -1,0 +1,115 @@
+{
+  "evaluation": {
+    "avg_reward": 164.7790137797594,
+    "total_conversions": 10,
+    "conversion_rate": 1.0,
+    "avg_cac": 18.441972440481187,
+    "roas": 6.506896178664334,
+    "avg_journey_length": 27.2
+  },
+  "attribution": {
+    "channel_attribution": {
+      "search": {
+        "first_touch": 291,
+        "last_touch": 312,
+        "linear": 278.07743090243105
+      },
+      "social": {
+        "first_touch": 308,
+        "last_touch": 181,
+        "linear": 253.96639471639457
+      },
+      "display": {
+        "first_touch": 286,
+        "last_touch": 81,
+        "linear": 151.14478854478858
+      },
+      "video": {
+        "first_touch": 0,
+        "last_touch": 78,
+        "linear": 74.06214063714069
+      },
+      "email": {
+        "first_touch": 0,
+        "last_touch": 123,
+        "linear": 62.884892884892935
+      },
+      "direct": {
+        "first_touch": 0,
+        "last_touch": 9,
+        "linear": 3.6850649350649354
+      },
+      "affiliate": {
+        "first_touch": 0,
+        "last_touch": 0,
+        "linear": 0.0
+      },
+      "retargeting": {
+        "first_touch": 0,
+        "last_touch": 101,
+        "linear": 61.17928737928742
+      }
+    },
+    "top_conversion_paths": [
+      [
+        "display -> social",
+        16
+      ],
+      [
+        "social -> social",
+        15
+      ],
+      [
+        "search -> video",
+        13
+      ],
+      [
+        "social -> search",
+        12
+      ],
+      [
+        "social -> display",
+        12
+      ],
+      [
+        "social -> social -> social",
+        11
+      ],
+      [
+        "search -> social",
+        11
+      ],
+      [
+        "display -> search",
+        9
+      ],
+      [
+        "search -> search",
+        9
+      ],
+      [
+        "search -> search -> search",
+        8
+      ]
+    ],
+    "avg_journey_length": 4.734463276836158,
+    "avg_cost_per_journey": 1.4190846885687844
+  },
+  "config": {
+    "num_users": 1000,
+    "time_horizon_days": 30,
+    "budget_daily": 1000.0,
+    "orchestrator_lr": 0.01,
+    "agent_lr": 0.0003,
+    "gamma": 0.99,
+    "use_wandb": true,
+    "wandb_project": "gaelp-journey-tracking",
+    "wandb_entity": null,
+    "training_episodes": 100,
+    "eval_episodes": 20,
+    "checkpoint_freq": 10,
+    "batch_size": 32,
+    "update_epochs": 4
+  },
+  "timestamp": "2025-08-21T14:25:09.141502"
+}

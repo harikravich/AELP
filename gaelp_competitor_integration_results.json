@@ -1,0 +1,1246 @@
+{
+  "integration_summary": {
+    "timestamp": "2025-08-21T15:28:59.521822",
+    "registered_agents": 4,
+    "training_jobs_created": 12,
+    "scenarios_tested": 3,
+    "training_samples_generated": 12
+  },
+  "agent_registrations": [
+    {
+      "id": 1,
+      "name": "competitor_qustodio",
+      "type": "simulation",
+      "version": "1.0",
+      "docker_image": "gaelp/competitor-qustodio:latest",
+      "description": "Competitive agent representing Qustodio",
+      "config": {
+        "agent_type": "q_learning",
+        "annual_budget": 99.0,
+        "aggression_level": 0.8,
+        "risk_tolerance": 0.7
+      },
+      "resource_requirements": {
+        "cpu": "0.5",
+        "memory": "1Gi",
+        "storage": "5Gi"
+      },
+      "budget_limit": 99.0,
+      "current_cost": 0.0
+    },
+    {
+      "id": 2,
+      "name": "competitor_bark",
+      "type": "simulation",
+      "version": "1.0",
+      "docker_image": "gaelp/competitor-bark:latest",
+      "description": "Competitive agent representing Bark",
+      "config": {
+        "agent_type": "policy_gradient",
+        "annual_budget": 144.0,
+        "aggression_level": 0.6,
+        "risk_tolerance": 0.4
+      },
+      "resource_requirements": {
+        "cpu": "0.5",
+        "memory": "1Gi",
+        "storage": "5Gi"
+      },
+      "budget_limit": 144.0,
+      "current_cost": 0.0
+    },
+    {
+      "id": 3,
+      "name": "competitor_circle",
+      "type": "simulation",
+      "version": "1.0",
+      "docker_image": "gaelp/competitor-circle:latest",
+      "description": "Competitive agent representing Circle",
+      "config": {
+        "agent_type": "rule_based",
+        "annual_budget": 129.0,
+        "aggression_level": 0.3,
+        "risk_tolerance": 0.3
+      },
+      "resource_requirements": {
+        "cpu": "0.5",
+        "memory": "1Gi",
+        "storage": "5Gi"
+      },
+      "budget_limit": 129.0,
+      "current_cost": 0.0
+    },
+    {
+      "id": 4,
+      "name": "competitor_norton",
+      "type": "simulation",
+      "version": "1.0",
+      "docker_image": "gaelp/competitor-norton:latest",
+      "description": "Competitive agent representing Norton",
+      "config": {
+        "agent_type": "random",
+        "annual_budget": 100.0,
+        "aggression_level": 0.5,
+        "risk_tolerance": 0.5
+      },
+      "resource_requirements": {
+        "cpu": "0.5",
+        "memory": "1Gi",
+        "storage": "5Gi"
+      },
+      "budget_limit": 100.0,
+      "current_cost": 0.0
+    }
+  ],
+  "training_jobs": [
+    {
+      "id": 1,
+      "agent_id": 1,
+      "name": "competitive_training_qustodio_20250821_152859",
+      "status": "queued",
+      "priority": 7,
+      "hyperparameters": {
+        "name": "High Competition",
+        "num_auctions": 300,
+        "days": 5,
+        "market_competition_bias": 0.8,
+        "user_tier_focus": "premium"
+      },
+      "training_config": {
+        "simulation_type": "competitive_auction",
+        "num_auctions": 300,
+        "simulation_days": 5,
+        "competitive_environment": true,
+        "learning_enabled": true
+      },
+      "resource_requirements": {
+        "cpu": "0.5",
+        "memory": "1Gi",
+        "storage": "5Gi"
+      }
+    },
+    {
+      "id": 2,
+      "agent_id": 2,
+      "name": "competitive_training_bark_20250821_152859",
+      "status": "queued",
+      "priority": 7,
+      "hyperparameters": {
+        "name": "High Competition",
+        "num_auctions": 300,
+        "days": 5,
+        "market_competition_bias": 0.8,
+        "user_tier_focus": "premium"
+      },
+      "training_config": {
+        "simulation_type": "competitive_auction",
+        "num_auctions": 300,
+        "simulation_days": 5,
+        "competitive_environment": true,
+        "learning_enabled": true
+      },
+      "resource_requirements": {
+        "cpu": "0.5",
+        "memory": "1Gi",
+        "storage": "5Gi"
+      }
+    },
+    {
+      "id": 3,
+      "agent_id": 3,
+      "name": "competitive_training_circle_20250821_152859",
+      "status": "queued",
+      "priority": 7,
+      "hyperparameters": {
+        "name": "High Competition",
+        "num_auctions": 300,
+        "days": 5,
+        "market_competition_bias": 0.8,
+        "user_tier_focus": "premium"
+      },
+      "training_config": {
+        "simulation_type": "competitive_auction",
+        "num_auctions": 300,
+        "simulation_days": 5,
+        "competitive_environment": true,
+        "learning_enabled": true
+      },
+      "resource_requirements": {
+        "cpu": "0.5",
+        "memory": "1Gi",
+        "storage": "5Gi"
+      }
+    },
+    {
+      "id": 4,
+      "agent_id": 4,
+      "name": "competitive_training_norton_20250821_152859",
+      "status": "queued",
+      "priority": 7,
+      "hyperparameters": {
+        "name": "High Competition",
+        "num_auctions": 300,
+        "days": 5,
+        "market_competition_bias": 0.8,
+        "user_tier_focus": "premium"
+      },
+      "training_config": {
+        "simulation_type": "competitive_auction",
+        "num_auctions": 300,
+        "simulation_days": 5,
+        "competitive_environment": true,
+        "learning_enabled": true
+      },
+      "resource_requirements": {
+        "cpu": "0.5",
+        "memory": "1Gi",
+        "storage": "5Gi"
+      }
+    },
+    {
+      "id": 5,
+      "agent_id": 1,
+      "name": "competitive_training_qustodio_20250821_152859",
+      "status": "queued",
+      "priority": 7,
+      "hyperparameters": {
+        "name": "Balanced Market",
+        "num_auctions": 500,
+        "days": 10,
+        "market_competition_bias": 0.5,
+        "user_tier_focus": "mixed"
+      },
+      "training_config": {
+        "simulation_type": "competitive_auction",
+        "num_auctions": 500,
+        "simulation_days": 10,
+        "competitive_environment": true,
+        "learning_enabled": true
+      },
+      "resource_requirements": {
+        "cpu": "0.5",
+        "memory": "1Gi",
+        "storage": "5Gi"
+      }
+    },
+    {
+      "id": 6,
+      "agent_id": 2,
+      "name": "competitive_training_bark_20250821_152859",
+      "status": "queued",
+      "priority": 7,
+      "hyperparameters": {
+        "name": "Balanced Market",
+        "num_auctions": 500,
+        "days": 10,
+        "market_competition_bias": 0.5,
+        "user_tier_focus": "mixed"
+      },
+      "training_config": {
+        "simulation_type": "competitive_auction",
+        "num_auctions": 500,
+        "simulation_days": 10,
+        "competitive_environment": true,
+        "learning_enabled": true
+      },
+      "resource_requirements": {
+        "cpu": "0.5",
+        "memory": "1Gi",
+        "storage": "5Gi"
+      }
+    },
+    {
+      "id": 7,
+      "agent_id": 3,
+      "name": "competitive_training_circle_20250821_152859",
+      "status": "queued",
+      "priority": 7,
+      "hyperparameters": {
+        "name": "Balanced Market",
+        "num_auctions": 500,
+        "days": 10,
+        "market_competition_bias": 0.5,
+        "user_tier_focus": "mixed"
+      },
+      "training_config": {
+        "simulation_type": "competitive_auction",
+        "num_auctions": 500,
+        "simulation_days": 10,
+        "competitive_environment": true,
+        "learning_enabled": true
+      },
+      "resource_requirements": {
+        "cpu": "0.5",
+        "memory": "1Gi",
+        "storage": "5Gi"
+      }
+    },
+    {
+      "id": 8,
+      "agent_id": 4,
+      "name": "competitive_training_norton_20250821_152859",
+      "status": "queued",
+      "priority": 7,
+      "hyperparameters": {
+        "name": "Balanced Market",
+        "num_auctions": 500,
+        "days": 10,
+        "market_competition_bias": 0.5,
+        "user_tier_focus": "mixed"
+      },
+      "training_config": {
+        "simulation_type": "competitive_auction",
+        "num_auctions": 500,
+        "simulation_days": 10,
+        "competitive_environment": true,
+        "learning_enabled": true
+      },
+      "resource_requirements": {
+        "cpu": "0.5",
+        "memory": "1Gi",
+        "storage": "5Gi"
+      }
+    },
+    {
+      "id": 9,
+      "agent_id": 1,
+      "name": "competitive_training_qustodio_20250821_152859",
+      "status": "queued",
+      "priority": 7,
+      "hyperparameters": {
+        "name": "Low Competition",
+        "num_auctions": 200,
+        "days": 3,
+        "market_competition_bias": 0.3,
+        "user_tier_focus": "medium"
+      },
+      "training_config": {
+        "simulation_type": "competitive_auction",
+        "num_auctions": 200,
+        "simulation_days": 3,
+        "competitive_environment": true,
+        "learning_enabled": true
+      },
+      "resource_requirements": {
+        "cpu": "0.5",
+        "memory": "1Gi",
+        "storage": "5Gi"
+      }
+    },
+    {
+      "id": 10,
+      "agent_id": 2,
+      "name": "competitive_training_bark_20250821_152859",
+      "status": "queued",
+      "priority": 7,
+      "hyperparameters": {
+        "name": "Low Competition",
+        "num_auctions": 200,
+        "days": 3,
+        "market_competition_bias": 0.3,
+        "user_tier_focus": "medium"
+      },
+      "training_config": {
+        "simulation_type": "competitive_auction",
+        "num_auctions": 200,
+        "simulation_days": 3,
+        "competitive_environment": true,
+        "learning_enabled": true
+      },
+      "resource_requirements": {
+        "cpu": "0.5",
+        "memory": "1Gi",
+        "storage": "5Gi"
+      }
+    },
+    {
+      "id": 11,
+      "agent_id": 3,
+      "name": "competitive_training_circle_20250821_152859",
+      "status": "queued",
+      "priority": 7,
+      "hyperparameters": {
+        "name": "Low Competition",
+        "num_auctions": 200,
+        "days": 3,
+        "market_competition_bias": 0.3,
+        "user_tier_focus": "medium"
+      },
+      "training_config": {
+        "simulation_type": "competitive_auction",
+        "num_auctions": 200,
+        "simulation_days": 3,
+        "competitive_environment": true,
+        "learning_enabled": true
+      },
+      "resource_requirements": {
+        "cpu": "0.5",
+        "memory": "1Gi",
+        "storage": "5Gi"
+      }
+    },
+    {
+      "id": 12,
+      "agent_id": 4,
+      "name": "competitive_training_norton_20250821_152859",
+      "status": "queued",
+      "priority": 7,
+      "hyperparameters": {
+        "name": "Low Competition",
+        "num_auctions": 200,
+        "days": 3,
+        "market_competition_bias": 0.3,
+        "user_tier_focus": "medium"
+      },
+      "training_config": {
+        "simulation_type": "competitive_auction",
+        "num_auctions": 200,
+        "simulation_days": 3,
+        "competitive_environment": true,
+        "learning_enabled": true
+      },
+      "resource_requirements": {
+        "cpu": "0.5",
+        "memory": "1Gi",
+        "storage": "5Gi"
+      }
+    }
+  ],
+  "competitive_results": {
+    "scenario_results": {
+      "High Competition": {
+        "timestamp": "2025-08-21T15:28:59.485093",
+        "total_auctions": 5,
+        "agents": {
+          "qustodio": {
+            "name": "Qustodio",
+            "agent_type": "q_learning",
+            "annual_budget": 99.0,
+            "metrics": {
+              "win_rate": 0.75,
+              "avg_position": 1.0,
+              "spend_efficiency": 0.0,
+              "total_spend": 0.28,
+              "total_revenue": 0.0,
+              "roas": 0.0,
+              "conversion_rate": 0.0,
+              "cost_per_acquisition": 0.0,
+              "high_value_wins": 0,
+              "total_auctions": 4
+            },
+            "strategy_params": {
+              "base_bid_multiplier": 1.0,
+              "aggression_level": 0.8,
+              "risk_tolerance": 0.7
+            }
+          },
+          "bark": {
+            "name": "Bark",
+            "agent_type": "policy_gradient",
+            "annual_budget": 144.0,
+            "metrics": {
+              "win_rate": 0.0,
+              "avg_position": 0.0,
+              "spend_efficiency": 0.0,
+              "total_spend": 0.0,
+              "total_revenue": 0.0,
+              "roas": 0.0,
+              "conversion_rate": 0.0,
+              "cost_per_acquisition": 0.0,
+              "high_value_wins": 0,
+              "total_auctions": 0
+            },
+            "strategy_params": {
+              "base_bid_multiplier": 1.0,
+              "aggression_level": 0.6,
+              "risk_tolerance": 0.4
+            }
+          },
+          "circle": {
+            "name": "Circle",
+            "agent_type": "rule_based",
+            "annual_budget": 129.0,
+            "metrics": {
+              "win_rate": 0.25,
+              "avg_position": 1.0,
+              "spend_efficiency": 282.673,
+              "total_spend": 0.45,
+              "total_revenue": 125.89,
+              "roas": 282.673,
+              "conversion_rate": 1.0,
+              "cost_per_acquisition": 0.45,
+              "high_value_wins": 1,
+              "total_auctions": 4
+            },
+            "strategy_params": {
+              "base_bid_multiplier": 1.0,
+              "aggression_level": 0.3,
+              "risk_tolerance": 0.3
+            }
+          },
+          "norton": {
+            "name": "Norton",
+            "agent_type": "random",
+            "annual_budget": 100.0,
+            "metrics": {
+              "win_rate": 1.0,
+              "avg_position": 1.0,
+              "spend_efficiency": 0.0,
+              "total_spend": 0.34,
+              "total_revenue": 0.0,
+              "roas": 0.0,
+              "conversion_rate": 0.0,
+              "cost_per_acquisition": 0.0,
+              "high_value_wins": 1,
+              "total_auctions": 1
+            },
+            "strategy_params": {
+              "base_bid_multiplier": 1.0,
+              "aggression_level": 0.5,
+              "risk_tolerance": 0.5
+            }
+          }
+        },
+        "market_analysis": {
+          "avg_market_competition": 0.4901896301930041,
+          "avg_winning_price": 0.2138895353056268,
+          "avg_position": 1.5555555555555556,
+          "price_volatility": 0.15125995241005558,
+          "total_unique_auctions": 5
+        },
+        "competitive_landscape": {
+          "head_to_head_wins": {
+            "qustodio": {
+              "circle": 2
+            },
+            "norton": {
+              "circle": 1,
+              "qustodio": 1
+            }
+          },
+          "most_competitive_matchup": "circle_vs_qustodio",
+          "market_share": {
+            "qustodio": 0.6,
+            "norton": 0.2,
+            "circle": 0.2
+          }
+        },
+        "learning_insights": {
+          "qustodio": {
+            "learning_events": 0,
+            "strategy_evolution": {
+              "evolution": "no_changes",
+              "total_changes": 0,
+              "change_types": {},
+              "latest_change": null
+            },
+            "adaptation_triggers": []
+          },
+          "bark": {
+            "learning_events": 0,
+            "strategy_evolution": {
+              "evolution": "no_changes",
+              "total_changes": 0,
+              "change_types": {},
+              "latest_change": null
+            },
+            "adaptation_triggers": []
+          },
+          "circle": {
+            "learning_events": 0,
+            "strategy_evolution": {
+              "evolution": "no_changes",
+              "total_changes": 0,
+              "change_types": {},
+              "latest_change": null
+            },
+            "adaptation_triggers": []
+          },
+          "norton": {
+            "learning_events": 0,
+            "strategy_evolution": {
+              "evolution": "no_changes",
+              "total_changes": 0,
+              "change_types": {},
+              "latest_change": null
+            },
+            "adaptation_triggers": []
+          }
+        }
+      },
+      "Balanced Market": {
+        "timestamp": "2025-08-21T15:28:59.512079",
+        "total_auctions": 5,
+        "agents": {
+          "qustodio": {
+            "name": "Qustodio",
+            "agent_type": "q_learning",
+            "annual_budget": 99.0,
+            "metrics": {
+              "win_rate": 0.75,
+              "avg_position": 1.0,
+              "spend_efficiency": 0.0,
+              "total_spend": 0.28,
+              "total_revenue": 0.0,
+              "roas": 0.0,
+              "conversion_rate": 0.0,
+              "cost_per_acquisition": 0.0,
+              "high_value_wins": 0,
+              "total_auctions": 4
+            },
+            "strategy_params": {
+              "base_bid_multiplier": 1.0,
+              "aggression_level": 0.8,
+              "risk_tolerance": 0.7
+            }
+          },
+          "bark": {
+            "name": "Bark",
+            "agent_type": "policy_gradient",
+            "annual_budget": 144.0,
+            "metrics": {
+              "win_rate": 0.0,
+              "avg_position": 0.0,
+              "spend_efficiency": 0.0,
+              "total_spend": 0.0,
+              "total_revenue": 0.0,
+              "roas": 0.0,
+              "conversion_rate": 0.0,
+              "cost_per_acquisition": 0.0,
+              "high_value_wins": 0,
+              "total_auctions": 0
+            },
+            "strategy_params": {
+              "base_bid_multiplier": 1.0,
+              "aggression_level": 0.6,
+              "risk_tolerance": 0.4
+            }
+          },
+          "circle": {
+            "name": "Circle",
+            "agent_type": "rule_based",
+            "annual_budget": 129.0,
+            "metrics": {
+              "win_rate": 0.25,
+              "avg_position": 1.0,
+              "spend_efficiency": 282.673,
+              "total_spend": 0.45,
+              "total_revenue": 125.89,
+              "roas": 282.673,
+              "conversion_rate": 1.0,
+              "cost_per_acquisition": 0.45,
+              "high_value_wins": 1,
+              "total_auctions": 4
+            },
+            "strategy_params": {
+              "base_bid_multiplier": 1.0,
+              "aggression_level": 0.3,
+              "risk_tolerance": 0.3
+            }
+          },
+          "norton": {
+            "name": "Norton",
+            "agent_type": "random",
+            "annual_budget": 100.0,
+            "metrics": {
+              "win_rate": 1.0,
+              "avg_position": 1.0,
+              "spend_efficiency": 0.0,
+              "total_spend": 0.34,
+              "total_revenue": 0.0,
+              "roas": 0.0,
+              "conversion_rate": 0.0,
+              "cost_per_acquisition": 0.0,
+              "high_value_wins": 1,
+              "total_auctions": 1
+            },
+            "strategy_params": {
+              "base_bid_multiplier": 1.0,
+              "aggression_level": 0.5,
+              "risk_tolerance": 0.5
+            }
+          }
+        },
+        "market_analysis": {
+          "avg_market_competition": 0.4901896301930041,
+          "avg_winning_price": 0.2138895353056268,
+          "avg_position": 1.5555555555555556,
+          "price_volatility": 0.15125995241005558,
+          "total_unique_auctions": 5
+        },
+        "competitive_landscape": {
+          "head_to_head_wins": {
+            "qustodio": {
+              "circle": 2
+            },
+            "norton": {
+              "circle": 1,
+              "qustodio": 1
+            }
+          },
+          "most_competitive_matchup": "circle_vs_qustodio",
+          "market_share": {
+            "qustodio": 0.6,
+            "norton": 0.2,
+            "circle": 0.2
+          }
+        },
+        "learning_insights": {
+          "qustodio": {
+            "learning_events": 0,
+            "strategy_evolution": {
+              "evolution": "no_changes",
+              "total_changes": 0,
+              "change_types": {},
+              "latest_change": null
+            },
+            "adaptation_triggers": []
+          },
+          "bark": {
+            "learning_events": 0,
+            "strategy_evolution": {
+              "evolution": "no_changes",
+              "total_changes": 0,
+              "change_types": {},
+              "latest_change": null
+            },
+            "adaptation_triggers": []
+          },
+          "circle": {
+            "learning_events": 0,
+            "strategy_evolution": {
+              "evolution": "no_changes",
+              "total_changes": 0,
+              "change_types": {},
+              "latest_change": null
+            },
+            "adaptation_triggers": []
+          },
+          "norton": {
+            "learning_events": 0,
+            "strategy_evolution": {
+              "evolution": "no_changes",
+              "total_changes": 0,
+              "change_types": {},
+              "latest_change": null
+            },
+            "adaptation_triggers": []
+          }
+        }
+      },
+      "Low Competition": {
+        "timestamp": "2025-08-21T15:28:59.521361",
+        "total_auctions": 5,
+        "agents": {
+          "qustodio": {
+            "name": "Qustodio",
+            "agent_type": "q_learning",
+            "annual_budget": 99.0,
+            "metrics": {
+              "win_rate": 0.75,
+              "avg_position": 1.0,
+              "spend_efficiency": 0.0,
+              "total_spend": 0.28,
+              "total_revenue": 0.0,
+              "roas": 0.0,
+              "conversion_rate": 0.0,
+              "cost_per_acquisition": 0.0,
+              "high_value_wins": 0,
+              "total_auctions": 4
+            },
+            "strategy_params": {
+              "base_bid_multiplier": 1.0,
+              "aggression_level": 0.8,
+              "risk_tolerance": 0.7
+            }
+          },
+          "bark": {
+            "name": "Bark",
+            "agent_type": "policy_gradient",
+            "annual_budget": 144.0,
+            "metrics": {
+              "win_rate": 0.0,
+              "avg_position": 0.0,
+              "spend_efficiency": 0.0,
+              "total_spend": 0.0,
+              "total_revenue": 0.0,
+              "roas": 0.0,
+              "conversion_rate": 0.0,
+              "cost_per_acquisition": 0.0,
+              "high_value_wins": 0,
+              "total_auctions": 0
+            },
+            "strategy_params": {
+              "base_bid_multiplier": 1.0,
+              "aggression_level": 0.6,
+              "risk_tolerance": 0.4
+            }
+          },
+          "circle": {
+            "name": "Circle",
+            "agent_type": "rule_based",
+            "annual_budget": 129.0,
+            "metrics": {
+              "win_rate": 0.25,
+              "avg_position": 1.0,
+              "spend_efficiency": 282.673,
+              "total_spend": 0.45,
+              "total_revenue": 125.89,
+              "roas": 282.673,
+              "conversion_rate": 1.0,
+              "cost_per_acquisition": 0.45,
+              "high_value_wins": 1,
+              "total_auctions": 4
+            },
+            "strategy_params": {
+              "base_bid_multiplier": 1.0,
+              "aggression_level": 0.3,
+              "risk_tolerance": 0.3
+            }
+          },
+          "norton": {
+            "name": "Norton",
+            "agent_type": "random",
+            "annual_budget": 100.0,
+            "metrics": {
+              "win_rate": 1.0,
+              "avg_position": 1.0,
+              "spend_efficiency": 0.0,
+              "total_spend": 0.34,
+              "total_revenue": 0.0,
+              "roas": 0.0,
+              "conversion_rate": 0.0,
+              "cost_per_acquisition": 0.0,
+              "high_value_wins": 1,
+              "total_auctions": 1
+            },
+            "strategy_params": {
+              "base_bid_multiplier": 1.0,
+              "aggression_level": 0.5,
+              "risk_tolerance": 0.5
+            }
+          }
+        },
+        "market_analysis": {
+          "avg_market_competition": 0.4901896301930041,
+          "avg_winning_price": 0.2138895353056268,
+          "avg_position": 1.5555555555555556,
+          "price_volatility": 0.15125995241005558,
+          "total_unique_auctions": 5
+        },
+        "competitive_landscape": {
+          "head_to_head_wins": {
+            "qustodio": {
+              "circle": 2
+            },
+            "norton": {
+              "circle": 1,
+              "qustodio": 1
+            }
+          },
+          "most_competitive_matchup": "circle_vs_qustodio",
+          "market_share": {
+            "qustodio": 0.6,
+            "norton": 0.2,
+            "circle": 0.2
+          }
+        },
+        "learning_insights": {
+          "qustodio": {
+            "learning_events": 0,
+            "strategy_evolution": {
+              "evolution": "no_changes",
+              "total_changes": 0,
+              "change_types": {},
+              "latest_change": null
+            },
+            "adaptation_triggers": []
+          },
+          "bark": {
+            "learning_events": 0,
+            "strategy_evolution": {
+              "evolution": "no_changes",
+              "total_changes": 0,
+              "change_types": {},
+              "latest_change": null
+            },
+            "adaptation_triggers": []
+          },
+          "circle": {
+            "learning_events": 0,
+            "strategy_evolution": {
+              "evolution": "no_changes",
+              "total_changes": 0,
+              "change_types": {},
+              "latest_change": null
+            },
+            "adaptation_triggers": []
+          },
+          "norton": {
+            "learning_events": 0,
+            "strategy_evolution": {
+              "evolution": "no_changes",
+              "total_changes": 0,
+              "change_types": {},
+              "latest_change": null
+            },
+            "adaptation_triggers": []
+          }
+        }
+      }
+    },
+    "training_data": [
+      {
+        "agent_type": "q_learning",
+        "strategy_params": {
+          "base_bid_multiplier": 1.0,
+          "aggression_level": 0.8,
+          "risk_tolerance": 0.7
+        },
+        "performance_metrics": {
+          "win_rate": 0.75,
+          "avg_position": 1.0,
+          "spend_efficiency": 0.0,
+          "total_spend": 0.28,
+          "total_revenue": 0.0,
+          "roas": 0.0,
+          "conversion_rate": 0.0,
+          "cost_per_acquisition": 0.0,
+          "high_value_wins": 0,
+          "total_auctions": 4
+        },
+        "market_conditions": {
+          "competition_level": 0.4901896301930041,
+          "avg_price": 0.2138895353056268
+        },
+        "learning_insights": {
+          "win_rate": 0.75,
+          "efficiency": 0.0,
+          "adaptability": 0
+        }
+      },
+      {
+        "agent_type": "policy_gradient",
+        "strategy_params": {
+          "base_bid_multiplier": 1.0,
+          "aggression_level": 0.6,
+          "risk_tolerance": 0.4
+        },
+        "performance_metrics": {
+          "win_rate": 0.0,
+          "avg_position": 0.0,
+          "spend_efficiency": 0.0,
+          "total_spend": 0.0,
+          "total_revenue": 0.0,
+          "roas": 0.0,
+          "conversion_rate": 0.0,
+          "cost_per_acquisition": 0.0,
+          "high_value_wins": 0,
+          "total_auctions": 0
+        },
+        "market_conditions": {
+          "competition_level": 0.4901896301930041,
+          "avg_price": 0.2138895353056268
+        },
+        "learning_insights": {
+          "win_rate": 0.0,
+          "efficiency": 0.0,
+          "adaptability": 0
+        }
+      },
+      {
+        "agent_type": "rule_based",
+        "strategy_params": {
+          "base_bid_multiplier": 1.0,
+          "aggression_level": 0.3,
+          "risk_tolerance": 0.3
+        },
+        "performance_metrics": {
+          "win_rate": 0.25,
+          "avg_position": 1.0,
+          "spend_efficiency": 282.673,
+          "total_spend": 0.45,
+          "total_revenue": 125.89,
+          "roas": 282.673,
+          "conversion_rate": 1.0,
+          "cost_per_acquisition": 0.45,
+          "high_value_wins": 1,
+          "total_auctions": 4
+        },
+        "market_conditions": {
+          "competition_level": 0.4901896301930041,
+          "avg_price": 0.2138895353056268
+        },
+        "learning_insights": {
+          "win_rate": 0.25,
+          "efficiency": 282.673,
+          "adaptability": 0
+        }
+      },
+      {
+        "agent_type": "random",
+        "strategy_params": {
+          "base_bid_multiplier": 1.0,
+          "aggression_level": 0.5,
+          "risk_tolerance": 0.5
+        },
+        "performance_metrics": {
+          "win_rate": 1.0,
+          "avg_position": 1.0,
+          "spend_efficiency": 0.0,
+          "total_spend": 0.34,
+          "total_revenue": 0.0,
+          "roas": 0.0,
+          "conversion_rate": 0.0,
+          "cost_per_acquisition": 0.0,
+          "high_value_wins": 1,
+          "total_auctions": 1
+        },
+        "market_conditions": {
+          "competition_level": 0.4901896301930041,
+          "avg_price": 0.2138895353056268
+        },
+        "learning_insights": {
+          "win_rate": 1.0,
+          "efficiency": 0.0,
+          "adaptability": 0
+        }
+      },
+      {
+        "agent_type": "q_learning",
+        "strategy_params": {
+          "base_bid_multiplier": 1.0,
+          "aggression_level": 0.8,
+          "risk_tolerance": 0.7
+        },
+        "performance_metrics": {
+          "win_rate": 0.75,
+          "avg_position": 1.0,
+          "spend_efficiency": 0.0,
+          "total_spend": 0.28,
+          "total_revenue": 0.0,
+          "roas": 0.0,
+          "conversion_rate": 0.0,
+          "cost_per_acquisition": 0.0,
+          "high_value_wins": 0,
+          "total_auctions": 4
+        },
+        "market_conditions": {
+          "competition_level": 0.4901896301930041,
+          "avg_price": 0.2138895353056268
+        },
+        "learning_insights": {
+          "win_rate": 0.75,
+          "efficiency": 0.0,
+          "adaptability": 0
+        }
+      },
+      {
+        "agent_type": "policy_gradient",
+        "strategy_params": {
+          "base_bid_multiplier": 1.0,
+          "aggression_level": 0.6,
+          "risk_tolerance": 0.4
+        },
+        "performance_metrics": {
+          "win_rate": 0.0,
+          "avg_position": 0.0,
+          "spend_efficiency": 0.0,
+          "total_spend": 0.0,
+          "total_revenue": 0.0,
+          "roas": 0.0,
+          "conversion_rate": 0.0,
+          "cost_per_acquisition": 0.0,
+          "high_value_wins": 0,
+          "total_auctions": 0
+        },
+        "market_conditions": {
+          "competition_level": 0.4901896301930041,
+          "avg_price": 0.2138895353056268
+        },
+        "learning_insights": {
+          "win_rate": 0.0,
+          "efficiency": 0.0,
+          "adaptability": 0
+        }
+      },
+      {
+        "agent_type": "rule_based",
+        "strategy_params": {
+          "base_bid_multiplier": 1.0,
+          "aggression_level": 0.3,
+          "risk_tolerance": 0.3
+        },
+        "performance_metrics": {
+          "win_rate": 0.25,
+          "avg_position": 1.0,
+          "spend_efficiency": 282.673,
+          "total_spend": 0.45,
+          "total_revenue": 125.89,
+          "roas": 282.673,
+          "conversion_rate": 1.0,
+          "cost_per_acquisition": 0.45,
+          "high_value_wins": 1,
+          "total_auctions": 4
+        },
+        "market_conditions": {
+          "competition_level": 0.4901896301930041,
+          "avg_price": 0.2138895353056268
+        },
+        "learning_insights": {
+          "win_rate": 0.25,
+          "efficiency": 282.673,
+          "adaptability": 0
+        }
+      },
+      {
+        "agent_type": "random",
+        "strategy_params": {
+          "base_bid_multiplier": 1.0,
+          "aggression_level": 0.5,
+          "risk_tolerance": 0.5
+        },
+        "performance_metrics": {
+          "win_rate": 1.0,
+          "avg_position": 1.0,
+          "spend_efficiency": 0.0,
+          "total_spend": 0.34,
+          "total_revenue": 0.0,
+          "roas": 0.0,
+          "conversion_rate": 0.0,
+          "cost_per_acquisition": 0.0,
+          "high_value_wins": 1,
+          "total_auctions": 1
+        },
+        "market_conditions": {
+          "competition_level": 0.4901896301930041,
+          "avg_price": 0.2138895353056268
+        },
+        "learning_insights": {
+          "win_rate": 1.0,
+          "efficiency": 0.0,
+          "adaptability": 0
+        }
+      },
+      {
+        "agent_type": "q_learning",
+        "strategy_params": {
+          "base_bid_multiplier": 1.0,
+          "aggression_level": 0.8,
+          "risk_tolerance": 0.7
+        },
+        "performance_metrics": {
+          "win_rate": 0.75,
+          "avg_position": 1.0,
+          "spend_efficiency": 0.0,
+          "total_spend": 0.28,
+          "total_revenue": 0.0,
+          "roas": 0.0,
+          "conversion_rate": 0.0,
+          "cost_per_acquisition": 0.0,
+          "high_value_wins": 0,
+          "total_auctions": 4
+        },
+        "market_conditions": {
+          "competition_level": 0.4901896301930041,
+          "avg_price": 0.2138895353056268
+        },
+        "learning_insights": {
+          "win_rate": 0.75,
+          "efficiency": 0.0,
+          "adaptability": 0
+        }
+      },
+      {
+        "agent_type": "policy_gradient",
+        "strategy_params": {
+          "base_bid_multiplier": 1.0,
+          "aggression_level": 0.6,
+          "risk_tolerance": 0.4
+        },
+        "performance_metrics": {
+          "win_rate": 0.0,
+          "avg_position": 0.0,
+          "spend_efficiency": 0.0,
+          "total_spend": 0.0,
+          "total_revenue": 0.0,
+          "roas": 0.0,
+          "conversion_rate": 0.0,
+          "cost_per_acquisition": 0.0,
+          "high_value_wins": 0,
+          "total_auctions": 0
+        },
+        "market_conditions": {
+          "competition_level": 0.4901896301930041,
+          "avg_price": 0.2138895353056268
+        },
+        "learning_insights": {
+          "win_rate": 0.0,
+          "efficiency": 0.0,
+          "adaptability": 0
+        }
+      },
+      {
+        "agent_type": "rule_based",
+        "strategy_params": {
+          "base_bid_multiplier": 1.0,
+          "aggression_level": 0.3,
+          "risk_tolerance": 0.3
+        },
+        "performance_metrics": {
+          "win_rate": 0.25,
+          "avg_position": 1.0,
+          "spend_efficiency": 282.673,
+          "total_spend": 0.45,
+          "total_revenue": 125.89,
+          "roas": 282.673,
+          "conversion_rate": 1.0,
+          "cost_per_acquisition": 0.45,
+          "high_value_wins": 1,
+          "total_auctions": 4
+        },
+        "market_conditions": {
+          "competition_level": 0.4901896301930041,
+          "avg_price": 0.2138895353056268
+        },
+        "learning_insights": {
+          "win_rate": 0.25,
+          "efficiency": 282.673,
+          "adaptability": 0
+        }
+      },
+      {
+        "agent_type": "random",
+        "strategy_params": {
+          "base_bid_multiplier": 1.0,
+          "aggression_level": 0.5,
+          "risk_tolerance": 0.5
+        },
+        "performance_metrics": {
+          "win_rate": 1.0,
+          "avg_position": 1.0,
+          "spend_efficiency": 0.0,
+          "total_spend": 0.34,
+          "total_revenue": 0.0,
+          "roas": 0.0,
+          "conversion_rate": 0.0,
+          "cost_per_acquisition": 0.0,
+          "high_value_wins": 1,
+          "total_auctions": 1
+        },
+        "market_conditions": {
+          "competition_level": 0.4901896301930041,
+          "avg_price": 0.2138895353056268
+        },
+        "learning_insights": {
+          "win_rate": 1.0,
+          "efficiency": 0.0,
+          "adaptability": 0
+        }
+      }
+    ],
+    "total_training_jobs": 12,
+    "registered_agents": 4
+  },
+  "integration_status": "successful"
+}

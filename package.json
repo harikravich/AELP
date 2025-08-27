@@ -1,0 +1,59 @@
+{
+  "name": "aelp-dashboard",
+  "version": "1.0.0",
+  "description": "GAELP Campaign Agent Performance Dashboard",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "start:meta-mcp": "node mcp-connectors/meta-ads/meta-mcp-server.js",
+    "start:google-mcp": "node mcp-connectors/google-ads/google-mcp-server.js",
+    "build:mcp": "tsc --project mcp-connectors/tsconfig.json",
+    "dev:meta": "ts-node mcp-connectors/meta-ads/meta-mcp-server.ts",
+    "dev:google": "ts-node mcp-connectors/google-ads/google-mcp-server.ts"
+  },
+  "dependencies": {
+    "@google-cloud/bigquery": "^7.0.0",
+    "@modelcontextprotocol/sdk": "^1.17.3",
+    "@modelcontextprotocol/server-filesystem": "^2025.8.18",
+    "@tanstack/react-query": "^5.0.0",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@types/ws": "^8.5.0",
+    "autoprefixer": "^10.4.0",
+    "clsx": "^2.0.0",
+    "date-fns": "^2.30.0",
+    "framer-motion": "^10.16.0",
+    "lucide-react": "^0.294.0",
+    "next": "^14.0.0",
+    "next-auth": "^4.24.0",
+    "postcss": "^8.4.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "recharts": "^2.8.0",
+    "tailwind-merge": "^2.0.0",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5.0.0",
+    "ws": "^8.14.0",
+    "zustand": "^4.4.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.16",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^14.0.0",
+    "ts-node": "^10.9.0"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "campaign",
+    "dashboard",
+    "monitoring"
+  ],
+  "author": "GAELP Team",
+  "license": "MIT"
+}

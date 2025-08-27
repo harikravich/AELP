@@ -1,0 +1,314 @@
+INFO:training_orchestrator.phases:Phase Manager initialized
+INFO:training_orchestrator.curriculum:Curriculum Scheduler initialized
+INFO:training_orchestrator.episode_manager:Episode Manager initialized
+INFO:training_orchestrator.performance_monitor:Performance Monitor initialized
+INFO:training_orchestrator.safety_monitor:Safety Monitor initialized
+DEBUG:google.auth._default:Checking None for explicit credentials as part of auth process...
+DEBUG:google.auth._default:Checking Cloud SDK credentials as part of auth process...
+DEBUG:google.auth._default:Cloud SDK credentials not found on disk; not using them
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): metadata.google.internal:80
+DEBUG:urllib3.connectionpool:http://metadata.google.internal:80 "GET /computeMetadata/v1/universe/universe-domain HTTP/1.1" 404 1604
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): metadata.google.internal:80
+DEBUG:urllib3.connectionpool:http://metadata.google.internal:80 "GET /computeMetadata/v1/universe/universe-domain HTTP/1.1" 404 1604
+INFO:training_orchestrator.core:External services initialized successfully
+INFO:training_orchestrator.core:Training Orchestrator initialized with experiment name: ad_campaign_training
+🎯 GAELP Ad Campaign Learning Platform - Live Demo
+============================================================
+This demo shows an agent learning to optimize ad campaigns
+from scratch through the complete 4-phase training pipeline:
+1. Simulation Training (LLM personas)
+2. Historical Data Validation
+3. Small Budget Real Testing
+4. Scaled Deployment
+
+Press Ctrl+C at any time to stop the demo.
+
+🤖 Created Agent: agent-001
+
+============================================================
+PHASE 1: SIMULATION TRAINING
+============================================================
+Agent learns on LLM personas responding to ad campaigns
+This is safe, fast, and costs no real money.
+
+🚀 Starting Simulation Training
+============================================================
+
+--- Episode 1 ---
+Simulation Episode: Revenue=$329.80, Cost=$153.42, ROAS=2.15x
+Agent agent-001 updated policy. Exploration: 0.100
+
+--- Episode 2 ---
+Simulation Episode: Revenue=$840.48, Cost=$133.98, ROAS=6.27x
+Agent agent-001 updated policy. Exploration: 0.100
+
+--- Episode 3 ---
+Simulation Episode: Revenue=$1210.83, Cost=$145.30, ROAS=8.33x
+Agent agent-001 updated policy. Exploration: 0.100
+
+--- Episode 4 ---
+Simulation Episode: Revenue=$721.40, Cost=$137.57, ROAS=5.24x
+Agent agent-001 updated policy. Exploration: 0.100
+
+--- Episode 5 ---
+Simulation Episode: Revenue=$760.49, Cost=$148.76, ROAS=5.11x
+Agent agent-001 updated policy. Exploration: 0.100
+Episode 5: Recent avg ROAS = 5.42x
+
+--- Episode 6 ---
+Simulation Episode: Revenue=$923.43, Cost=$103.72, ROAS=8.90x
+Agent agent-001 updated policy. Exploration: 0.100
+
+--- Episode 7 ---
+Simulation Episode: Revenue=$445.96, Cost=$133.11, ROAS=3.35x
+Agent agent-001 updated policy. Exploration: 0.100
+
+--- Episode 8 ---
+Simulation Episode: Revenue=$830.09, Cost=$143.22, ROAS=5.80x
+Agent agent-001 updated policy. Exploration: 0.100
+
+--- Episode 9 ---
+Simulation Episode: Revenue=$244.45, Cost=$156.08, ROAS=1.57x
+Agent agent-001 updated policy. Exploration: 0.100
+
+--- Episode 10 ---
+Simulation Episode: Revenue=$700.39, Cost=$113.30, ROAS=6.18x
+Agent agent-001 updated policy. Exploration: 0.100
+Episode 10: Recent avg ROAS = 5.16x
+
+--- Episode 11 ---
+Simulation Episode: Revenue=$586.69, Cost=$127.57, ROAS=4.60x
+Agent agent-001 updated policy. Exploration: 0.095
+
+--- Episode 12 ---
+Simulation Episode: Revenue=$508.00, Cost=$108.10, ROAS=4.70x
+Agent agent-001 updated policy. Exploration: 0.090
+
+--- Episode 13 ---
+Simulation Episode: Revenue=$971.99, Cost=$122.18, ROAS=7.96x
+Agent agent-001 updated policy. Exploration: 0.086
+
+--- Episode 14 ---
+Simulation Episode: Revenue=$727.31, Cost=$120.13, ROAS=6.05x
+Agent agent-001 updated policy. Exploration: 0.081
+
+--- Episode 15 ---
+Simulation Episode: Revenue=$277.10, Cost=$155.42, ROAS=1.78x
+Agent agent-001 updated policy. Exploration: 0.077
+Episode 15: Recent avg ROAS = 5.02x
+
+--- Episode 16 ---
+Simulation Episode: Revenue=$839.43, Cost=$105.68, ROAS=7.94x
+Agent agent-001 updated policy. Exploration: 0.074
+
+--- Episode 17 ---
+Simulation Episode: Revenue=$475.85, Cost=$103.54, ROAS=4.60x
+Agent agent-001 updated policy. Exploration: 0.070
+
+--- Episode 18 ---
+Simulation Episode: Revenue=$1302.01, Cost=$83.85, ROAS=15.53x
+Agent agent-001 updated policy. Exploration: 0.066
+
+--- Episode 19 ---
+Simulation Episode: Revenue=$551.06, Cost=$115.13, ROAS=4.79x
+Agent agent-001 updated policy. Exploration: 0.063
+
+--- Episode 20 ---
+Simulation Episode: Revenue=$660.13, Cost=$133.93, ROAS=4.93x
+Agent agent-001 updated policy. Exploration: 0.060
+Episode 20: Recent avg ROAS = 7.56x
+
+✅ Simulation Training Complete! Average ROAS: 5.79x
+🎓 Agent graduated from simulation training!
+
+============================================================
+PHASE 2: HISTORICAL DATA VALIDATION
+============================================================
+Testing agent on real historical campaign data
+
+🚀 Starting Historical Validation
+============================================================
+
+--- Episode 1 ---
+Real Deployment: Revenue=$160.11, Cost=$12.26, ROAS=13.05x
+Agent agent-001 updated policy. Exploration: 0.057
+
+--- Episode 2 ---
+Real Deployment: Revenue=$89.01, Cost=$14.76, ROAS=6.03x
+Agent agent-001 updated policy. Exploration: 0.054
+
+--- Episode 3 ---
+Real Deployment: Revenue=$171.38, Cost=$11.35, ROAS=15.10x
+Agent agent-001 updated policy. Exploration: 0.051
+
+--- Episode 4 ---
+Real Deployment: Revenue=$177.98, Cost=$48.40, ROAS=3.68x
+Agent agent-001 updated policy. Exploration: 0.049
+
+--- Episode 5 ---
+Real Deployment: Revenue=$131.64, Cost=$17.09, ROAS=7.70x
+Agent agent-001 updated policy. Exploration: 0.046
+Episode 5: Recent avg ROAS = 9.11x
+
+--- Episode 6 ---
+Real Deployment: Revenue=$122.99, Cost=$27.58, ROAS=4.46x
+Agent agent-001 updated policy. Exploration: 0.044
+
+--- Episode 7 ---
+Real Deployment: Revenue=$55.40, Cost=$32.84, ROAS=1.69x
+Agent agent-001 updated policy. Exploration: 0.042
+
+--- Episode 8 ---
+Real Deployment: Revenue=$75.00, Cost=$40.60, ROAS=1.85x
+Agent agent-001 updated policy. Exploration: 0.040
+
+--- Episode 9 ---
+Real Deployment: Revenue=$73.71, Cost=$49.19, ROAS=1.50x
+Agent agent-001 updated policy. Exploration: 0.038
+
+--- Episode 10 ---
+Real Deployment: Revenue=$170.11, Cost=$31.01, ROAS=5.49x
+Agent agent-001 updated policy. Exploration: 0.036
+Episode 10: Recent avg ROAS = 3.00x
+
+✅ Historical Validation Complete! Average ROAS: 6.05x
+
+============================================================
+PHASE 3: SMALL BUDGET REAL TESTING
+============================================================
+Deploying agent with $10-50/day budget limits
+Real Facebook/Google Ads with safety controls
+
+🚀 Starting Small Budget Real Testing
+============================================================
+
+--- Episode 1 ---
+Real Deployment: Revenue=$88.13, Cost=$27.38, ROAS=3.22x
+Agent agent-001 updated policy. Exploration: 0.034
+
+--- Episode 2 ---
+Real Deployment: Revenue=$199.52, Cost=$14.22, ROAS=14.03x
+Agent agent-001 updated policy. Exploration: 0.032
+
+--- Episode 3 ---
+Real Deployment: Revenue=$196.47, Cost=$28.95, ROAS=6.79x
+Agent agent-001 updated policy. Exploration: 0.031
+
+--- Episode 4 ---
+Real Deployment: Revenue=$165.81, Cost=$36.59, ROAS=4.53x
+Agent agent-001 updated policy. Exploration: 0.029
+
+--- Episode 5 ---
+Real Deployment: Revenue=$172.36, Cost=$35.19, ROAS=4.90x
+Agent agent-001 updated policy. Exploration: 0.028
+Episode 5: Recent avg ROAS = 6.69x
+
+--- Episode 6 ---
+Real Deployment: Revenue=$67.89, Cost=$44.10, ROAS=1.54x
+Agent agent-001 updated policy. Exploration: 0.026
+
+--- Episode 7 ---
+Real Deployment: Revenue=$174.16, Cost=$37.84, ROAS=4.60x
+Agent agent-001 updated policy. Exploration: 0.025
+
+--- Episode 8 ---
+Real Deployment: Revenue=$189.63, Cost=$40.24, ROAS=4.71x
+Agent agent-001 updated policy. Exploration: 0.024
+
+--- Episode 9 ---
+Real Deployment: Revenue=$171.25, Cost=$45.73, ROAS=3.74x
+Agent agent-001 updated policy. Exploration: 0.023
+
+--- Episode 10 ---
+Real Deployment: Revenue=$109.57, Cost=$26.46, ROAS=4.14x
+Agent agent-001 updated policy. Exploration: 0.021
+Episode 10: Recent avg ROAS = 3.75x
+
+--- Episode 11 ---
+Real Deployment: Revenue=$179.84, Cost=$18.26, ROAS=9.85x
+Agent agent-001 updated policy. Exploration: 0.020
+
+--- Episode 12 ---
+Real Deployment: Revenue=$191.79, Cost=$20.21, ROAS=9.49x
+Agent agent-001 updated policy. Exploration: 0.019
+
+--- Episode 13 ---
+Real Deployment: Revenue=$101.98, Cost=$31.81, ROAS=3.21x
+Agent agent-001 updated policy. Exploration: 0.018
+
+--- Episode 14 ---
+Real Deployment: Revenue=$121.59, Cost=$19.85, ROAS=6.13x
+Agent agent-001 updated policy. Exploration: 0.017
+
+--- Episode 15 ---
+Real Deployment: Revenue=$123.81, Cost=$35.93, ROAS=3.45x
+Agent agent-001 updated policy. Exploration: 0.017
+Episode 15: Recent avg ROAS = 6.42x
+
+✅ Small Budget Real Testing Complete! Average ROAS: 5.62x
+🎓 Agent graduated to scaled deployment!
+
+============================================================
+PHASE 4: SCALED DEPLOYMENT
+============================================================
+Agent managing larger budgets based on proven performance
+
+🚀 Starting Scaled Deployment
+============================================================
+
+--- Episode 1 ---
+Real Deployment: Revenue=$140.51, Cost=$31.09, ROAS=4.52x
+Agent agent-001 updated policy. Exploration: 0.016
+
+--- Episode 2 ---
+Real Deployment: Revenue=$168.23, Cost=$29.85, ROAS=5.64x
+Agent agent-001 updated policy. Exploration: 0.015
+
+--- Episode 3 ---
+Real Deployment: Revenue=$194.66, Cost=$17.32, ROAS=11.24x
+Agent agent-001 updated policy. Exploration: 0.014
+
+--- Episode 4 ---
+Real Deployment: Revenue=$79.91, Cost=$45.43, ROAS=1.76x
+Agent agent-001 updated policy. Exploration: 0.014
+
+--- Episode 5 ---
+Real Deployment: Revenue=$171.10, Cost=$24.65, ROAS=6.94x
+Agent agent-001 updated policy. Exploration: 0.013
+Episode 5: Recent avg ROAS = 6.02x
+
+--- Episode 6 ---
+Real Deployment: Revenue=$189.59, Cost=$18.44, ROAS=10.28x
+Agent agent-001 updated policy. Exploration: 0.012
+
+--- Episode 7 ---
+Real Deployment: Revenue=$174.84, Cost=$45.61, ROAS=3.83x
+Agent agent-001 updated policy. Exploration: 0.012
+
+--- Episode 8 ---
+Real Deployment: Revenue=$92.24, Cost=$35.80, ROAS=2.58x
+Agent agent-001 updated policy. Exploration: 0.011
+
+--- Episode 9 ---
+Real Deployment: Revenue=$90.88, Cost=$21.01, ROAS=4.32x
+Agent agent-001 updated policy. Exploration: 0.010
+
+--- Episode 10 ---
+Real Deployment: Revenue=$83.65, Cost=$44.44, ROAS=1.88x
+Agent agent-001 updated policy. Exploration: 0.010
+Episode 10: Recent avg ROAS = 4.58x
+
+✅ Scaled Deployment Complete! Average ROAS: 5.30x
+
+============================================================
+🎉 TRAINING COMPLETE - RESULTS SUMMARY
+============================================================
+Phase 1 (Simulation):      5.79x ROAS
+Phase 2 (Historical):      6.05x ROAS
+Phase 3 (Small Budget):    5.62x ROAS
+Phase 4 (Scaled):          5.30x ROAS
+
+📈 Total Improvement: 0.9x better than initial performance
+🏆 EXCELLENT: Agent achieved superhuman performance!
+
+🎯 Agent agent-001 is now ready for production deployment!

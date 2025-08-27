@@ -1,0 +1,21 @@
+{
+  "training_20250821_153158": {
+    "experiment_id": "training_20250821_153158",
+    "experiment_type": "training",
+    "name": "Demo_Experiment",
+    "description": "Demo of model versioning",
+    "timestamp": "2025-08-21T15:31:58.117469+00:00",
+    "status": "running",
+    "config": {
+      "algorithm": "PPO"
+    },
+    "model_versions": [
+      "demo_agent_20250821_153158_8168fe36"
+    ],
+    "metrics": {},
+    "tags": [],
+    "wandb_run_id": null,
+    "author": "hariravichandran",
+    "duration_seconds": null
+  }
+}

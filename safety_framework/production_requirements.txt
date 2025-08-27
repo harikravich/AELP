@@ -1,0 +1,95 @@
+# Production Requirements for GAELP Safety Framework
+# Real money controls, AI services, and regulatory compliance
+
+# Core async framework
+asyncio-mqtt==0.16.1
+aiofiles==23.2.1
+httpx==0.25.0
+websockets==11.0.3
+
+# Financial integrations
+stripe==6.6.0
+plaid-python==10.0.0
+
+# Cloud and monitoring
+google-cloud-bigquery==3.11.4
+google-cloud-monitoring==2.16.0
+google-cloud-pubsub==2.18.2
+google-cloud-storage==2.10.0
+google-cloud-vision==3.4.4
+google-cloud-videointelligence==2.11.4
+google-cloud-language==2.11.1
+google-cloud-secretmanager==2.16.4
+prometheus-client==0.17.1
+grafana-api==1.0.3
+
+# AI and content moderation
+openai==0.28.0
+perspective-api==0.1.5
+transformers==4.33.2
+torch==2.0.1
+Pillow==10.0.0
+opencv-python==4.8.0.76
+
+# Database and caching
+redis==5.0.0
+psycopg2-binary==2.9.7
+sqlalchemy==2.0.20
+alembic==1.11.3
+
+# Security and encryption
+cryptography==41.0.4
+pynacl==1.5.0
+bcrypt==4.0.1
+
+# Notifications and alerts
+slack-sdk==3.22.0
+twilio==8.5.0
+pagerduty==0.6.1
+emails==0.6.0
+
+# Data processing and validation
+pydantic==2.3.0
+marshmallow==3.20.1
+jsonschema==4.19.0
+pandas==2.0.3
+numpy==1.24.3
+
+# Utilities
+python-dateutil==2.8.2
+pytz==2023.3
+click==8.1.7
+python-dotenv==1.0.0
+backoff==2.2.1
+
+# Testing (for production validation)
+pytest==7.4.0
+pytest-asyncio==0.21.1
+pytest-mock==3.11.1
+pytest-cov==4.1.0
+
+# Development and debugging
+black==23.7.0
+flake8==6.0.0
+mypy==1.5.1
+isort==5.12.0
+
+# Compliance and regulatory
+python-gdpr==0.1.0  # Custom package for GDPR utilities
+
+# Performance and reliability
+tenacity==8.2.3
+circuit-breaker==1.4.0
+ratelimit==2.2.1
+
+# Deployment
+gunicorn==21.2.0
+uvicorn[standard]==0.23.2
+kubernetes==27.2.0
+docker==6.1.3
+
+# Logging and tracing
+structlog==23.1.0
+opentelemetry-api==1.19.0
+opentelemetry-sdk==1.19.0
+opentelemetry-exporter-gcp-trace==1.6.0

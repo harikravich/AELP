@@ -1,0 +1,56 @@
+{
+  "datasets": [
+    "synthetic",
+    "criteo_sample",
+    "aggregated"
+  ],
+  "total_rows": 21000,
+  "features": [
+    "campaign_id",
+    "vertical",
+    "impressions",
+    "clicks",
+    "ctr",
+    "cost",
+    "cpc",
+    "conversions",
+    "conversion_rate",
+    "revenue",
+    "roas",
+    "profit",
+    "hour",
+    "day_of_week",
+    "is_weekend",
+    "season"
+  ],
+  "benchmarks": {
+    "retail": {
+      "avg_ctr": 0.021,
+      "avg_cpc": 1.5,
+      "avg_conversion_rate": 0.032,
+      "avg_cpa": 45.0,
+      "avg_roas": 4.2
+    },
+    "finance": {
+      "avg_ctr": 0.018,
+      "avg_cpc": 3.8,
+      "avg_conversion_rate": 0.025,
+      "avg_cpa": 150.0,
+      "avg_roas": 3.5
+    },
+    "travel": {
+      "avg_ctr": 0.025,
+      "avg_cpc": 2.2,
+      "avg_conversion_rate": 0.028,
+      "avg_cpa": 78.0,
+      "avg_roas": 5.1
+    },
+    "b2b": {
+      "avg_ctr": 0.015,
+      "avg_cpc": 4.5,
+      "avg_conversion_rate": 0.022,
+      "avg_cpa": 200.0,
+      "avg_roas": 2.8
+    }
+  }
+}

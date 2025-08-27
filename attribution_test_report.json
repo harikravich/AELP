@@ -1,0 +1,129 @@
+{
+  "overall_success": false,
+  "test_summary": {
+    "total_tests": 8,
+    "passed": 7,
+    "failed": 1,
+    "pass_rate": 87.5
+  },
+  "test_results": {
+    "basic_attribution_flow": {
+      "success": true,
+      "gaelp_uid": "gaelp_1755914246_8aa08c2a_9972f1db",
+      "landing_url_generated": true,
+      "aura_url_generated": true,
+      "conversion_processed": true,
+      "attribution_chain_length": 3,
+      "attribution_events": [
+        "ad_click",
+        "landing_page_visit",
+        "conversion"
+      ]
+    },
+    "ios_privacy_compliance": {
+      "success": true,
+      "server_side_tracking": true,
+      "identity_resolution": true,
+      "conversion_tracking": true,
+      "gaelp_uid": "gaelp_1755914246_9c6ef761_1be0b393"
+    },
+    "identity_resolution": {
+      "success": true,
+      "desktop_uid": "gaelp_1755914246_fa1022af_d2f6a44b",
+      "mobile_uid": "gaelp_1755914246_b715602c_0231f5a3",
+      "desktop_resolved": "gaelp_1755914246_fa1022af_d2f6a44b",
+      "mobile_resolved": "gaelp_1755914246_b715602c_0231f5a3",
+      "similar_signatures_found": true
+    },
+    "cross_domain_tracking": {
+      "success": true,
+      "landing_params_preserved": true,
+      "aura_params_preserved": true,
+      "signatures_present": true
+    },
+    "server_side_tracking": {
+      "success": true,
+      "database_operations": true,
+      "webhook_processing": true
+    },
+    "attribution_accuracy": {
+      "success": false,
+      "expected_conversions": 5,
+      "attributed_conversions": 8,
+      "attribution_rate": 87.5,
+      "attribution_by_source": [
+        {
+          "original_source": "google_ads",
+          "original_campaign": "teen_safety_search",
+          "conversions": 3,
+          "revenue": 360.0
+        },
+        {
+          "original_source": "facebook_ads",
+          "original_campaign": "parental_controls_social",
+          "conversions": 2,
+          "revenue": 240.0
+        },
+        {
+          "original_source": "facebook_ads",
+          "original_campaign": "ios_teen_safety_001",
+          "conversions": 1,
+          "revenue": 120.0
+        },
+        {
+          "original_source": "google_ads",
+          "original_campaign": "teen_wellness_campaign_001",
+          "conversions": 1,
+          "revenue": 120.0
+        },
+        {
+          "original_source": "unknown",
+          "original_campaign": "unknown",
+          "conversions": 1,
+          "revenue": 99.99
+        }
+      ]
+    },
+    "webhook_processing": {
+      "success": true,
+      "webhook_formats_tested": 3,
+      "webhook_results": {
+        "Standard format": {
+          "processed": true,
+          "gaelp_uid_extracted": true,
+          "stored_in_database": true
+        },
+        "Custom dimensions format": {
+          "processed": true,
+          "gaelp_uid_extracted": true,
+          "stored_in_database": true
+        },
+        "Event parameters format": {
+          "processed": true,
+          "gaelp_uid_extracted": true,
+          "stored_in_database": true
+        }
+      }
+    },
+    "error_handling": {
+      "success": true,
+      "scenarios_tested": 3,
+      "scenarios": [
+        {
+          "scenario": "Invalid webhook payload",
+          "handled_gracefully": true
+        },
+        {
+          "scenario": "Missing GAELP UID",
+          "handled_gracefully": true
+        },
+        {
+          "scenario": "Empty user signature",
+          "handled_gracefully": true
+        }
+      ]
+    }
+  },
+  "timestamp": "2025-08-23T01:57:26.940681",
+  "database_path": "/tmp/cross_account_tracking_test.db"
+}

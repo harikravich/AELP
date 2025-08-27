@@ -1,0 +1,67 @@
+╭─────────────────────────────────────────────────╮
+│ GAELP Learning Tracker Demo                     │
+│ Tracking what the agent learns across campaigns │
+╰─────────────────────────────────────────────────╯
+
+═══ SIMULATION PHASE ═══
+Running simulation... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+
+═══ HISTORICAL PHASE ═══
+Running historical... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+
+═══ REAL_TESTING PHASE ═══
+Running real_testing... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+
+═══ SCALED PHASE ═══
+Running scaled... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+
+
+╭───────────────────────────── 📊 Learning Report ─────────────────────────────╮
+│ ======================================================================       │
+│ GAELP AGENT LEARNING REPORT                                                  │
+│ ======================================================================       │
+│                                                                              │
+│ 📊 OVERALL STATISTICS                                                        │
+│ Total Campaigns: 55                                                          │
+│ Average ROAS: 3.15x                                                          │
+│ Phases Completed: 4                                                          │
+│                                                                              │
+│ 🏆 BEST CAMPAIGN                                                             │
+│ ID: campaign_55                                                              │
+│ ROAS: 4.80x                                                                  │
+│ Creative: carousel                                                           │
+│ Audience: professionals                                                      │
+│                                                                              │
+│ 📈 CREATIVE PERFORMANCE                                                      │
+│ image: 3.05x avg ROAS (12 campaigns)                                         │
+│ video: 3.01x avg ROAS (29 campaigns)                                         │
+│ carousel: 3.52x avg ROAS (14 campaigns)                                      │
+│                                                                              │
+│ 🎯 AUDIENCE INSIGHTS                                                         │
+│ young_adults: 2.94x ROAS, $52.47 optimal budget                              │
+│ professionals: 3.32x ROAS, $52.97 optimal budget                             │
+│ families: 3.11x ROAS, $48.30 optimal budget                                  │
+│                                                                              │
+│ 📈 LEARNING PROGRESSION                                                      │
+│ simulation: 1.70x → 3.75x (121% improvement)                                 │
+│ historical: 1.92x → 3.86x (101% improvement)                                 │
+│ real_testing: 2.63x → 3.97x (51% improvement)                                │
+│ scaled: 3.27x → 4.80x (47% improvement)                                      │
+│                                                                              │
+│ 🔍 KEY DISCOVERIES                                                           │
+│ • 🎯 professionals audience shows highest engagement                         │
+│ • 💰 Optimal budget discovered: $58.00/day                                   │
+│ • 📈 129% ROAS improvement through learning                                  │
+│ • 🔍 Morning campaigns (6-9am) perform 19% better                            │
+│ • 🔍 Morning campaigns (6-9am) perform 17% better                            │
+│ • 🔍 Morning campaigns (6-9am) perform 19% better                            │
+│                                                                              │
+│ 💡 FAILED EXPERIMENTS & LESSONS                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+Detailed learning history saved to learning_history.json
+Learning visualization saved to learning_progress.png
+
+🎯 Agent Learning Complete!
+Total discoveries: 7
+Lessons from failures: 0

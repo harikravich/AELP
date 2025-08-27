@@ -1,0 +1,43 @@
+# GA4 Service Account Credentials - NEVER COMMIT
+ga4-service-account.json
+ga4_token.json
+*-service-account*.json
+*credentials*.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.env
+
+# Node
+node_modules/
+.next/
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# ML/Data
+*.pkl
+*.h5
+*.pth
+checkpoints/
+wandb/
+d3rlpy_logs/
+
+# Temporary
+*.tmp
+*.bak
+*.swp

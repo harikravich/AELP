@@ -1,0 +1,542 @@
+# GAELP API Example Requests and Responses
+# This file contains practical examples for all major API operations
+
+# ============================================================================
+# ENVIRONMENT API EXAMPLES
+# ============================================================================
+
+environment_reset_example:
+  request:
+    method: POST
+    url: "https://api.gaelp.dev/v1/environments/env_12345/reset"
+    headers:
+      Content-Type: "application/json"
+      X-API-Key: "your-api-key"
+    body:
+      seed: 42
+      persona_config:
+        demographics:
+          age_range: [25, 45]
+          gender: ["male", "female"]
+          income_range: [50000, 100000]
+          location: ["US", "CA", "UK"]
+        interests: ["technology", "fitness", "travel"]
+        behavior_patterns:
+          engagement_likelihood: 0.3
+          conversion_rate: 0.05
+          time_to_convert: 48
+  response:
+    status: 200
+    body:
+      initial_state:
+        market_context:
+          competition_level: 0.7
+          market_saturation: 0.4
+          seasonal_factor: 1.2
+        audience_size: 1000000
+        available_budget: 10000.0
+        environment_type: "simulated"
+      reset_id: "123e4567-e89b-12d3-a456-426614174000"
+
+environment_step_example:
+  request:
+    method: POST
+    url: "https://api.gaelp.dev/v1/environments/env_12345/step"
+    headers:
+      Content-Type: "application/json"
+      X-API-Key: "your-api-key"
+    body:
+      ad_campaign:
+        creative:
+          headline: "Discover the Future of Fitness"
+          description: "Transform your workout routine with AI-powered fitness tracking"
+          image_url: "https://cdn.gaelp.dev/ads/fitness-tracker.jpg"
+          call_to_action: "shop_now"
+        targeting:
+          demographics:
+            age_range: [25, 45]
+            gender: ["male", "female"]
+          interests: ["fitness", "health", "technology"]
+        budget:
+          daily_budget: 100.0
+          total_budget: 1000.0
+          bid_strategy: "cpc"
+          max_bid: 2.50
+  response:
+    status: 200
+    body:
+      performance_metrics:
+        impressions: 10000
+        clicks: 300
+        conversions: 15
+        ctr: 0.03
+        conversion_rate: 0.05
+        cost_per_click: 2.33
+        cost_per_conversion: 46.67
+        return_on_ad_spend: 3.2
+        total_spend: 700.0
+        revenue: 2240.0
+      reward: 0.85
+      done: false
+      info:
+        campaign_duration: 24
+        audience_reached: 8500
+        budget_remaining: 300.0
+        next_recommended_action: "increase_budget"
+
+# ============================================================================
+# AGENT API EXAMPLES
+# ============================================================================
+
+agent_registration_example:
+  request:
+    method: POST
+    url: "https://api.gaelp.dev/v1/agents"
+    headers:
+      Content-Type: "application/json"
+      X-API-Key: "your-api-key"
+    body:
+      agent_name: "DQN_AdOptimizer_v1"
+      agent_type: "dqn"
+      model_config:
+        hidden_layers: [256, 128, 64]
+        learning_rate: 0.001
+        discount_factor: 0.95
+        exploration_strategy: "epsilon_greedy"
+      specialization:
+        campaign_types: ["conversion", "acquisition"]
+        verticals: ["e-commerce", "saas", "healthcare"]
+        budget_ranges: ["small", "medium"]
+  response:
+    status: 201
+    body:
+      agent_id: "agent_123e4567-e89b-12d3-a456-426614174000"
+      status: "registered"
+      model_endpoint: "https://api.gaelp.dev/v1/agents/agent_123e4567/predict"
+      created_at: "2024-01-15T10:30:00Z"
+
+agent_campaign_selection_example:
+  request:
+    method: POST
+    url: "https://api.gaelp.dev/v1/agents/agent_123e4567/select-campaign"
+    headers:
+      Content-Type: "application/json"
+      X-API-Key: "your-api-key"
+    body:
+      market_context:
+        product_info:
+          category: "fitness_tracker"
+          price_point: "mid"
+          key_features: ["heart_rate", "gps", "water_resistant"]
+          brand_sentiment: 0.6
+        market_conditions:
+          competition_intensity: 0.7
+          market_saturation: 0.4
+          seasonal_factor: 1.2
+          trend_momentum: 0.8
+        target_metrics:
+          primary_objective: "conversions"
+          target_cpa: 25.0
+          target_roas: 4.0
+        constraints:
+          max_daily_budget: 500.0
+          brand_safety_level: "moderate"
+  response:
+    status: 200
+    body:
+      campaign_config:
+        creative_strategy:
+          message_angle: "problem_solution"
+          tone: "friendly"
+          visual_style: "lifestyle"
+          cta_strategy: "value"
+        targeting_strategy:
+          primary_audience:
+            demographics:
+              age_range: [25, 40]
+              interests: ["fitness", "health", "wearables"]
+        budget_strategy:
+          allocation_method: "performance_based"
+          bid_strategy: "target_cpa"
+          daily_budget: 150.0
+          max_bid: 3.50
+      confidence_score: 0.87
+      expected_performance:
+        predicted_ctr: 0.025
+        predicted_conversion_rate: 0.035
+        predicted_cpa: 22.5
+        predicted_roas: 4.2
+
+# ============================================================================
+# CAMPAIGN MANAGEMENT API EXAMPLES
+# ============================================================================
+
+campaign_creation_example:
+  request:
+    method: POST
+    url: "https://api.gaelp.dev/v1/campaigns"
+    headers:
+      Content-Type: "application/json"
+      X-API-Key: "your-api-key"
+    body:
+      campaign_name: "FitTrack Pro Launch Q4"
+      creative:
+        headline: "Transform Your Fitness Journey"
+        description: "AI-powered fitness tracking that adapts to your goals"
+        primary_image: "https://cdn.gaelp.dev/campaigns/fittrack-hero.jpg"
+        call_to_action: "shop_now"
+        landing_page_url: "https://fittrack.com/pro?utm_source=gaelp"
+      targeting:
+        demographics:
+          age_range:
+            min: 25
+            max: 45
+          gender: ["male", "female"]
+        interests: ["fitness", "health-wellness", "technology", "sports"]
+        geographic:
+          countries: ["US", "CA", "UK", "AU"]
+      budget:
+        total_budget: 5000.0
+        daily_budget: 100.0
+        bid_strategy: "target_cpa"
+        target_cpa: 25.0
+      campaign_settings:
+        objective: "conversions"
+        start_date: "2024-01-15T09:00:00Z"
+        optimization_goal: "conversions"
+  response:
+    status: 201
+    body:
+      campaign_id: "camp_123e4567-e89b-12d3-a456-426614174000"
+      status: "pending_review"
+      created_at: "2024-01-15T10:30:00Z"
+      estimated_reach:
+        min_reach: 50000
+        max_reach: 150000
+        audience_size: 100000
+
+campaign_performance_example:
+  request:
+    method: GET
+    url: "https://api.gaelp.dev/v1/campaigns/camp_123e4567/performance?date_range=2024-01-01,2024-01-31&granularity=day"
+    headers:
+      X-API-Key: "your-api-key"
+  response:
+    status: 200
+    body:
+      metrics:
+        summary:
+          total_impressions: 250000
+          total_clicks: 7500
+          total_conversions: 300
+          total_spend: 7500.0
+          total_revenue: 30000.0
+          overall_ctr: 0.03
+          overall_conversion_rate: 0.04
+          overall_cpa: 25.0
+          overall_roas: 4.0
+        time_series:
+          - date: "2024-01-01"
+            impressions: 8000
+            clicks: 240
+            conversions: 12
+            spend: 600.0
+            revenue: 1200.0
+      insights:
+        best_performing_segments:
+          - segment: "male_25_35_fitness_enthusiast"
+            performance_score: 0.92
+        optimization_opportunities:
+          - opportunity: "increase_mobile_targeting"
+            potential_impact: "15% CPA reduction"
+            confidence: 0.8
+
+# ============================================================================
+# SIMULATION API EXAMPLES
+# ============================================================================
+
+persona_creation_example:
+  request:
+    method: POST
+    url: "https://api.gaelp.dev/v1/simulation/personas"
+    headers:
+      Content-Type: "application/json"
+      X-API-Key: "your-api-key"
+    body:
+      persona_name: "Tech-Savvy Millennial Fitness Enthusiast"
+      demographics:
+        age: 28
+        gender: "female"
+        income: 75000
+        education: "bachelor"
+        occupation: "Software Engineer"
+        location:
+          country: "US"
+          state: "CA"
+          city: "San Francisco"
+      interests:
+        - category: "fitness"
+          subcategories: ["running", "yoga", "strength-training"]
+          interest_level: 0.9
+          engagement_frequency: "daily"
+      behavior_patterns:
+        online_behavior:
+          daily_screen_time_hours: 6.5
+          preferred_devices: ["smartphone", "laptop"]
+        ad_response_tendencies:
+          overall_ad_tolerance: 0.4
+          click_likelihood_base: 0.02
+          conversion_likelihood_base: 0.05
+  response:
+    status: 201
+    body:
+      persona_id: "persona_123e4567-e89b-12d3-a456-426614174000"
+      persona_name: "Tech-Savvy Millennial Fitness Enthusiast"
+      validation_score: 0.92
+      created_at: "2024-01-15T10:30:00Z"
+
+user_response_simulation_example:
+  request:
+    method: POST
+    url: "https://api.gaelp.dev/v1/simulation/personas/persona_123e4567/simulate"
+    headers:
+      Content-Type: "application/json"
+      X-API-Key: "your-api-key"
+    body:
+      ad_creative:
+        headline: "Transform Your Fitness Journey"
+        description: "AI-powered fitness tracking that adapts to your goals"
+        image_url: "https://cdn.gaelp.dev/ads/fitness-tracker.jpg"
+        call_to_action: "Learn More"
+        ad_format: "image"
+      context:
+        placement: "feed"
+        device: "mobile"
+        time_of_day: 19
+        day_of_week: "wednesday"
+        surrounding_content: "social"
+  response:
+    status: 200
+    body:
+      engagement_metrics:
+        impression_quality: 0.7
+        click_probability: 0.04
+        engagement_type: "click"
+        time_spent_viewing: 2.3
+        conversion_probability: 0.08
+      emotional_response:
+        primary_emotion: "trust"
+        emotion_intensity: 0.6
+        sentiment_score: 0.4
+        resonance_factors:
+          - factor: "health_focus"
+            strength: 0.8
+          - factor: "technology_appeal"
+            strength: 0.6
+      behavioral_prediction:
+        immediate_action: "click"
+        follow_up_actions:
+          - action: "visit_website"
+            probability: 0.8
+            time_delay_hours: 0.1
+
+# ============================================================================
+# SAFETY & BUDGET API EXAMPLES
+# ============================================================================
+
+spending_limits_example:
+  request:
+    method: POST
+    url: "https://api.gaelp.dev/v1/safety/spending-limits"
+    headers:
+      Content-Type: "application/json"
+      X-API-Key: "your-api-key"
+    body:
+      limit_scope: "account"
+      scope_id: null
+      limits:
+        daily_budget: 500.0
+        weekly_budget: 3000.0
+        monthly_budget: 12000.0
+        emergency_stop_threshold: 10000.0
+      alert_thresholds:
+        warning_threshold_percentage: 80
+        critical_threshold_percentage: 95
+        notification_channels: ["email", "webhook"]
+      spending_velocity_controls:
+        max_hourly_spend: 100.0
+        max_spend_acceleration: 2.0
+        cool_down_period_hours: 4
+  response:
+    status: 201
+    body:
+      limit_config_id: "limit_123e4567-e89b-12d3-a456-426614174000"
+      status: "active"
+      effective_date: "2024-01-15T10:30:00Z"
+      configured_limits:
+        daily_limit: 500.0
+        remaining_budgets:
+          daily_remaining: 500.0
+          weekly_remaining: 3000.0
+          monthly_remaining: 12000.0
+
+campaign_safety_validation_example:
+  request:
+    method: POST
+    url: "https://api.gaelp.dev/v1/safety/campaign-safety"
+    headers:
+      Content-Type: "application/json"
+      X-API-Key: "your-api-key"
+    body:
+      campaign:
+        creative:
+          headline: "Transform Your Fitness Journey"
+          description: "AI-powered fitness tracking that adapts to your goals"
+          image_url: "https://cdn.gaelp.dev/ads/fitness-tracker.jpg"
+          landing_page_url: "https://fittrack.com/pro"
+          call_to_action: "Learn More"
+        budget:
+          daily_budget: 100.0
+          total_budget: 3000.0
+      validation_level: "standard"
+  response:
+    status: 200
+    body:
+      safety_score: 0.92
+      validation_result: "approved_with_warnings"
+      safety_checks:
+        content_safety:
+          score: 0.95
+          issues: []
+          text_analysis:
+            sentiment_score: 0.8
+            toxicity_score: 0.02
+            readability_score: 0.9
+        brand_safety:
+          score: 0.88
+          brand_alignment_score: 0.9
+        compliance_check:
+          score: 1.0
+          violations: []
+          legal_review_required: false
+        fraud_detection:
+          score: 0.95
+          fraud_indicators: []
+      recommendations:
+        - category: "targeting"
+          priority: "medium"
+          recommendation: "Consider broader age range for better reach"
+          rationale: "Current targeting may be too narrow"
+          estimated_impact: "moderate"
+
+spending_status_example:
+  request:
+    method: GET
+    url: "https://api.gaelp.dev/v1/safety/spending-status?time_range=today&include_projections=true"
+    headers:
+      X-API-Key: "your-api-key"
+  response:
+    status: 200
+    body:
+      current_usage:
+        total_spent_today: 1250.75
+        total_spent_week: 6543.25
+        total_spent_month: 18750.50
+        active_campaigns_count: 12
+        avg_daily_spend_7d: 935.25
+      limit_status:
+        daily_limit_usage:
+          limit: 1500.0
+          spent: 1250.75
+          remaining: 249.25
+          usage_percentage: 83.4
+          status: "warning"
+      velocity_analysis:
+        current_hourly_spend: 52.11
+        spend_acceleration: 1.3
+        velocity_status: "normal"
+        time_to_daily_limit: 4.8
+      projections:
+        projected_daily_spend: 1456.32
+        projected_weekly_spend: 7234.56
+        projected_monthly_spend: 21876.43
+      alerts:
+        - alert_type: "budget_warning"
+          severity: "warning"
+          message: "Daily spend approaching 85% of limit"
+          triggered_at: "2024-01-15T14:30:00Z"
+          requires_action: false
+
+# ============================================================================
+# INTEGRATION EXAMPLES
+# ============================================================================
+
+# Example: Full Campaign Lifecycle
+campaign_lifecycle_example:
+  # Step 1: Validate campaign safety
+  safety_validation:
+    endpoint: "POST /v1/safety/campaign-safety"
+    # ... request body ...
+  
+  # Step 2: Create campaign if approved
+  campaign_creation:
+    endpoint: "POST /v1/campaigns"
+    # ... request body ...
+  
+  # Step 3: Monitor performance
+  performance_monitoring:
+    endpoint: "GET /v1/campaigns/{id}/performance"
+    schedule: "every_hour"
+  
+  # Step 4: Agent optimization
+  agent_optimization:
+    endpoint: "POST /v1/agents/{id}/optimize-targeting"
+    trigger: "performance_threshold"
+
+# Example: Simulation-to-Real Training Pipeline
+training_pipeline_example:
+  # Step 1: Create personas for simulation
+  persona_setup:
+    endpoint: "POST /v1/simulation/personas"
+    count: 1000
+  
+  # Step 2: Run batch simulations
+  simulation:
+    endpoint: "POST /v1/simulation/batch-simulate"
+    # ... configuration ...
+  
+  # Step 3: Train agent on simulation results
+  agent_training:
+    endpoint: "POST /v1/agents/{id}/update-policy"
+    data_source: "simulation_results"
+  
+  # Step 4: Deploy to real environment
+  deployment:
+    endpoint: "POST /v1/environments/{id}/step"
+    agent_id: "trained_agent"
+
+# Example: Emergency Response Workflow
+emergency_response_example:
+  # Triggered by spending anomaly
+  trigger:
+    condition: "spending_velocity > 3x_normal"
+  
+  # Step 1: Emergency stop
+  emergency_action:
+    endpoint: "POST /v1/safety/emergency-controls"
+    body:
+      action: "emergency_stop"
+      scope: "high_spend_campaigns"
+      reason: "Spending anomaly detected"
+  
+  # Step 2: Safety validation of all campaigns
+  bulk_validation:
+    endpoint: "POST /v1/safety/campaign-safety"
+    scope: "all_active_campaigns"
+  
+  # Step 3: Gradual resumption with reduced budgets
+  gradual_resume:
+    endpoint: "POST /v1/campaigns/{id}/control"
+    body:
+      action: "resume"
+      reduced_budget: 0.5

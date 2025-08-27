@@ -1,0 +1,1167 @@
+{
+  "campaigns_created": [
+    {
+      "timestamp": "2025-08-21T04:59:54.282334",
+      "phase": "simulation",
+      "campaign_id": "campaign_1",
+      "creative_type": "image",
+      "target_audience": "professionals",
+      "budget": 30.0,
+      "actual_roas": 1.4129579570845936,
+      "actual_ctr": 0.02,
+      "actual_conversions": 5,
+      "cost": 30.0,
+      "revenue": 42.38873871253781
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.282427",
+      "phase": "simulation",
+      "campaign_id": "campaign_2",
+      "creative_type": "video",
+      "target_audience": "professionals",
+      "budget": 32.0,
+      "actual_roas": 1.0902330217063076,
+      "actual_ctr": 0.021500000000000002,
+      "actual_conversions": 6,
+      "cost": 32.0,
+      "revenue": 34.887456694601845
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.282481",
+      "phase": "simulation",
+      "campaign_id": "campaign_3",
+      "creative_type": "video",
+      "target_audience": "professionals",
+      "budget": 34.0,
+      "actual_roas": 1.9584585830391996,
+      "actual_ctr": 0.023,
+      "actual_conversions": 7,
+      "cost": 34.0,
+      "revenue": 66.58759182333279
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.282541",
+      "phase": "simulation",
+      "campaign_id": "campaign_4",
+      "creative_type": "image",
+      "target_audience": "families",
+      "budget": 36.0,
+      "actual_roas": 1.8263000313149376,
+      "actual_ctr": 0.0245,
+      "actual_conversions": 8,
+      "cost": 36.0,
+      "revenue": 65.74680112733775
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.282591",
+      "phase": "simulation",
+      "campaign_id": "campaign_5",
+      "creative_type": "video",
+      "target_audience": "families",
+      "budget": 38.0,
+      "actual_roas": 2.4631909472447737,
+      "actual_ctr": 0.026000000000000002,
+      "actual_conversions": 9,
+      "cost": 38.0,
+      "revenue": 93.6012559953014
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.282694",
+      "phase": "simulation",
+      "campaign_id": "campaign_6",
+      "creative_type": "image",
+      "target_audience": "families",
+      "budget": 40.0,
+      "actual_roas": 1.6758906219404763,
+      "actual_ctr": 0.0275,
+      "actual_conversions": 10,
+      "cost": 40.0,
+      "revenue": 67.03562487761906
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.282743",
+      "phase": "simulation",
+      "campaign_id": "campaign_7",
+      "creative_type": "image",
+      "target_audience": "young_adults",
+      "budget": 42.0,
+      "actual_roas": 1.9975978592820596,
+      "actual_ctr": 0.028999999999999998,
+      "actual_conversions": 11,
+      "cost": 42.0,
+      "revenue": 83.8991100898465
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.282794",
+      "phase": "simulation",
+      "campaign_id": "campaign_8",
+      "creative_type": "image",
+      "target_audience": "professionals",
+      "budget": 44.0,
+      "actual_roas": 2.2628735362437054,
+      "actual_ctr": 0.0305,
+      "actual_conversions": 12,
+      "cost": 44.0,
+      "revenue": 99.56643559472303
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.282842",
+      "phase": "simulation",
+      "campaign_id": "campaign_9",
+      "creative_type": "video",
+      "target_audience": "young_adults",
+      "budget": 46.0,
+      "actual_roas": 2.352688814584885,
+      "actual_ctr": 0.032,
+      "actual_conversions": 13,
+      "cost": 46.0,
+      "revenue": 108.22368547090471
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.282947",
+      "phase": "simulation",
+      "campaign_id": "campaign_10",
+      "creative_type": "video",
+      "target_audience": "professionals",
+      "budget": 48.0,
+      "actual_roas": 2.017267957432643,
+      "actual_ctr": 0.0335,
+      "actual_conversions": 14,
+      "cost": 48.0,
+      "revenue": 96.82886195676686
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.283024",
+      "phase": "simulation",
+      "campaign_id": "campaign_11",
+      "creative_type": "image",
+      "target_audience": "families",
+      "budget": 50.0,
+      "actual_roas": 2.646914073369504,
+      "actual_ctr": 0.035,
+      "actual_conversions": 15,
+      "cost": 50.0,
+      "revenue": 132.3457036684752
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.283071",
+      "phase": "simulation",
+      "campaign_id": "campaign_12",
+      "creative_type": "carousel",
+      "target_audience": "professionals",
+      "budget": 52.0,
+      "actual_roas": 3.08647272512282,
+      "actual_ctr": 0.036500000000000005,
+      "actual_conversions": 16,
+      "cost": 52.0,
+      "revenue": 160.49658170638665
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.283118",
+      "phase": "simulation",
+      "campaign_id": "campaign_13",
+      "creative_type": "image",
+      "target_audience": "professionals",
+      "budget": 54.0,
+      "actual_roas": 2.2728113926715734,
+      "actual_ctr": 0.038,
+      "actual_conversions": 17,
+      "cost": 54.0,
+      "revenue": 122.73181520426496
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.283165",
+      "phase": "simulation",
+      "campaign_id": "campaign_14",
+      "creative_type": "video",
+      "target_audience": "families",
+      "budget": 56.0,
+      "actual_roas": 2.7705273470455007,
+      "actual_ctr": 0.0395,
+      "actual_conversions": 18,
+      "cost": 56.0,
+      "revenue": 155.14953143454804
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.283211",
+      "phase": "simulation",
+      "campaign_id": "campaign_15",
+      "creative_type": "video",
+      "target_audience": "professionals",
+      "budget": 58.0,
+      "actual_roas": 3.2576147378981615,
+      "actual_ctr": 0.040999999999999995,
+      "actual_conversions": 19,
+      "cost": 58.0,
+      "revenue": 188.94165479809337
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.283271",
+      "phase": "simulation",
+      "campaign_id": "campaign_16",
+      "creative_type": "carousel",
+      "target_audience": "families",
+      "budget": 60.0,
+      "actual_roas": 3.3383921786955444,
+      "actual_ctr": 0.042499999999999996,
+      "actual_conversions": 20,
+      "cost": 60.0,
+      "revenue": 200.30353072173267
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.283318",
+      "phase": "simulation",
+      "campaign_id": "campaign_17",
+      "creative_type": "video",
+      "target_audience": "professionals",
+      "budget": 62.0,
+      "actual_roas": 2.951351273146973,
+      "actual_ctr": 0.044,
+      "actual_conversions": 21,
+      "cost": 62.0,
+      "revenue": 182.98377893511233
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.283363",
+      "phase": "simulation",
+      "campaign_id": "campaign_18",
+      "creative_type": "carousel",
+      "target_audience": "professionals",
+      "budget": 64.0,
+      "actual_roas": 2.821458412165673,
+      "actual_ctr": 0.0455,
+      "actual_conversions": 22,
+      "cost": 64.0,
+      "revenue": 180.57333837860307
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.283408",
+      "phase": "simulation",
+      "campaign_id": "campaign_19",
+      "creative_type": "image",
+      "target_audience": "young_adults",
+      "budget": 66.0,
+      "actual_roas": 3.2421161153181037,
+      "actual_ctr": 0.047,
+      "actual_conversions": 23,
+      "cost": 66.0,
+      "revenue": 213.97966361099483
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.283453",
+      "phase": "simulation",
+      "campaign_id": "campaign_20",
+      "creative_type": "video",
+      "target_audience": "young_adults",
+      "budget": 68.0,
+      "actual_roas": 3.565764531702659,
+      "actual_ctr": 0.0485,
+      "actual_conversions": 24,
+      "cost": 68.0,
+      "revenue": 242.47198815578082
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.290546",
+      "phase": "historical",
+      "campaign_id": "campaign_21",
+      "creative_type": "video",
+      "target_audience": "professionals",
+      "budget": 30.0,
+      "actual_roas": 1.9513393966876789,
+      "actual_ctr": 0.02,
+      "actual_conversions": 5,
+      "cost": 30.0,
+      "revenue": 58.540181900630365
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.290644",
+      "phase": "historical",
+      "campaign_id": "campaign_22",
+      "creative_type": "video",
+      "target_audience": "young_adults",
+      "budget": 34.0,
+      "actual_roas": 1.693079742559275,
+      "actual_ctr": 0.023,
+      "actual_conversions": 7,
+      "cost": 34.0,
+      "revenue": 57.564711247015346
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.290699",
+      "phase": "historical",
+      "campaign_id": "campaign_23",
+      "creative_type": "video",
+      "target_audience": "families",
+      "budget": 38.0,
+      "actual_roas": 2.182923897292026,
+      "actual_ctr": 0.026000000000000002,
+      "actual_conversions": 9,
+      "cost": 38.0,
+      "revenue": 82.95110809709699
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.290748",
+      "phase": "historical",
+      "campaign_id": "campaign_24",
+      "creative_type": "image",
+      "target_audience": "families",
+      "budget": 42.0,
+      "actual_roas": 2.825433792833077,
+      "actual_ctr": 0.028999999999999998,
+      "actual_conversions": 11,
+      "cost": 42.0,
+      "revenue": 118.66821929898923
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.290795",
+      "phase": "historical",
+      "campaign_id": "campaign_25",
+      "creative_type": "video",
+      "target_audience": "professionals",
+      "budget": 46.0,
+      "actual_roas": 2.566316579671775,
+      "actual_ctr": 0.032,
+      "actual_conversions": 13,
+      "cost": 46.0,
+      "revenue": 118.05056266490165
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.290882",
+      "phase": "historical",
+      "campaign_id": "campaign_26",
+      "creative_type": "image",
+      "target_audience": "families",
+      "budget": 50.0,
+      "actual_roas": 2.9398303992875863,
+      "actual_ctr": 0.035,
+      "actual_conversions": 15,
+      "cost": 50.0,
+      "revenue": 146.9915199643793
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.290977",
+      "phase": "historical",
+      "campaign_id": "campaign_27",
+      "creative_type": "video",
+      "target_audience": "young_adults",
+      "budget": 54.0,
+      "actual_roas": 3.4070026014384176,
+      "actual_ctr": 0.038,
+      "actual_conversions": 17,
+      "cost": 54.0,
+      "revenue": 183.97814047767454
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.291029",
+      "phase": "historical",
+      "campaign_id": "campaign_28",
+      "creative_type": "video",
+      "target_audience": "families",
+      "budget": 58.0,
+      "actual_roas": 3.7548496636019104,
+      "actual_ctr": 0.040999999999999995,
+      "actual_conversions": 19,
+      "cost": 58.0,
+      "revenue": 217.7812804889108
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.291087",
+      "phase": "historical",
+      "campaign_id": "campaign_29",
+      "creative_type": "carousel",
+      "target_audience": "professionals",
+      "budget": 62.0,
+      "actual_roas": 3.7394151854224154,
+      "actual_ctr": 0.044,
+      "actual_conversions": 21,
+      "cost": 62.0,
+      "revenue": 231.84374149618975
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.291135",
+      "phase": "historical",
+      "campaign_id": "campaign_30",
+      "creative_type": "video",
+      "target_audience": "families",
+      "budget": 66.0,
+      "actual_roas": 3.9361988723885473,
+      "actual_ctr": 0.047,
+      "actual_conversions": 23,
+      "cost": 66.0,
+      "revenue": 259.78912557764414
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.297588",
+      "phase": "real_testing",
+      "campaign_id": "campaign_31",
+      "creative_type": "image",
+      "target_audience": "young_adults",
+      "budget": 30.0,
+      "actual_roas": 2.2493263037960096,
+      "actual_ctr": 0.02,
+      "actual_conversions": 5,
+      "cost": 30.0,
+      "revenue": 67.47978911388029
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.297664",
+      "phase": "real_testing",
+      "campaign_id": "campaign_32",
+      "creative_type": "video",
+      "target_audience": "young_adults",
+      "budget": 32.666666666666664,
+      "actual_roas": 2.6168524763196737,
+      "actual_ctr": 0.022,
+      "actual_conversions": 6,
+      "cost": 32.666666666666664,
+      "revenue": 85.483847559776
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.297714",
+      "phase": "real_testing",
+      "campaign_id": "campaign_33",
+      "creative_type": "carousel",
+      "target_audience": "families",
+      "budget": 35.333333333333336,
+      "actual_roas": 2.821377387540153,
+      "actual_ctr": 0.024,
+      "actual_conversions": 7,
+      "cost": 35.333333333333336,
+      "revenue": 99.6886676930854
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.297767",
+      "phase": "real_testing",
+      "campaign_id": "campaign_34",
+      "creative_type": "image",
+      "target_audience": "young_adults",
+      "budget": 38.0,
+      "actual_roas": 3.251834555541927,
+      "actual_ctr": 0.026000000000000002,
+      "actual_conversions": 9,
+      "cost": 38.0,
+      "revenue": 123.56971311059321
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.297818",
+      "phase": "real_testing",
+      "campaign_id": "campaign_35",
+      "creative_type": "image",
+      "target_audience": "young_adults",
+      "budget": 40.666666666666664,
+      "actual_roas": 2.5573735628048766,
+      "actual_ctr": 0.028,
+      "actual_conversions": 10,
+      "cost": 40.666666666666664,
+      "revenue": 103.99985822073164
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.297949",
+      "phase": "real_testing",
+      "campaign_id": "campaign_36",
+      "creative_type": "video",
+      "target_audience": "young_adults",
+      "budget": 43.33333333333333,
+      "actual_roas": 2.7789723619580204,
+      "actual_ctr": 0.03,
+      "actual_conversions": 11,
+      "cost": 43.33333333333333,
+      "revenue": 120.42213568484753
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.298001",
+      "phase": "real_testing",
+      "campaign_id": "campaign_37",
+      "creative_type": "image",
+      "target_audience": "families",
+      "budget": 46.0,
+      "actual_roas": 4.063690572046438,
+      "actual_ctr": 0.032,
+      "actual_conversions": 13,
+      "cost": 46.0,
+      "revenue": 186.92976631413615
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.298048",
+      "phase": "real_testing",
+      "campaign_id": "campaign_38",
+      "creative_type": "image",
+      "target_audience": "professionals",
+      "budget": 48.66666666666667,
+      "actual_roas": 3.2438692773408055,
+      "actual_ctr": 0.034,
+      "actual_conversions": 14,
+      "cost": 48.66666666666667,
+      "revenue": 157.86830483058588
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.298109",
+      "phase": "real_testing",
+      "campaign_id": "campaign_39",
+      "creative_type": "carousel",
+      "target_audience": "professionals",
+      "budget": 51.33333333333333,
+      "actual_roas": 3.332606726333837,
+      "actual_ctr": 0.036000000000000004,
+      "actual_conversions": 15,
+      "cost": 51.33333333333333,
+      "revenue": 171.0738119518036
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.298160",
+      "phase": "real_testing",
+      "campaign_id": "campaign_40",
+      "creative_type": "image",
+      "target_audience": "professionals",
+      "budget": 54.0,
+      "actual_roas": 3.8140658682539272,
+      "actual_ctr": 0.038,
+      "actual_conversions": 17,
+      "cost": 54.0,
+      "revenue": 205.95955688571206
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.298228",
+      "phase": "real_testing",
+      "campaign_id": "campaign_41",
+      "creative_type": "video",
+      "target_audience": "young_adults",
+      "budget": 56.666666666666664,
+      "actual_roas": 4.2858878660620725,
+      "actual_ctr": 0.039999999999999994,
+      "actual_conversions": 18,
+      "cost": 56.666666666666664,
+      "revenue": 242.86697907685075
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.298282",
+      "phase": "real_testing",
+      "campaign_id": "campaign_42",
+      "creative_type": "video",
+      "target_audience": "young_adults",
+      "budget": 59.33333333333333,
+      "actual_roas": 3.8633238981832743,
+      "actual_ctr": 0.041999999999999996,
+      "actual_conversions": 19,
+      "cost": 59.33333333333333,
+      "revenue": 229.22388462554093
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.298327",
+      "phase": "real_testing",
+      "campaign_id": "campaign_43",
+      "creative_type": "video",
+      "target_audience": "young_adults",
+      "budget": 62.0,
+      "actual_roas": 3.935859140791459,
+      "actual_ctr": 0.044,
+      "actual_conversions": 21,
+      "cost": 62.0,
+      "revenue": 244.02326672907046
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.298372",
+      "phase": "real_testing",
+      "campaign_id": "campaign_44",
+      "creative_type": "video",
+      "target_audience": "families",
+      "budget": 64.66666666666667,
+      "actual_roas": 3.6573237331632926,
+      "actual_ctr": 0.046,
+      "actual_conversions": 22,
+      "cost": 64.66666666666667,
+      "revenue": 236.5069347445596
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.298417",
+      "phase": "real_testing",
+      "campaign_id": "campaign_45",
+      "creative_type": "carousel",
+      "target_audience": "professionals",
+      "budget": 67.33333333333334,
+      "actual_roas": 4.277389520251048,
+      "actual_ctr": 0.048,
+      "actual_conversions": 23,
+      "cost": 67.33333333333334,
+      "revenue": 288.01089436357057
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.304631",
+      "phase": "scaled",
+      "campaign_id": "campaign_46",
+      "creative_type": "video",
+      "target_audience": "professionals",
+      "budget": 30.0,
+      "actual_roas": 3.3609495919436005,
+      "actual_ctr": 0.02,
+      "actual_conversions": 5,
+      "cost": 30.0,
+      "revenue": 100.82848775830801
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.304709",
+      "phase": "scaled",
+      "campaign_id": "campaign_47",
+      "creative_type": "carousel",
+      "target_audience": "families",
+      "budget": 34.0,
+      "actual_roas": 2.8671817704719293,
+      "actual_ctr": 0.023,
+      "actual_conversions": 7,
+      "cost": 34.0,
+      "revenue": 97.4841801960456
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.304760",
+      "phase": "scaled",
+      "campaign_id": "campaign_48",
+      "creative_type": "video",
+      "target_audience": "families",
+      "budget": 38.0,
+      "actual_roas": 3.0846980961215786,
+      "actual_ctr": 0.026000000000000002,
+      "actual_conversions": 9,
+      "cost": 38.0,
+      "revenue": 117.21852765261998
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.304809",
+      "phase": "scaled",
+      "campaign_id": "campaign_49",
+      "creative_type": "carousel",
+      "target_audience": "professionals",
+      "budget": 42.0,
+      "actual_roas": 3.189757263768422,
+      "actual_ctr": 0.028999999999999998,
+      "actual_conversions": 11,
+      "cost": 42.0,
+      "revenue": 133.9698050782737
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.304893",
+      "phase": "scaled",
+      "campaign_id": "campaign_50",
+      "creative_type": "image",
+      "target_audience": "families",
+      "budget": 46.0,
+      "actual_roas": 4.37370956782818,
+      "actual_ctr": 0.032,
+      "actual_conversions": 13,
+      "cost": 46.0,
+      "revenue": 201.19064012009628
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.304942",
+      "phase": "scaled",
+      "campaign_id": "campaign_51",
+      "creative_type": "video",
+      "target_audience": "families",
+      "budget": 50.0,
+      "actual_roas": 3.742917520010128,
+      "actual_ctr": 0.035,
+      "actual_conversions": 15,
+      "cost": 50.0,
+      "revenue": 187.1458760005064
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.304989",
+      "phase": "scaled",
+      "campaign_id": "campaign_52",
+      "creative_type": "video",
+      "target_audience": "families",
+      "budget": 54.0,
+      "actual_roas": 4.249999492412983,
+      "actual_ctr": 0.038,
+      "actual_conversions": 17,
+      "cost": 54.0,
+      "revenue": 229.4999725903011
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.305037",
+      "phase": "scaled",
+      "campaign_id": "campaign_53",
+      "creative_type": "video",
+      "target_audience": "professionals",
+      "budget": 58.0,
+      "actual_roas": 4.040174851848384,
+      "actual_ctr": 0.040999999999999995,
+      "actual_conversions": 19,
+      "cost": 58.0,
+      "revenue": 234.33014140720627
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.305084",
+      "phase": "scaled",
+      "campaign_id": "campaign_54",
+      "creative_type": "video",
+      "target_audience": "professionals",
+      "budget": 62.0,
+      "actual_roas": 4.380913332690031,
+      "actual_ctr": 0.044,
+      "actual_conversions": 21,
+      "cost": 62.0,
+      "revenue": 271.6166266267819
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.305130",
+      "phase": "scaled",
+      "campaign_id": "campaign_55",
+      "creative_type": "video",
+      "target_audience": "young_adults",
+      "budget": 66.0,
+      "actual_roas": 4.826476260522068,
+      "actual_ctr": 0.047,
+      "actual_conversions": 23,
+      "cost": 66.0,
+      "revenue": 318.5474331944565
+    }
+  ],
+  "performance_metrics": [
+    {
+      "roas": 1.4129579570845936,
+      "ctr": 0.02,
+      "conversions": 5,
+      "cost": 30.0,
+      "revenue": 42.38873871253781
+    },
+    {
+      "roas": 1.0902330217063076,
+      "ctr": 0.021500000000000002,
+      "conversions": 6,
+      "cost": 32.0,
+      "revenue": 34.887456694601845
+    },
+    {
+      "roas": 1.9584585830391996,
+      "ctr": 0.023,
+      "conversions": 7,
+      "cost": 34.0,
+      "revenue": 66.58759182333279
+    },
+    {
+      "roas": 1.8263000313149376,
+      "ctr": 0.0245,
+      "conversions": 8,
+      "cost": 36.0,
+      "revenue": 65.74680112733775
+    },
+    {
+      "roas": 2.4631909472447737,
+      "ctr": 0.026000000000000002,
+      "conversions": 9,
+      "cost": 38.0,
+      "revenue": 93.6012559953014
+    },
+    {
+      "roas": 1.6758906219404763,
+      "ctr": 0.0275,
+      "conversions": 10,
+      "cost": 40.0,
+      "revenue": 67.03562487761906
+    },
+    {
+      "roas": 1.9975978592820596,
+      "ctr": 0.028999999999999998,
+      "conversions": 11,
+      "cost": 42.0,
+      "revenue": 83.8991100898465
+    },
+    {
+      "roas": 2.2628735362437054,
+      "ctr": 0.0305,
+      "conversions": 12,
+      "cost": 44.0,
+      "revenue": 99.56643559472303
+    },
+    {
+      "roas": 2.352688814584885,
+      "ctr": 0.032,
+      "conversions": 13,
+      "cost": 46.0,
+      "revenue": 108.22368547090471
+    },
+    {
+      "roas": 2.017267957432643,
+      "ctr": 0.0335,
+      "conversions": 14,
+      "cost": 48.0,
+      "revenue": 96.82886195676686
+    },
+    {
+      "roas": 2.646914073369504,
+      "ctr": 0.035,
+      "conversions": 15,
+      "cost": 50.0,
+      "revenue": 132.3457036684752
+    },
+    {
+      "roas": 3.08647272512282,
+      "ctr": 0.036500000000000005,
+      "conversions": 16,
+      "cost": 52.0,
+      "revenue": 160.49658170638665
+    },
+    {
+      "roas": 2.2728113926715734,
+      "ctr": 0.038,
+      "conversions": 17,
+      "cost": 54.0,
+      "revenue": 122.73181520426496
+    },
+    {
+      "roas": 2.7705273470455007,
+      "ctr": 0.0395,
+      "conversions": 18,
+      "cost": 56.0,
+      "revenue": 155.14953143454804
+    },
+    {
+      "roas": 3.2576147378981615,
+      "ctr": 0.040999999999999995,
+      "conversions": 19,
+      "cost": 58.0,
+      "revenue": 188.94165479809337
+    },
+    {
+      "roas": 3.3383921786955444,
+      "ctr": 0.042499999999999996,
+      "conversions": 20,
+      "cost": 60.0,
+      "revenue": 200.30353072173267
+    },
+    {
+      "roas": 2.951351273146973,
+      "ctr": 0.044,
+      "conversions": 21,
+      "cost": 62.0,
+      "revenue": 182.98377893511233
+    },
+    {
+      "roas": 2.821458412165673,
+      "ctr": 0.0455,
+      "conversions": 22,
+      "cost": 64.0,
+      "revenue": 180.57333837860307
+    },
+    {
+      "roas": 3.2421161153181037,
+      "ctr": 0.047,
+      "conversions": 23,
+      "cost": 66.0,
+      "revenue": 213.97966361099483
+    },
+    {
+      "roas": 3.565764531702659,
+      "ctr": 0.0485,
+      "conversions": 24,
+      "cost": 68.0,
+      "revenue": 242.47198815578082
+    },
+    {
+      "roas": 1.9513393966876789,
+      "ctr": 0.02,
+      "conversions": 5,
+      "cost": 30.0,
+      "revenue": 58.540181900630365
+    },
+    {
+      "roas": 1.693079742559275,
+      "ctr": 0.023,
+      "conversions": 7,
+      "cost": 34.0,
+      "revenue": 57.564711247015346
+    },
+    {
+      "roas": 2.182923897292026,
+      "ctr": 0.026000000000000002,
+      "conversions": 9,
+      "cost": 38.0,
+      "revenue": 82.95110809709699
+    },
+    {
+      "roas": 2.825433792833077,
+      "ctr": 0.028999999999999998,
+      "conversions": 11,
+      "cost": 42.0,
+      "revenue": 118.66821929898923
+    },
+    {
+      "roas": 2.566316579671775,
+      "ctr": 0.032,
+      "conversions": 13,
+      "cost": 46.0,
+      "revenue": 118.05056266490165
+    },
+    {
+      "roas": 2.9398303992875863,
+      "ctr": 0.035,
+      "conversions": 15,
+      "cost": 50.0,
+      "revenue": 146.9915199643793
+    },
+    {
+      "roas": 3.4070026014384176,
+      "ctr": 0.038,
+      "conversions": 17,
+      "cost": 54.0,
+      "revenue": 183.97814047767454
+    },
+    {
+      "roas": 3.7548496636019104,
+      "ctr": 0.040999999999999995,
+      "conversions": 19,
+      "cost": 58.0,
+      "revenue": 217.7812804889108
+    },
+    {
+      "roas": 3.7394151854224154,
+      "ctr": 0.044,
+      "conversions": 21,
+      "cost": 62.0,
+      "revenue": 231.84374149618975
+    },
+    {
+      "roas": 3.9361988723885473,
+      "ctr": 0.047,
+      "conversions": 23,
+      "cost": 66.0,
+      "revenue": 259.78912557764414
+    },
+    {
+      "roas": 2.2493263037960096,
+      "ctr": 0.02,
+      "conversions": 5,
+      "cost": 30.0,
+      "revenue": 67.47978911388029
+    },
+    {
+      "roas": 2.6168524763196737,
+      "ctr": 0.022,
+      "conversions": 6,
+      "cost": 32.666666666666664,
+      "revenue": 85.483847559776
+    },
+    {
+      "roas": 2.821377387540153,
+      "ctr": 0.024,
+      "conversions": 7,
+      "cost": 35.333333333333336,
+      "revenue": 99.6886676930854
+    },
+    {
+      "roas": 3.251834555541927,
+      "ctr": 0.026000000000000002,
+      "conversions": 9,
+      "cost": 38.0,
+      "revenue": 123.56971311059321
+    },
+    {
+      "roas": 2.5573735628048766,
+      "ctr": 0.028,
+      "conversions": 10,
+      "cost": 40.666666666666664,
+      "revenue": 103.99985822073164
+    },
+    {
+      "roas": 2.7789723619580204,
+      "ctr": 0.03,
+      "conversions": 11,
+      "cost": 43.33333333333333,
+      "revenue": 120.42213568484753
+    },
+    {
+      "roas": 4.063690572046438,
+      "ctr": 0.032,
+      "conversions": 13,
+      "cost": 46.0,
+      "revenue": 186.92976631413615
+    },
+    {
+      "roas": 3.2438692773408055,
+      "ctr": 0.034,
+      "conversions": 14,
+      "cost": 48.66666666666667,
+      "revenue": 157.86830483058588
+    },
+    {
+      "roas": 3.332606726333837,
+      "ctr": 0.036000000000000004,
+      "conversions": 15,
+      "cost": 51.33333333333333,
+      "revenue": 171.0738119518036
+    },
+    {
+      "roas": 3.8140658682539272,
+      "ctr": 0.038,
+      "conversions": 17,
+      "cost": 54.0,
+      "revenue": 205.95955688571206
+    },
+    {
+      "roas": 4.2858878660620725,
+      "ctr": 0.039999999999999994,
+      "conversions": 18,
+      "cost": 56.666666666666664,
+      "revenue": 242.86697907685075
+    },
+    {
+      "roas": 3.8633238981832743,
+      "ctr": 0.041999999999999996,
+      "conversions": 19,
+      "cost": 59.33333333333333,
+      "revenue": 229.22388462554093
+    },
+    {
+      "roas": 3.935859140791459,
+      "ctr": 0.044,
+      "conversions": 21,
+      "cost": 62.0,
+      "revenue": 244.02326672907046
+    },
+    {
+      "roas": 3.6573237331632926,
+      "ctr": 0.046,
+      "conversions": 22,
+      "cost": 64.66666666666667,
+      "revenue": 236.5069347445596
+    },
+    {
+      "roas": 4.277389520251048,
+      "ctr": 0.048,
+      "conversions": 23,
+      "cost": 67.33333333333334,
+      "revenue": 288.01089436357057
+    },
+    {
+      "roas": 3.3609495919436005,
+      "ctr": 0.02,
+      "conversions": 5,
+      "cost": 30.0,
+      "revenue": 100.82848775830801
+    },
+    {
+      "roas": 2.8671817704719293,
+      "ctr": 0.023,
+      "conversions": 7,
+      "cost": 34.0,
+      "revenue": 97.4841801960456
+    },
+    {
+      "roas": 3.0846980961215786,
+      "ctr": 0.026000000000000002,
+      "conversions": 9,
+      "cost": 38.0,
+      "revenue": 117.21852765261998
+    },
+    {
+      "roas": 3.189757263768422,
+      "ctr": 0.028999999999999998,
+      "conversions": 11,
+      "cost": 42.0,
+      "revenue": 133.9698050782737
+    },
+    {
+      "roas": 4.37370956782818,
+      "ctr": 0.032,
+      "conversions": 13,
+      "cost": 46.0,
+      "revenue": 201.19064012009628
+    },
+    {
+      "roas": 3.742917520010128,
+      "ctr": 0.035,
+      "conversions": 15,
+      "cost": 50.0,
+      "revenue": 187.1458760005064
+    },
+    {
+      "roas": 4.249999492412983,
+      "ctr": 0.038,
+      "conversions": 17,
+      "cost": 54.0,
+      "revenue": 229.4999725903011
+    },
+    {
+      "roas": 4.040174851848384,
+      "ctr": 0.040999999999999995,
+      "conversions": 19,
+      "cost": 58.0,
+      "revenue": 234.33014140720627
+    },
+    {
+      "roas": 4.380913332690031,
+      "ctr": 0.044,
+      "conversions": 21,
+      "cost": 62.0,
+      "revenue": 271.6166266267819
+    },
+    {
+      "roas": 4.826476260522068,
+      "ctr": 0.047,
+      "conversions": 23,
+      "cost": 66.0,
+      "revenue": 318.5474331944565
+    }
+  ],
+  "discovered_strategies": [
+    {
+      "timestamp": "2025-08-21T04:59:54.282638",
+      "type": "creative_optimization",
+      "description": "Video ads show 22% higher engagement for families",
+      "confidence": 0.79,
+      "episodes_to_discover": 5
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.282971",
+      "type": "creative_optimization",
+      "description": "Video ads show 20% higher engagement for professionals",
+      "confidence": 0.84,
+      "episodes_to_discover": 10
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.283225",
+      "type": "creative_optimization",
+      "description": "Video ads show 35% higher engagement for professionals",
+      "confidence": 0.89,
+      "episodes_to_discover": 15
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.283467",
+      "type": "creative_optimization",
+      "description": "Video ads show 23% higher engagement for young_adults",
+      "confidence": 0.94,
+      "episodes_to_discover": 20
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.297845",
+      "type": "timing_pattern",
+      "description": "Morning campaigns (6-9am) perform 16% better",
+      "confidence": 0.8400000000000001,
+      "episodes_to_discover": 35
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.298179",
+      "type": "timing_pattern",
+      "description": "Morning campaigns (6-9am) perform 15% better",
+      "confidence": 0.89,
+      "episodes_to_discover": 40
+    },
+    {
+      "timestamp": "2025-08-21T04:59:54.298435",
+      "type": "timing_pattern",
+      "description": "Morning campaigns (6-9am) perform 24% better",
+      "confidence": 0.9400000000000001,
+      "episodes_to_discover": 45
+    }
+  ],
+  "failed_experiments": [
+    {
+      "timestamp": "2025-08-21T04:59:54.282356",
+      "campaign_id": "campaign_1",
+      "reason": "Low ROAS due to poor audience match",
+      "lesson": "Need better audience segmentation for this creative type",
+      "cost_of_failure": 0.0
+    }
+  ],
+  "optimization_insights": []
+}

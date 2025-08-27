@@ -1,0 +1,16 @@
+{
+  "segments": {},
+  "channels": {},
+  "devices": {},
+  "temporal": {
+    "peak_hours": [
+      9,
+      10,
+      11,
+      20,
+      21
+    ],
+    "avg_session_duration": 180
+  },
+  "last_updated": "2025-08-23T04:31:58.898746"
+}

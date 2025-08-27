@@ -1,0 +1,938 @@
+openapi: 3.0.3
+info:
+  title: GAELP Simulation Environment API
+  description: API for managing simulated user personas and ad response simulation
+  version: 1.0.0
+  contact:
+    name: GAELP Platform Team
+    email: api@gaelp.dev
+
+servers:
+  - url: https://api.gaelp.dev/v1/simulation
+    description: Production server
+  - url: https://staging-api.gaelp.dev/v1/simulation
+    description: Staging server
+
+security:
+  - apiKey: []
+  - bearerAuth: []
+
+paths:
+  /personas:
+    post:
+      summary: Create a user persona
+      description: Create a detailed user persona for simulation purposes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                persona_name:
+                  type: string
+                  example: "Tech-Savvy Millennial Fitness Enthusiast"
+                demographics:
+                  type: object
+                  properties:
+                    age:
+                      type: integer
+                      example: 28
+                    gender:
+                      type: string
+                      enum: [male, female, non-binary, prefer-not-to-say]
+                      example: "female"
+                    income:
+                      type: integer
+                      example: 75000
+                    education:
+                      type: string
+                      enum: [high-school, some-college, bachelor, master, doctorate]
+                      example: "bachelor"
+                    occupation:
+                      type: string
+                      example: "Software Engineer"
+                    location:
+                      type: object
+                      properties:
+                        country:
+                          type: string
+                          example: "US"
+                        state:
+                          type: string
+                          example: "CA"
+                        city:
+                          type: string
+                          example: "San Francisco"
+                        zip_code:
+                          type: string
+                          example: "94105"
+                    marital_status:
+                      type: string
+                      enum: [single, married, divorced, widowed]
+                      example: "single"
+                    children:
+                      type: integer
+                      example: 0
+                interests:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      category:
+                        type: string
+                        example: "fitness"
+                      subcategories:
+                        type: array
+                        items:
+                          type: string
+                        example: ["running", "yoga", "strength-training"]
+                      interest_level:
+                        type: number
+                        format: float
+                        minimum: 0
+                        maximum: 1
+                        example: 0.9
+                      engagement_frequency:
+                        type: string
+                        enum: [daily, weekly, monthly, occasionally]
+                        example: "daily"
+                behavior_patterns:
+                  type: object
+                  properties:
+                    online_behavior:
+                      type: object
+                      properties:
+                        daily_screen_time_hours:
+                          type: number
+                          format: float
+                          example: 6.5
+                        preferred_devices:
+                          type: array
+                          items:
+                            type: string
+                            enum: [smartphone, tablet, desktop, laptop, smart-tv]
+                          example: ["smartphone", "laptop"]
+                        social_media_usage:
+                          type: object
+                          properties:
+                            platforms:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  platform:
+                                    type: string
+                                    enum: [facebook, instagram, twitter, linkedin, tiktok, youtube, pinterest]
+                                  usage_frequency:
+                                    type: string
+                                    enum: [heavy, moderate, light, none]
+                                  time_spent_daily_minutes:
+                                    type: integer
+                        browsing_patterns:
+                          type: object
+                          properties:
+                            peak_hours:
+                              type: array
+                              items:
+                                type: integer
+                              example: [9, 12, 19, 21]
+                            preferred_content_types:
+                              type: array
+                              items:
+                                type: string
+                                enum: [articles, videos, images, infographics, podcasts]
+                              example: ["videos", "articles"]
+                    purchase_behavior:
+                      type: object
+                      properties:
+                        shopping_frequency:
+                          type: string
+                          enum: [daily, weekly, monthly, quarterly, rarely]
+                          example: "weekly"
+                        average_order_value:
+                          type: number
+                          format: float
+                          example: 85.0
+                        preferred_channels:
+                          type: array
+                          items:
+                            type: string
+                            enum: [online, in-store, mobile-app, social-commerce]
+                          example: ["online", "mobile-app"]
+                        decision_making_style:
+                          type: string
+                          enum: [impulsive, research-heavy, price-conscious, brand-loyal, social-influenced]
+                          example: "research-heavy"
+                        brand_loyalty_score:
+                          type: number
+                          format: float
+                          minimum: 0
+                          maximum: 1
+                          example: 0.6
+                    ad_response_tendencies:
+                      type: object
+                      properties:
+                        overall_ad_tolerance:
+                          type: number
+                          format: float
+                          minimum: 0
+                          maximum: 1
+                          description: "How tolerant they are to ads (0=very intolerant, 1=very tolerant)"
+                          example: 0.4
+                        click_likelihood_base:
+                          type: number
+                          format: float
+                          minimum: 0
+                          maximum: 1
+                          example: 0.02
+                        conversion_likelihood_base:
+                          type: number
+                          format: float
+                          minimum: 0
+                          maximum: 1
+                          example: 0.05
+                        ad_format_preferences:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              format:
+                                type: string
+                                enum: [image, video, carousel, collection, text, native]
+                              preference_score:
+                                type: number
+                                format: float
+                                minimum: 0
+                                maximum: 1
+                        message_resonance_factors:
+                          type: object
+                          properties:
+                            emotional_triggers:
+                              type: array
+                              items:
+                                type: string
+                                enum: [fear, joy, surprise, trust, anticipation, anger, sadness, disgust]
+                              example: ["joy", "trust", "anticipation"]
+                            value_propositions:
+                              type: array
+                              items:
+                                type: string
+                                enum: [price, quality, convenience, status, health, environment, innovation, community]
+                              example: ["health", "innovation", "convenience"]
+                psychographic_profile:
+                  type: object
+                  properties:
+                    personality_traits:
+                      type: object
+                      properties:
+                        openness:
+                          type: number
+                          format: float
+                          minimum: 0
+                          maximum: 1
+                          example: 0.8
+                        conscientiousness:
+                          type: number
+                          format: float
+                          minimum: 0
+                          maximum: 1
+                          example: 0.7
+                        extraversion:
+                          type: number
+                          format: float
+                          minimum: 0
+                          maximum: 1
+                          example: 0.6
+                        agreeableness:
+                          type: number
+                          format: float
+                          minimum: 0
+                          maximum: 1
+                          example: 0.8
+                        neuroticism:
+                          type: number
+                          format: float
+                          minimum: 0
+                          maximum: 1
+                          example: 0.3
+                    values:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          value:
+                            type: string
+                            example: "health"
+                          importance:
+                            type: number
+                            format: float
+                            minimum: 0
+                            maximum: 1
+                            example: 0.9
+                    lifestyle:
+                      type: object
+                      properties:
+                        activities:
+                          type: array
+                          items:
+                            type: string
+                          example: ["gym", "meditation", "cooking", "hiking"]
+                        opinions:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              topic:
+                                type: string
+                              stance:
+                                type: string
+                              strength:
+                                type: number
+                                format: float
+              required:
+                - persona_name
+                - demographics
+                - interests
+                - behavior_patterns
+      responses:
+        '201':
+          description: Persona created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  persona_id:
+                    type: string
+                    format: uuid
+                    example: "persona_123e4567-e89b-12d3-a456-426614174000"
+                  persona_name:
+                    type: string
+                  validation_score:
+                    type: number
+                    format: float
+                    description: "Validation score for persona realism (0-1)"
+                    example: 0.92
+                  created_at:
+                    type: string
+                    format: date-time
+
+    get:
+      summary: List personas
+      description: Get list of created personas with filtering options
+      parameters:
+        - name: demographics
+          in: query
+          description: Filter by demographic criteria
+          schema:
+            type: string
+          example: "age:25-35,gender:female"
+        - name: interests
+          in: query
+          description: Filter by interest categories
+          schema:
+            type: string
+          example: "fitness,technology"
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        '200':
+          description: Personas retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  personas:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        persona_id:
+                          type: string
+                        persona_name:
+                          type: string
+                        demographics_summary:
+                          type: object
+                        interests_summary:
+                          type: array
+                          items:
+                            type: string
+                        created_at:
+                          type: string
+                          format: date-time
+                  pagination:
+                    type: object
+                    properties:
+                      total_count:
+                        type: integer
+                      has_next:
+                        type: boolean
+
+  /personas/{persona_id}/simulate:
+    post:
+      summary: Simulate user response to ad
+      description: Simulate how a specific persona would respond to an ad creative
+      parameters:
+        - name: persona_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ad_creative:
+                  type: object
+                  properties:
+                    creative_id:
+                      type: string
+                      example: "creative_001"
+                    headline:
+                      type: string
+                      example: "Transform Your Fitness Journey"
+                    description:
+                      type: string
+                      example: "AI-powered fitness tracking that adapts to your goals"
+                    image_url:
+                      type: string
+                      format: uri
+                      example: "https://cdn.gaelp.dev/ads/fitness-tracker.jpg"
+                    video_url:
+                      type: string
+                      format: uri
+                      nullable: true
+                    call_to_action:
+                      type: string
+                      example: "Learn More"
+                    landing_page_url:
+                      type: string
+                      format: uri
+                    ad_format:
+                      type: string
+                      enum: [image, video, carousel, collection, text, native]
+                      example: "image"
+                context:
+                  type: object
+                  properties:
+                    placement:
+                      type: string
+                      enum: [feed, story, sidebar, search, video, banner]
+                      example: "feed"
+                    device:
+                      type: string
+                      enum: [mobile, desktop, tablet]
+                      example: "mobile"
+                    time_of_day:
+                      type: integer
+                      minimum: 0
+                      maximum: 23
+                      example: 19
+                    day_of_week:
+                      type: string
+                      enum: [monday, tuesday, wednesday, thursday, friday, saturday, sunday]
+                      example: "wednesday"
+                    surrounding_content:
+                      type: string
+                      enum: [news, entertainment, social, search, educational]
+                      example: "social"
+                simulation_parameters:
+                  type: object
+                  properties:
+                    include_emotional_response:
+                      type: boolean
+                      default: true
+                    include_attention_modeling:
+                      type: boolean
+                      default: true
+                    randomness_factor:
+                      type: number
+                      format: float
+                      minimum: 0
+                      maximum: 1
+                      default: 0.1
+                      description: "Amount of randomness in the simulation"
+              required:
+                - ad_creative
+                - context
+      responses:
+        '200':
+          description: Simulation completed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  engagement_metrics:
+                    type: object
+                    properties:
+                      impression_quality:
+                        type: number
+                        format: float
+                        minimum: 0
+                        maximum: 1
+                        description: "Quality of impression (attention paid)"
+                        example: 0.7
+                      click_probability:
+                        type: number
+                        format: float
+                        minimum: 0
+                        maximum: 1
+                        example: 0.04
+                      engagement_type:
+                        type: string
+                        enum: [ignore, view, click, share, save, comment]
+                        example: "click"
+                      time_spent_viewing:
+                        type: number
+                        format: float
+                        description: "Time in seconds"
+                        example: 2.3
+                      conversion_probability:
+                        type: number
+                        format: float
+                        minimum: 0
+                        maximum: 1
+                        example: 0.08
+                  emotional_response:
+                    type: object
+                    properties:
+                      primary_emotion:
+                        type: string
+                        enum: [joy, trust, fear, surprise, sadness, disgust, anger, anticipation, neutral]
+                        example: "trust"
+                      emotion_intensity:
+                        type: number
+                        format: float
+                        minimum: 0
+                        maximum: 1
+                        example: 0.6
+                      sentiment_score:
+                        type: number
+                        format: float
+                        minimum: -1
+                        maximum: 1
+                        example: 0.4
+                      resonance_factors:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            factor:
+                              type: string
+                            strength:
+                              type: number
+                              format: float
+                        example: [{"factor": "health_focus", "strength": 0.8}, {"factor": "technology_appeal", "strength": 0.6}]
+                  behavioral_prediction:
+                    type: object
+                    properties:
+                      immediate_action:
+                        type: string
+                        enum: [ignore, click, save, share, hide_ad, report_ad]
+                        example: "click"
+                      follow_up_actions:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            action:
+                              type: string
+                            probability:
+                              type: number
+                              format: float
+                            time_delay_hours:
+                              type: number
+                              format: float
+                        example: [
+                          {"action": "visit_website", "probability": 0.8, "time_delay_hours": 0.1},
+                          {"action": "research_product", "probability": 0.6, "time_delay_hours": 2.0}
+                        ]
+                      conversion_journey:
+                        type: object
+                        properties:
+                          touchpoints_needed:
+                            type: integer
+                            example: 3
+                          conversion_window_hours:
+                            type: number
+                            format: float
+                            example: 72.0
+                          conversion_probability_over_time:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                hour:
+                                  type: integer
+                                probability:
+                                  type: number
+                                  format: float
+                  attention_modeling:
+                    type: object
+                    properties:
+                      attention_capture_score:
+                        type: number
+                        format: float
+                        minimum: 0
+                        maximum: 1
+                        example: 0.65
+                      visual_attention_heatmap:
+                        type: object
+                        properties:
+                          headline_attention:
+                            type: number
+                            format: float
+                            example: 0.8
+                          image_attention:
+                            type: number
+                            format: float
+                            example: 0.9
+                          cta_attention:
+                            type: number
+                            format: float
+                            example: 0.4
+                          brand_attention:
+                            type: number
+                            format: float
+                            example: 0.3
+                      cognitive_load:
+                        type: number
+                        format: float
+                        minimum: 0
+                        maximum: 1
+                        description: "How much mental effort required to process the ad"
+                        example: 0.3
+                  feedback:
+                    type: object
+                    properties:
+                      likelihood_to_recommend:
+                        type: number
+                        format: float
+                        minimum: 0
+                        maximum: 10
+                        example: 7.5
+                      perceived_relevance:
+                        type: number
+                        format: float
+                        minimum: 0
+                        maximum: 1
+                        example: 0.8
+                      ad_recall_probability:
+                        type: number
+                        format: float
+                        minimum: 0
+                        maximum: 1
+                        example: 0.6
+                      brand_perception_change:
+                        type: number
+                        format: float
+                        minimum: -1
+                        maximum: 1
+                        example: 0.2
+
+  /batch-simulate:
+    post:
+      summary: Batch simulation across multiple personas
+      description: Run simulation across multiple personas and campaigns for statistical analysis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                personas:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                  example: ["persona_001", "persona_002", "persona_003"]
+                campaigns:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      campaign_id:
+                        type: string
+                      ad_creative:
+                        type: object
+                      context:
+                        type: object
+                batch_config:
+                  type: object
+                  properties:
+                    sample_size_per_persona:
+                      type: integer
+                      minimum: 1
+                      maximum: 1000
+                      default: 100
+                      description: "Number of simulation runs per persona"
+                    randomness_factor:
+                      type: number
+                      format: float
+                      minimum: 0
+                      maximum: 1
+                      default: 0.2
+                    parallel_processing:
+                      type: boolean
+                      default: true
+                    output_format:
+                      type: string
+                      enum: [detailed, summary, statistical]
+                      default: summary
+              required:
+                - personas
+                - campaigns
+      responses:
+        '200':
+          description: Batch simulation completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  aggregated_results:
+                    type: object
+                    properties:
+                      overall_performance:
+                        type: object
+                        properties:
+                          avg_ctr:
+                            type: number
+                            format: float
+                          avg_conversion_rate:
+                            type: number
+                            format: float
+                          avg_engagement_score:
+                            type: number
+                            format: float
+                          reach_estimate:
+                            type: integer
+                      persona_performance:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            persona_id:
+                              type: string
+                            performance_metrics:
+                              type: object
+                            audience_fit_score:
+                              type: number
+                              format: float
+                      campaign_performance:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            campaign_id:
+                              type: string
+                            cross_persona_metrics:
+                              type: object
+                            optimization_score:
+                              type: number
+                              format: float
+                  statistical_analysis:
+                    type: object
+                    properties:
+                      confidence_intervals:
+                        type: object
+                        properties:
+                          ctr_ci:
+                            type: array
+                            items:
+                              type: number
+                              format: float
+                          conversion_rate_ci:
+                            type: array
+                            items:
+                              type: number
+                              format: float
+                      significance_tests:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            comparison:
+                              type: string
+                            p_value:
+                              type: number
+                              format: float
+                            effect_size:
+                              type: number
+                              format: float
+                            significant:
+                              type: boolean
+                      recommendations:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            recommendation:
+                              type: string
+                            confidence:
+                              type: number
+                              format: float
+                            expected_improvement:
+                              type: number
+                              format: float
+
+  /market-simulation:
+    post:
+      summary: Simulate market-level campaign performance
+      description: Simulate how a campaign would perform in a realistic market environment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                campaign_config:
+                  type: object
+                  properties:
+                    creative:
+                      type: object
+                    targeting:
+                      type: object
+                    budget:
+                      type: object
+                market_parameters:
+                  type: object
+                  properties:
+                    market_size:
+                      type: integer
+                      example: 1000000
+                    competition_level:
+                      type: number
+                      format: float
+                      minimum: 0
+                      maximum: 1
+                      example: 0.7
+                    market_saturation:
+                      type: number
+                      format: float
+                      example: 0.4
+                    seasonal_factors:
+                      type: object
+                      properties:
+                        current_season_multiplier:
+                          type: number
+                          format: float
+                          example: 1.2
+                        trend_momentum:
+                          type: number
+                          format: float
+                          example: 0.8
+                    external_events:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          event_type:
+                            type: string
+                          impact_factor:
+                            type: number
+                            format: float
+                          duration_days:
+                            type: integer
+                simulation_duration_days:
+                  type: integer
+                  minimum: 1
+                  maximum: 365
+                  default: 30
+              required:
+                - campaign_config
+                - market_parameters
+      responses:
+        '200':
+          description: Market simulation completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  market_simulation_results:
+                    type: object
+                    properties:
+                      projected_performance:
+                        type: object
+                        properties:
+                          total_impressions:
+                            type: integer
+                          total_clicks:
+                            type: integer
+                          total_conversions:
+                            type: integer
+                          projected_spend:
+                            type: number
+                            format: float
+                          projected_revenue:
+                            type: number
+                            format: float
+                          final_ctr:
+                            type: number
+                            format: float
+                          final_conversion_rate:
+                            type: number
+                            format: float
+                          roas:
+                            type: number
+                            format: float
+                      performance_timeline:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            day:
+                              type: integer
+                            daily_metrics:
+                              type: object
+                            market_conditions:
+                              type: object
+                      audience_insights:
+                        type: object
+                        properties:
+                          reached_demographics:
+                            type: object
+                          engagement_by_segment:
+                            type: object
+                          conversion_by_segment:
+                            type: object
+                      competitive_impact:
+                        type: object
+                        properties:
+                          market_share_captured:
+                            type: number
+                            format: float
+                          competitor_response_simulation:
+                            type: object
+
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

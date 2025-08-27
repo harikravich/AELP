@@ -1,0 +1,58 @@
+{
+  "metadata": {
+    "created_from_real_data": true,
+    "data_period": "90_days",
+    "extraction_date": "2025-08-23T01:14:45.284340"
+  },
+  "channel_cvr_rates": {
+    "paid_search_google": 2.32,
+    "affiliates_high_quality": 5.28,
+    "affiliates_medium_quality": 3.54,
+    "display_broad": 0.01,
+    "organic_search": 0.45,
+    "direct": 0.41,
+    "paid_social_facebook": 1.61
+  },
+  "channel_cac_estimates": {
+    "paid_search_google": 21.53,
+    "affiliates_high_quality": 9.47,
+    "affiliates_medium_quality": 14.12,
+    "display_broad": 8453.96,
+    "organic_search": 109.98,
+    "paid_social_facebook": 31.03
+  },
+  "conversion_windows": {
+    "optimal_window_days": 1,
+    "day_1_cvr": 1.5331841325997086,
+    "conversion_velocity_per_day": -0.5733644529875082
+  },
+  "device_patterns": {
+    "ios_traffic_share": 62.81259536099027,
+    "ios_cvr": 1.3802238440254229,
+    "android_addressable": false,
+    "ios_aov": 89.33978681089752
+  },
+  "temporal_patterns": {
+    "peak_hour": 19,
+    "evening_cvr_lift": 0.10030263961359576,
+    "parent_browsing_window": [
+      19,
+      20,
+      21,
+      22
+    ]
+  },
+  "user_segments": {
+    "new_user_cvr": 2.09,
+    "returning_user_cvr": 1.02,
+    "high_value_cities": [
+      "New York",
+      "Los Angeles",
+      "Chicago",
+      "Dallas",
+      "Houston"
+    ],
+    "crisis_parent_quick_conversion": true,
+    "researcher_long_consideration": true
+  }
+}

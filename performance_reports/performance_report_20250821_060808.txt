@@ -1,0 +1,25 @@
+GAELP Agent Performance Report
+==================================================
+Generated: 2025-08-21 06:08:07
+
+LEARNING PROGRESS
+--------------------
+Total Campaigns: 55
+Average ROAS: 3.034x
+Best ROAS: 4.826x
+Total Revenue: $8469.84
+Total Cost: $2670.00
+Net Profit: $5799.84
+
+BEST STRATEGY DISCOVERED
+-------------------------
+Strategy: Carousel Professionals
+Performance: 8.98x ROAS
+Confidence: 0.6
+Description: Use carousel ads targeting professionals with multiple product views
+
+KEY INSIGHTS
+------------
+✓ Agent is showing positive learning trend
+⚠ Performance shows high variation
+✓ Strong ROAS performance (>2x)

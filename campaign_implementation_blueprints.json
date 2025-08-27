@@ -1,0 +1,65 @@
+{
+  "behavioral_health_campaign": {
+    "name": "Behavioral Health Market Entry",
+    "objective": "Dominate uncontested behavioral health keyword space",
+    "target_keywords": [
+      "teen depression monitoring",
+      "mood tracking app",
+      "digital wellness ai",
+      "mental health early warning",
+      "ai behavioral analysis",
+      "teen anxiety monitoring",
+      "predictive mental health"
+    ],
+    "ad_messaging": {
+      "headline_1": "AI Teen Behavioral Health Monitoring",
+      "headline_2": "Detect Mood Changes Before Problems Start",
+      "description": "Only AI-powered solution that monitors teen behavioral patterns and alerts parents to mental health risks. Clinically-backed approach.",
+      "cta": "Start Free Assessment"
+    },
+    "landing_page_focus": "Behavioral health benefits, AI technology, clinical backing",
+    "budget": 8000,
+    "target_cpa": 85,
+    "audience": "Parents concerned about teen mental health"
+  },
+  "crisis_intervention_campaign": {
+    "name": "Crisis Parent Support - High-Value Acquisition",
+    "objective": "Capture parents in crisis with immediate behavioral concerns",
+    "target_keywords": [
+      "emergency teen help",
+      "teen crisis monitoring",
+      "teen mental health crisis",
+      "urgent behavioral alert"
+    ],
+    "ad_messaging": {
+      "headline_1": "Emergency Teen Behavioral Monitoring",
+      "headline_2": "Get Immediate Help for Teen Mental Health Crisis",
+      "description": "24/7 AI monitoring alerts you instantly to concerning behavioral changes. Get professional support when you need it most.",
+      "cta": "Get Emergency Help Now"
+    },
+    "landing_page_focus": "Immediate help, crisis support, 24/7 monitoring",
+    "budget": 5000,
+    "target_cpa": 150,
+    "audience": "Parents dealing with teen crisis situations"
+  },
+  "bark_conquest_campaign": {
+    "name": "Bark Conquest - Behavioral Health Advantage",
+    "objective": "Intercept Bark brand searches with superior positioning",
+    "target_keywords": [
+      "bark alternatives",
+      "bark vs",
+      "is bark worth it",
+      "better than bark"
+    ],
+    "ad_messaging": {
+      "headline_1": "Better Than Bark - AI Behavioral Insights",
+      "headline_2": "Bark Catches Problems. Aura Prevents Them.",
+      "description": "Why settle for basic alerts? Aura's AI analyzes behavioral patterns to prevent problems before they happen. See the difference.",
+      "cta": "Compare Bark vs Aura"
+    },
+    "landing_page_focus": "Bark comparison, behavioral health advantage, prevention vs reaction",
+    "budget": 3500,
+    "target_cpa": 75,
+    "audience": "Parents researching Bark"
+  }
+}

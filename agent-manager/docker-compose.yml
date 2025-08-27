@@ -1,0 +1,96 @@
+version: '3.8'
+
+services:
+  agent-manager-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+      - "8080:8080"  # Prometheus metrics
+    environment:
+      - ENVIRONMENT=development
+      - DB_HOST=postgres
+      - DB_NAME=agent_manager
+      - DB_USER=agent_manager
+      - DB_PASSWORD=password
+      - REDIS_HOST=redis
+      - K8S_NAMESPACE=agent-training
+      - K8S_IN_CLUSTER=false
+      - JWT_SECRET_KEY=development-secret-key
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ~/.kube/config:/root/.kube/config:ro  # Mount kubeconfig for local development
+    restart: unless-stopped
+    networks:
+      - agent-manager-network
+
+  postgres:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=agent_manager
+      - POSTGRES_USER=agent_manager
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    restart: unless-stopped
+    networks:
+      - agent-manager-network
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    networks:
+      - agent-manager-network
+
+  # Optional: Prometheus for metrics collection
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    restart: unless-stopped
+    networks:
+      - agent-manager-network
+
+  # Optional: Grafana for metrics visualization
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./config/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./config/grafana/datasources:/etc/grafana/provisioning/datasources
+    restart: unless-stopped
+    networks:
+      - agent-manager-network
+
+volumes:
+  postgres_data:
+  redis_data:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  agent-manager-network:
+    driver: bridge

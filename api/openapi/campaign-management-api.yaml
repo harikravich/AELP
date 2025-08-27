@@ -1,0 +1,854 @@
+openapi: 3.0.3
+info:
+  title: GAELP Campaign Management API
+  description: API for managing ad campaigns, performance tracking, and campaign lifecycle
+  version: 1.0.0
+  contact:
+    name: GAELP Platform Team
+    email: api@gaelp.dev
+
+servers:
+  - url: https://api.gaelp.dev/v1/campaigns
+    description: Production server
+  - url: https://staging-api.gaelp.dev/v1/campaigns
+    description: Staging server
+
+security:
+  - apiKey: []
+  - bearerAuth: []
+
+paths:
+  /:
+    post:
+      summary: Create a new campaign
+      description: Create and launch a new ad campaign with specified creative, targeting, and budget
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                campaign_name:
+                  type: string
+                  example: "FitTrack Pro Launch Q4"
+                creative:
+                  type: object
+                  properties:
+                    headline:
+                      type: string
+                      example: "Transform Your Fitness Journey"
+                    description:
+                      type: string
+                      example: "AI-powered fitness tracking that adapts to your goals"
+                    primary_image:
+                      type: string
+                      format: uri
+                      example: "https://cdn.gaelp.dev/campaigns/fittrack-hero.jpg"
+                    video_url:
+                      type: string
+                      format: uri
+                      nullable: true
+                      example: "https://cdn.gaelp.dev/campaigns/fittrack-demo.mp4"
+                    call_to_action:
+                      type: string
+                      enum: [learn_more, shop_now, sign_up, download, get_quote, subscribe]
+                      example: "shop_now"
+                    landing_page_url:
+                      type: string
+                      format: uri
+                      example: "https://fittrack.com/pro?utm_source=gaelp"
+                targeting:
+                  type: object
+                  properties:
+                    demographics:
+                      type: object
+                      properties:
+                        age_range:
+                          type: object
+                          properties:
+                            min:
+                              type: integer
+                              example: 25
+                            max:
+                              type: integer
+                              example: 45
+                        gender:
+                          type: array
+                          items:
+                            type: string
+                            enum: [male, female, non-binary, all]
+                          example: ["male", "female"]
+                        income_brackets:
+                          type: array
+                          items:
+                            type: string
+                            enum: [low, lower-middle, middle, upper-middle, high]
+                          example: ["middle", "upper-middle"]
+                        education:
+                          type: array
+                          items:
+                            type: string
+                            enum: [high-school, some-college, bachelor, master, doctorate]
+                          example: ["bachelor", "master"]
+                    geographic:
+                      type: object
+                      properties:
+                        countries:
+                          type: array
+                          items:
+                            type: string
+                          example: ["US", "CA", "UK", "AU"]
+                        regions:
+                          type: array
+                          items:
+                            type: string
+                          example: ["california", "new-york", "texas"]
+                        cities:
+                          type: array
+                          items:
+                            type: string
+                          example: ["san-francisco", "new-york-city", "los-angeles"]
+                        radius_targeting:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              latitude:
+                                type: number
+                                format: float
+                              longitude:
+                                type: number
+                                format: float
+                              radius_miles:
+                                type: integer
+                    interests:
+                      type: array
+                      items:
+                        type: string
+                      example: ["fitness", "health-wellness", "technology", "sports"]
+                    behaviors:
+                      type: object
+                      properties:
+                        purchase_behaviors:
+                          type: array
+                          items:
+                            type: string
+                          example: ["online-shoppers", "fitness-product-buyers"]
+                        device_usage:
+                          type: array
+                          items:
+                            type: string
+                            enum: [mobile, desktop, tablet]
+                          example: ["mobile", "desktop"]
+                        engagement_patterns:
+                          type: array
+                          items:
+                            type: string
+                          example: ["video-viewers", "app-installers"]
+                    custom_audiences:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          audience_id:
+                            type: string
+                          audience_type:
+                            type: string
+                            enum: [uploaded, website_visitors, lookalike, pixel_based]
+                          match_rate:
+                            type: number
+                            format: float
+                budget:
+                  type: object
+                  properties:
+                    total_budget:
+                      type: number
+                      format: float
+                      example: 5000.0
+                    daily_budget:
+                      type: number
+                      format: float
+                      example: 100.0
+                    bid_strategy:
+                      type: string
+                      enum: [manual_cpc, auto_cpc, target_cpa, target_roas, maximize_clicks, maximize_conversions]
+                      example: "target_cpa"
+                    target_cpa:
+                      type: number
+                      format: float
+                      nullable: true
+                      example: 25.0
+                    target_roas:
+                      type: number
+                      format: float
+                      nullable: true
+                      example: 4.0
+                    max_bid:
+                      type: number
+                      format: float
+                      nullable: true
+                      example: 3.50
+                campaign_settings:
+                  type: object
+                  properties:
+                    objective:
+                      type: string
+                      enum: [awareness, traffic, engagement, leads, app_installs, video_views, conversions]
+                      example: "conversions"
+                    start_date:
+                      type: string
+                      format: date-time
+                      example: "2024-01-15T09:00:00Z"
+                    end_date:
+                      type: string
+                      format: date-time
+                      nullable: true
+                      example: "2024-02-15T23:59:59Z"
+                    schedule:
+                      type: object
+                      properties:
+                        timezone:
+                          type: string
+                          example: "America/New_York"
+                        day_parting:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              day:
+                                type: string
+                                enum: [monday, tuesday, wednesday, thursday, friday, saturday, sunday]
+                              start_hour:
+                                type: integer
+                                minimum: 0
+                                maximum: 23
+                              end_hour:
+                                type: integer
+                                minimum: 0
+                                maximum: 23
+                    optimization_goal:
+                      type: string
+                      enum: [clicks, impressions, conversions, value, reach]
+                      example: "conversions"
+                    attribution_window:
+                      type: object
+                      properties:
+                        click_window_days:
+                          type: integer
+                          example: 7
+                        view_window_days:
+                          type: integer
+                          example: 1
+              required:
+                - campaign_name
+                - creative
+                - targeting
+                - budget
+                - campaign_settings
+      responses:
+        '201':
+          description: Campaign created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  campaign_id:
+                    type: string
+                    format: uuid
+                    example: "camp_123e4567-e89b-12d3-a456-426614174000"
+                  status:
+                    type: string
+                    enum: [created, pending_review, approved, active, paused, stopped, completed]
+                    example: "pending_review"
+                  created_at:
+                    type: string
+                    format: date-time
+                  estimated_reach:
+                    type: object
+                    properties:
+                      min_reach:
+                        type: integer
+                        example: 50000
+                      max_reach:
+                        type: integer
+                        example: 150000
+                      audience_size:
+                        type: integer
+                        example: 100000
+                  platform_assignments:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        platform:
+                          type: string
+                          enum: [facebook, google, linkedin, twitter, tiktok, pinterest]
+                        campaign_id:
+                          type: string
+                        status:
+                          type: string
+                  budget_allocation:
+                    type: object
+                    properties:
+                      daily_allocation:
+                        type: number
+                        format: float
+                      platform_splits:
+                        type: object
+                        additionalProperties:
+                          type: number
+                          format: float
+
+    get:
+      summary: List campaigns
+      description: Get a list of campaigns with optional filtering
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, paused, stopped, completed, all]
+            default: active
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+        - name: date_range
+          in: query
+          schema:
+            type: string
+            pattern: '^\d{4}-\d{2}-\d{2},\d{4}-\d{2}-\d{2}$'
+          example: "2024-01-01,2024-01-31"
+        - name: objective
+          in: query
+          schema:
+            type: string
+            enum: [awareness, traffic, engagement, leads, app_installs, video_views, conversions]
+      responses:
+        '200':
+          description: Campaigns retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  campaigns:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        campaign_id:
+                          type: string
+                        campaign_name:
+                          type: string
+                        status:
+                          type: string
+                        objective:
+                          type: string
+                        total_budget:
+                          type: number
+                          format: float
+                        spent_budget:
+                          type: number
+                          format: float
+                        performance_summary:
+                          type: object
+                          properties:
+                            impressions:
+                              type: integer
+                            clicks:
+                              type: integer
+                            conversions:
+                              type: integer
+                            ctr:
+                              type: number
+                              format: float
+                            cpa:
+                              type: number
+                              format: float
+                            roas:
+                              type: number
+                              format: float
+                        created_at:
+                          type: string
+                          format: date-time
+                        last_updated:
+                          type: string
+                          format: date-time
+                  pagination:
+                    type: object
+                    properties:
+                      total_count:
+                        type: integer
+                      page_count:
+                        type: integer
+                      current_page:
+                        type: integer
+                      has_next:
+                        type: boolean
+
+  /{campaign_id}:
+    get:
+      summary: Get campaign details
+      description: Retrieve detailed information about a specific campaign
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Campaign details retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  campaign_details:
+                    type: object
+                    properties:
+                      basic_info:
+                        type: object
+                        properties:
+                          campaign_id:
+                            type: string
+                          name:
+                            type: string
+                          status:
+                            type: string
+                          objective:
+                            type: string
+                          created_at:
+                            type: string
+                            format: date-time
+                          start_date:
+                            type: string
+                            format: date-time
+                          end_date:
+                            type: string
+                            format: date-time
+                      creative:
+                        type: object
+                      targeting:
+                        type: object
+                      budget:
+                        type: object
+                      current_performance:
+                        type: object
+                        properties:
+                          impressions:
+                            type: integer
+                          clicks:
+                            type: integer
+                          conversions:
+                            type: integer
+                          spend:
+                            type: number
+                            format: float
+                          revenue:
+                            type: number
+                            format: float
+                          ctr:
+                            type: number
+                            format: float
+                          conversion_rate:
+                            type: number
+                            format: float
+                          cpa:
+                            type: number
+                            format: float
+                          roas:
+                            type: number
+                            format: float
+                          frequency:
+                            type: number
+                            format: float
+                          reach:
+                            type: integer
+
+  /{campaign_id}/performance:
+    get:
+      summary: Get campaign performance metrics
+      description: Retrieve detailed performance metrics for a campaign
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: date_range
+          in: query
+          schema:
+            type: string
+            pattern: '^\d{4}-\d{2}-\d{2},\d{4}-\d{2}-\d{2}$'
+          example: "2024-01-01,2024-01-31"
+        - name: granularity
+          in: query
+          schema:
+            type: string
+            enum: [hour, day, week, month]
+            default: day
+        - name: breakdown
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+              enum: [age, gender, location, device, placement, time]
+          style: form
+          explode: false
+        - name: metrics
+          in: query
+          description: Specific metrics to include
+          schema:
+            type: array
+            items:
+              type: string
+              enum: [impressions, clicks, conversions, spend, revenue, ctr, cpa, roas, frequency, reach]
+          style: form
+          explode: false
+      responses:
+        '200':
+          description: Performance metrics retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  metrics:
+                    type: object
+                    properties:
+                      summary:
+                        type: object
+                        properties:
+                          total_impressions:
+                            type: integer
+                          total_clicks:
+                            type: integer
+                          total_conversions:
+                            type: integer
+                          total_spend:
+                            type: number
+                            format: float
+                          total_revenue:
+                            type: number
+                            format: float
+                          overall_ctr:
+                            type: number
+                            format: float
+                          overall_conversion_rate:
+                            type: number
+                            format: float
+                          overall_cpa:
+                            type: number
+                            format: float
+                          overall_roas:
+                            type: number
+                            format: float
+                      time_series:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            date:
+                              type: string
+                              format: date
+                            impressions:
+                              type: integer
+                            clicks:
+                              type: integer
+                            conversions:
+                              type: integer
+                            spend:
+                              type: number
+                              format: float
+                            revenue:
+                              type: number
+                              format: float
+                      breakdowns:
+                        type: object
+                        additionalProperties:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              dimension_value:
+                                type: string
+                              metrics:
+                                type: object
+                  insights:
+                    type: object
+                    properties:
+                      best_performing_segments:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            segment:
+                              type: string
+                            performance_score:
+                              type: number
+                              format: float
+                      optimization_opportunities:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            opportunity:
+                              type: string
+                            potential_impact:
+                              type: string
+                            confidence:
+                              type: number
+                              format: float
+                      trend_analysis:
+                        type: object
+                        properties:
+                          performance_trend:
+                            type: string
+                            enum: [improving, stable, declining]
+                          trend_strength:
+                            type: number
+                            format: float
+
+  /{campaign_id}/control:
+    post:
+      summary: Control campaign status
+      description: Pause, resume, or stop a campaign
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                  enum: [pause, resume, stop]
+                  example: "pause"
+                reason:
+                  type: string
+                  example: "Budget optimization needed"
+                schedule:
+                  type: object
+                  nullable: true
+                  properties:
+                    scheduled_time:
+                      type: string
+                      format: date-time
+                      description: When to execute the action (if not immediate)
+              required:
+                - action
+      responses:
+        '200':
+          description: Campaign control action executed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  action_executed:
+                    type: string
+                  previous_status:
+                    type: string
+                  new_status:
+                    type: string
+                  timestamp:
+                    type: string
+                    format: date-time
+                  platforms_affected:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        platform:
+                          type: string
+                        platform_campaign_id:
+                          type: string
+                        action_status:
+                          type: string
+                          enum: [success, pending, failed]
+
+  /{campaign_id}/historical:
+    get:
+      summary: Get historical campaign data
+      description: Retrieve historical performance data for analysis and learning
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: include_hourly
+          in: query
+          schema:
+            type: boolean
+            default: false
+        - name: include_audience_insights
+          in: query
+          schema:
+            type: boolean
+            default: true
+        - name: include_creative_performance
+          in: query
+          schema:
+            type: boolean
+            default: true
+        - name: export_format
+          in: query
+          schema:
+            type: string
+            enum: [json, csv, parquet]
+            default: json
+      responses:
+        '200':
+          description: Historical data retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  campaign_history:
+                    type: object
+                    properties:
+                      performance_timeline:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            timestamp:
+                              type: string
+                              format: date-time
+                            metrics:
+                              type: object
+                            context:
+                              type: object
+                              properties:
+                                market_conditions:
+                                  type: object
+                                competitive_activity:
+                                  type: object
+                                external_factors:
+                                  type: object
+                      audience_evolution:
+                        type: object
+                        properties:
+                          audience_composition_changes:
+                            type: array
+                            items:
+                              type: object
+                          engagement_pattern_shifts:
+                            type: array
+                            items:
+                              type: object
+                      creative_performance_history:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            creative_id:
+                              type: string
+                            performance_over_time:
+                              type: array
+                              items:
+                                type: object
+                            fatigue_analysis:
+                              type: object
+                      optimization_actions:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            action_type:
+                              type: string
+                            timestamp:
+                              type: string
+                              format: date-time
+                            parameters_changed:
+                              type: object
+                            performance_impact:
+                              type: object
+
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              details:
+                type: object
+
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+
+    NotFound:
+      description: Campaign not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+
+    RateLimited:
+      description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string

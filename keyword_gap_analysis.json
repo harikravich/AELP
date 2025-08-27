@@ -1,0 +1,773 @@
+{
+  "timestamp": "2025-08-22T17:11:45.656135",
+  "analysis_summary": {
+    "total_keywords_analyzed": 41,
+    "behavioral_health_keywords": 16,
+    "clinical_authority_keywords": 4,
+    "avg_opportunity_score": 0.6573158536585366
+  },
+  "top_opportunities": [
+    {
+      "keyword": "mood tracking app",
+      "volume": 2400,
+      "competition": 0.3,
+      "opportunity_score": 0.8799999999999999,
+      "category": "behavioral_health",
+      "intent": "high",
+      "suggested_bid": 7.696,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "teen depression monitoring",
+      "volume": 1200,
+      "competition": 0.2,
+      "opportunity_score": 0.8,
+      "category": "behavioral_health",
+      "intent": "high",
+      "suggested_bid": 5.952,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "digital wellness ai",
+      "volume": 890,
+      "competition": 0.1,
+      "opportunity_score": 0.7935000000000001,
+      "category": "ai_powered",
+      "intent": "medium",
+      "suggested_bid": 2.5916,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "mental health early warning",
+      "volume": 560,
+      "competition": 0.1,
+      "opportunity_score": 0.744,
+      "category": "behavioral_health",
+      "intent": "medium",
+      "suggested_bid": 2.4464000000000006,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "evidence based monitoring",
+      "volume": 415,
+      "competition": 0.09999999999999998,
+      "opportunity_score": 0.7222500000000001,
+      "category": "general",
+      "intent": "high",
+      "suggested_bid": 4.7652,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "behavioral pattern recognition",
+      "volume": 340,
+      "competition": 0.1,
+      "opportunity_score": 0.7110000000000001,
+      "category": "behavioral_health",
+      "intent": "medium",
+      "suggested_bid": 2.3496,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "ai behavioral analysis",
+      "volume": 320,
+      "competition": 0.1,
+      "opportunity_score": 0.708,
+      "category": "behavioral_health",
+      "intent": "medium",
+      "suggested_bid": 2.3408,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "predictive mental health",
+      "volume": 450,
+      "competition": 0.15,
+      "opportunity_score": 0.7075,
+      "category": "behavioral_health",
+      "intent": "medium",
+      "suggested_bid": 2.507,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "psychologist recommended monitoring",
+      "volume": 89,
+      "competition": 0.02,
+      "opportunity_score": 0.7053499999999999,
+      "category": "clinical_authority",
+      "intent": "high",
+      "suggested_bid": 4.152624,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "teen anxiety monitoring",
+      "volume": 539,
+      "competition": 0.19999999999999998,
+      "opportunity_score": 0.70085,
+      "category": "behavioral_health",
+      "intent": "high",
+      "suggested_bid": 5.31744,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "medical grade parental control",
+      "volume": 242,
+      "competition": 0.09999999999999998,
+      "opportunity_score": 0.6963,
+      "category": "clinical_authority",
+      "intent": "medium",
+      "suggested_bid": 2.30648,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "predictive teen safety",
+      "volume": 744,
+      "competition": 0.3,
+      "opportunity_score": 0.6916,
+      "category": "ai_powered",
+      "intent": "medium",
+      "suggested_bid": 2.98688,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "teen crisis monitoring",
+      "volume": 708,
+      "competition": 0.3,
+      "opportunity_score": 0.6861999999999999,
+      "category": "crisis_intervention",
+      "intent": "high",
+      "suggested_bid": 5.93632,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "teen mental health crisis",
+      "volume": 691,
+      "competition": 0.3,
+      "opportunity_score": 0.6836499999999999,
+      "category": "behavioral_health",
+      "intent": "crisis",
+      "suggested_bid": 11.83728,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "aap guidelines tracker",
+      "volume": 80,
+      "competition": 0.09999999999999998,
+      "opportunity_score": 0.672,
+      "category": "clinical_authority",
+      "intent": "high",
+      "suggested_bid": 4.470400000000001,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "intelligent teen monitoring",
+      "volume": 592,
+      "competition": 0.3,
+      "opportunity_score": 0.6688,
+      "category": "ai_powered",
+      "intent": "high",
+      "suggested_bid": 5.81568,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "holistic teen monitoring",
+      "volume": 543,
+      "competition": 0.3,
+      "opportunity_score": 0.66145,
+      "category": "general",
+      "intent": "high",
+      "suggested_bid": 5.7647200000000005,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "emergency teen help",
+      "volume": 780,
+      "competition": 0.4,
+      "opportunity_score": 0.657,
+      "category": "crisis_intervention",
+      "intent": "high",
+      "suggested_bid": 6.473599999999999,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "preventive mental health",
+      "volume": 437,
+      "competition": 0.3,
+      "opportunity_score": 0.64555,
+      "category": "behavioral_health",
+      "intent": "medium",
+      "suggested_bid": 2.8272399999999998,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "predictive parental control",
+      "volume": 419,
+      "competition": 0.3,
+      "opportunity_score": 0.6428499999999999,
+      "category": "ai_powered",
+      "intent": "medium",
+      "suggested_bid": 2.81788,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "proactive mental health",
+      "volume": 400,
+      "competition": 0.3,
+      "opportunity_score": 0.6399999999999999,
+      "category": "behavioral_health",
+      "intent": "medium",
+      "suggested_bid": 2.8080000000000003,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "urgent behavioral alert",
+      "volume": 130,
+      "competition": 0.19999999999999998,
+      "opportunity_score": 0.6395000000000001,
+      "category": "behavioral_health",
+      "intent": "crisis",
+      "suggested_bid": 9.8496,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "behavioral ai insights",
+      "volume": 129,
+      "competition": 0.19999999999999998,
+      "opportunity_score": 0.6393500000000001,
+      "category": "behavioral_health",
+      "intent": "medium",
+      "suggested_bid": 2.46192,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "immediate mental health",
+      "volume": 389,
+      "competition": 0.3,
+      "opportunity_score": 0.63835,
+      "category": "behavioral_health",
+      "intent": "medium",
+      "suggested_bid": 2.8022800000000005,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "behavioral health dashboard",
+      "volume": 100,
+      "competition": 0.19999999999999998,
+      "opportunity_score": 0.635,
+      "category": "behavioral_health",
+      "intent": "medium",
+      "suggested_bid": 2.448,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "wellness-focused parental control",
+      "volume": 307,
+      "competition": 0.3,
+      "opportunity_score": 0.62605,
+      "category": "wellness_prevention",
+      "intent": "medium",
+      "suggested_bid": 2.7596399999999996,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "mental wellness monitoring",
+      "volume": 302,
+      "competition": 0.3,
+      "opportunity_score": 0.6253,
+      "category": "wellness_prevention",
+      "intent": "high",
+      "suggested_bid": 5.51408,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "teen wellbeing tracker",
+      "volume": 259,
+      "competition": 0.3,
+      "opportunity_score": 0.6188499999999999,
+      "category": "wellness_prevention",
+      "intent": "high",
+      "suggested_bid": 5.469360000000001,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "digital wellness coach",
+      "volume": 247,
+      "competition": 0.3,
+      "opportunity_score": 0.6170499999999999,
+      "category": "wellness_prevention",
+      "intent": "medium",
+      "suggested_bid": 2.72844,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "digital wellbeing insights",
+      "volume": 227,
+      "competition": 0.3,
+      "opportunity_score": 0.61405,
+      "category": "wellness_prevention",
+      "intent": "medium",
+      "suggested_bid": 2.7180400000000002,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "smart wellness monitoring",
+      "volume": 219,
+      "competition": 0.3,
+      "opportunity_score": 0.6128499999999999,
+      "category": "ai_powered",
+      "intent": "high",
+      "suggested_bid": 5.42776,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "mindful digital parenting",
+      "volume": 185,
+      "competition": 0.3,
+      "opportunity_score": 0.60775,
+      "category": "wellness_prevention",
+      "intent": "medium",
+      "suggested_bid": 2.6961999999999997,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "balanced screen time ai",
+      "volume": 132,
+      "competition": 0.3,
+      "opportunity_score": 0.5997999999999999,
+      "category": "ai_powered",
+      "intent": "medium",
+      "suggested_bid": 2.66864,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "cdc screen time app",
+      "volume": 120,
+      "competition": 0.05,
+      "opportunity_score": 0.5980000000000001,
+      "category": "clinical_authority",
+      "intent": "high",
+      "suggested_bid": 4.300800000000001,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": true,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "clinical mental health app",
+      "volume": 374,
+      "competition": 0.4,
+      "opportunity_score": 0.5961,
+      "category": "behavioral_health",
+      "intent": "high",
+      "suggested_bid": 6.018879999999999,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "parent crisis hotline",
+      "volume": 90,
+      "competition": 0.3,
+      "opportunity_score": 0.5934999999999999,
+      "category": "crisis_intervention",
+      "intent": "crisis",
+      "suggested_bid": 10.587200000000001,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "crisis parent support",
+      "volume": 80,
+      "competition": 0.3,
+      "opportunity_score": 0.592,
+      "category": "crisis_intervention",
+      "intent": "crisis",
+      "suggested_bid": 10.5664,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "ai mood detection",
+      "volume": 72,
+      "competition": 0.3,
+      "opportunity_score": 0.5908,
+      "category": "behavioral_health",
+      "intent": "medium",
+      "suggested_bid": 2.6374400000000002,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "teen suicide prevention app",
+      "volume": 473,
+      "competition": 0.5,
+      "opportunity_score": 0.5709500000000001,
+      "category": "crisis_intervention",
+      "intent": "high",
+      "suggested_bid": 6.5676000000000005,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "pediatrician approved app",
+      "volume": 400,
+      "competition": 0.5,
+      "opportunity_score": 0.56,
+      "category": "general",
+      "intent": "high",
+      "suggested_bid": 6.48,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    },
+    {
+      "keyword": "therapist recommended app",
+      "volume": 379,
+      "competition": 0.5,
+      "opportunity_score": 0.5568500000000001,
+      "category": "general",
+      "intent": "high",
+      "suggested_bid": 6.4548000000000005,
+      "competitor_coverage": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      }
+    }
+  ],
+  "keyword_clusters": [
+    {
+      "theme": "behavioral_health",
+      "keyword_count": 16,
+      "total_volume": 8531,
+      "avg_competition": 0.22812500000000002,
+      "cluster_score": 0.684978125
+    },
+    {
+      "theme": "ai_powered",
+      "keyword_count": 6,
+      "total_volume": 2996,
+      "avg_competition": 0.26666666666666666,
+      "cluster_score": 0.6682333333333333
+    },
+    {
+      "theme": "clinical_authority",
+      "keyword_count": 4,
+      "total_volume": 531,
+      "avg_competition": 0.06749999999999999,
+      "cluster_score": 0.6679125000000001
+    },
+    {
+      "theme": "general",
+      "keyword_count": 4,
+      "total_volume": 1737,
+      "avg_competition": 0.35,
+      "cluster_score": 0.6251375000000001
+    },
+    {
+      "theme": "crisis_intervention",
+      "keyword_count": 5,
+      "total_volume": 2131,
+      "avg_competition": 0.36,
+      "cluster_score": 0.6199299999999999
+    },
+    {
+      "theme": "wellness_prevention",
+      "keyword_count": 6,
+      "total_volume": 1527,
+      "avg_competition": 0.3,
+      "cluster_score": 0.6181749999999999
+    }
+  ],
+  "campaign_recommendations": {
+    "top_opportunities_by_category": {
+      "behavioral_health": {
+        "keywords": [
+          "mood tracking app",
+          "teen depression monitoring",
+          "mental health early warning",
+          "behavioral pattern recognition",
+          "ai behavioral analysis"
+        ],
+        "total_volume": 4820,
+        "avg_opportunity_score": 0.7686,
+        "suggested_budget": 623.544
+      },
+      "clinical_authority": {
+        "keywords": [
+          "psychologist recommended monitoring",
+          "medical grade parental control",
+          "aap guidelines tracker",
+          "cdc screen time app"
+        ],
+        "total_volume": 531,
+        "avg_opportunity_score": 0.6679125000000001,
+        "suggested_budget": 456.9091200000001
+      },
+      "crisis_intervention": {
+        "keywords": [
+          "teen crisis monitoring",
+          "emergency teen help",
+          "parent crisis hotline",
+          "crisis parent support",
+          "teen suicide prevention app"
+        ],
+        "total_volume": 2131,
+        "avg_opportunity_score": 0.6199299999999999,
+        "suggested_budget": 1203.9336
+      },
+      "ai_powered": {
+        "keywords": [
+          "digital wellness ai",
+          "predictive teen safety",
+          "intelligent teen monitoring",
+          "predictive parental control",
+          "smart wellness monitoring"
+        ],
+        "total_volume": 2864,
+        "avg_opportunity_score": 0.6819200000000001,
+        "suggested_budget": 589.1940000000001
+      }
+    },
+    "quick_wins": {
+      "count": 9,
+      "keywords": [
+        "teen depression monitoring",
+        "digital wellness ai",
+        "mental health early warning",
+        "evidence based monitoring",
+        "behavioral pattern recognition",
+        "ai behavioral analysis",
+        "predictive mental health",
+        "psychologist recommended monitoring",
+        "teen anxiety monitoring"
+      ],
+      "total_volume": 4803,
+      "avg_competition": 0.11888888888888889
+    },
+    "crisis_keywords": {
+      "count": 4,
+      "keywords": [
+        "teen mental health crisis",
+        "urgent behavioral alert",
+        "parent crisis hotline",
+        "crisis parent support"
+      ],
+      "high_value_reason": "Parents in crisis have highest conversion rates",
+      "suggested_priority": "Immediate - these are highest ROI"
+    },
+    "competitor_blind_spots": {
+      "bark": {
+        "missed_keywords": [
+          "mood tracking app",
+          "teen depression monitoring",
+          "digital wellness ai",
+          "mental health early warning",
+          "evidence based monitoring",
+          "behavioral pattern recognition",
+          "ai behavioral analysis",
+          "predictive mental health",
+          "psychologist recommended monitoring",
+          "teen anxiety monitoring"
+        ],
+        "missed_volume": 7203,
+        "avg_opportunity": 0.747245
+      },
+      "qustodio": {
+        "missed_keywords": [
+          "mood tracking app",
+          "teen depression monitoring",
+          "digital wellness ai",
+          "mental health early warning",
+          "evidence based monitoring",
+          "behavioral pattern recognition",
+          "ai behavioral analysis",
+          "predictive mental health",
+          "psychologist recommended monitoring",
+          "teen anxiety monitoring"
+        ],
+        "missed_volume": 7203,
+        "avg_opportunity": 0.747245
+      },
+      "life360": {
+        "missed_keywords": [
+          "mood tracking app",
+          "teen depression monitoring",
+          "digital wellness ai",
+          "mental health early warning",
+          "evidence based monitoring",
+          "behavioral pattern recognition",
+          "ai behavioral analysis",
+          "predictive mental health",
+          "psychologist recommended monitoring",
+          "teen anxiety monitoring"
+        ],
+        "missed_volume": 7203,
+        "avg_opportunity": 0.747245
+      },
+      "universal_gaps": {
+        "count": 40,
+        "keywords": [
+          "mood tracking app",
+          "teen depression monitoring",
+          "digital wellness ai",
+          "mental health early warning",
+          "evidence based monitoring",
+          "behavioral pattern recognition",
+          "ai behavioral analysis",
+          "predictive mental health",
+          "psychologist recommended monitoring",
+          "teen anxiety monitoring"
+        ],
+        "description": "Keywords NO competitor is targeting"
+      }
+    }
+  }
+}

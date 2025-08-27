@@ -1,0 +1,903 @@
+openapi: 3.0.3
+info:
+  title: GAELP Safety & Budget Control API
+  description: API for managing spending limits, campaign safety validation, and budget monitoring
+  version: 1.0.0
+  contact:
+    name: GAELP Platform Team
+    email: api@gaelp.dev
+
+servers:
+  - url: https://api.gaelp.dev/v1/safety
+    description: Production server
+  - url: https://staging-api.gaelp.dev/v1/safety
+    description: Staging server
+
+security:
+  - apiKey: []
+  - bearerAuth: []
+
+paths:
+  /spending-limits:
+    post:
+      summary: Set spending limits
+      description: Configure spending limits and budget controls for accounts or campaigns
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                limit_scope:
+                  type: string
+                  enum: [account, campaign, agent]
+                  example: "account"
+                scope_id:
+                  type: string
+                  description: "ID of account, campaign, or agent (null for account-level)"
+                  nullable: true
+                  example: null
+                limits:
+                  type: object
+                  properties:
+                    daily_budget:
+                      type: number
+                      format: float
+                      minimum: 0
+                      example: 500.0
+                    weekly_budget:
+                      type: number
+                      format: float
+                      minimum: 0
+                      nullable: true
+                      example: 3000.0
+                    monthly_budget:
+                      type: number
+                      format: float
+                      minimum: 0
+                      nullable: true
+                      example: 12000.0
+                    total_budget:
+                      type: number
+                      format: float
+                      minimum: 0
+                      nullable: true
+                      example: 50000.0
+                    per_campaign_limit:
+                      type: number
+                      format: float
+                      minimum: 0
+                      nullable: true
+                      example: 2000.0
+                    emergency_stop_threshold:
+                      type: number
+                      format: float
+                      minimum: 0
+                      description: "Auto-stop all campaigns if this amount is exceeded in 24h"
+                      example: 10000.0
+                alert_thresholds:
+                  type: object
+                  properties:
+                    warning_threshold_percentage:
+                      type: number
+                      format: float
+                      minimum: 0
+                      maximum: 100
+                      default: 80
+                      example: 80
+                    critical_threshold_percentage:
+                      type: number
+                      format: float
+                      minimum: 0
+                      maximum: 100
+                      default: 95
+                      example: 95
+                    notification_channels:
+                      type: array
+                      items:
+                        type: string
+                        enum: [email, sms, webhook, slack, teams]
+                      example: ["email", "webhook"]
+                spending_velocity_controls:
+                  type: object
+                  properties:
+                    max_hourly_spend:
+                      type: number
+                      format: float
+                      nullable: true
+                      example: 100.0
+                    max_spend_acceleration:
+                      type: number
+                      format: float
+                      description: "Maximum allowed increase in spending rate (multiplier)"
+                      default: 2.0
+                      example: 2.0
+                    cool_down_period_hours:
+                      type: integer
+                      description: "Hours to wait after hitting limits before auto-resuming"
+                      default: 4
+                      example: 4
+                rollover_settings:
+                  type: object
+                  properties:
+                    allow_daily_rollover:
+                      type: boolean
+                      default: false
+                    max_rollover_percentage:
+                      type: number
+                      format: float
+                      minimum: 0
+                      maximum: 100
+                      default: 20
+                      example: 20
+                    rollover_expiry_days:
+                      type: integer
+                      default: 7
+                      example: 7
+              required:
+                - limit_scope
+                - limits
+      responses:
+        '201':
+          description: Spending limits configured successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  limit_config_id:
+                    type: string
+                    format: uuid
+                    example: "limit_123e4567-e89b-12d3-a456-426614174000"
+                  status:
+                    type: string
+                    enum: [active, pending, disabled]
+                    example: "active"
+                  effective_date:
+                    type: string
+                    format: date-time
+                  configured_limits:
+                    type: object
+                    properties:
+                      daily_limit:
+                        type: number
+                        format: float
+                      remaining_budgets:
+                        type: object
+                        properties:
+                          daily_remaining:
+                            type: number
+                            format: float
+                          weekly_remaining:
+                            type: number
+                            format: float
+                          monthly_remaining:
+                            type: number
+                            format: float
+                          total_remaining:
+                            type: number
+                            format: float
+
+    get:
+      summary: Get current spending limits
+      description: Retrieve current spending limits and budget status
+      parameters:
+        - name: scope
+          in: query
+          schema:
+            type: string
+            enum: [account, campaign, agent]
+            default: account
+        - name: scope_id
+          in: query
+          schema:
+            type: string
+          description: "ID of specific campaign or agent"
+      responses:
+        '200':
+          description: Current spending limits retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  active_limits:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        limit_config_id:
+                          type: string
+                        scope:
+                          type: string
+                        scope_id:
+                          type: string
+                          nullable: true
+                        limits:
+                          type: object
+                        current_usage:
+                          type: object
+                          properties:
+                            daily_spent:
+                              type: number
+                              format: float
+                            weekly_spent:
+                              type: number
+                              format: float
+                            monthly_spent:
+                              type: number
+                              format: float
+                            total_spent:
+                              type: number
+                              format: float
+                        remaining_budgets:
+                          type: object
+                          properties:
+                            daily_remaining:
+                              type: number
+                              format: float
+                            weekly_remaining:
+                              type: number
+                              format: float
+                            monthly_remaining:
+                              type: number
+                              format: float
+                            total_remaining:
+                              type: number
+                              format: float
+                        status:
+                          type: string
+                          enum: [active, warning, critical, exceeded, paused]
+                        last_updated:
+                          type: string
+                          format: date-time
+
+  /campaign-safety:
+    post:
+      summary: Validate campaign safety
+      description: Analyze campaign configuration for safety, compliance, and brand risk
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                campaign:
+                  type: object
+                  properties:
+                    campaign_id:
+                      type: string
+                      nullable: true
+                      description: "Existing campaign ID for re-validation"
+                    creative:
+                      type: object
+                      properties:
+                        headline:
+                          type: string
+                        description:
+                          type: string
+                        image_url:
+                          type: string
+                          format: uri
+                          nullable: true
+                        video_url:
+                          type: string
+                          format: uri
+                          nullable: true
+                        landing_page_url:
+                          type: string
+                          format: uri
+                        call_to_action:
+                          type: string
+                    targeting:
+                      type: object
+                    budget:
+                      type: object
+                      properties:
+                        daily_budget:
+                          type: number
+                          format: float
+                        total_budget:
+                          type: number
+                          format: float
+                validation_level:
+                  type: string
+                  enum: [basic, standard, strict, custom]
+                  default: standard
+                  description: "Level of safety validation to apply"
+                custom_checks:
+                  type: array
+                  items:
+                    type: string
+                    enum: [content_safety, brand_safety, compliance, fraud_detection, targeting_ethics, budget_reasonableness]
+                  nullable: true
+              required:
+                - campaign
+      responses:
+        '200':
+          description: Campaign safety validation completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  safety_score:
+                    type: number
+                    format: float
+                    minimum: 0
+                    maximum: 1
+                    description: "Overall safety score (1 = completely safe)"
+                    example: 0.92
+                  validation_result:
+                    type: string
+                    enum: [approved, approved_with_warnings, requires_review, rejected]
+                    example: "approved_with_warnings"
+                  safety_checks:
+                    type: object
+                    properties:
+                      content_safety:
+                        type: object
+                        properties:
+                          score:
+                            type: number
+                            format: float
+                            example: 0.95
+                          issues:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                type:
+                                  type: string
+                                  enum: [inappropriate_content, misleading_claims, prohibited_words, sensitive_topics]
+                                severity:
+                                  type: string
+                                  enum: [low, medium, high, critical]
+                                description:
+                                  type: string
+                                location:
+                                  type: string
+                                  enum: [headline, description, image, video, landing_page]
+                            example: []
+                          text_analysis:
+                            type: object
+                            properties:
+                              sentiment_score:
+                                type: number
+                                format: float
+                                minimum: -1
+                                maximum: 1
+                              toxicity_score:
+                                type: number
+                                format: float
+                                minimum: 0
+                                maximum: 1
+                              readability_score:
+                                type: number
+                                format: float
+                      brand_safety:
+                        type: object
+                        properties:
+                          score:
+                            type: number
+                            format: float
+                            example: 0.88
+                          risks:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                risk_type:
+                                  type: string
+                                  enum: [controversial_topics, competitor_mentions, negative_association, reputation_risk]
+                                risk_level:
+                                  type: string
+                                  enum: [low, medium, high]
+                                description:
+                                  type: string
+                                mitigation:
+                                  type: string
+                          brand_alignment_score:
+                            type: number
+                            format: float
+                            example: 0.9
+                      compliance_check:
+                        type: object
+                        properties:
+                          score:
+                            type: number
+                            format: float
+                            example: 1.0
+                          violations:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                regulation:
+                                  type: string
+                                  enum: [gdpr, ccpa, coppa, ada, fda, ftc, industry_specific]
+                                violation_type:
+                                  type: string
+                                description:
+                                  type: string
+                                required_action:
+                                  type: string
+                            example: []
+                          legal_review_required:
+                            type: boolean
+                            example: false
+                      fraud_detection:
+                        type: object
+                        properties:
+                          score:
+                            type: number
+                            format: float
+                            example: 0.95
+                          fraud_indicators:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                indicator:
+                                  type: string
+                                  enum: [suspicious_targeting, unrealistic_claims, known_scam_patterns, fake_reviews]
+                                confidence:
+                                  type: number
+                                  format: float
+                          landing_page_analysis:
+                            type: object
+                            properties:
+                              ssl_certificate:
+                                type: boolean
+                              domain_age_days:
+                                type: integer
+                              trust_signals:
+                                type: array
+                                items:
+                                  type: string
+                      targeting_ethics:
+                        type: object
+                        properties:
+                          score:
+                            type: number
+                            format: float
+                            example: 0.90
+                          ethical_concerns:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                concern_type:
+                                  type: string
+                                  enum: [discriminatory_targeting, vulnerable_populations, privacy_concerns, manipulation_risk]
+                                severity:
+                                  type: string
+                                  enum: [low, medium, high]
+                                description:
+                                  type: string
+                                recommendation:
+                                  type: string
+                          vulnerable_group_targeting:
+                            type: boolean
+                            example: false
+                      budget_reasonableness:
+                        type: object
+                        properties:
+                          score:
+                            type: number
+                            format: float
+                            example: 0.85
+                          budget_analysis:
+                            type: object
+                            properties:
+                              budget_vs_market_avg:
+                                type: number
+                                format: float
+                              roi_feasibility:
+                                type: string
+                                enum: [unrealistic, optimistic, reasonable, conservative]
+                              spend_velocity_risk:
+                                type: string
+                                enum: [low, medium, high]
+                  recommendations:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        category:
+                          type: string
+                          enum: [content, targeting, budget, compliance, safety]
+                        priority:
+                          type: string
+                          enum: [low, medium, high, critical]
+                        recommendation:
+                          type: string
+                        rationale:
+                          type: string
+                        estimated_impact:
+                          type: string
+                          enum: [minimal, moderate, significant]
+                  approval_requirements:
+                    type: object
+                    properties:
+                      requires_human_review:
+                        type: boolean
+                      required_approvers:
+                        type: array
+                        items:
+                          type: string
+                          enum: [content_reviewer, legal_team, brand_manager, compliance_officer]
+                      estimated_review_time_hours:
+                        type: integer
+                      auto_approval_possible:
+                        type: boolean
+
+  /spending-status:
+    get:
+      summary: Get current spending status
+      description: Get real-time spending status across all active campaigns and limits
+      parameters:
+        - name: scope
+          in: query
+          schema:
+            type: string
+            enum: [account, campaign, agent]
+            default: account
+        - name: time_range
+          in: query
+          schema:
+            type: string
+            enum: [today, week, month, all]
+            default: today
+        - name: include_projections
+          in: query
+          schema:
+            type: boolean
+            default: true
+      responses:
+        '200':
+          description: Current spending status retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_usage:
+                    type: object
+                    properties:
+                      total_spent_today:
+                        type: number
+                        format: float
+                        example: 1250.75
+                      total_spent_week:
+                        type: number
+                        format: float
+                        example: 6543.25
+                      total_spent_month:
+                        type: number
+                        format: float
+                        example: 18750.50
+                      active_campaigns_count:
+                        type: integer
+                        example: 12
+                      avg_daily_spend_7d:
+                        type: number
+                        format: float
+                        example: 935.25
+                  limit_status:
+                    type: object
+                    properties:
+                      daily_limit_usage:
+                        type: object
+                        properties:
+                          limit:
+                            type: number
+                            format: float
+                          spent:
+                            type: number
+                            format: float
+                          remaining:
+                            type: number
+                            format: float
+                          usage_percentage:
+                            type: number
+                            format: float
+                          status:
+                            type: string
+                            enum: [safe, warning, critical, exceeded]
+                      weekly_limit_usage:
+                        type: object
+                        properties:
+                          limit:
+                            type: number
+                            format: float
+                          spent:
+                            type: number
+                            format: float
+                          remaining:
+                            type: number
+                            format: float
+                          usage_percentage:
+                            type: number
+                            format: float
+                          status:
+                            type: string
+                            enum: [safe, warning, critical, exceeded]
+                      monthly_limit_usage:
+                        type: object
+                        properties:
+                          limit:
+                            type: number
+                            format: float
+                          spent:
+                            type: number
+                            format: float
+                          remaining:
+                            type: number
+                            format: float
+                          usage_percentage:
+                            type: number
+                            format: float
+                          status:
+                            type: string
+                            enum: [safe, warning, critical, exceeded]
+                  velocity_analysis:
+                    type: object
+                    properties:
+                      current_hourly_spend:
+                        type: number
+                        format: float
+                      spend_acceleration:
+                        type: number
+                        format: float
+                        description: "Current vs average spending rate multiplier"
+                      velocity_status:
+                        type: string
+                        enum: [normal, elevated, high, critical]
+                      time_to_daily_limit:
+                        type: number
+                        format: float
+                        description: "Hours until daily limit reached at current rate"
+                        nullable: true
+                  projections:
+                    type: object
+                    properties:
+                      projected_daily_spend:
+                        type: number
+                        format: float
+                      projected_weekly_spend:
+                        type: number
+                        format: float
+                      projected_monthly_spend:
+                        type: number
+                        format: float
+                      confidence_interval:
+                        type: object
+                        properties:
+                          lower_bound:
+                            type: number
+                            format: float
+                          upper_bound:
+                            type: number
+                            format: float
+                          confidence_level:
+                            type: number
+                            format: float
+                  alerts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        alert_type:
+                          type: string
+                          enum: [budget_warning, budget_critical, velocity_alert, anomaly_detected, limit_exceeded]
+                        severity:
+                          type: string
+                          enum: [info, warning, critical, emergency]
+                        message:
+                          type: string
+                        triggered_at:
+                          type: string
+                          format: date-time
+                        scope:
+                          type: string
+                        scope_id:
+                          type: string
+                          nullable: true
+                        auto_actions_taken:
+                          type: array
+                          items:
+                            type: string
+                        requires_action:
+                          type: boolean
+
+  /emergency-controls:
+    post:
+      summary: Emergency spending controls
+      description: Emergency actions to stop or limit spending immediately
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                  enum: [emergency_stop, pause_all, reduce_budgets, stop_high_spend]
+                  example: "emergency_stop"
+                scope:
+                  type: string
+                  enum: [all_campaigns, specific_campaigns, high_spend_campaigns, agent_campaigns]
+                  default: "all_campaigns"
+                campaign_ids:
+                  type: array
+                  items:
+                    type: string
+                  nullable: true
+                  description: "Specific campaigns to apply action to"
+                parameters:
+                  type: object
+                  properties:
+                    reduction_percentage:
+                      type: number
+                      format: float
+                      minimum: 0
+                      maximum: 100
+                      description: "For reduce_budgets action"
+                    spend_threshold:
+                      type: number
+                      format: float
+                      description: "For stop_high_spend action"
+                reason:
+                  type: string
+                  example: "Unexpected spending spike detected"
+              required:
+                - action
+                - reason
+      responses:
+        '200':
+          description: Emergency action executed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  action_id:
+                    type: string
+                    format: uuid
+                  action_type:
+                    type: string
+                  executed_at:
+                    type: string
+                    format: date-time
+                  affected_campaigns:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        campaign_id:
+                          type: string
+                        previous_status:
+                          type: string
+                        new_status:
+                          type: string
+                        action_result:
+                          type: string
+                          enum: [success, failed, pending]
+                  total_spend_stopped:
+                    type: number
+                    format: float
+                    description: "Estimated daily spend that was stopped"
+                  recovery_options:
+                    type: object
+                    properties:
+                      auto_resume_possible:
+                        type: boolean
+                      manual_review_required:
+                        type: boolean
+                      cooldown_period_hours:
+                        type: integer
+                      resume_conditions:
+                        type: array
+                        items:
+                          type: string
+
+  /audit-log:
+    get:
+      summary: Get safety and budget audit log
+      description: Retrieve audit log of all safety and budget related actions
+      parameters:
+        - name: start_date
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: end_date
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: action_type
+          in: query
+          schema:
+            type: string
+            enum: [limit_set, limit_exceeded, campaign_blocked, emergency_action, safety_validation]
+        - name: severity
+          in: query
+          schema:
+            type: string
+            enum: [info, warning, critical, emergency]
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 1000
+            default: 100
+      responses:
+        '200':
+          description: Audit log retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  audit_entries:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        entry_id:
+                          type: string
+                        timestamp:
+                          type: string
+                          format: date-time
+                        action_type:
+                          type: string
+                        severity:
+                          type: string
+                        user_id:
+                          type: string
+                          nullable: true
+                        system_action:
+                          type: boolean
+                        description:
+                          type: string
+                        scope:
+                          type: string
+                        scope_id:
+                          type: string
+                          nullable: true
+                        parameters:
+                          type: object
+                        result:
+                          type: object
+                        compliance_relevant:
+                          type: boolean
+                  summary:
+                    type: object
+                    properties:
+                      total_entries:
+                        type: integer
+                      entries_by_type:
+                        type: object
+                        additionalProperties:
+                          type: integer
+                      entries_by_severity:
+                        type: object
+                        additionalProperties:
+                          type: integer
+
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

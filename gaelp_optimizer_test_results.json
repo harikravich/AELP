@@ -1,0 +1,324 @@
+{
+  "test_no_static_allocations": {
+    "status": "crashed",
+    "error": "unsupported operand type(s) for -: 'decimal.Decimal' and 'float'"
+  },
+  "test_dayparting_multipliers": {
+    "status": "passed",
+    "multiplier_tests": {
+      "hour_2": {
+        "expected": 1.4,
+        "actual_base": 1.4,
+        "desktop": 1.3299999999999998,
+        "ios": 1.47,
+        "android": 1.4,
+        "reason": "crisis_parents",
+        "matches_expected": true
+      },
+      "hour_9": {
+        "expected": 1.1,
+        "actual_base": 1.1,
+        "desktop": 1.1880000000000002,
+        "ios": 1.1550000000000002,
+        "android": 1.1,
+        "reason": "research_phase",
+        "matches_expected": true
+      },
+      "hour_15": {
+        "expected": 1.3,
+        "actual_base": 1.3,
+        "desktop": 1.2349999999999999,
+        "ios": 1.4949999999999999,
+        "android": 1.3,
+        "reason": "after_school",
+        "matches_expected": true
+      },
+      "hour_19": {
+        "expected": 1.5,
+        "actual_base": 1.5,
+        "desktop": 1.62,
+        "ios": 1.5750000000000002,
+        "android": 1.5,
+        "reason": "decision_time",
+        "matches_expected": true
+      },
+      "hour_21": {
+        "expected": 1.5,
+        "actual_base": 1.5,
+        "desktop": 1.62,
+        "ios": 1.5750000000000002,
+        "android": 1.5,
+        "reason": "decision_time",
+        "matches_expected": true
+      },
+      "hour_4": {
+        "expected": 0.7,
+        "actual_base": 0.7,
+        "desktop": 0.6649999999999999,
+        "ios": 0.735,
+        "android": 0.7,
+        "reason": "low_activity",
+        "matches_expected": true
+      }
+    },
+    "crisis_multiplier_correct": true,
+    "decision_multiplier_correct": true,
+    "bid_adjustments": {
+      "crisis_time": 8.75,
+      "decision_time": 9.375,
+      "base_bid": 5.0
+    }
+  },
+  "test_ios_premium_bidding": {
+    "status": "passed",
+    "channel_ios_premiums": {
+      "google_search": {
+        "expected_ios_multiplier": 1.25,
+        "actual_ios_multiplier": 1.25,
+        "effective_multiplier": 1.0267857142857142,
+        "ios_bid": 18.6875,
+        "android_bid": 18.2,
+        "desktop_bid": 17.29,
+        "premium_in_range": true,
+        "correct_application": true
+      },
+      "google_display": {
+        "expected_ios_multiplier": 1.15,
+        "actual_ios_multiplier": 1.15,
+        "effective_multiplier": 1.3225,
+        "ios_bid": 24.069499999999998,
+        "android_bid": 18.2,
+        "desktop_bid": 17.29,
+        "premium_in_range": false,
+        "correct_application": true
+      },
+      "facebook_feed": {
+        "expected_ios_multiplier": 1.3,
+        "actual_ios_multiplier": 1.3,
+        "effective_multiplier": 1.3,
+        "ios_bid": 27.209,
+        "android_bid": 0.0,
+        "desktop_bid": 0.0,
+        "premium_in_range": true,
+        "correct_application": true
+      },
+      "facebook_stories": {
+        "expected_ios_multiplier": 1.35,
+        "actual_ios_multiplier": 1.35,
+        "effective_multiplier": 1.35,
+        "ios_bid": 0.0,
+        "android_bid": 0.0,
+        "desktop_bid": 0.0,
+        "premium_in_range": true,
+        "correct_application": true
+      },
+      "tiktok_feed": {
+        "expected_ios_multiplier": 1.2,
+        "actual_ios_multiplier": 1.2,
+        "effective_multiplier": 1.2,
+        "ios_bid": 0.0,
+        "android_bid": 0.0,
+        "desktop_bid": 0.0,
+        "premium_in_range": true,
+        "correct_application": true
+      },
+      "tiktok_spark": {
+        "expected_ios_multiplier": 1.15,
+        "actual_ios_multiplier": 1.15,
+        "effective_multiplier": 1.15,
+        "ios_bid": 0.0,
+        "android_bid": 0.0,
+        "desktop_bid": 0.0,
+        "premium_in_range": false,
+        "correct_application": true
+      }
+    },
+    "social_channels_higher_premium": true,
+    "stories_highest_premium": true
+  },
+  "test_marginal_roas_optimization": {
+    "status": "passed",
+    "marginal_roas_tests": {
+      "spend_100": 3.5,
+      "spend_300": 3.5,
+      "spend_500": 3.5,
+      "spend_700": 3.5
+    },
+    "diminishing_returns_detected": true,
+    "allocation_favors_high_performer": true,
+    "google_allocation": 150.0,
+    "tiktok_allocation": 100.0
+  },
+  "test_channel_constraints": {
+    "status": "failed",
+    "constraints_met": true,
+    "budget_balanced": false,
+    "total_allocated": 995.0,
+    "daily_budget": 1000.0,
+    "channel_constraints": {
+      "google_search": {
+        "budget": 450.0,
+        "min_budget": 150.0,
+        "max_budget": 600.0,
+        "min_constraint_met": true,
+        "max_constraint_met": true,
+        "priority_score": 9.0
+      },
+      "google_display": {
+        "budget": 50.0,
+        "min_budget": 50.0,
+        "max_budget": 200.0,
+        "min_constraint_met": true,
+        "max_constraint_met": true,
+        "priority_score": 6.0
+      },
+      "facebook_feed": {
+        "budget": 270.0,
+        "min_budget": 200.0,
+        "max_budget": 400.0,
+        "min_constraint_met": true,
+        "max_constraint_met": true,
+        "priority_score": 8.0
+      },
+      "facebook_stories": {
+        "budget": 75.0,
+        "min_budget": 75.0,
+        "max_budget": 200.0,
+        "min_constraint_met": true,
+        "max_constraint_met": true,
+        "priority_score": 7.0
+      },
+      "tiktok_feed": {
+        "budget": 100.0,
+        "min_budget": 100.0,
+        "max_budget": 300.0,
+        "min_constraint_met": true,
+        "max_constraint_met": true,
+        "priority_score": 6.5
+      },
+      "tiktok_spark": {
+        "budget": 50.0,
+        "min_budget": 50.0,
+        "max_budget": 150.0,
+        "min_constraint_met": true,
+        "max_constraint_met": true,
+        "priority_score": 5.5
+      }
+    }
+  },
+  "test_budget_pacing": {
+    "status": "passed",
+    "total_attempts": 30,
+    "approved_decisions": 1,
+    "blocked_decisions": 29,
+    "total_spend": 93.4375,
+    "pacing_multiplier": 1.4,
+    "pacing_active": true,
+    "max_hourly_spend": 93.4375,
+    "hourly_limit_respected": true,
+    "budget_utilization": 0.09343749999999999
+  },
+  "test_real_time_reallocation": {
+    "status": "passed",
+    "initial_google": 450.0,
+    "new_google": 520.0,
+    "google_change": 70.0,
+    "initial_facebook": 270.0,
+    "new_facebook": 200.0,
+    "facebook_change": -70.0,
+    "reallocation_correct": true,
+    "google_performance_roas": 10.0,
+    "facebook_performance_roas": 0.5
+  },
+  "test_crisis_time_multipliers": {
+    "status": "passed",
+    "crisis_hour_results": {
+      "hour_0": {
+        "multiplier": 1.3299999999999998,
+        "base_multiplier": 1.4,
+        "reason": "crisis_parents",
+        "conversion_probability": 0.35,
+        "is_crisis_related": true
+      },
+      "hour_1": {
+        "multiplier": 1.3299999999999998,
+        "base_multiplier": 1.4,
+        "reason": "crisis_parents",
+        "conversion_probability": 0.35,
+        "is_crisis_related": true
+      },
+      "hour_2": {
+        "multiplier": 1.3299999999999998,
+        "base_multiplier": 1.4,
+        "reason": "crisis_parents",
+        "conversion_probability": 0.35,
+        "is_crisis_related": true
+      },
+      "hour_3": {
+        "multiplier": 1.2349999999999999,
+        "base_multiplier": 1.3,
+        "reason": "late_night_worry",
+        "conversion_probability": 0.28,
+        "is_crisis_related": true
+      }
+    },
+    "hour_2_multiplier": 1.4,
+    "hour_2_correct": true,
+    "crisis_reasoning": "crisis_parents"
+  },
+  "test_decision_time_multipliers": {
+    "status": "passed",
+    "decision_hour_results": {
+      "hour_19": {
+        "multiplier": 1.62,
+        "base_multiplier": 1.5,
+        "reason": "decision_time",
+        "conversion_probability": 0.45,
+        "is_decision_time": true
+      },
+      "hour_20": {
+        "multiplier": 1.62,
+        "base_multiplier": 1.5,
+        "reason": "decision_time",
+        "conversion_probability": 0.45,
+        "is_decision_time": true
+      },
+      "hour_21": {
+        "multiplier": 1.62,
+        "base_multiplier": 1.5,
+        "reason": "decision_time",
+        "conversion_probability": 0.45,
+        "is_decision_time": true
+      }
+    },
+    "all_multipliers_correct": true,
+    "decision_multipliers": [
+      1.5,
+      1.5,
+      1.5
+    ]
+  },
+  "test_performance_driven_allocation": {
+    "status": "passed",
+    "allocation": {
+      "google": 520.0,
+      "facebook": 200.0,
+      "tiktok": 100.0
+    },
+    "performance_roas": {
+      "google": 12.0,
+      "facebook": 3.6,
+      "tiktok": 0.9
+    },
+    "hierarchy_correct": true,
+    "efficiency_ratios": {
+      "google": 43.333333333333336,
+      "facebook": 55.55555555555556,
+      "tiktok": 111.11111111111111
+    }
+  },
+  "test_emergency_scenarios": {
+    "status": "crashed",
+    "error": "Budget $100 below minimum requirements"
+  }
+}

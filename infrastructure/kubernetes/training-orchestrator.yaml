@@ -1,0 +1,184 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: training-orchestrator
+  namespace: gaelp-training
+  labels:
+    app: training-orchestrator
+    component: training
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: training-orchestrator
+  template:
+    metadata:
+      labels:
+        app: training-orchestrator
+        component: training
+    spec:
+      serviceAccountName: training-orchestrator
+      containers:
+      - name: training-orchestrator
+        image: gcr.io/PROJECT_ID/training-orchestrator:latest
+        ports:
+        - containerPort: 8080
+          name: http
+        env:
+        - name: PROJECT_ID
+          value: "PROJECT_ID"
+        - name: BIGQUERY_DATASET
+          value: "agent_training"
+        - name: STORAGE_BUCKET
+          value: "gaelp-model-artifacts-SUFFIX"
+        resources:
+          requests:
+            cpu: 500m
+            memory: 1Gi
+          limits:
+            cpu: 2
+            memory: 4Gi
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: training-orchestrator-service
+  namespace: gaelp-training
+  labels:
+    app: training-orchestrator
+spec:
+  selector:
+    app: training-orchestrator
+  ports:
+  - port: 80
+    targetPort: 8080
+    name: http
+  type: ClusterIP
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: training-orchestrator
+  namespace: gaelp-training
+  annotations:
+    iam.gke.io/gcp-service-account: gaelp-training-orchestrator@PROJECT_ID.iam.gserviceaccount.com
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: agent-training-job
+  namespace: gaelp-training
+  labels:
+    app: agent-training
+    component: training
+spec:
+  parallelism: 1
+  completions: 1
+  backoffLimit: 3
+  template:
+    metadata:
+      labels:
+        app: agent-training
+    spec:
+      serviceAccountName: training-orchestrator
+      restartPolicy: Never
+      nodeSelector:
+        workload: ml-training
+      tolerations:
+      - key: nvidia.com/gpu
+        operator: Equal
+        value: "true"
+        effect: NoSchedule
+      containers:
+      - name: agent-trainer
+        image: gcr.io/PROJECT_ID/agent-trainer:latest
+        resources:
+          requests:
+            cpu: 2
+            memory: 8Gi
+            nvidia.com/gpu: 1
+          limits:
+            cpu: 4
+            memory: 16Gi
+            nvidia.com/gpu: 1
+        env:
+        - name: PROJECT_ID
+          value: "PROJECT_ID"
+        - name: TRAINING_CONFIG
+          valueFrom:
+            configMapKeyRef:
+              name: training-config
+              key: config.json
+        - name: BIGQUERY_DATASET
+          value: "agent_training"
+        - name: MODEL_BUCKET
+          value: "gaelp-model-artifacts-SUFFIX"
+        volumeMounts:
+        - name: training-data
+          mountPath: /data
+        - name: model-output
+          mountPath: /models
+      volumes:
+      - name: training-data
+        persistentVolumeClaim:
+          claimName: training-data-pvc
+      - name: model-output
+        persistentVolumeClaim:
+          claimName: model-output-pvc
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: training-config
+  namespace: gaelp-training
+data:
+  config.json: |
+    {
+      "model_type": "reinforcement_learning",
+      "algorithm": "ppo",
+      "learning_rate": 0.0003,
+      "batch_size": 64,
+      "epochs": 100,
+      "environment": "ad_campaign_simulation",
+      "reward_function": "roas_optimization",
+      "checkpoint_frequency": 10,
+      "evaluation_frequency": 5
+    }
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: training-data-pvc
+  namespace: gaelp-training
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: ssd
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: model-output-pvc
+  namespace: gaelp-training
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: ssd

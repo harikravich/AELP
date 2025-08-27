@@ -1,0 +1,1582 @@
+{
+  "simulation_overview": {
+    "total_worlds": 100,
+    "total_episodes_run": 250,
+    "successful_episodes": 135,
+    "success_rate": 0.54,
+    "runtime_seconds": 4.481478452682495,
+    "episodes_per_second": 55.78516166921579,
+    "max_concurrent_worlds": 20
+  },
+  "batch_results": [
+    {
+      "batch_num": 1,
+      "experiences": 50,
+      "total_reward": 1702.3667541805744,
+      "average_reward": 34.047335083611486,
+      "success_rate": 0.5,
+      "crisis_interactions": 3,
+      "crisis_revenue": 492.82014758881166,
+      "batch_time": 0.7471013069152832,
+      "episodes_per_second": 66.92532798054614,
+      "world_breakdown": {
+        "normal_market": {
+          "count": 18,
+          "average_reward": 3.53478992738177,
+          "average_roas": 3.53478992738177,
+          "success_rate": 0.4444444444444444,
+          "crisis_interactions": 0
+        },
+        "economic_downturn": {
+          "count": 4,
+          "average_reward": 50.94500222839391,
+          "average_roas": 50.94500222839391,
+          "success_rate": 0.75,
+          "crisis_interactions": 1
+        },
+        "luxury_seeker": {
+          "count": 1,
+          "average_reward": 105.7352735395445,
+          "average_roas": 105.7352735395445,
+          "success_rate": 1.0,
+          "crisis_interactions": 0
+        },
+        "high_competition": {
+          "count": 5,
+          "average_reward": 20.59514428921326,
+          "average_roas": 20.59514428921326,
+          "success_rate": 0.4,
+          "crisis_interactions": 0
+        },
+        "low_competition": {
+          "count": 5,
+          "average_reward": 24.218573534458848,
+          "average_roas": 24.218573534458848,
+          "success_rate": 0.6,
+          "crisis_interactions": 1
+        },
+        "crisis_parent": {
+          "count": 4,
+          "average_reward": 12.31244189537638,
+          "average_roas": 12.31244189537638,
+          "success_rate": 0.25,
+          "crisis_interactions": 0
+        },
+        "seasonal_peak": {
+          "count": 10,
+          "average_reward": 85.94309693856633,
+          "average_roas": 85.94309693856633,
+          "success_rate": 0.5,
+          "crisis_interactions": 1
+        },
+        "tech_savvy": {
+          "count": 1,
+          "average_reward": 124.19433263265643,
+          "average_roas": 124.19433263265643,
+          "success_rate": 1.0,
+          "crisis_interactions": 0
+        },
+        "impulse_buyer": {
+          "count": 2,
+          "average_reward": 36.1407971581982,
+          "average_roas": 36.1407971581982,
+          "success_rate": 0.5,
+          "crisis_interactions": 0
+        }
+      }
+    },
+    {
+      "batch_num": 2,
+      "experiences": 50,
+      "total_reward": 2183.817309886254,
+      "average_reward": 43.67634619772508,
+      "success_rate": 0.54,
+      "crisis_interactions": 3,
+      "crisis_revenue": 606.2981202778687,
+      "batch_time": 0.6850817203521729,
+      "episodes_per_second": 72.9839937552224,
+      "world_breakdown": {
+        "crisis_parent": {
+          "count": 11,
+          "average_reward": 64.31919874573288,
+          "average_roas": 64.31919874573288,
+          "success_rate": 0.5454545454545454,
+          "crisis_interactions": 0
+        },
+        "normal_market": {
+          "count": 9,
+          "average_reward": 75.65492662940119,
+          "average_roas": 75.65492662940119,
+          "success_rate": 0.6666666666666666,
+          "crisis_interactions": 0
+        },
+        "low_competition": {
+          "count": 9,
+          "average_reward": 56.89075611250827,
+          "average_roas": 56.89075611250827,
+          "success_rate": 0.5555555555555556,
+          "crisis_interactions": 1
+        },
+        "high_competition": {
+          "count": 7,
+          "average_reward": 4.7607061932320835,
+          "average_roas": 4.7607061932320835,
+          "success_rate": 0.42857142857142855,
+          "crisis_interactions": 0
+        },
+        "seasonal_peak": {
+          "count": 7,
+          "average_reward": 21.7356075794964,
+          "average_roas": 21.7356075794964,
+          "success_rate": 0.42857142857142855,
+          "crisis_interactions": 1
+        },
+        "economic_downturn": {
+          "count": 5,
+          "average_reward": 5.8404910344217,
+          "average_roas": 5.8404910344217,
+          "success_rate": 0.4,
+          "crisis_interactions": 0
+        },
+        "tech_savvy": {
+          "count": 1,
+          "average_reward": 8.783141621879196,
+          "average_roas": 8.783141621879196,
+          "success_rate": 1.0,
+          "crisis_interactions": 0
+        },
+        "luxury_seeker": {
+          "count": 1,
+          "average_reward": 59.93518580291982,
+          "average_roas": 59.93518580291982,
+          "success_rate": 1.0,
+          "crisis_interactions": 1
+        }
+      }
+    },
+    {
+      "batch_num": 3,
+      "experiences": 50,
+      "total_reward": 891.4261831363465,
+      "average_reward": 17.82852366272693,
+      "success_rate": 0.46,
+      "crisis_interactions": 5,
+      "crisis_revenue": 692.3490002439647,
+      "batch_time": 1.0497832298278809,
+      "episodes_per_second": 47.62888049583135,
+      "world_breakdown": {
+        "crisis_parent": {
+          "count": 4,
+          "average_reward": 1.517330184767328,
+          "average_roas": 1.517330184767328,
+          "success_rate": 0.25,
+          "crisis_interactions": 1
+        },
+        "high_competition": {
+          "count": 13,
+          "average_reward": -2.4569038364573776,
+          "average_roas": -2.4569038364573776,
+          "success_rate": 0.38461538461538464,
+          "crisis_interactions": 1
+        },
+        "seasonal_peak": {
+          "count": 7,
+          "average_reward": 59.617488461007675,
+          "average_roas": 59.617488461007675,
+          "success_rate": 0.42857142857142855,
+          "crisis_interactions": 0
+        },
+        "tech_savvy": {
+          "count": 4,
+          "average_reward": 22.137234600367012,
+          "average_roas": 22.137234600367012,
+          "success_rate": 0.5,
+          "crisis_interactions": 2
+        },
+        "normal_market": {
+          "count": 12,
+          "average_reward": 19.52449536833357,
+          "average_roas": 19.52449536833357,
+          "success_rate": 0.5833333333333334,
+          "crisis_interactions": 0
+        },
+        "luxury_seeker": {
+          "count": 4,
+          "average_reward": 45.72626462104951,
+          "average_roas": 45.72626462104951,
+          "success_rate": 0.75,
+          "crisis_interactions": 1
+        },
+        "low_competition": {
+          "count": 6,
+          "average_reward": -0.9622913769166187,
+          "average_roas": -0.9622913769166187,
+          "success_rate": 0.3333333333333333,
+          "crisis_interactions": 0
+        }
+      }
+    },
+    {
+      "batch_num": 4,
+      "experiences": 50,
+      "total_reward": 2380.369113077214,
+      "average_reward": 47.60738226154428,
+      "success_rate": 0.58,
+      "crisis_interactions": 1,
+      "crisis_revenue": 166.97389857995248,
+      "batch_time": 0.9832625389099121,
+      "episodes_per_second": 50.8511186192776,
+      "world_breakdown": {
+        "normal_market": {
+          "count": 12,
+          "average_reward": 22.185345211787396,
+          "average_roas": 22.185345211787396,
+          "success_rate": 0.5833333333333334,
+          "crisis_interactions": 0
+        },
+        "crisis_parent": {
+          "count": 7,
+          "average_reward": 26.439754835085967,
+          "average_roas": 26.439754835085967,
+          "success_rate": 0.7142857142857143,
+          "crisis_interactions": 0
+        },
+        "seasonal_peak": {
+          "count": 9,
+          "average_reward": 86.55575129683649,
+          "average_roas": 86.55575129683649,
+          "success_rate": 0.6666666666666666,
+          "crisis_interactions": 1
+        },
+        "low_competition": {
+          "count": 6,
+          "average_reward": 85.49192319170498,
+          "average_roas": 85.49192319170498,
+          "success_rate": 0.16666666666666666,
+          "crisis_interactions": 0
+        },
+        "high_competition": {
+          "count": 12,
+          "average_reward": 49.21447147548914,
+          "average_roas": 49.21447147548914,
+          "success_rate": 0.6666666666666666,
+          "crisis_interactions": 0
+        },
+        "economic_downturn": {
+          "count": 2,
+          "average_reward": 1.8418351194232412,
+          "average_roas": 1.8418351194232412,
+          "success_rate": 0.5,
+          "crisis_interactions": 0
+        },
+        "tech_savvy": {
+          "count": 1,
+          "average_reward": 86.85605792368939,
+          "average_roas": 86.85605792368939,
+          "success_rate": 1.0,
+          "crisis_interactions": 0
+        },
+        "impulse_buyer": {
+          "count": 1,
+          "average_reward": -44.0,
+          "average_roas": -44.0,
+          "success_rate": 0.0,
+          "crisis_interactions": 0
+        }
+      }
+    },
+    {
+      "batch_num": 5,
+      "experiences": 50,
+      "total_reward": 2499.6619171898355,
+      "average_reward": 49.99323834379671,
+      "success_rate": 0.62,
+      "crisis_interactions": 5,
+      "crisis_revenue": 943.5691369617426,
+      "batch_time": 0.9856183528900146,
+      "episodes_per_second": 50.729574843437916,
+      "world_breakdown": {
+        "economic_downturn": {
+          "count": 4,
+          "average_reward": 76.67218229212733,
+          "average_roas": 76.67218229212733,
+          "success_rate": 0.75,
+          "crisis_interactions": 1
+        },
+        "crisis_parent": {
+          "count": 3,
+          "average_reward": 38.40763359641759,
+          "average_roas": 38.40763359641759,
+          "success_rate": 0.6666666666666666,
+          "crisis_interactions": 0
+        },
+        "high_competition": {
+          "count": 15,
+          "average_reward": 54.331935251417036,
+          "average_roas": 54.331935251417036,
+          "success_rate": 0.6,
+          "crisis_interactions": 1
+        },
+        "tech_savvy": {
+          "count": 3,
+          "average_reward": -8.254454604858461,
+          "average_roas": -8.254454604858461,
+          "success_rate": 0.3333333333333333,
+          "crisis_interactions": 1
+        },
+        "normal_market": {
+          "count": 12,
+          "average_reward": 66.25264374769571,
+          "average_roas": 66.25264374769571,
+          "success_rate": 0.6666666666666666,
+          "crisis_interactions": 1
+        },
+        "low_competition": {
+          "count": 7,
+          "average_reward": 56.08400042808478,
+          "average_roas": 56.08400042808478,
+          "success_rate": 0.5714285714285714,
+          "crisis_interactions": 1
+        },
+        "seasonal_peak": {
+          "count": 2,
+          "average_reward": -27.70685977713306,
+          "average_roas": -27.70685977713306,
+          "success_rate": 0.0,
+          "crisis_interactions": 0
+        },
+        "budget_conscious": {
+          "count": 2,
+          "average_reward": 10.507044444485302,
+          "average_roas": 10.507044444485302,
+          "success_rate": 1.0,
+          "crisis_interactions": 0
+        },
+        "impulse_buyer": {
+          "count": 2,
+          "average_reward": 67.15726248587342,
+          "average_roas": 67.15726248587342,
+          "success_rate": 1.0,
+          "crisis_interactions": 0
+        }
+      }
+    }
+  ],
+  "crisis_analysis": {
+    "total_interactions": 17,
+    "interaction_rate": 0.068,
+    "total_revenue": 2902.0103036523406,
+    "revenue_share": 0.06713246597389529
+  },
+  "world_performance": [
+    {
+      "world_id": "world_000_normal_market",
+      "world_type": "normal_market",
+      "total_episodes": 3,
+      "successful_episodes": 3,
+      "success_rate": 1.0,
+      "total_revenue": 1237.462473416515,
+      "total_cost": 460.96093483024106,
+      "average_roas": 2.684527863239078,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_002_normal_market",
+      "world_type": "normal_market",
+      "total_episodes": 1,
+      "successful_episodes": 1,
+      "success_rate": 1.0,
+      "total_revenue": 275.6926502597411,
+      "total_cost": 263.4418760773754,
+      "average_roas": 1.046502759412355,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_007_normal_market",
+      "world_type": "normal_market",
+      "total_episodes": 1,
+      "successful_episodes": 1,
+      "success_rate": 1.0,
+      "total_revenue": 297.91229938595325,
+      "total_cost": 191.6287645039778,
+      "average_roas": 1.5546324694890428,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_010_normal_market",
+      "world_type": "normal_market",
+      "total_episodes": 3,
+      "successful_episodes": 3,
+      "success_rate": 1.0,
+      "total_revenue": 606.5102193103794,
+      "total_cost": 506.88128107535226,
+      "average_roas": 1.1965528062580326,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_011_normal_market",
+      "world_type": "normal_market",
+      "total_episodes": 2,
+      "successful_episodes": 2,
+      "success_rate": 1.0,
+      "total_revenue": 302.78707716033966,
+      "total_cost": 270.7360450684502,
+      "average_roas": 1.1183847983144837,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_022_normal_market",
+      "world_type": "normal_market",
+      "total_episodes": 1,
+      "successful_episodes": 1,
+      "success_rate": 1.0,
+      "total_revenue": 150.63432655462228,
+      "total_cost": 85.18660305505867,
+      "average_roas": 1.7682865750294419,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_023_normal_market",
+      "world_type": "normal_market",
+      "total_episodes": 1,
+      "successful_episodes": 1,
+      "success_rate": 1.0,
+      "total_revenue": 315.2528081938132,
+      "total_cost": 148.51100252305835,
+      "average_roas": 2.122757255947188,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_025_high_competition",
+      "world_type": "high_competition",
+      "total_episodes": 3,
+      "successful_episodes": 3,
+      "success_rate": 1.0,
+      "total_revenue": 332.7312201104539,
+      "total_cost": 231.09443837679856,
+      "average_roas": 1.4398062646922594,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_030_high_competition",
+      "world_type": "high_competition",
+      "total_episodes": 2,
+      "successful_episodes": 2,
+      "success_rate": 1.0,
+      "total_revenue": 948.2242964464846,
+      "total_cost": 446.45721753716475,
+      "average_roas": 2.123886140036589,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_033_high_competition",
+      "world_type": "high_competition",
+      "total_episodes": 1,
+      "successful_episodes": 1,
+      "success_rate": 1.0,
+      "total_revenue": 192.85425424850047,
+      "total_cost": 139.99703460254912,
+      "average_roas": 1.3775595661437596,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_041_high_competition",
+      "world_type": "high_competition",
+      "total_episodes": 1,
+      "successful_episodes": 1,
+      "success_rate": 1.0,
+      "total_revenue": 327.5786245973309,
+      "total_cost": 186.07477437632315,
+      "average_roas": 1.7604676705657378,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_046_low_competition",
+      "world_type": "low_competition",
+      "total_episodes": 3,
+      "successful_episodes": 3,
+      "success_rate": 1.0,
+      "total_revenue": 1224.0096994340163,
+      "total_cost": 471.9070089256862,
+      "average_roas": 2.593751896630058,
+      "crisis_parent_encounters": 1,
+      "crisis_parent_rate": 0.3333333333333333
+    },
+    {
+      "world_id": "world_049_low_competition",
+      "world_type": "low_competition",
+      "total_episodes": 2,
+      "successful_episodes": 2,
+      "success_rate": 1.0,
+      "total_revenue": 513.1202190701632,
+      "total_cost": 350.5429662552653,
+      "average_roas": 1.463786949005587,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_054_low_competition",
+      "world_type": "low_competition",
+      "total_episodes": 2,
+      "successful_episodes": 2,
+      "success_rate": 1.0,
+      "total_revenue": 552.0130572399511,
+      "total_cost": 293.3405413873529,
+      "average_roas": 1.8818164534271586,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_056_low_competition",
+      "world_type": "low_competition",
+      "total_episodes": 1,
+      "successful_episodes": 1,
+      "success_rate": 1.0,
+      "total_revenue": 327.5673782649728,
+      "total_cost": 250.3559224862486,
+      "average_roas": 1.3084067475294705,
+      "crisis_parent_encounters": 1,
+      "crisis_parent_rate": 1.0
+    },
+    {
+      "world_id": "world_059_low_competition",
+      "world_type": "low_competition",
+      "total_episodes": 2,
+      "successful_episodes": 2,
+      "success_rate": 1.0,
+      "total_revenue": 761.6625461566869,
+      "total_cost": 571.2600674472594,
+      "average_roas": 1.3333026226745772,
+      "crisis_parent_encounters": 1,
+      "crisis_parent_rate": 0.5
+    },
+    {
+      "world_id": "world_061_seasonal_peak",
+      "world_type": "seasonal_peak",
+      "total_episodes": 1,
+      "successful_episodes": 1,
+      "success_rate": 1.0,
+      "total_revenue": 238.58528524623824,
+      "total_cost": 67.6713845579728,
+      "average_roas": 3.525645098067215,
+      "crisis_parent_encounters": 1,
+      "crisis_parent_rate": 1.0
+    },
+    {
+      "world_id": "world_062_seasonal_peak",
+      "world_type": "seasonal_peak",
+      "total_episodes": 2,
+      "successful_episodes": 2,
+      "success_rate": 1.0,
+      "total_revenue": 801.3520079307775,
+      "total_cost": 489.5495599200201,
+      "average_roas": 1.6369170223780776,
+      "crisis_parent_encounters": 1,
+      "crisis_parent_rate": 0.5
+    },
+    {
+      "world_id": "world_068_seasonal_peak",
+      "world_type": "seasonal_peak",
+      "total_episodes": 2,
+      "successful_episodes": 2,
+      "success_rate": 1.0,
+      "total_revenue": 402.82114363367407,
+      "total_cost": 385.9249410112311,
+      "average_roas": 1.0437810590271004,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_070_seasonal_peak",
+      "world_type": "seasonal_peak",
+      "total_episodes": 2,
+      "successful_episodes": 2,
+      "success_rate": 1.0,
+      "total_revenue": 311.7507406955494,
+      "total_cost": 270.01347901282736,
+      "average_roas": 1.1545747339551862,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_072_economic_downturn",
+      "world_type": "economic_downturn",
+      "total_episodes": 2,
+      "successful_episodes": 2,
+      "success_rate": 1.0,
+      "total_revenue": 413.30661961169153,
+      "total_cost": 257.59924929431673,
+      "average_roas": 1.6044558388424235,
+      "crisis_parent_encounters": 1,
+      "crisis_parent_rate": 0.5
+    },
+    {
+      "world_id": "world_074_economic_downturn",
+      "world_type": "economic_downturn",
+      "total_episodes": 2,
+      "successful_episodes": 2,
+      "success_rate": 1.0,
+      "total_revenue": 938.8769643543338,
+      "total_cost": 464.1243576769151,
+      "average_roas": 2.0228995716874274,
+      "crisis_parent_encounters": 1,
+      "crisis_parent_rate": 0.5
+    },
+    {
+      "world_id": "world_085_crisis_parent",
+      "world_type": "crisis_parent",
+      "total_episodes": 2,
+      "successful_episodes": 2,
+      "success_rate": 1.0,
+      "total_revenue": 205.61322073488307,
+      "total_cost": 162.9960592335713,
+      "average_roas": 1.261461299749842,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_090_tech_savvy",
+      "world_type": "tech_savvy",
+      "total_episodes": 1,
+      "successful_episodes": 1,
+      "success_rate": 1.0,
+      "total_revenue": 141.06466676771652,
+      "total_cost": 163.02507033534263,
+      "average_roas": 0.8652943162517669,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_094_budget_conscious",
+      "world_type": "budget_conscious",
+      "total_episodes": 2,
+      "successful_episodes": 2,
+      "success_rate": 1.0,
+      "total_revenue": 377.0483333610589,
+      "total_cost": 364.1586884016557,
+      "average_roas": 1.0353956815254846,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_099_luxury_seeker",
+      "world_type": "luxury_seeker",
+      "total_episodes": 6,
+      "successful_episodes": 5,
+      "success_rate": 0.8333333333333334,
+      "total_revenue": 1415.9173209168955,
+      "total_cost": 815.6276249654242,
+      "average_roas": 1.735984998027646,
+      "crisis_parent_encounters": 2,
+      "crisis_parent_rate": 0.3333333333333333
+    },
+    {
+      "world_id": "world_005_normal_market",
+      "world_type": "normal_market",
+      "total_episodes": 5,
+      "successful_episodes": 4,
+      "success_rate": 0.8,
+      "total_revenue": 709.2976769937052,
+      "total_cost": 537.4752356762865,
+      "average_roas": 1.31968438713501,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_038_high_competition",
+      "world_type": "high_competition",
+      "total_episodes": 5,
+      "successful_episodes": 4,
+      "success_rate": 0.8,
+      "total_revenue": 1365.5640214633565,
+      "total_cost": 904.394263685215,
+      "average_roas": 1.509921144235228,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_006_normal_market",
+      "world_type": "normal_market",
+      "total_episodes": 4,
+      "successful_episodes": 3,
+      "success_rate": 0.75,
+      "total_revenue": 1044.959554959531,
+      "total_cost": 427.8982889068875,
+      "average_roas": 2.4420746285968877,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_032_high_competition",
+      "world_type": "high_competition",
+      "total_episodes": 4,
+      "successful_episodes": 3,
+      "success_rate": 0.75,
+      "total_revenue": 683.6027426957751,
+      "total_cost": 603.1834443420704,
+      "average_roas": 1.13332477724322,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_065_seasonal_peak",
+      "world_type": "seasonal_peak",
+      "total_episodes": 4,
+      "successful_episodes": 3,
+      "success_rate": 0.75,
+      "total_revenue": 1058.6575440354204,
+      "total_cost": 559.8477449992535,
+      "average_roas": 1.8909740255126546,
+      "crisis_parent_encounters": 1,
+      "crisis_parent_rate": 0.25
+    },
+    {
+      "world_id": "world_082_crisis_parent",
+      "world_type": "crisis_parent",
+      "total_episodes": 4,
+      "successful_episodes": 3,
+      "success_rate": 0.75,
+      "total_revenue": 1091.0606327336284,
+      "total_cost": 635.9889735886281,
+      "average_roas": 1.715533881943291,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_089_crisis_parent",
+      "world_type": "crisis_parent",
+      "total_episodes": 4,
+      "successful_episodes": 3,
+      "success_rate": 0.75,
+      "total_revenue": 555.4003599676229,
+      "total_cost": 715.431074459826,
+      "average_roas": 0.7763156784697511,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_092_tech_savvy",
+      "world_type": "tech_savvy",
+      "total_episodes": 4,
+      "successful_episodes": 3,
+      "success_rate": 0.75,
+      "total_revenue": 1114.140536685014,
+      "total_cost": 823.3870432236295,
+      "average_roas": 1.3531188592949681,
+      "crisis_parent_encounters": 1,
+      "crisis_parent_rate": 0.25
+    },
+    {
+      "world_id": "world_004_normal_market",
+      "world_type": "normal_market",
+      "total_episodes": 3,
+      "successful_episodes": 2,
+      "success_rate": 0.6666666666666666,
+      "total_revenue": 328.2536812467987,
+      "total_cost": 405.5169726933931,
+      "average_roas": 0.809469648253139,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_012_normal_market",
+      "world_type": "normal_market",
+      "total_episodes": 6,
+      "successful_episodes": 4,
+      "success_rate": 0.6666666666666666,
+      "total_revenue": 1471.7492159359022,
+      "total_cost": 1553.1753621044438,
+      "average_roas": 0.9475744026365349,
+      "crisis_parent_encounters": 1,
+      "crisis_parent_rate": 0.16666666666666666
+    },
+    {
+      "world_id": "world_016_normal_market",
+      "world_type": "normal_market",
+      "total_episodes": 3,
+      "successful_episodes": 2,
+      "success_rate": 0.6666666666666666,
+      "total_revenue": 412.0528714521521,
+      "total_cost": 497.4491321230632,
+      "average_roas": 0.8283316722124966,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_021_normal_market",
+      "world_type": "normal_market",
+      "total_episodes": 3,
+      "successful_episodes": 2,
+      "success_rate": 0.6666666666666666,
+      "total_revenue": 858.3440026833105,
+      "total_cost": 531.9671928608883,
+      "average_roas": 1.613528078803482,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_028_high_competition",
+      "world_type": "high_competition",
+      "total_episodes": 3,
+      "successful_episodes": 2,
+      "success_rate": 0.6666666666666666,
+      "total_revenue": 1438.344442139002,
+      "total_cost": 687.187080751109,
+      "average_roas": 2.0930900513537933,
+      "crisis_parent_encounters": 1,
+      "crisis_parent_rate": 0.3333333333333333
+    },
+    {
+      "world_id": "world_047_low_competition",
+      "world_type": "low_competition",
+      "total_episodes": 3,
+      "successful_episodes": 2,
+      "success_rate": 0.6666666666666666,
+      "total_revenue": 403.3021761698133,
+      "total_cost": 179.2688262235564,
+      "average_roas": 2.249706123845967,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_063_seasonal_peak",
+      "world_type": "seasonal_peak",
+      "total_episodes": 3,
+      "successful_episodes": 2,
+      "success_rate": 0.6666666666666666,
+      "total_revenue": 436.7294611308071,
+      "total_cost": 534.0361581470332,
+      "average_roas": 0.8177900587221377,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_077_economic_downturn",
+      "world_type": "economic_downturn",
+      "total_episodes": 3,
+      "successful_episodes": 2,
+      "success_rate": 0.6666666666666666,
+      "total_revenue": 753.5424373215737,
+      "total_cost": 504.01874956041945,
+      "average_roas": 1.495068264779389,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_087_crisis_parent",
+      "world_type": "crisis_parent",
+      "total_episodes": 6,
+      "successful_episodes": 4,
+      "success_rate": 0.6666666666666666,
+      "total_revenue": 1524.1651916106746,
+      "total_cost": 1136.325026655048,
+      "average_roas": 1.3413109417270297,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_097_impulse_buyer",
+      "world_type": "impulse_buyer",
+      "total_episodes": 3,
+      "successful_episodes": 2,
+      "success_rate": 0.6666666666666666,
+      "total_revenue": 274.9021652845839,
+      "total_cost": 189.75129206170317,
+      "average_roas": 1.4487498993956331,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_014_normal_market",
+      "world_type": "normal_market",
+      "total_episodes": 2,
+      "successful_episodes": 1,
+      "success_rate": 0.5,
+      "total_revenue": 239.10987318260752,
+      "total_cost": 397.5830971251307,
+      "average_roas": 0.601408548078574,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_015_normal_market",
+      "world_type": "normal_market",
+      "total_episodes": 2,
+      "successful_episodes": 1,
+      "success_rate": 0.5,
+      "total_revenue": 537.9304206279024,
+      "total_cost": 265.01895350501206,
+      "average_roas": 2.0297809402440685,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_024_normal_market",
+      "world_type": "normal_market",
+      "total_episodes": 4,
+      "successful_episodes": 2,
+      "success_rate": 0.5,
+      "total_revenue": 366.19038327745574,
+      "total_cost": 435.85866698256746,
+      "average_roas": 0.8401585445405445,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_027_high_competition",
+      "world_type": "high_competition",
+      "total_episodes": 4,
+      "successful_episodes": 2,
+      "success_rate": 0.5,
+      "total_revenue": 467.2102599844089,
+      "total_cost": 707.0100347902044,
+      "average_roas": 0.660825500338262,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_034_high_competition",
+      "world_type": "high_competition",
+      "total_episodes": 2,
+      "successful_episodes": 1,
+      "success_rate": 0.5,
+      "total_revenue": 69.03518927018894,
+      "total_cost": 182.0017637206884,
+      "average_roas": 0.37931055094682914,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_040_high_competition",
+      "world_type": "high_competition",
+      "total_episodes": 2,
+      "successful_episodes": 1,
+      "success_rate": 0.5,
+      "total_revenue": 105.43843568442063,
+      "total_cost": 296.4081489360848,
+      "average_roas": 0.3557204350247353,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_044_high_competition",
+      "world_type": "high_competition",
+      "total_episodes": 4,
+      "successful_episodes": 2,
+      "success_rate": 0.5,
+      "total_revenue": 392.56625033197327,
+      "total_cost": 191.31735195872767,
+      "average_roas": 2.0519113729770857,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_045_low_competition",
+      "world_type": "low_competition",
+      "total_episodes": 2,
+      "successful_episodes": 1,
+      "success_rate": 0.5,
+      "total_revenue": 272.5786545252722,
+      "total_cost": 303.04024263777194,
+      "average_roas": 0.8994800563537336,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_067_seasonal_peak",
+      "world_type": "seasonal_peak",
+      "total_episodes": 2,
+      "successful_episodes": 1,
+      "success_rate": 0.5,
+      "total_revenue": 591.3860828371832,
+      "total_cost": 415.162604595675,
+      "average_roas": 1.424468572773146,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_073_economic_downturn",
+      "world_type": "economic_downturn",
+      "total_episodes": 2,
+      "successful_episodes": 1,
+      "success_rate": 0.5,
+      "total_revenue": 253.25168253098946,
+      "total_cost": 427.47195253623914,
+      "average_roas": 0.5924404654584208,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_076_economic_downturn",
+      "world_type": "economic_downturn",
+      "total_episodes": 4,
+      "successful_episodes": 2,
+      "success_rate": 0.5,
+      "total_revenue": 254.41998018020305,
+      "total_cost": 398.0687348132178,
+      "average_roas": 0.6391358022618436,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_080_crisis_parent",
+      "world_type": "crisis_parent",
+      "total_episodes": 2,
+      "successful_episodes": 1,
+      "success_rate": 0.5,
+      "total_revenue": 526.1918855501495,
+      "total_cost": 327.9497465396842,
+      "average_roas": 1.6044893801632398,
+      "crisis_parent_encounters": 1,
+      "crisis_parent_rate": 0.5
+    },
+    {
+      "world_id": "world_098_impulse_buyer",
+      "world_type": "impulse_buyer",
+      "total_episodes": 2,
+      "successful_episodes": 1,
+      "success_rate": 0.5,
+      "total_revenue": 421.0220209396286,
+      "total_cost": 513.4606526422805,
+      "average_roas": 0.8199693954600795,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_031_high_competition",
+      "world_type": "high_competition",
+      "total_episodes": 5,
+      "successful_episodes": 2,
+      "success_rate": 0.4,
+      "total_revenue": 428.9926020946904,
+      "total_cost": 486.28538060055,
+      "average_roas": 0.8821828070687536,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_036_high_competition",
+      "world_type": "high_competition",
+      "total_episodes": 5,
+      "successful_episodes": 2,
+      "success_rate": 0.4,
+      "total_revenue": 592.8991060924686,
+      "total_cost": 762.4100083695469,
+      "average_roas": 0.7776643795120344,
+      "crisis_parent_encounters": 1,
+      "crisis_parent_rate": 0.2
+    },
+    {
+      "world_id": "world_093_tech_savvy",
+      "world_type": "tech_savvy",
+      "total_episodes": 5,
+      "successful_episodes": 2,
+      "success_rate": 0.4,
+      "total_revenue": 1458.5151269612065,
+      "total_cost": 1467.354587191169,
+      "average_roas": 0.9939759208121037,
+      "crisis_parent_encounters": 2,
+      "crisis_parent_rate": 0.4
+    },
+    {
+      "world_id": "world_001_normal_market",
+      "world_type": "normal_market",
+      "total_episodes": 3,
+      "successful_episodes": 1,
+      "success_rate": 0.3333333333333333,
+      "total_revenue": 137.75647923254104,
+      "total_cost": 313.71993208000197,
+      "average_roas": 0.43910655698284307,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_019_normal_market",
+      "world_type": "normal_market",
+      "total_episodes": 6,
+      "successful_episodes": 2,
+      "success_rate": 0.3333333333333333,
+      "total_revenue": 985.6399704070941,
+      "total_cost": 1299.3060662991206,
+      "average_roas": 0.758589524033042,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_043_high_competition",
+      "world_type": "high_competition",
+      "total_episodes": 3,
+      "successful_episodes": 1,
+      "success_rate": 0.3333333333333333,
+      "total_revenue": 252.222778138946,
+      "total_cost": 484.2130140118902,
+      "average_roas": 0.5208921917426046,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_055_low_competition",
+      "world_type": "low_competition",
+      "total_episodes": 3,
+      "successful_episodes": 1,
+      "success_rate": 0.3333333333333333,
+      "total_revenue": 360.2314953077114,
+      "total_cost": 664.5650047919604,
+      "average_roas": 0.5420560708285873,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_060_seasonal_peak",
+      "world_type": "seasonal_peak",
+      "total_episodes": 3,
+      "successful_episodes": 1,
+      "success_rate": 0.3333333333333333,
+      "total_revenue": 430.1876038063939,
+      "total_cost": 313.6445053071884,
+      "average_roas": 1.3715770451169274,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_069_seasonal_peak",
+      "world_type": "seasonal_peak",
+      "total_episodes": 3,
+      "successful_episodes": 1,
+      "success_rate": 0.3333333333333333,
+      "total_revenue": 394.6798429229615,
+      "total_cost": 268.4712343816416,
+      "average_roas": 1.4701010476299663,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_088_crisis_parent",
+      "world_type": "crisis_parent",
+      "total_episodes": 3,
+      "successful_episodes": 1,
+      "success_rate": 0.3333333333333333,
+      "total_revenue": 542.5603170956392,
+      "total_cost": 414.5020614776026,
+      "average_roas": 1.3089447979137643,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_081_crisis_parent",
+      "world_type": "crisis_parent",
+      "total_episodes": 4,
+      "successful_episodes": 1,
+      "success_rate": 0.25,
+      "total_revenue": 274.2980841501919,
+      "total_cost": 290.6957316357159,
+      "average_roas": 0.9435917156634669,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_050_low_competition",
+      "world_type": "low_competition",
+      "total_episodes": 5,
+      "successful_episodes": 1,
+      "success_rate": 0.2,
+      "total_revenue": 104.45123820438802,
+      "total_cost": 267.2669395985329,
+      "average_roas": 0.39081241533758854,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_066_seasonal_peak",
+      "world_type": "seasonal_peak",
+      "total_episodes": 5,
+      "successful_episodes": 1,
+      "success_rate": 0.2,
+      "total_revenue": 555.4365052616677,
+      "total_cost": 839.8662773491174,
+      "average_roas": 0.6613392158270722,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_064_seasonal_peak",
+      "world_type": "seasonal_peak",
+      "total_episodes": 6,
+      "successful_episodes": 1,
+      "success_rate": 0.16666666666666666,
+      "total_revenue": 173.36468546609126,
+      "total_cost": 388.8448868171876,
+      "average_roas": 0.445845352076334,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_003_normal_market",
+      "world_type": "normal_market",
+      "total_episodes": 3,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 154.90463567603035,
+      "total_cost": 214.99646015030174,
+      "average_roas": 0.7204985401514897,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_008_normal_market",
+      "world_type": "normal_market",
+      "total_episodes": 1,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 0.0,
+      "total_cost": 30.779708289619883,
+      "average_roas": 0.0,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_009_normal_market",
+      "world_type": "normal_market",
+      "total_episodes": 0,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 0.0,
+      "total_cost": 0.0,
+      "average_roas": 0.0,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_013_normal_market",
+      "world_type": "normal_market",
+      "total_episodes": 3,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 282.17030216896586,
+      "total_cost": 425.79755349871743,
+      "average_roas": 0.662686527553794,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_017_normal_market",
+      "world_type": "normal_market",
+      "total_episodes": 0,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 0.0,
+      "total_cost": 0.0,
+      "average_roas": 0.0,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_018_normal_market",
+      "world_type": "normal_market",
+      "total_episodes": 1,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 276.69880536431924,
+      "total_cost": 176.3580990715842,
+      "average_roas": 1.568960012729591,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_020_normal_market",
+      "world_type": "normal_market",
+      "total_episodes": 2,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 120.30298266442738,
+      "total_cost": 461.8756236309114,
+      "average_roas": 0.26046618723607395,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_026_high_competition",
+      "world_type": "high_competition",
+      "total_episodes": 1,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 137.04831973563532,
+      "total_cost": 217.07883720526115,
+      "average_roas": 0.6313297118228427,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_029_high_competition",
+      "world_type": "high_competition",
+      "total_episodes": 2,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 483.8711605903594,
+      "total_cost": 604.9867875801272,
+      "average_roas": 0.7998045089972702,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_035_high_competition",
+      "world_type": "high_competition",
+      "total_episodes": 0,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 0.0,
+      "total_cost": 0.0,
+      "average_roas": 0.0,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_037_high_competition",
+      "world_type": "high_competition",
+      "total_episodes": 0,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 0.0,
+      "total_cost": 0.0,
+      "average_roas": 0.0,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_039_high_competition",
+      "world_type": "high_competition",
+      "total_episodes": 4,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 332.6136778882297,
+      "total_cost": 1107.7288680517347,
+      "average_roas": 0.30026632642807993,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_042_high_competition",
+      "world_type": "high_competition",
+      "total_episodes": 1,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 23.17461182412188,
+      "total_cost": 133.98263919250945,
+      "average_roas": 0.1729672736989756,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_048_low_competition",
+      "world_type": "low_competition",
+      "total_episodes": 3,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 168.2725619315868,
+      "total_cost": 366.0212882464173,
+      "average_roas": 0.45973435790516176,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_051_low_competition",
+      "world_type": "low_competition",
+      "total_episodes": 0,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 0.0,
+      "total_cost": 0.0,
+      "average_roas": 0.0,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_052_low_competition",
+      "world_type": "low_competition",
+      "total_episodes": 2,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 0.0,
+      "total_cost": 210.13066012798726,
+      "average_roas": 0.0,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_053_low_competition",
+      "world_type": "low_competition",
+      "total_episodes": 2,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 108.21931190189174,
+      "total_cost": 388.8394735170252,
+      "average_roas": 0.27831359538437755,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_057_low_competition",
+      "world_type": "low_competition",
+      "total_episodes": 2,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 30.784193794631204,
+      "total_cost": 149.74986357220922,
+      "average_roas": 0.20557076354054304,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_058_low_competition",
+      "world_type": "low_competition",
+      "total_episodes": 1,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 37.742493174841265,
+      "total_cost": 67.65171896376575,
+      "average_roas": 0.5578940750205644,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_071_seasonal_peak",
+      "world_type": "seasonal_peak",
+      "total_episodes": 2,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 189.6225439150481,
+      "total_cost": 220.9106227300555,
+      "average_roas": 0.858367703515823,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_075_economic_downturn",
+      "world_type": "economic_downturn",
+      "total_episodes": 1,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 97.6740126998858,
+      "total_cost": 111.91913181428971,
+      "average_roas": 0.8727195352261916,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_078_economic_downturn",
+      "world_type": "economic_downturn",
+      "total_episodes": 0,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 0.0,
+      "total_cost": 0.0,
+      "average_roas": 0.0,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_079_economic_downturn",
+      "world_type": "economic_downturn",
+      "total_episodes": 1,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 202.67809778663295,
+      "total_cost": 184.4780063153773,
+      "average_roas": 1.0986572428592998,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_083_crisis_parent",
+      "world_type": "crisis_parent",
+      "total_episodes": 1,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 56.38670212851745,
+      "total_cost": 70.26245232408408,
+      "average_roas": 0.8025154298406064,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_084_crisis_parent",
+      "world_type": "crisis_parent",
+      "total_episodes": 1,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 201.97059373334514,
+      "total_cost": 247.1656399701713,
+      "average_roas": 0.8171467270196601,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_086_crisis_parent",
+      "world_type": "crisis_parent",
+      "total_episodes": 2,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 0.0,
+      "total_cost": 81.81521904105,
+      "average_roas": 0.0,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_091_tech_savvy",
+      "world_type": "tech_savvy",
+      "total_episodes": 0,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 0.0,
+      "total_cost": 0.0,
+      "average_roas": 0.0,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_095_budget_conscious",
+      "world_type": "budget_conscious",
+      "total_episodes": 0,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 0.0,
+      "total_cost": 0.0,
+      "average_roas": 0.0,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    },
+    {
+      "world_id": "world_096_budget_conscious",
+      "world_type": "budget_conscious",
+      "total_episodes": 0,
+      "successful_episodes": 0,
+      "success_rate": 0.0,
+      "total_revenue": 0.0,
+      "total_cost": 0.0,
+      "average_roas": 0.0,
+      "crisis_parent_encounters": 0,
+      "crisis_parent_rate": 0.0
+    }
+  ],
+  "buffer_stats": {
+    "total_experiences": 250,
+    "crisis_parent_experiences": 17,
+    "crisis_parent_ratio": 0.068,
+    "average_importance_weight": 4.332,
+    "max_importance_weight": 50.0,
+    "buffer_utilization": 0.00025
+  },
+  "timestamp": "2025-08-21T15:27:08.175562"
+}

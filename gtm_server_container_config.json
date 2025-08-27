@@ -1,0 +1,518 @@
+{
+  "name": "GAELP Cross-Account Attribution Server Container",
+  "description": "Server-side tracking container for cross-account attribution from personal ads to Aura GA4",
+  "domain": "track.teen-wellness-monitor.com",
+  "container_config": {
+    "transportUrl": "https://track.teen-wellness-monitor.com/gtm",
+    "containerVersion": "1",
+    "publicId": "GTM-GAELP001",
+    "accountId": "1234567890",
+    "containerId": "12345678",
+    "tagManagerUrl": "https://tagmanager.google.com/#/container/accounts/1234567890/containers/12345678",
+    
+    "clients": [
+      {
+        "name": "GA4 Client",
+        "type": "ga4",
+        "clientId": "GA4_CLIENT_001",
+        "priority": 1,
+        "configuration": {
+          "measurementId": "G-AURA-GA4-ID",
+          "enableFirstPartyServerDataApi": true,
+          "serverContainerUrl": "https://track.teen-wellness-monitor.com/gtm",
+          "customDimensions": {
+            "dimension1": "gaelp_source",
+            "dimension2": "gaelp_campaign", 
+            "dimension3": "gaelp_creative",
+            "dimension4": "gaelp_uid",
+            "dimension5": "original_domain"
+          },
+          "customMetrics": {
+            "metric1": "attribution_confidence",
+            "metric2": "journey_length"
+          }
+        }
+      },
+      {
+        "name": "Facebook Conversions API Client",
+        "type": "facebook_capi",
+        "clientId": "FB_CAPI_CLIENT_001", 
+        "priority": 2,
+        "configuration": {
+          "pixelId": "{{FB_PIXEL_ID}}",
+          "accessToken": "{{FB_CAPI_ACCESS_TOKEN}}",
+          "testEventCode": "{{FB_TEST_EVENT_CODE}}",
+          "enableAdvancedMatching": true,
+          "dataProcessingOptions": [],
+          "customData": {
+            "gaelp_uid": "{{gaelp_uid}}",
+            "gaelp_source": "{{gaelp_source}}",
+            "gaelp_campaign": "{{gaelp_campaign}}"
+          }
+        }
+      },
+      {
+        "name": "Universal Analytics Client", 
+        "type": "universal_analytics",
+        "clientId": "UA_CLIENT_001",
+        "priority": 3,
+        "configuration": {
+          "trackingId": "{{UA_TRACKING_ID}}",
+          "enableDisplayFeatures": true,
+          "customDimensions": {
+            "1": "gaelp_uid",
+            "2": "gaelp_source",
+            "3": "gaelp_campaign",
+            "4": "attribution_method"
+          }
+        }
+      }
+    ],
+    
+    "tags": [
+      {
+        "name": "Cross-Account Attribution Processor",
+        "type": "custom",
+        "tagId": "ATTRIBUTION_PROCESSOR_001",
+        "firingTrigger": "All Server Events",
+        "configuration": {
+          "code": "// Custom JavaScript for attribution processing\nconst eventData = data;\nconst gaelpUid = eventData.gaelp_uid;\nconst eventType = eventData.event_name;\n\n// Process cross-account attribution\nif (gaelpUid && eventType) {\n  // Store attribution data\n  const attributionData = {\n    gaelp_uid: gaelpUid,\n    source: eventData.gaelp_source || 'unknown',\n    campaign: eventData.gaelp_campaign || 'unknown',\n    creative: eventData.gaelp_creative || 'unknown',\n    timestamp: Date.now(),\n    event_type: eventType,\n    domain: eventData.page_hostname || 'unknown'\n  };\n  \n  // Send to attribution database\n  sendHttpRequest('https://track.teen-wellness-monitor.com/api/attribution', {\n    method: 'POST',\n    headers: {'Content-Type': 'application/json'},\n    body: JSON.stringify(attributionData)\n  });\n  \n  // Enhance event data for downstream tags\n  eventData.gaelp_attribution_processed = true;\n  eventData.attribution_timestamp = Date.now();\n}\n\nreturnData(eventData);",
+          "variables": [
+            "gaelp_uid",
+            "gaelp_source", 
+            "gaelp_campaign",
+            "gaelp_creative",
+            "event_name",
+            "page_hostname"
+          ]
+        }
+      },
+      {
+        "name": "Enhanced GA4 Event",
+        "type": "ga4_event",
+        "tagId": "GA4_ENHANCED_001",
+        "firingTrigger": "Attribution Processed",
+        "configuration": {
+          "measurementId": "G-AURA-GA4-ID",
+          "eventName": "{{Event Name}}",
+          "customParameters": {
+            "gaelp_uid": "{{gaelp_uid}}",
+            "gaelp_source": "{{gaelp_source}}",
+            "gaelp_campaign": "{{gaelp_campaign}}",
+            "gaelp_creative": "{{gaelp_creative}}",
+            "attribution_method": "server_side",
+            "original_domain": "{{page_hostname}}",
+            "cross_account_attribution": true
+          },
+          "userProperties": {
+            "gaelp_user_id": "{{gaelp_uid}}",
+            "acquisition_source": "{{gaelp_source}}",
+            "acquisition_campaign": "{{gaelp_campaign}}"
+          },
+          "sendEcommerceData": true,
+          "enhancedConversionData": {
+            "email": "{{hashed_email}}",
+            "phone": "{{hashed_phone}}",
+            "address": "{{hashed_address}}"
+          }
+        }
+      },
+      {
+        "name": "Facebook Conversion Event",
+        "type": "facebook_conversion",
+        "tagId": "FB_CONVERSION_001", 
+        "firingTrigger": "Conversion Events",
+        "configuration": {
+          "pixelId": "{{FB_PIXEL_ID}}",
+          "eventName": "Purchase",
+          "customData": {
+            "currency": "{{currency}}",
+            "value": "{{value}}",
+            "content_type": "product",
+            "content_ids": "{{item_ids}}",
+            "gaelp_uid": "{{gaelp_uid}}",
+            "source": "cross_account_attribution"
+          },
+          "userData": {
+            "em": "{{hashed_email}}",
+            "ph": "{{hashed_phone}}",
+            "client_ip_address": "{{client_ip}}",
+            "client_user_agent": "{{user_agent}}"
+          },
+          "testEventCode": "{{FB_TEST_EVENT_CODE}}"
+        }
+      },
+      {
+        "name": "Offline Conversion Upload",
+        "type": "custom",
+        "tagId": "OFFLINE_CONVERSION_001",
+        "firingTrigger": "Purchase Completed",
+        "configuration": {
+          "code": "// Upload offline conversions to ad platforms\nconst conversionData = {\n  gaelp_uid: data.gaelp_uid,\n  gclid: data.gclid,\n  fbclid: data.fbclid,\n  conversion_value: data.value,\n  currency: data.currency || 'USD',\n  transaction_id: data.transaction_id,\n  timestamp: Date.now()\n};\n\n// Queue for Google Ads offline conversion upload\nif (conversionData.gclid) {\n  sendHttpRequest('https://track.teen-wellness-monitor.com/api/offline-conversions/google', {\n    method: 'POST',\n    headers: {'Content-Type': 'application/json'},\n    body: JSON.stringify(conversionData)\n  });\n}\n\n// Queue for Facebook offline conversion upload\nif (conversionData.fbclid) {\n  sendHttpRequest('https://track.teen-wellness-monitor.com/api/offline-conversions/facebook', {\n    method: 'POST', \n    headers: {'Content-Type': 'application/json'},\n    body: JSON.stringify(conversionData)\n  });\n}\n\ndata.offline_conversion_queued = true;"
+        }
+      }
+    ],
+    
+    "triggers": [
+      {
+        "name": "All Server Events",
+        "type": "custom_event",
+        "triggerId": "ALL_EVENTS_001",
+        "filter": {
+          "type": "all"
+        }
+      },
+      {
+        "name": "Attribution Processed",
+        "type": "custom_event", 
+        "triggerId": "ATTRIBUTION_PROCESSED_001",
+        "filter": {
+          "type": "equals",
+          "parameter": [
+            {
+              "type": "template",
+              "key": "arg0",
+              "value": "{{gaelp_attribution_processed}}"
+            },
+            {
+              "type": "template", 
+              "key": "arg1",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Conversion Events",
+        "type": "custom_event",
+        "triggerId": "CONVERSION_EVENTS_001", 
+        "filter": {
+          "type": "contains",
+          "parameter": [
+            {
+              "type": "template",
+              "key": "arg0", 
+              "value": "{{Event Name}}"
+            },
+            {
+              "type": "list",
+              "key": "arg1",
+              "list": ["purchase", "sign_up", "subscribe", "begin_checkout"]
+            }
+          ]
+        }
+      },
+      {
+        "name": "Purchase Completed",
+        "type": "custom_event",
+        "triggerId": "PURCHASE_COMPLETED_001",
+        "filter": {
+          "type": "equals",
+          "parameter": [
+            {
+              "type": "template",
+              "key": "arg0",
+              "value": "{{Event Name}}"
+            },
+            {
+              "type": "template",
+              "key": "arg1", 
+              "value": "purchase"
+            }
+          ]
+        }
+      }
+    ],
+    
+    "variables": [
+      {
+        "name": "gaelp_uid",
+        "type": "event_parameter",
+        "variableId": "GAELP_UID_001",
+        "parameter": [
+          {
+            "type": "template",
+            "key": "parameterName",
+            "value": "gaelp_uid"
+          }
+        ]
+      },
+      {
+        "name": "gaelp_source",
+        "type": "event_parameter",
+        "variableId": "GAELP_SOURCE_001", 
+        "parameter": [
+          {
+            "type": "template",
+            "key": "parameterName",
+            "value": "gaelp_source"
+          }
+        ]
+      },
+      {
+        "name": "gaelp_campaign",
+        "type": "event_parameter",
+        "variableId": "GAELP_CAMPAIGN_001",
+        "parameter": [
+          {
+            "type": "template",
+            "key": "parameterName",
+            "value": "gaelp_campaign"
+          }
+        ]
+      },
+      {
+        "name": "gaelp_creative", 
+        "type": "event_parameter",
+        "variableId": "GAELP_CREATIVE_001",
+        "parameter": [
+          {
+            "type": "template",
+            "key": "parameterName",
+            "value": "gaelp_creative"
+          }
+        ]
+      },
+      {
+        "name": "Event Name",
+        "type": "event_parameter",
+        "variableId": "EVENT_NAME_001",
+        "parameter": [
+          {
+            "type": "template",
+            "key": "parameterName", 
+            "value": "event_name"
+          }
+        ]
+      },
+      {
+        "name": "Transaction ID",
+        "type": "event_parameter",
+        "variableId": "TRANSACTION_ID_001",
+        "parameter": [
+          {
+            "type": "template",
+            "key": "parameterName",
+            "value": "transaction_id"
+          }
+        ]
+      },
+      {
+        "name": "Value",
+        "type": "event_parameter",
+        "variableId": "VALUE_001",
+        "parameter": [
+          {
+            "type": "template", 
+            "key": "parameterName",
+            "value": "value"
+          }
+        ]
+      },
+      {
+        "name": "Currency",
+        "type": "event_parameter",
+        "variableId": "CURRENCY_001",
+        "parameter": [
+          {
+            "type": "template",
+            "key": "parameterName",
+            "value": "currency"
+          }
+        ]
+      }
+    ]
+  },
+  
+  "deployment_config": {
+    "hosting_platform": "Google Cloud Run",
+    "domain_setup": {
+      "primary_domain": "track.teen-wellness-monitor.com",
+      "ssl_certificate": "required",
+      "dns_records": [
+        {
+          "type": "A",
+          "name": "track",
+          "value": "216.58.194.174"
+        },
+        {
+          "type": "CNAME", 
+          "name": "track.teen-wellness-monitor.com",
+          "value": "ghs.googlehosted.com"
+        }
+      ]
+    },
+    "environment_variables": {
+      "GA4_MEASUREMENT_ID": "G-AURA-MEASUREMENT-ID",
+      "GA4_API_SECRET": "{{GA4_API_SECRET}}",
+      "FB_PIXEL_ID": "{{FB_PIXEL_ID}}",
+      "FB_CAPI_ACCESS_TOKEN": "{{FB_CAPI_TOKEN}}",
+      "FB_TEST_EVENT_CODE": "{{FB_TEST_CODE}}",
+      "GAELP_SIGNING_KEY": "{{SIGNING_SECRET}}",
+      "ATTRIBUTION_DATABASE_URL": "{{DATABASE_CONNECTION}}",
+      "GOOGLE_ADS_CUSTOMER_ID": "{{GOOGLE_ADS_ID}}",
+      "GOOGLE_ADS_CONVERSION_ID": "{{CONVERSION_ACTION_ID}}"
+    },
+    "security": {
+      "cors_origins": [
+        "https://teen-wellness-monitor.com",
+        "https://www.teen-wellness-monitor.com", 
+        "https://aura.com",
+        "https://www.aura.com"
+      ],
+      "rate_limiting": {
+        "requests_per_minute": 1000,
+        "burst_limit": 100
+      },
+      "request_validation": {
+        "require_signature": true,
+        "validate_origins": true,
+        "block_suspicious_requests": true
+      }
+    }
+  },
+  
+  "monitoring_config": {
+    "logging": {
+      "level": "INFO",
+      "include_request_body": false,
+      "include_response_body": false,
+      "retention_days": 30
+    },
+    "metrics": {
+      "track_attribution_rate": true,
+      "track_conversion_volume": true,
+      "track_error_rates": true,
+      "track_latency": true
+    },
+    "alerts": [
+      {
+        "name": "Attribution Rate Drop",
+        "condition": "attribution_rate < 85%",
+        "severity": "high",
+        "notification": "email"
+      },
+      {
+        "name": "Conversion Volume Spike",
+        "condition": "conversion_volume > 150% of baseline",
+        "severity": "medium", 
+        "notification": "slack"
+      },
+      {
+        "name": "Server Error Rate",
+        "condition": "error_rate > 5%",
+        "severity": "critical",
+        "notification": "pagerduty"
+      }
+    ]
+  },
+  
+  "testing_config": {
+    "test_endpoints": {
+      "health_check": "https://track.teen-wellness-monitor.com/health",
+      "attribution_test": "https://track.teen-wellness-monitor.com/test/attribution",
+      "conversion_test": "https://track.teen-wellness-monitor.com/test/conversion"
+    },
+    "test_scenarios": [
+      {
+        "name": "End-to-End Attribution Test",
+        "description": "Test complete flow from ad click to conversion",
+        "steps": [
+          "Send ad click event with GAELP UID",
+          "Track landing page visit", 
+          "Simulate Aura redirect",
+          "Send conversion webhook",
+          "Verify attribution chain"
+        ],
+        "expected_result": "Complete attribution chain tracked"
+      },
+      {
+        "name": "iOS Tracking Test",
+        "description": "Test tracking with iOS privacy restrictions",
+        "steps": [
+          "Send events with iOS user agent",
+          "Verify server-side tracking works",
+          "Check fingerprint-based identity resolution"
+        ],
+        "expected_result": "Successful tracking despite iOS restrictions"
+      },
+      {
+        "name": "Offline Conversion Test",
+        "description": "Test offline conversion uploads",
+        "steps": [
+          "Send conversion with GCLID/FBCLID",
+          "Verify offline conversion queue",
+          "Check upload to ad platforms"
+        ],
+        "expected_result": "Offline conversions uploaded successfully"
+      }
+    ]
+  },
+  
+  "data_flow": {
+    "step1_ad_click": {
+      "source": "Personal Google/Facebook Ad",
+      "destination": "teen-wellness-monitor.com",
+      "data_captured": [
+        "gclid/fbclid",
+        "campaign_id",
+        "creative_id", 
+        "user_signature",
+        "timestamp"
+      ],
+      "processing": [
+        "Generate GAELP UID",
+        "Store user signature",
+        "Create attribution record",
+        "Decorate landing URL"
+      ]
+    },
+    "step2_landing_visit": {
+      "source": "teen-wellness-monitor.com",
+      "destination": "Server tracking + GA4",
+      "data_captured": [
+        "page_view event",
+        "engagement_metrics",
+        "device_fingerprint", 
+        "session_data"
+      ],
+      "processing": [
+        "Identity resolution",
+        "Attribution matching",
+        "Server-side GA4 send",
+        "Prepare Aura redirect"
+      ]
+    },
+    "step3_aura_redirect": {
+      "source": "teen-wellness-monitor.com",
+      "destination": "aura.com",
+      "data_preserved": [
+        "gaelp_uid",
+        "attribution_parameters",
+        "click_ids",
+        "campaign_data"
+      ],
+      "processing": [
+        "Parameter decoration", 
+        "Signature validation",
+        "Cross-domain tracking setup"
+      ]
+    },
+    "step4_conversion": {
+      "source": "aura.com webhook",
+      "destination": "Attribution system + Ad platforms", 
+      "data_captured": [
+        "conversion_value",
+        "transaction_id",
+        "user_data",
+        "gaelp_uid"
+      ],
+      "processing": [
+        "Attribution calculation",
+        "Journey completion",
+        "Offline conversion upload",
+        "ROI calculation"
+      ]
+    }
+  }
+}

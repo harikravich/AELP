@@ -1,0 +1,493 @@
+name: GAELP Test Suite
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    # Run nightly tests at 2 AM UTC
+    - cron: '0 2 * * *'
+
+env:
+  GAELP_ENV: test
+  PYTHON_VERSION: '3.11'
+  NODE_VERSION: '18'
+
+jobs:
+  # Unit and Integration Tests
+  unit-integration-tests:
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: test
+          POSTGRES_USER: test
+          POSTGRES_DB: gaelp_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+      
+      redis:
+        image: redis:7
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+    
+    - name: Cache Python dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    
+    - name: Cache Node dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+    
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install -r requirements-test.txt
+    
+    - name: Install Node dependencies
+      run: npm ci
+    
+    - name: Set up test environment
+      run: |
+        mkdir -p reports logs test_data
+        echo "Database URL: postgresql://test:test@localhost:5432/gaelp_test"
+        echo "Redis URL: redis://localhost:6379/0"
+    
+    - name: Run unit tests
+      run: |
+        python test_runner.py --types unit --environment test
+      env:
+        DATABASE_URL: postgresql://test:test@localhost:5432/gaelp_test
+        REDIS_URL: redis://localhost:6379/0
+        GAELP_LOG_LEVEL: INFO
+    
+    - name: Run integration tests
+      run: |
+        python test_runner.py --types integration --environment test
+      env:
+        DATABASE_URL: postgresql://test:test@localhost:5432/gaelp_test
+        REDIS_URL: redis://localhost:6379/0
+        GAELP_LOG_LEVEL: INFO
+    
+    - name: Upload test results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: unit-integration-test-results
+        path: |
+          reports/
+          logs/
+    
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        files: ./reports/unit_coverage.xml,./reports/integration_coverage.xml
+        flags: unit,integration
+        name: codecov-umbrella
+
+  # End-to-End Tests
+  e2e-tests:
+    runs-on: ubuntu-latest
+    needs: unit-integration-tests
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: test
+          POSTGRES_USER: test
+          POSTGRES_DB: gaelp_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+      
+      redis:
+        image: redis:7
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install -r requirements-test.txt
+        npm ci
+    
+    - name: Start GAELP services
+      run: |
+        # Start the GAELP API server in background
+        python -m uvicorn main:app --host 0.0.0.0 --port 8000 &
+        
+        # Wait for server to start
+        sleep 10
+        
+        # Verify server is running
+        curl -f http://localhost:8000/health || exit 1
+      env:
+        DATABASE_URL: postgresql://test:test@localhost:5432/gaelp_test
+        REDIS_URL: redis://localhost:6379/0
+    
+    - name: Run E2E tests
+      run: |
+        python test_runner.py --types e2e --environment test
+      env:
+        DATABASE_URL: postgresql://test:test@localhost:5432/gaelp_test
+        REDIS_URL: redis://localhost:6379/0
+        API_BASE_URL: http://localhost:8000
+    
+    - name: Upload E2E test results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: e2e-test-results
+        path: |
+          reports/
+          logs/
+
+  # Security Tests
+  security-tests:
+    runs-on: ubuntu-latest
+    needs: unit-integration-tests
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install -r requirements-test.txt
+        
+        # Install security testing tools
+        pip install bandit safety semgrep
+    
+    - name: Run Bandit security scan
+      run: |
+        bandit -r . -f json -o reports/bandit_report.json || true
+        bandit -r . -f txt
+    
+    - name: Run Safety check
+      run: |
+        safety check --json --output reports/safety_report.json || true
+        safety check
+    
+    - name: Run Semgrep security scan
+      run: |
+        semgrep --config=auto --json --output=reports/semgrep_report.json . || true
+        semgrep --config=auto .
+    
+    - name: Run security tests
+      run: |
+        python test_runner.py --types security --environment test
+    
+    - name: Upload security test results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: security-test-results
+        path: |
+          reports/
+          logs/
+
+  # Load Tests (only on main branch or manual trigger)
+  load-tests:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+    needs: [unit-integration-tests, e2e-tests]
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: test
+          POSTGRES_USER: test
+          POSTGRES_DB: gaelp_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+      
+      redis:
+        image: redis:7
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install -r requirements-test.txt
+    
+    - name: Start GAELP services
+      run: |
+        python -m uvicorn main:app --host 0.0.0.0 --port 8000 &
+        sleep 10
+        curl -f http://localhost:8000/health || exit 1
+      env:
+        DATABASE_URL: postgresql://test:test@localhost:5432/gaelp_test
+        REDIS_URL: redis://localhost:6379/0
+    
+    - name: Run load tests
+      run: |
+        python test_runner.py --types load --environment test
+      env:
+        DATABASE_URL: postgresql://test:test@localhost:5432/gaelp_test
+        REDIS_URL: redis://localhost:6379/0
+        API_BASE_URL: http://localhost:8000
+    
+    - name: Upload load test results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: load-test-results
+        path: |
+          reports/
+          logs/
+
+  # Docker build and test
+  docker-tests:
+    runs-on: ubuntu-latest
+    needs: unit-integration-tests
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    
+    - name: Build Docker image
+      run: |
+        docker build -t gaelp:test .
+    
+    - name: Run Docker container tests
+      run: |
+        # Start services with Docker Compose
+        docker-compose -f docker-compose.test.yml up -d
+        
+        # Wait for services to be ready
+        sleep 30
+        
+        # Run health checks
+        docker-compose -f docker-compose.test.yml exec -T api curl -f http://localhost:8000/health
+        
+        # Run tests in container
+        docker-compose -f docker-compose.test.yml exec -T api python test_runner.py --types unit integration
+        
+        # Cleanup
+        docker-compose -f docker-compose.test.yml down
+
+  # Generate final report
+  generate-report:
+    runs-on: ubuntu-latest
+    needs: [unit-integration-tests, e2e-tests, security-tests]
+    if: always()
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install jinja2 matplotlib seaborn pandas
+    
+    - name: Download all test artifacts
+      uses: actions/download-artifact@v3
+      with:
+        path: ./all-reports
+    
+    - name: Combine test results
+      run: |
+        python -c "
+        import json
+        import os
+        from pathlib import Path
+        
+        combined_results = {
+            'timestamp': '$(date -u +%Y-%m-%dT%H:%M:%SZ)',
+            'commit': '${{ github.sha }}',
+            'branch': '${{ github.ref_name }}',
+            'suites': {}
+        }
+        
+        # Combine all JSON reports
+        for report_dir in Path('all-reports').glob('*/reports'):
+            for json_file in report_dir.glob('*_report.json'):
+                if json_file.exists():
+                    with open(json_file) as f:
+                        data = json.load(f)
+                        suite_name = json_file.stem.replace('_report', '')
+                        combined_results['suites'][suite_name] = data
+        
+        # Save combined results
+        with open('reports/combined_results.json', 'w') as f:
+            json.dump(combined_results, f, indent=2)
+        "
+    
+    - name: Generate final HTML report
+      run: |
+        mkdir -p reports
+        python -c "
+        from tests.utils.test_reporting import TestReporter
+        import json
+        
+        # Load combined results and generate comprehensive report
+        with open('reports/combined_results.json') as f:
+            data = json.load(f)
+        
+        reporter = TestReporter('reports')
+        # Process and generate final report
+        html_report = reporter.generate_html_report()
+        print(f'Final report generated: {html_report}')
+        "
+    
+    - name: Upload final report
+      uses: actions/upload-artifact@v3
+      with:
+        name: final-test-report
+        path: reports/
+    
+    - name: Comment PR with results
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          
+          try {
+            const reportData = JSON.parse(fs.readFileSync('reports/combined_results.json', 'utf8'));
+            
+            let comment = '## 🧪 Test Results\n\n';
+            comment += `**Commit:** ${reportData.commit.substring(0, 7)}\n`;
+            comment += `**Branch:** ${reportData.branch}\n\n`;
+            
+            comment += '### Summary\n';
+            comment += '| Suite | Status | Tests | Coverage |\n';
+            comment += '|-------|--------|-------|----------|\n';
+            
+            for (const [suiteName, suiteData] of Object.entries(reportData.suites)) {
+              const summary = suiteData.summary || {};
+              const totalTests = summary.total_tests || 0;
+              const passedTests = summary.passed_tests || 0;
+              const coverage = summary.coverage || 0;
+              const status = passedTests === totalTests ? '✅' : '❌';
+              
+              comment += `| ${suiteName} | ${status} | ${passedTests}/${totalTests} | ${coverage.toFixed(1)}% |\n`;
+            }
+            
+            comment += '\n📊 [Full Test Report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})';
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+          } catch (error) {
+            console.log('Could not post test results comment:', error);
+          }
+
+  # Slack notification
+  notify-slack:
+    runs-on: ubuntu-latest
+    needs: [unit-integration-tests, e2e-tests, security-tests]
+    if: always() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
+    
+    steps:
+    - name: Notify Slack
+      uses: 8398a7/action-slack@v3
+      with:
+        status: ${{ job.status }}
+        channel: '#gaelp-ci'
+        webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+        fields: repo,message,commit,author,action,eventName,ref,workflow
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}

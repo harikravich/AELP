@@ -1,0 +1,38 @@
+{
+  "timestamp": "2025-08-21T15:32:29.744020",
+  "validation_results": {
+    "world_count": 100,
+    "world_types": 10,
+    "init_time": 0.0032358169555664062,
+    "crisis_frequency": 0.07333333333333333,
+    "crisis_value_share": 0.05762807976207739,
+    "crisis_interactions": 11,
+    "regular_crisis_rate": 0.08,
+    "importance_crisis_rate": 0.11,
+    "importance_boost": 1.375,
+    "avg_importance_weight": 4.593333333333334,
+    "max_importance_weight": 50.0,
+    "aggregation_batch_size": 1629,
+    "world_types_in_batch": 7,
+    "integration_batch_size": 2751,
+    "integration_importance_ratio": 0.4
+  },
+  "performance_metrics": {
+    "episodes_per_second": 36.347095671118154,
+    "batch_processing_time": 2.751251459121704,
+    "concurrent_worlds": 25
+  },
+  "compliance_check": {
+    "crisis_frequency": true,
+    "performance": true,
+    "overall_compliant": true,
+    "individual_checks": {
+      "100+ Worlds Support": true,
+      "Crisis Parent Handling": true,
+      "Importance Sampling": true,
+      "Experience Aggregation": true,
+      "Performance Standard": true,
+      "Integration Ready": true
+    }
+  }
+}

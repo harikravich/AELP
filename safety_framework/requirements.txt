@@ -1,0 +1,60 @@
+# GAELP Safety Framework Requirements
+
+# Core dependencies
+asyncio>=3.4.3
+dataclasses-json>=0.5.7
+python-dateutil>=2.8.0
+typing-extensions>=4.0.0
+
+# Cryptography for credential management
+cryptography>=3.4.8
+
+# Data processing and analysis
+numpy>=1.21.0
+pandas>=1.3.0
+
+# For advanced ML-based safety checks (optional)
+scikit-learn>=1.0.0
+torch>=1.10.0  # Optional for deep learning safety models
+
+# HTTP client for webhooks and external integrations
+aiohttp>=3.8.0
+requests>=2.28.0
+
+# Configuration and environment
+pydantic>=1.8.0
+python-dotenv>=0.19.0
+
+# Logging and monitoring
+structlog>=21.1.0
+prometheus-client>=0.11.0
+
+# Database/storage (choose based on backend)
+redis>=4.0.0  # For caching and session storage
+psycopg2-binary>=2.9.0  # For PostgreSQL if using database backend
+pymongo>=4.0.0  # For MongoDB if using NoSQL backend
+
+# Cloud integrations
+google-cloud-storage>=2.5.0  # For GCS integration
+google-cloud-monitoring>=2.11.0  # For Cloud Monitoring
+google-auth>=2.0.0
+
+# Testing dependencies
+pytest>=6.2.0
+pytest-asyncio>=0.19.0
+pytest-mock>=3.6.0
+pytest-cov>=3.0.0
+
+# Development dependencies
+black>=22.0.0
+flake8>=4.0.0
+mypy>=0.910
+pre-commit>=2.15.0
+
+# Security scanning
+bandit>=1.7.0
+safety>=2.0.0
+
+# Documentation
+sphinx>=4.0.0
+sphinx-rtd-theme>=1.0.0

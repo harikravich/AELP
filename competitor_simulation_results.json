@@ -1,0 +1,461 @@
+{
+  "agents": {
+    "qustodio": {
+      "name": "Qustodio",
+      "agent_type": "q_learning",
+      "annual_budget": 99.0,
+      "metrics": {
+        "win_rate": 0.75,
+        "avg_position": 1.0,
+        "spend_efficiency": 404.989,
+        "total_spend": 0.3,
+        "total_revenue": 121.05,
+        "roas": 404.989,
+        "conversion_rate": 0.333,
+        "cost_per_acquisition": 0.3,
+        "high_value_wins": 1,
+        "total_auctions": 4
+      },
+      "strategy_params": {
+        "base_bid_multiplier": 1.0,
+        "aggression_level": 0.8,
+        "risk_tolerance": 0.7
+      }
+    },
+    "bark": {
+      "name": "Bark",
+      "agent_type": "policy_gradient",
+      "annual_budget": 144.0,
+      "metrics": {
+        "win_rate": 0.0,
+        "avg_position": 0.0,
+        "spend_efficiency": 0.0,
+        "total_spend": 0.0,
+        "total_revenue": 0.0,
+        "roas": 0.0,
+        "conversion_rate": 0.0,
+        "cost_per_acquisition": 0.0,
+        "high_value_wins": 0,
+        "total_auctions": 0
+      },
+      "strategy_params": {
+        "base_bid_multiplier": 1.0,
+        "aggression_level": 0.6,
+        "risk_tolerance": 0.4
+      }
+    },
+    "circle": {
+      "name": "Circle",
+      "agent_type": "rule_based",
+      "annual_budget": 129.0,
+      "metrics": {
+        "win_rate": 1.0,
+        "avg_position": 1.0,
+        "spend_efficiency": 0.0,
+        "total_spend": 0.38,
+        "total_revenue": 0.0,
+        "roas": 0.0,
+        "conversion_rate": 0.0,
+        "cost_per_acquisition": 0.0,
+        "high_value_wins": 0,
+        "total_auctions": 4
+      },
+      "strategy_params": {
+        "base_bid_multiplier": 1.0,
+        "aggression_level": 0.3,
+        "risk_tolerance": 0.3
+      }
+    },
+    "norton": {
+      "name": "Norton",
+      "agent_type": "random",
+      "annual_budget": 100.0,
+      "metrics": {
+        "win_rate": 0.5,
+        "avg_position": 1.0,
+        "spend_efficiency": 0.0,
+        "total_spend": 0.32,
+        "total_revenue": 0.0,
+        "roas": 0.0,
+        "conversion_rate": 0.0,
+        "cost_per_acquisition": 0.0,
+        "high_value_wins": 2,
+        "total_auctions": 6
+      },
+      "strategy_params": {
+        "base_bid_multiplier": 1.0,
+        "aggression_level": 0.5,
+        "risk_tolerance": 0.5
+      }
+    }
+  },
+  "simulation_history": [
+    {
+      "timestamp": "2025-08-21T18:36:15.958425",
+      "context": {
+        "user_id": "user_4880",
+        "user_value_tier": "UserValueTier.LOW",
+        "timestamp": "2025-08-21 18:36:15.958425",
+        "device_type": "mobile",
+        "geo_location": "AU",
+        "time_of_day": 18,
+        "day_of_week": 3,
+        "market_competition": 0.07686489421157987,
+        "keyword_competition": 0.8362982606039289,
+        "seasonality_factor": 0.9,
+        "user_engagement_score": 0.44941547101775026,
+        "conversion_probability": 0.00893830032053052
+      },
+      "results": {
+        "qustodio": {
+          "won": true,
+          "bid_amount": 0.1,
+          "winning_price": 0.08000000000000002,
+          "position": 1,
+          "competitor_count": 1,
+          "user_value_tier": "UserValueTier.LOW",
+          "cost_per_click": 0.08000000000000002,
+          "revenue": 0.0,
+          "converted": false
+        }
+      }
+    },
+    {
+      "timestamp": "2025-08-21T14:20:15.958425",
+      "context": {
+        "user_id": "user_7458",
+        "user_value_tier": "UserValueTier.PREMIUM",
+        "timestamp": "2025-08-21 14:20:15.958425",
+        "device_type": "mobile",
+        "geo_location": "US",
+        "time_of_day": 14,
+        "day_of_week": 3,
+        "market_competition": 0.914654907619881,
+        "keyword_competition": 0.1673890021367146,
+        "seasonality_factor": 0.9,
+        "user_engagement_score": 0.3714475997753193,
+        "conversion_probability": 0.22326324041655354
+      },
+      "results": {
+        "qustodio": {
+          "won": true,
+          "bid_amount": 0.17361190455122316,
+          "winning_price": 0.13888952364097853,
+          "position": 1,
+          "competitor_count": 1,
+          "user_value_tier": "UserValueTier.PREMIUM",
+          "cost_per_click": 0.13888952364097853,
+          "revenue": 121.04709376169896,
+          "converted": true
+        }
+      }
+    },
+    {
+      "timestamp": "2025-08-21T11:08:15.958425",
+      "context": {
+        "user_id": "user_5444",
+        "user_value_tier": "UserValueTier.PREMIUM",
+        "timestamp": "2025-08-21 11:08:15.958425",
+        "device_type": "desktop",
+        "geo_location": "DE",
+        "time_of_day": 11,
+        "day_of_week": 3,
+        "market_competition": 0.6233761920055144,
+        "keyword_competition": 0.7708837508221337,
+        "seasonality_factor": 0.9,
+        "user_engagement_score": 0.13882408389780615,
+        "conversion_probability": 0.23366892072615267
+      },
+      "results": {
+        "norton": {
+          "won": true,
+          "bid_amount": 0.8293123937281637,
+          "winning_price": 0.1508831195276254,
+          "position": 1,
+          "competitor_count": 2,
+          "user_value_tier": "UserValueTier.PREMIUM",
+          "cost_per_click": 0.1508831195276254,
+          "revenue": 0.0,
+          "converted": false
+        },
+        "qustodio": {
+          "won": false,
+          "bid_amount": 0.1508831195276254,
+          "winning_price": 0,
+          "position": 2,
+          "competitor_count": 2,
+          "user_value_tier": "UserValueTier.PREMIUM",
+          "cost_per_click": 0,
+          "revenue": 0.0,
+          "converted": false
+        }
+      }
+    },
+    {
+      "timestamp": "2025-08-21T14:18:15.958425",
+      "context": {
+        "user_id": "user_8364",
+        "user_value_tier": "UserValueTier.MEDIUM",
+        "timestamp": "2025-08-21 14:18:15.958425",
+        "device_type": "tablet",
+        "geo_location": "UK",
+        "time_of_day": 14,
+        "day_of_week": 3,
+        "market_competition": 0.7488770216778088,
+        "keyword_competition": 0.05111973435102144,
+        "seasonality_factor": 0.9,
+        "user_engagement_score": 0.5807431026429914,
+        "conversion_probability": 0.03775598459845296
+      },
+      "results": {
+        "qustodio": {
+          "won": true,
+          "bid_amount": 0.1,
+          "winning_price": 0.08000000000000002,
+          "position": 1,
+          "competitor_count": 1,
+          "user_value_tier": "UserValueTier.MEDIUM",
+          "cost_per_click": 0.08000000000000002,
+          "revenue": 0.0,
+          "converted": false
+        }
+      }
+    },
+    {
+      "timestamp": "2025-08-21T14:07:15.958425",
+      "context": {
+        "user_id": "user_4070",
+        "user_value_tier": "UserValueTier.MEDIUM",
+        "timestamp": "2025-08-21 14:07:15.958425",
+        "device_type": "desktop",
+        "geo_location": "CA",
+        "time_of_day": 14,
+        "day_of_week": 3,
+        "market_competition": 0.11004564223428635,
+        "keyword_competition": 0.20863057475726712,
+        "seasonality_factor": 0.9,
+        "user_engagement_score": 0.08526406790719444,
+        "conversion_probability": 0.06184273550978005
+      },
+      "results": {
+        "circle": {
+          "won": true,
+          "bid_amount": 0.1,
+          "winning_price": 0.08000000000000002,
+          "position": 1,
+          "competitor_count": 1,
+          "user_value_tier": "UserValueTier.MEDIUM",
+          "cost_per_click": 0.08000000000000002,
+          "revenue": 0.0,
+          "converted": false
+        }
+      }
+    },
+    {
+      "timestamp": "2025-08-21T14:22:15.958425",
+      "context": {
+        "user_id": "user_3825",
+        "user_value_tier": "UserValueTier.MEDIUM",
+        "timestamp": "2025-08-21 14:22:15.958425",
+        "device_type": "desktop",
+        "geo_location": "CA",
+        "time_of_day": 14,
+        "day_of_week": 3,
+        "market_competition": 0.1795203025590113,
+        "keyword_competition": 0.38030208211163474,
+        "seasonality_factor": 0.9,
+        "user_engagement_score": 0.7374266109070625,
+        "conversion_probability": 0.047708092093517715
+      },
+      "results": {
+        "circle": {
+          "won": true,
+          "bid_amount": 0.1,
+          "winning_price": 0.1,
+          "position": 1,
+          "competitor_count": 2,
+          "user_value_tier": "UserValueTier.MEDIUM",
+          "cost_per_click": 0.1,
+          "revenue": 0.0,
+          "converted": false
+        },
+        "norton": {
+          "won": false,
+          "bid_amount": 0.1,
+          "winning_price": 0,
+          "position": 2,
+          "competitor_count": 2,
+          "user_value_tier": "UserValueTier.MEDIUM",
+          "cost_per_click": 0,
+          "revenue": 0.0,
+          "converted": false
+        }
+      }
+    },
+    {
+      "timestamp": "2025-08-21T04:16:15.958425",
+      "context": {
+        "user_id": "user_6870",
+        "user_value_tier": "UserValueTier.MEDIUM",
+        "timestamp": "2025-08-21 04:16:15.958425",
+        "device_type": "desktop",
+        "geo_location": "DE",
+        "time_of_day": 4,
+        "day_of_week": 3,
+        "market_competition": 0.7815106943058783,
+        "keyword_competition": 0.487781920678083,
+        "seasonality_factor": 0.9,
+        "user_engagement_score": 0.7361257852761802,
+        "conversion_probability": 0.02241086526404833
+      },
+      "results": {
+        "norton": {
+          "won": true,
+          "bid_amount": 0.1,
+          "winning_price": 0.08000000000000002,
+          "position": 1,
+          "competitor_count": 1,
+          "user_value_tier": "UserValueTier.MEDIUM",
+          "cost_per_click": 0.08000000000000002,
+          "revenue": 0.0,
+          "converted": false
+        }
+      }
+    },
+    {
+      "timestamp": "2025-08-21T10:47:15.958425",
+      "context": {
+        "user_id": "user_9112",
+        "user_value_tier": "UserValueTier.MEDIUM",
+        "timestamp": "2025-08-21 10:47:15.958425",
+        "device_type": "mobile",
+        "geo_location": "US",
+        "time_of_day": 10,
+        "day_of_week": 3,
+        "market_competition": 0.5304723575201108,
+        "keyword_competition": 0.24806040366044915,
+        "seasonality_factor": 0.9,
+        "user_engagement_score": 0.6262554904643245,
+        "conversion_probability": 0.05381602883392222
+      },
+      "results": {
+        "circle": {
+          "won": true,
+          "bid_amount": 0.1,
+          "winning_price": 0.1,
+          "position": 1,
+          "competitor_count": 2,
+          "user_value_tier": "UserValueTier.MEDIUM",
+          "cost_per_click": 0.1,
+          "revenue": 0.0,
+          "converted": false
+        },
+        "norton": {
+          "won": false,
+          "bid_amount": 0.1,
+          "winning_price": 0,
+          "position": 2,
+          "competitor_count": 2,
+          "user_value_tier": "UserValueTier.MEDIUM",
+          "cost_per_click": 0,
+          "revenue": 0.0,
+          "converted": false
+        }
+      }
+    },
+    {
+      "timestamp": "2025-08-21T10:13:15.958425",
+      "context": {
+        "user_id": "user_2530",
+        "user_value_tier": "UserValueTier.MEDIUM",
+        "timestamp": "2025-08-21 10:13:15.958425",
+        "device_type": "desktop",
+        "geo_location": "UK",
+        "time_of_day": 10,
+        "day_of_week": 3,
+        "market_competition": 0.4853382000499166,
+        "keyword_competition": 0.31753104645462954,
+        "seasonality_factor": 0.9,
+        "user_engagement_score": 0.38231828518052624,
+        "conversion_probability": 0.0584440830892005
+      },
+      "results": {
+        "circle": {
+          "won": true,
+          "bid_amount": 0.1,
+          "winning_price": 0.1,
+          "position": 1,
+          "competitor_count": 2,
+          "user_value_tier": "UserValueTier.MEDIUM",
+          "cost_per_click": 0.1,
+          "revenue": 0.0,
+          "converted": false
+        },
+        "norton": {
+          "won": false,
+          "bid_amount": 0.1,
+          "winning_price": 0,
+          "position": 2,
+          "competitor_count": 2,
+          "user_value_tier": "UserValueTier.MEDIUM",
+          "cost_per_click": 0,
+          "revenue": 0.0,
+          "converted": false
+        }
+      }
+    },
+    {
+      "timestamp": "2025-08-21T09:40:15.958425",
+      "context": {
+        "user_id": "user_8285",
+        "user_value_tier": "UserValueTier.HIGH",
+        "timestamp": "2025-08-21 09:40:15.958425",
+        "device_type": "mobile",
+        "geo_location": "UK",
+        "time_of_day": 9,
+        "day_of_week": 3,
+        "market_competition": 0.7474246120781032,
+        "keyword_competition": 0.33207874183479286,
+        "seasonality_factor": 0.9,
+        "user_engagement_score": 0.4492421024245207,
+        "conversion_probability": 0.07940510216543092
+      },
+      "results": {
+        "norton": {
+          "won": true,
+          "bid_amount": 0.11595831184557723,
+          "winning_price": 0.0927666494764618,
+          "position": 1,
+          "competitor_count": 1,
+          "user_value_tier": "UserValueTier.HIGH",
+          "cost_per_click": 0.0927666494764618,
+          "revenue": 0.0,
+          "converted": false
+        }
+      }
+    }
+  ],
+  "market_conditions": {
+    "base_competition": 0.5,
+    "seasonal_factors": {
+      "1": 0.8,
+      "2": 0.9,
+      "3": 1.1,
+      "4": 1.2,
+      "5": 1.0,
+      "6": 0.9,
+      "7": 0.8,
+      "8": 0.9,
+      "9": 1.1,
+      "10": 1.2,
+      "11": 1.5,
+      "12": 1.8
+    },
+    "user_distribution": {
+      "low": 0.4,
+      "medium": 0.35,
+      "high": 0.2,
+      "premium": 0.05
+    }
+  }
+}

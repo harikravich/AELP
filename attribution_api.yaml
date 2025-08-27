@@ -1,0 +1,1053 @@
+openapi: 3.0.3
+info:
+  title: GAELP Attribution API
+  description: |
+    Multi-Touch Attribution API for GAELP (Generalized Agent Environment Learning Platform).
+    
+    This API provides attribution modeling capabilities for assigning credit to touchpoints
+    in multi-touch customer journeys, enabling proper reward assignment in reinforcement
+    learning environments.
+    
+    ## Attribution Models
+    
+    - **Time Decay**: Exponential decay attribution with configurable half-life (default 7 days)
+    - **Position-Based (U-shaped)**: Higher attribution to first (40%) and last (40%) touchpoints
+    - **Linear**: Equal attribution to all touchpoints (20% distributed among middle touchpoints)
+    - **Data-Driven**: Machine learning based attribution using conversion probability lift
+    
+    ## Use Cases
+    
+    - Multi-touch customer journey analysis
+    - Reward assignment in RL environments
+    - Attribution model comparison and evaluation
+    - Training data-driven attribution models
+  version: 1.0.0
+  contact:
+    name: GAELP API Team
+    url: https://github.com/gaelp/attribution-api
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://api.gaelp.com/v1
+    description: Production server
+  - url: https://staging-api.gaelp.com/v1
+    description: Staging server
+  - url: http://localhost:8000/v1
+    description: Development server
+
+tags:
+  - name: attribution
+    description: Attribution calculation operations
+  - name: models
+    description: Attribution model management
+  - name: journeys
+    description: Customer journey management
+  - name: training
+    description: Model training operations
+
+paths:
+  /attribution/calculate:
+    post:
+      tags: [attribution]
+      summary: Calculate attribution for a journey
+      description: |
+        Calculate attribution weights for all touchpoints in a customer journey
+        using the specified attribution model.
+      operationId: calculateAttribution
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttributionRequest'
+            examples:
+              time_decay_example:
+                summary: Time decay attribution
+                value:
+                  journey_id: "journey_123"
+                  model_name: "time_decay"
+                  model_config:
+                    half_life_days: 7
+                  touchpoints:
+                    - id: "tp1"
+                      timestamp: "2024-01-01T10:00:00Z"
+                      channel: "email"
+                      action: "click"
+                    - id: "tp2"
+                      timestamp: "2024-01-05T15:30:00Z"
+                      channel: "social"
+                      action: "view"
+                  conversion_value: 100.0
+                  conversion_timestamp: "2024-01-10T09:00:00Z"
+              position_based_example:
+                summary: Position-based attribution
+                value:
+                  journey_id: "journey_456"
+                  model_name: "position_based"
+                  model_config:
+                    first_weight: 0.4
+                    last_weight: 0.4
+                    middle_weight: 0.2
+                  touchpoints:
+                    - id: "tp1"
+                      timestamp: "2024-01-01T10:00:00Z"
+                      channel: "search"
+                      action: "click"
+                    - id: "tp2"
+                      timestamp: "2024-01-03T12:00:00Z"
+                      channel: "email"
+                      action: "open"
+                    - id: "tp3"
+                      timestamp: "2024-01-05T14:00:00Z"
+                      channel: "direct"
+                      action: "visit"
+                  conversion_value: 150.0
+                  conversion_timestamp: "2024-01-06T16:00:00Z"
+      responses:
+        '200':
+          description: Attribution calculation successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttributionResponse'
+              examples:
+                success_example:
+                  summary: Successful attribution calculation
+                  value:
+                    journey_id: "journey_123"
+                    model_name: "time_decay"
+                    attribution_weights:
+                      tp1: 0.2857
+                      tp2: 0.7143
+                    total_weight: 1.0
+                    conversion_value: 100.0
+                    calculation_timestamp: "2024-01-10T10:00:00Z"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /attribution/distribute:
+    post:
+      tags: [attribution]
+      summary: Distribute conversion credit among touchpoints
+      description: |
+        Distribute the total conversion value among touchpoints based on
+        attribution weights calculated by the specified model.
+      operationId: distributeCredit
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttributionRequest'
+      responses:
+        '200':
+          description: Credit distribution successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditDistributionResponse'
+              examples:
+                success_example:
+                  summary: Successful credit distribution
+                  value:
+                    journey_id: "journey_123"
+                    model_name: "time_decay"
+                    touchpoint_credits:
+                      - touchpoint_id: "tp1"
+                        attributed_value: 28.57
+                        attribution_weight: 0.2857
+                      - touchpoint_id: "tp2"
+                        attributed_value: 71.43
+                        attribution_weight: 0.7143
+                    total_distributed: 100.0
+                    calculation_timestamp: "2024-01-10T10:00:00Z"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /attribution/touchpoint/{touchpoint_id}/value:
+    post:
+      tags: [attribution]
+      summary: Get attributed value for specific touchpoint
+      description: |
+        Calculate the attributed value for a specific touchpoint within a journey
+        using the specified attribution model.
+      operationId: getTouchpointValue
+      parameters:
+        - name: touchpoint_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique identifier for the touchpoint
+          example: "tp1"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttributionRequest'
+      responses:
+        '200':
+          description: Touchpoint value calculation successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TouchpointValueResponse'
+              examples:
+                success_example:
+                  summary: Successful touchpoint value calculation
+                  value:
+                    touchpoint_id: "tp1"
+                    journey_id: "journey_123"
+                    attributed_value: 28.57
+                    attribution_weight: 0.2857
+                    model_name: "time_decay"
+                    calculation_timestamp: "2024-01-10T10:00:00Z"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          description: Touchpoint not found in journey
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /attribution/compare:
+    post:
+      tags: [attribution]
+      summary: Compare attribution across multiple models
+      description: |
+        Compare attribution results for the same journey across multiple
+        attribution models to understand model differences and sensitivity.
+      operationId: compareModels
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModelComparisonRequest'
+            examples:
+              compare_example:
+                summary: Compare multiple models
+                value:
+                  journey_id: "journey_123"
+                  model_names: ["time_decay", "position_based", "linear"]
+                  model_configs:
+                    time_decay:
+                      half_life_days: 7
+                    position_based:
+                      first_weight: 0.4
+                      last_weight: 0.4
+                      middle_weight: 0.2
+                  touchpoints:
+                    - id: "tp1"
+                      timestamp: "2024-01-01T10:00:00Z"
+                      channel: "email"
+                      action: "click"
+                    - id: "tp2"
+                      timestamp: "2024-01-05T15:30:00Z"
+                      channel: "social"
+                      action: "view"
+                  conversion_value: 100.0
+                  conversion_timestamp: "2024-01-10T09:00:00Z"
+      responses:
+        '200':
+          description: Model comparison successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelComparisonResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /models:
+    get:
+      tags: [models]
+      summary: List available attribution models
+      description: Get a list of all available attribution models and their configurations.
+      operationId: listModels
+      responses:
+        '200':
+          description: List of available models
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelListResponse'
+              examples:
+                models_example:
+                  summary: Available models
+                  value:
+                    models:
+                      - name: "time_decay"
+                        display_name: "Time Decay Attribution"
+                        description: "Exponential decay attribution with configurable half-life"
+                        parameters:
+                          - name: "half_life_days"
+                            type: "integer"
+                            default: 7
+                            description: "Number of days for attribution to decay by half"
+                      - name: "position_based"
+                        display_name: "Position-Based (U-shaped) Attribution"
+                        description: "Higher attribution to first and last touchpoints"
+                        parameters:
+                          - name: "first_weight"
+                            type: "number"
+                            default: 0.4
+                            description: "Attribution weight for first touchpoint"
+                      - name: "linear"
+                        display_name: "Linear Attribution"
+                        description: "Equal attribution to all touchpoints"
+                        parameters: []
+                      - name: "data_driven"
+                        display_name: "Data-Driven Attribution"
+                        description: "ML-based attribution using conversion probability lift"
+                        parameters: []
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /models/data-driven/train:
+    post:
+      tags: [training]
+      summary: Train data-driven attribution model
+      description: |
+        Train the data-driven attribution model using historical journey data.
+        The model uses machine learning to determine optimal attribution weights
+        based on conversion probability lift.
+      operationId: trainDataDrivenModel
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TrainingRequest'
+      responses:
+        '202':
+          description: Training job started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrainingResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /models/data-driven/training/{job_id}:
+    get:
+      tags: [training]
+      summary: Get training job status
+      description: Get the status and progress of a data-driven model training job.
+      operationId: getTrainingStatus
+      parameters:
+        - name: job_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Training job identifier
+          example: "training_job_123"
+      responses:
+        '200':
+          description: Training job status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrainingStatusResponse'
+        '404':
+          description: Training job not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /journeys/{journey_id}/attribution:
+    get:
+      tags: [journeys]
+      summary: Get cached attribution for journey
+      description: Retrieve previously calculated attribution results for a journey.
+      operationId: getJourneyAttribution
+      parameters:
+        - name: journey_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Journey identifier
+          example: "journey_123"
+        - name: model_name
+          in: query
+          required: false
+          schema:
+            type: string
+            default: "linear"
+          description: Attribution model name
+          example: "time_decay"
+      responses:
+        '200':
+          description: Cached attribution results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttributionResponse'
+        '404':
+          description: Journey or attribution not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /gaelp/episode/attribution:
+    post:
+      tags: [attribution]
+      summary: Calculate attribution for GAELP episode
+      description: |
+        Calculate multi-touch attribution for a GAELP episode, converting
+        episode data to journey format and returning attributed rewards
+        for each timestep.
+      operationId: calculateEpisodeAttribution
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EpisodeAttributionRequest'
+            examples:
+              episode_example:
+                summary: GAELP episode attribution
+                value:
+                  episode_id: "episode_123"
+                  model_name: "time_decay"
+                  model_config:
+                    half_life_days: 7
+                  states:
+                    - customer_id: "customer_1"
+                      features: [0.1, 0.2, 0.3]
+                    - customer_id: "customer_1"
+                      features: [0.2, 0.3, 0.4]
+                  actions:
+                    - channel: "email"
+                      type: "send_offer"
+                    - channel: "push"
+                      type: "reminder"
+                  rewards: [0.0, 1.0]
+                  timestamps:
+                    - "2024-01-01T10:00:00Z"
+                    - "2024-01-02T15:00:00Z"
+                  total_reward: 100.0
+                  success: true
+                  end_timestamp: "2024-01-02T16:00:00Z"
+      responses:
+        '200':
+          description: Episode attribution successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EpisodeAttributionResponse'
+              examples:
+                success_example:
+                  summary: Successful episode attribution
+                  value:
+                    episode_id: "episode_123"
+                    model_name: "time_decay"
+                    attributed_rewards: [28.57, 71.43]
+                    total_attributed: 100.0
+                    journey_id: "journey_episode_123"
+                    calculation_timestamp: "2024-01-02T17:00:00Z"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  schemas:
+    Touchpoint:
+      type: object
+      required: [id, timestamp, channel, action]
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the touchpoint
+          example: "tp1"
+        timestamp:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp of the touchpoint
+          example: "2024-01-01T10:00:00Z"
+        channel:
+          type: string
+          description: Marketing channel or source
+          example: "email"
+          enum: [email, social, search, direct, referral, push, sms, display, video, affiliate]
+        action:
+          type: string
+          description: Type of action or interaction
+          example: "click"
+        value:
+          type: number
+          format: float
+          description: Optional value associated with the touchpoint
+          example: 10.5
+          default: 0.0
+        metadata:
+          type: object
+          description: Additional touchpoint metadata
+          additionalProperties: true
+          example:
+            campaign_id: "campaign_123"
+            creative_id: "creative_456"
+
+    AttributionRequest:
+      type: object
+      required: [journey_id, touchpoints, conversion_value, conversion_timestamp]
+      properties:
+        journey_id:
+          type: string
+          description: Unique identifier for the journey
+          example: "journey_123"
+        model_name:
+          type: string
+          description: Name of attribution model to use
+          default: "linear"
+          enum: [time_decay, position_based, linear, data_driven]
+          example: "time_decay"
+        model_config:
+          type: object
+          description: Model-specific configuration parameters
+          additionalProperties: true
+          example:
+            half_life_days: 7
+        touchpoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/Touchpoint'
+          description: List of touchpoints in the journey
+          minItems: 1
+        conversion_value:
+          type: number
+          format: float
+          description: Total conversion value to attribute
+          example: 100.0
+        conversion_timestamp:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp of conversion
+          example: "2024-01-10T09:00:00Z"
+        converted:
+          type: boolean
+          description: Whether the journey resulted in conversion
+          default: true
+
+    AttributionResponse:
+      type: object
+      properties:
+        journey_id:
+          type: string
+          description: Journey identifier
+          example: "journey_123"
+        model_name:
+          type: string
+          description: Attribution model used
+          example: "time_decay"
+        attribution_weights:
+          type: object
+          description: Attribution weights for each touchpoint
+          additionalProperties:
+            type: number
+            format: float
+          example:
+            tp1: 0.2857
+            tp2: 0.7143
+        total_weight:
+          type: number
+          format: float
+          description: Sum of all attribution weights (should be 1.0)
+          example: 1.0
+        conversion_value:
+          type: number
+          format: float
+          description: Total conversion value
+          example: 100.0
+        calculation_timestamp:
+          type: string
+          format: date-time
+          description: When the attribution was calculated
+          example: "2024-01-10T10:00:00Z"
+
+    CreditDistributionResponse:
+      type: object
+      properties:
+        journey_id:
+          type: string
+          description: Journey identifier
+          example: "journey_123"
+        model_name:
+          type: string
+          description: Attribution model used
+          example: "time_decay"
+        touchpoint_credits:
+          type: array
+          items:
+            type: object
+            properties:
+              touchpoint_id:
+                type: string
+                description: Touchpoint identifier
+                example: "tp1"
+              attributed_value:
+                type: number
+                format: float
+                description: Attributed value for this touchpoint
+                example: 28.57
+              attribution_weight:
+                type: number
+                format: float
+                description: Attribution weight (0-1)
+                example: 0.2857
+        total_distributed:
+          type: number
+          format: float
+          description: Total value distributed
+          example: 100.0
+        calculation_timestamp:
+          type: string
+          format: date-time
+          description: When the attribution was calculated
+          example: "2024-01-10T10:00:00Z"
+
+    TouchpointValueResponse:
+      type: object
+      properties:
+        touchpoint_id:
+          type: string
+          description: Touchpoint identifier
+          example: "tp1"
+        journey_id:
+          type: string
+          description: Journey identifier
+          example: "journey_123"
+        attributed_value:
+          type: number
+          format: float
+          description: Attributed value for this touchpoint
+          example: 28.57
+        attribution_weight:
+          type: number
+          format: float
+          description: Attribution weight (0-1)
+          example: 0.2857
+        model_name:
+          type: string
+          description: Attribution model used
+          example: "time_decay"
+        calculation_timestamp:
+          type: string
+          format: date-time
+          description: When the attribution was calculated
+          example: "2024-01-10T10:00:00Z"
+
+    ModelComparisonRequest:
+      type: object
+      required: [journey_id, model_names, touchpoints, conversion_value, conversion_timestamp]
+      properties:
+        journey_id:
+          type: string
+          description: Journey identifier
+          example: "journey_123"
+        model_names:
+          type: array
+          items:
+            type: string
+            enum: [time_decay, position_based, linear, data_driven]
+          description: List of models to compare
+          example: ["time_decay", "position_based", "linear"]
+        model_configs:
+          type: object
+          description: Configuration for each model
+          additionalProperties:
+            type: object
+          example:
+            time_decay:
+              half_life_days: 7
+            position_based:
+              first_weight: 0.4
+              last_weight: 0.4
+              middle_weight: 0.2
+        touchpoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/Touchpoint'
+          description: List of touchpoints in the journey
+          minItems: 1
+        conversion_value:
+          type: number
+          format: float
+          description: Total conversion value to attribute
+          example: 100.0
+        conversion_timestamp:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp of conversion
+          example: "2024-01-10T09:00:00Z"
+
+    ModelComparisonResponse:
+      type: object
+      properties:
+        journey_id:
+          type: string
+          description: Journey identifier
+          example: "journey_123"
+        model_results:
+          type: object
+          description: Attribution results for each model
+          additionalProperties:
+            type: object
+            properties:
+              attribution_weights:
+                type: object
+                additionalProperties:
+                  type: number
+                  format: float
+              total_weight:
+                type: number
+                format: float
+          example:
+            time_decay:
+              attribution_weights:
+                tp1: 0.2857
+                tp2: 0.7143
+              total_weight: 1.0
+            position_based:
+              attribution_weights:
+                tp1: 0.4
+                tp2: 0.6
+              total_weight: 1.0
+            linear:
+              attribution_weights:
+                tp1: 0.5
+                tp2: 0.5
+              total_weight: 1.0
+        calculation_timestamp:
+          type: string
+          format: date-time
+          description: When the comparison was performed
+          example: "2024-01-10T10:00:00Z"
+
+    ModelListResponse:
+      type: object
+      properties:
+        models:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Model identifier
+                example: "time_decay"
+              display_name:
+                type: string
+                description: Human-readable model name
+                example: "Time Decay Attribution"
+              description:
+                type: string
+                description: Model description
+                example: "Exponential decay attribution with configurable half-life"
+              parameters:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: "half_life_days"
+                    type:
+                      type: string
+                      enum: [string, number, integer, boolean]
+                      example: "integer"
+                    default:
+                      description: Default parameter value
+                      example: 7
+                    description:
+                      type: string
+                      example: "Number of days for attribution to decay by half"
+
+    TrainingRequest:
+      type: object
+      required: [training_data]
+      properties:
+        training_data:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttributionRequest'
+          description: Historical journey data for training
+          minItems: 10
+        validation_split:
+          type: number
+          format: float
+          description: Fraction of data to use for validation
+          minimum: 0.1
+          maximum: 0.5
+          default: 0.2
+          example: 0.2
+        job_id:
+          type: string
+          description: Optional job identifier
+          example: "training_job_123"
+
+    TrainingResponse:
+      type: object
+      properties:
+        job_id:
+          type: string
+          description: Training job identifier
+          example: "training_job_123"
+        status:
+          type: string
+          enum: [started, running, completed, failed]
+          description: Training job status
+          example: "started"
+        estimated_completion:
+          type: string
+          format: date-time
+          description: Estimated completion time
+          example: "2024-01-10T12:00:00Z"
+
+    TrainingStatusResponse:
+      type: object
+      properties:
+        job_id:
+          type: string
+          description: Training job identifier
+          example: "training_job_123"
+        status:
+          type: string
+          enum: [started, running, completed, failed]
+          description: Current job status
+          example: "running"
+        progress:
+          type: number
+          format: float
+          description: Training progress (0-1)
+          example: 0.75
+        accuracy:
+          type: number
+          format: float
+          description: Model accuracy (if completed)
+          example: 0.85
+        started_at:
+          type: string
+          format: date-time
+          description: When training started
+          example: "2024-01-10T10:00:00Z"
+        completed_at:
+          type: string
+          format: date-time
+          description: When training completed (if finished)
+          example: "2024-01-10T11:30:00Z"
+        error_message:
+          type: string
+          description: Error message (if failed)
+          example: "Insufficient training data"
+
+    EpisodeAttributionRequest:
+      type: object
+      required: [episode_id, states, actions, rewards, timestamps]
+      properties:
+        episode_id:
+          type: string
+          description: GAELP episode identifier
+          example: "episode_123"
+        model_name:
+          type: string
+          description: Attribution model to use
+          default: "linear"
+          enum: [time_decay, position_based, linear, data_driven]
+          example: "time_decay"
+        model_config:
+          type: object
+          description: Model-specific configuration
+          additionalProperties: true
+          example:
+            half_life_days: 7
+        states:
+          type: array
+          items:
+            type: object
+            description: Environment state at each timestep
+          description: List of environment states
+          example:
+            - customer_id: "customer_1"
+              features: [0.1, 0.2, 0.3]
+        actions:
+          type: array
+          items:
+            type: object
+            description: Action taken at each timestep
+          description: List of actions taken
+          example:
+            - channel: "email"
+              type: "send_offer"
+        rewards:
+          type: array
+          items:
+            type: number
+            format: float
+          description: Immediate rewards at each timestep
+          example: [0.0, 1.0]
+        timestamps:
+          type: array
+          items:
+            type: string
+            format: date-time
+          description: Timestamps for each timestep
+          example:
+            - "2024-01-01T10:00:00Z"
+            - "2024-01-02T15:00:00Z"
+        total_reward:
+          type: number
+          format: float
+          description: Total episode reward
+          example: 100.0
+        success:
+          type: boolean
+          description: Whether episode was successful
+          default: false
+          example: true
+        end_timestamp:
+          type: string
+          format: date-time
+          description: When episode ended
+          example: "2024-01-02T16:00:00Z"
+
+    EpisodeAttributionResponse:
+      type: object
+      properties:
+        episode_id:
+          type: string
+          description: GAELP episode identifier
+          example: "episode_123"
+        model_name:
+          type: string
+          description: Attribution model used
+          example: "time_decay"
+        attributed_rewards:
+          type: array
+          items:
+            type: number
+            format: float
+          description: Attributed rewards for each timestep
+          example: [28.57, 71.43]
+        total_attributed:
+          type: number
+          format: float
+          description: Total attributed value
+          example: 100.0
+        journey_id:
+          type: string
+          description: Generated journey identifier
+          example: "journey_episode_123"
+        calculation_timestamp:
+          type: string
+          format: date-time
+          description: When attribution was calculated
+          example: "2024-01-02T17:00:00Z"
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error type
+          example: "ValidationError"
+        message:
+          type: string
+          description: Human-readable error message
+          example: "Invalid model configuration"
+        details:
+          type: object
+          description: Additional error details
+          additionalProperties: true
+        timestamp:
+          type: string
+          format: date-time
+          description: When the error occurred
+          example: "2024-01-10T10:00:00Z"
+
+  responses:
+    BadRequest:
+      description: Bad request - invalid input parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: "BadRequest"
+            message: "Invalid request parameters"
+            timestamp: "2024-01-10T10:00:00Z"
+
+    ValidationError:
+      description: Validation error - request data failed validation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: "ValidationError"
+            message: "Touchpoint timestamps must be before conversion timestamp"
+            details:
+              field: "touchpoints[1].timestamp"
+              value: "2024-01-15T10:00:00Z"
+            timestamp: "2024-01-10T10:00:00Z"
+
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: "InternalServerError"
+            message: "An unexpected error occurred"
+            timestamp: "2024-01-10T10:00:00Z"
+
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key for authentication
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token for authentication
+
+security:
+  - ApiKeyAuth: []
+  - BearerAuth: []

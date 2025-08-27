@@ -1,0 +1,270 @@
+{
+  "timestamp": "2025-08-22T17:11:35.969171",
+  "summary": {
+    "total_competitors": 3,
+    "market_gaps_identified": 3,
+    "conquest_opportunities": 3,
+    "avg_gap_opportunity_score": 1.0
+  },
+  "competitor_profiles": {
+    "bark": {
+      "company": "Bark Technologies Inc",
+      "pricing": {
+        "bark_jr": 14.0,
+        "bark_premium": 27.0
+      },
+      "weaknesses": [
+        "reactive_only",
+        "no_ai_mood_detection",
+        "no_behavioral_analysis",
+        "no_predictive_insights",
+        "no_clinical_backing"
+      ],
+      "market_positioning": "Safety-focused reactive monitoring",
+      "missing_features": [
+        "behavioral_health",
+        "ai_insights",
+        "clinical_backing",
+        "predictive_alerts"
+      ]
+    },
+    "qustodio": {
+      "company": "Qustodio LLC",
+      "pricing": {
+        "complete": 13.95,
+        "premium": 8.25
+      },
+      "weaknesses": [
+        "no_ai_insights",
+        "complex_setup",
+        "manual_monitoring_only",
+        "no_behavioral_patterns",
+        "no_mental_health_features"
+      ],
+      "market_positioning": "Comprehensive traditional monitoring",
+      "missing_features": [
+        "behavioral_health",
+        "ai_insights",
+        "clinical_backing",
+        "predictive_alerts"
+      ]
+    },
+    "life360": {
+      "company": "Life360 Inc",
+      "pricing": {
+        "gold": 7.99,
+        "platinum": 14.99
+      },
+      "weaknesses": [
+        "no_digital_wellness",
+        "missing_online_risks",
+        "location_only_focus",
+        "no_behavioral_insights",
+        "no_mental_health_features"
+      ],
+      "market_positioning": "Physical location and safety only",
+      "missing_features": [
+        "behavioral_health",
+        "ai_insights",
+        "clinical_backing",
+        "predictive_alerts"
+      ]
+    }
+  },
+  "market_gaps": [
+    {
+      "category": "behavioral_health",
+      "opportunity_score": 1.0,
+      "keywords": [
+        "ai behavioral analysis",
+        "predictive mental health",
+        "mood tracking app",
+        "mental health early warning",
+        "digital wellness ai",
+        "digital wellbeing ai",
+        "teen depression monitoring",
+        "behavioral pattern recognition",
+        "social persona analysis",
+        "teen anxiety monitoring"
+      ],
+      "competitor_coverage": {
+        "bark": 0.0,
+        "qustodio": 0.0,
+        "life360": 0.0
+      },
+      "reasoning": "Competitors have 0.0% coverage in behavioral_health"
+    },
+    {
+      "category": "clinical_authority",
+      "opportunity_score": 1.0,
+      "keywords": [
+        "aap guidelines tracker",
+        "medical grade parental control",
+        "pediatrician approved app",
+        "cdc screen time app",
+        "clinical mental health app",
+        "psychologist recommended monitoring",
+        "evidence based monitoring"
+      ],
+      "competitor_coverage": {
+        "bark": 0.0,
+        "qustodio": 0.0,
+        "life360": 0.0
+      },
+      "reasoning": "Competitors have 0.0% coverage in clinical_authority"
+    },
+    {
+      "category": "crisis_intervention",
+      "opportunity_score": 1.0,
+      "keywords": [
+        "teen suicide prevention app",
+        "urgent behavioral alert",
+        "teen crisis monitoring",
+        "crisis parent support",
+        "emergency teen help",
+        "immediate mental health"
+      ],
+      "competitor_coverage": {
+        "bark": 0.0,
+        "qustodio": 0.0,
+        "life360": 0.0
+      },
+      "reasoning": "Competitors have 0.0% coverage in crisis_intervention"
+    }
+  ],
+  "conquest_campaigns": [
+    {
+      "target_competitor": "bark",
+      "brand_keywords": [
+        "better than bark",
+        "bark alternatives",
+        "is bark worth it",
+        "bark vs",
+        "bark competitor",
+        "bark reviews"
+      ],
+      "comparison_angle": "behavioral_health_vs_alerts",
+      "messaging": "Aura - Beyond Alerts to AI Insights. Prevent problems, don't just detect them.",
+      "estimated_volume": 3400,
+      "competition_level": 0.6
+    },
+    {
+      "target_competitor": "qustodio",
+      "brand_keywords": [
+        "qustodio competitor",
+        "qustodio alternatives",
+        "better than qustodio",
+        "qustodio vs",
+        "qustodio reviews"
+      ],
+      "comparison_angle": "ai_powered_vs_manual",
+      "messaging": "Aura - AI-Powered vs Manual Monitoring. Smart insights, not just restrictions.",
+      "estimated_volume": 2100,
+      "competition_level": 0.5
+    },
+    {
+      "target_competitor": "life360",
+      "brand_keywords": [
+        "life360 vs",
+        "better than life360",
+        "life360 alternatives",
+        "life360 competitor",
+        "life360 reviews"
+      ],
+      "comparison_angle": "digital_and_physical_monitoring",
+      "messaging": "Aura - Monitor Digital AND Physical Wellness. Complete family protection.",
+      "estimated_volume": 5600,
+      "competition_level": 0.7
+    }
+  ],
+  "recommendations": {
+    "immediate_opportunities": [
+      {
+        "category": "behavioral_health",
+        "action": "Target 10 underserved keywords",
+        "keywords": [
+          "ai behavioral analysis",
+          "predictive mental health",
+          "mood tracking app",
+          "mental health early warning",
+          "digital wellness ai"
+        ],
+        "opportunity_score": 1.0,
+        "reasoning": "Competitors have 0.0% coverage in behavioral_health"
+      },
+      {
+        "category": "clinical_authority",
+        "action": "Target 7 underserved keywords",
+        "keywords": [
+          "aap guidelines tracker",
+          "medical grade parental control",
+          "pediatrician approved app",
+          "cdc screen time app",
+          "clinical mental health app"
+        ],
+        "opportunity_score": 1.0,
+        "reasoning": "Competitors have 0.0% coverage in clinical_authority"
+      },
+      {
+        "category": "crisis_intervention",
+        "action": "Target 6 underserved keywords",
+        "keywords": [
+          "teen suicide prevention app",
+          "urgent behavioral alert",
+          "teen crisis monitoring",
+          "crisis parent support",
+          "emergency teen help"
+        ],
+        "opportunity_score": 1.0,
+        "reasoning": "Competitors have 0.0% coverage in crisis_intervention"
+      }
+    ],
+    "conquest_campaigns": [
+      {
+        "target": "bark",
+        "keywords": [
+          "better than bark",
+          "bark alternatives",
+          "is bark worth it"
+        ],
+        "messaging": "Aura - Beyond Alerts to AI Insights. Prevent problems, don't just detect them.",
+        "estimated_volume": 3400
+      },
+      {
+        "target": "qustodio",
+        "keywords": [
+          "qustodio competitor",
+          "qustodio alternatives",
+          "better than qustodio"
+        ],
+        "messaging": "Aura - AI-Powered vs Manual Monitoring. Smart insights, not just restrictions.",
+        "estimated_volume": 2100
+      },
+      {
+        "target": "life360",
+        "keywords": [
+          "life360 vs",
+          "better than life360",
+          "life360 alternatives"
+        ],
+        "messaging": "Aura - Monitor Digital AND Physical Wellness. Complete family protection.",
+        "estimated_volume": 5600
+      }
+    ],
+    "bid_strategy_adjustments": [],
+    "market_positioning": [
+      {
+        "angle": "Bark focuses on safety, we own behavioral health",
+        "messaging": "Beyond monitoring - behavioral insights"
+      },
+      {
+        "angle": "Qustodio is manual, we're AI-powered",
+        "messaging": "Smart insights, not just screen limits"
+      },
+      {
+        "angle": "Life360 tracks location, we track digital wellness",
+        "messaging": "Complete family wellness, online and offline"
+      }
+    ]
+  }
+}

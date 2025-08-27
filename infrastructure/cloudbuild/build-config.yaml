@@ -1,0 +1,186 @@
+# Cloud Build configuration for GAELP components
+steps:
+  # Build Training Orchestrator
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - 'build'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/training-orchestrator:$BUILD_ID'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/training-orchestrator:latest'
+      - './components/training-orchestrator'
+    id: 'build-training-orchestrator'
+
+  # Build Agent Trainer
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/agent-trainer:$BUILD_ID'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/agent-trainer:latest'
+      - './components/agent-trainer'
+    id: 'build-agent-trainer'
+
+  # Build Environment Registry API
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/environment-registry:$BUILD_ID'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/environment-registry:latest'
+      - './services/environment-registry'
+    id: 'build-environment-registry'
+
+  # Build Agent Management API
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/agent-management:$BUILD_ID'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/agent-management:latest'
+      - './services/agent-management'
+    id: 'build-agent-management'
+
+  # Build Campaign Monitor
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/campaign-monitor:$BUILD_ID'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/campaign-monitor:latest'
+      - './services/campaign-monitor'
+    id: 'build-campaign-monitor'
+
+  # Build Metrics Collector
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/metrics-collector:$BUILD_ID'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/metrics-collector:latest'
+      - './services/metrics-collector'
+    id: 'build-metrics-collector'
+
+  # Push all images
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '--all-tags', 'gcr.io/$PROJECT_ID/training-orchestrator']
+    id: 'push-training-orchestrator'
+    waitFor: ['build-training-orchestrator']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '--all-tags', 'gcr.io/$PROJECT_ID/agent-trainer']
+    id: 'push-agent-trainer'
+    waitFor: ['build-agent-trainer']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '--all-tags', 'gcr.io/$PROJECT_ID/environment-registry']
+    id: 'push-environment-registry'
+    waitFor: ['build-environment-registry']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '--all-tags', 'gcr.io/$PROJECT_ID/agent-management']
+    id: 'push-agent-management'
+    waitFor: ['build-agent-management']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '--all-tags', 'gcr.io/$PROJECT_ID/campaign-monitor']
+    id: 'push-campaign-monitor'
+    waitFor: ['build-campaign-monitor']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '--all-tags', 'gcr.io/$PROJECT_ID/metrics-collector']
+    id: 'push-metrics-collector'
+    waitFor: ['build-metrics-collector']
+
+  # Deploy to Cloud Run services
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'environment-registry'
+      - '--image=gcr.io/$PROJECT_ID/environment-registry:$BUILD_ID'
+      - '--region=$_REGION'
+      - '--platform=managed'
+      - '--allow-unauthenticated'
+    id: 'deploy-environment-registry'
+    waitFor: ['push-environment-registry']
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'agent-management'
+      - '--image=gcr.io/$PROJECT_ID/agent-management:$BUILD_ID'
+      - '--region=$_REGION'
+      - '--platform=managed'
+      - '--no-allow-unauthenticated'
+    id: 'deploy-agent-management'
+    waitFor: ['push-agent-management']
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'campaign-monitor'
+      - '--image=gcr.io/$PROJECT_ID/campaign-monitor:$BUILD_ID'
+      - '--region=$_REGION'
+      - '--platform=managed'
+      - '--no-allow-unauthenticated'
+    id: 'deploy-campaign-monitor'
+    waitFor: ['push-campaign-monitor']
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'metrics-collector'
+      - '--image=gcr.io/$PROJECT_ID/metrics-collector:$BUILD_ID'
+      - '--region=$_REGION'
+      - '--platform=managed'
+      - '--no-allow-unauthenticated'
+    id: 'deploy-metrics-collector'
+    waitFor: ['push-metrics-collector']
+
+  # Update GKE deployments
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args:
+      - 'set'
+      - 'image'
+      - 'deployment/training-orchestrator'
+      - 'training-orchestrator=gcr.io/$PROJECT_ID/training-orchestrator:$BUILD_ID'
+      - '-n'
+      - 'gaelp-training'
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=$_ZONE'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER'
+    id: 'update-training-orchestrator'
+    waitFor: ['push-training-orchestrator']
+
+# Substitutions for build variables
+substitutions:
+  _REGION: 'us-central1'
+  _ZONE: 'us-central1-a'
+  _CLUSTER: 'gaelp-cluster'
+
+# Build options
+options:
+  substitution_option: 'ALLOW_LOOSE'
+  machineType: 'E2_HIGHCPU_8'
+  diskSizeGb: '100'
+
+# Timeout
+timeout: '1200s'
+
+# Images to be stored in Container Registry
+images:
+  - 'gcr.io/$PROJECT_ID/training-orchestrator:$BUILD_ID'
+  - 'gcr.io/$PROJECT_ID/agent-trainer:$BUILD_ID'
+  - 'gcr.io/$PROJECT_ID/environment-registry:$BUILD_ID'
+  - 'gcr.io/$PROJECT_ID/agent-management:$BUILD_ID'
+  - 'gcr.io/$PROJECT_ID/campaign-monitor:$BUILD_ID'
+  - 'gcr.io/$PROJECT_ID/metrics-collector:$BUILD_ID'

@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AELP Intelligence Dashboard | Aura</title>
+    
+    <!-- Premium Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            --primary: #6366F1;
+            --primary-dark: #4F46E5;
+            --secondary: #8B5CF6;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --dark: #111827;
+            --darker: #0A0E1B;
+            --light: #F9FAFB;
+            --border: rgba(99, 102, 241, 0.1);
+            --glass: rgba(17, 24, 39, 0.7);
+            --glass-border: rgba(99, 102, 241, 0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0A0E1B 0%, #1A1F36 100%);
+            color: #E5E7EB;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+            animation: drift 20s infinite;
+            z-index: -1;
+        }
+        
+        @keyframes drift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+        
+        /* Header */
+        .header {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            max-width: 1800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: white;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, #94A3B8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .header-stats {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .header-stat {
+            text-align: center;
+        }
+        
+        .header-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .header-stat-label {
+            font-size: 0.75rem;
+            color: #94A3B8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        /* Main Grid */
+        .dashboard-container {
+            max-width: 1800px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .metric-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.1);
+        }
+        
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+        
+        .metric-label {
+            font-size: 0.875rem;
+            color: #94A3B8;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-change {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .metric-change.positive {
+            color: var(--success);
+        }
+        
+        .metric-change.negative {
+            color: var(--danger);
+        }
+        
+        /* Premium Tabs */
+        .tab-container {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        
+        .tab-header {
+            display: flex;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid var(--glass-border);
+            overflow-x: auto;
+        }
+        
+        .tab-button {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            color: #94A3B8;
+            font-weight: 500;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .tab-button:hover {
+            color: white;
+            background: rgba(99, 102, 241, 0.1);
+        }
+        
+        .tab-button.active {
+            color: white;
+        }
+        
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+        
+        .tab-content {
+            padding: 2rem;
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Creative Leaderboard */
+        .creative-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .creative-card:hover {
+            background: rgba(99, 102, 241, 0.05);
+            border-color: var(--primary);
+        }
+        
+        .creative-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+        
+        .creative-rank {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .creative-performance {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .creative-metric {
+            text-align: center;
+        }
+        
+        .creative-metric-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .creative-metric-label {
+            font-size: 0.75rem;
+            color: #94A3B8;
+            text-transform: uppercase;
+        }
+        
+        .creative-content {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .creative-headline {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        
+        .creative-body {
+            color: #CBD5E1;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .creative-cta {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 6px;
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+        
+        /* Competitor Analysis */
+        .competitor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .competitor-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+        }
+        
+        .competitor-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        
+        .competitor-company {
+            color: #94A3B8;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        
+        .competitor-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .competitor-stat {
+            padding: 0.75rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+        }
+        
+        .competitor-stat-value {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .competitor-stat-label {
+            font-size: 0.75rem;
+            color: #94A3B8;
+            text-transform: uppercase;
+        }
+        
+        /* Discovered Clusters */
+        .cluster-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cluster-name {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        
+        .cluster-description {
+            color: #CBD5E1;
+            margin-bottom: 1rem;
+        }
+        
+        .cluster-metrics {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .cluster-metric {
+            flex: 1;
+        }
+        
+        .cluster-metric-bar {
+            height: 4px;
+            background: rgba(99, 102, 241, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+        
+        .cluster-metric-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            transition: width 0.5s ease;
+        }
+        
+        /* Charts */
+        .chart-container {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .chart-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 1rem;
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .loading {
+            animation: pulse 1.5s infinite;
+        }
+        
+        /* Component Status */
+        .component-status {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+        
+        .component-status.active {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+        
+        .component-status.inactive {
+            border-color: var(--danger);
+            background: rgba(239, 68, 68, 0.1);
+        }
+        
+        .component-name {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #CBD5E1;
+        }
+        
+        .component-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success);
+        }
+        
+        .component-status.inactive .component-indicator {
+            background: var(--danger);
+        }
+        
+        /* Event Log */
+        .event-item {
+            padding: 0.5rem;
+            margin-bottom: 0.25rem;
+            border-left: 2px solid var(--primary);
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: 4px;
+            color: #E5E7EB;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .event-timestamp {
+            color: #94A3B8;
+            font-size: 0.75rem;
+            margin-right: 0.5rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-stats {
+                display: none;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .competitor-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">A</div>
+                <div class="logo-text">AELP Intelligence</div>
+            </div>
+            <div class="header-stats">
+                <div class="header-stat">
+                    <div class="header-stat-value" id="liveROAS">0.0x</div>
+                    <div class="header-stat-label">Live ROAS</div>
+                </div>
+                <div class="header-stat">
+                    <div class="header-stat-value" id="winRate">0%</div>
+                    <div class="header-stat-label">Win Rate</div>
+                </div>
+                <div class="header-stat">
+                    <div class="header-stat-value" id="activeSegments">0</div>
+                    <div class="header-stat-label">Discovered Segments</div>
+                </div>
+            </div>
+            <div class="control-buttons" style="display: flex; gap: 1rem;">
+                <button onclick="startSimulation()" style="padding: 0.5rem 1rem; background: var(--success); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Start</button>
+                <button onclick="stopSimulation()" style="padding: 0.5rem 1rem; background: var(--danger); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Stop</button>
+                <button onclick="resetSimulation()" style="padding: 0.5rem 1rem; background: var(--warning); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Reset</button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Dashboard -->
+    <div class="dashboard-container">
+        <!-- Key Metrics -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Total Spend</div>
+                <div class="metric-value" id="totalSpend">$0</div>
+                <div class="metric-change" id="spendChange">--</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Total Revenue</div>
+                <div class="metric-value" id="totalRevenue">$0</div>
+                <div class="metric-change" id="revenueChange">--</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Clicks</div>
+                <div class="metric-value" id="totalClicks">0</div>
+                <div class="metric-change" id="clicksChange">--</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Conversions</div>
+                <div class="metric-value" id="totalConversions">0</div>
+                <div class="metric-change" id="conversionsChange">--</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Impressions</div>
+                <div class="metric-value" id="totalImpressions">0</div>
+                <div class="metric-change" id="impressionsChange">--</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Average CPA</div>
+                <div class="metric-value" id="avgCPA">$0</div>
+                <div class="metric-change" id="cpaChange">--</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">CTR</div>
+                <div class="metric-value" id="ctr">0%</div>
+                <div class="metric-change" id="ctrChange">--</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Average Bid</div>
+                <div class="metric-value" id="avgBid">$0</div>
+                <div class="metric-change" id="bidChange">--</div>
+            </div>
+        </div>
+        
+        <!-- Main Tabs -->
+        <div class="tab-container">
+            <div class="tab-header">
+                <button class="tab-button active" onclick="switchTab('creatives')">Creative Performance</button>
+                <button class="tab-button" onclick="switchTab('competitors')">Competitor Analysis</button>
+                <button class="tab-button" onclick="switchTab('clusters')">Discovered Segments</button>
+                <button class="tab-button" onclick="switchTab('learning')">AI Learning Insights</button>
+                <button class="tab-button" onclick="switchTab('channels')">Channel Performance</button>
+                <button class="tab-button" onclick="switchTab('attribution')">Attribution</button>
+            </div>
+            
+            <!-- Creative Performance Tab -->
+            <div class="tab-content active" id="creativesTab">
+                <h3 style="margin-bottom: 1.5rem;">Top Performing Creatives</h3>
+                <div id="creativeLeaderboard">
+                    <!-- Will be populated dynamically -->
+                </div>
+            </div>
+            
+            <!-- Competitor Analysis Tab -->
+            <div class="tab-content" id="competitorsTab">
+                <h3 style="margin-bottom: 1.5rem;">Real-Time Competitor Tracking</h3>
+                <div class="competitor-grid" id="competitorGrid">
+                    <!-- Will be populated dynamically -->
+                </div>
+            </div>
+            
+            <!-- Discovered Segments Tab -->
+            <div class="tab-content" id="clustersTab">
+                <h3 style="margin-bottom: 1.5rem;">Behaviorally Discovered Segments</h3>
+                <div id="clusterList">
+                    <!-- Will be populated dynamically -->
+                </div>
+            </div>
+            
+            <!-- AI Learning Insights Tab -->
+            <div class="tab-content" id="learningTab">
+                <h3 style="margin-bottom: 1.5rem;">RL Agent Learning Progress</h3>
+                <div class="chart-container">
+                    <canvas id="learningChart"></canvas>
+                </div>
+                <div id="learningInsights" style="margin-top: 2rem;">
+                    <!-- Will be populated dynamically -->
+                </div>
+            </div>
+            
+            <!-- Channel Performance Tab -->
+            <div class="tab-content" id="channelsTab">
+                <h3 style="margin-bottom: 1.5rem;">Multi-Channel Analytics</h3>
+                <div class="chart-container">
+                    <canvas id="channelChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Attribution Tab -->
+            <div class="tab-content" id="attributionTab">
+                <h3 style="margin-bottom: 1.5rem;">Attribution Analysis</h3>
+                <div class="chart-container">
+                    <canvas id="attributionChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Real-time Performance Chart -->
+        <div class="chart-container">
+            <div class="chart-title">Real-Time Performance Metrics</div>
+            <canvas id="performanceChart"></canvas>
+        </div>
+        
+        <!-- Event Log -->
+        <div class="event-log-container" style="
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1rem;
+            margin-top: 2rem;
+            max-height: 200px;
+            overflow-y: auto;
+        ">
+            <div style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 1rem;
+                border-bottom: 1px solid var(--glass-border);
+                padding-bottom: 0.5rem;
+            ">
+                <h3 style="color: white; font-size: 1rem; font-weight: 600;">Live Event Stream</h3>
+                <span id="eventCount" style="color: #94A3B8; font-size: 0.875rem;">0 events</span>
+            </div>
+            <div id="eventLog" style="
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.875rem;
+                line-height: 1.6;
+            ">
+                <!-- Events will be added here -->
+            </div>
+        </div>
+        
+        <!-- Component Status Grid -->
+        <div class="component-status-container" style="
+            margin-top: 2rem;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+        ">
+            <h3 style="color: white; margin-bottom: 1rem;">Component Status</h3>
+            <div id="componentsGrid" style="
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 0.75rem;
+            ">
+                <!-- Component statuses will be added here -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Initialize charts
+        const charts = {};
+        
+        // Performance Chart
+        const perfCtx = document.getElementById('performanceChart').getContext('2d');
+        charts.performance = new Chart(perfCtx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [
+                    {
+                        label: 'ROI %',
+                        data: [],
+                        borderColor: '#4CAF50',
+                        backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Win Rate %',
+                        data: [],
+                        borderColor: '#2196F3',
+                        backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Bid ($)',
+                        data: [],
+                        borderColor: '#FF9800',
+                        backgroundColor: 'rgba(255, 152, 0, 0.1)',
+                        tension: 0.4,
+                        yAxisID: 'y1'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: { color: '#E5E7EB' }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: '#94A3B8' },
+                        grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                    },
+                    y: {
+                        ticks: { color: '#94A3B8' },
+                        grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                    }
+                }
+            }
+        });
+        
+        // Learning Chart
+        const learnCtx = document.getElementById('learningChart').getContext('2d');
+        charts.learning = new Chart(learnCtx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Q-Values',
+                    data: [],
+                    borderColor: '#10B981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.4
+                }, {
+                    label: 'Exploration Rate',
+                    data: [],
+                    borderColor: '#F59E0B',
+                    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: { color: '#E5E7EB' }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: '#94A3B8' },
+                        grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                    },
+                    y: {
+                        ticks: { color: '#94A3B8' },
+                        grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                    }
+                }
+            }
+        });
+        
+        // Attribution Chart
+        const attrCtx = document.getElementById('attributionChart').getContext('2d');
+        charts.attribution = new Chart(attrCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['First Touch', 'Last Touch', 'Multi-Touch', 'Data-Driven'],
+                datasets: [{
+                    data: [0, 0, 0, 0],
+                    backgroundColor: ['#6366F1', '#8B5CF6', '#EC4899', '#10B981']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: { color: '#E5E7EB' }
+                    }
+                }
+            }
+        });
+        
+        // Channel Chart
+        const channelCtx = document.getElementById('channelChart').getContext('2d');
+        charts.channel = new Chart(channelCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Google', 'Facebook', 'TikTok'],
+                datasets: [{
+                    label: 'Spend',
+                    data: [0, 0, 0],
+                    backgroundColor: ['#6366F1', '#8B5CF6', '#EC4899']
+                }, {
+                    label: 'Revenue',
+                    data: [0, 0, 0],
+                    backgroundColor: ['#10B981', '#34D399', '#6EE7B7']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: { color: '#E5E7EB' }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: '#94A3B8' },
+                        grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                    },
+                    y: {
+                        ticks: { color: '#94A3B8' },
+                        grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                    }
+                }
+            }
+        });
+        
+        // Control functions
+        async function startSimulation() {
+            const response = await fetch('/api/start', { method: 'POST' });
+            const data = await response.json();
+            console.log('Simulation started:', data);
+        }
+        
+        async function stopSimulation() {
+            const response = await fetch('/api/stop', { method: 'POST' });
+            const data = await response.json();
+            console.log('Simulation stopped:', data);
+        }
+        
+        async function resetSimulation() {
+            const response = await fetch('/api/reset', { method: 'POST' });
+            const data = await response.json();
+            console.log('Simulation reset:', data);
+        }
+        
+        // Tab switching
+        function switchTab(tabName) {
+            // Update buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabName + 'Tab').classList.add('active');
+        }
+        
+        // Update dashboard
+        async function updateDashboard() {
+            try {
+                const response = await fetch('/api/status');
+                const data = await response.json();
+                
+                // Update header stats
+                const roas = data.metrics.total_revenue / Math.max(1, data.metrics.total_spend);
+                document.getElementById('liveROAS').textContent = roas.toFixed(1) + 'x';
+                document.getElementById('winRate').textContent = (data.metrics.win_rate * 100).toFixed(1) + '%';
+                
+                // Update all metrics
+                document.getElementById('totalSpend').textContent = '$' + data.metrics.total_spend.toFixed(2);
+                document.getElementById('totalRevenue').textContent = '$' + data.metrics.total_revenue.toFixed(0);
+                document.getElementById('totalClicks').textContent = data.metrics.total_clicks.toLocaleString();
+                document.getElementById('totalConversions').textContent = data.metrics.total_conversions;
+                document.getElementById('totalImpressions').textContent = data.metrics.total_impressions.toLocaleString();
+                document.getElementById('avgCPA').textContent = '$' + data.metrics.current_cpa.toFixed(2);
+                
+                // Calculate and display CTR
+                const ctr = (data.metrics.total_clicks / Math.max(1, data.metrics.total_impressions)) * 100;
+                document.getElementById('ctr').textContent = ctr.toFixed(2) + '%';
+                
+                // Display average bid
+                const avgBid = data.metrics.avg_bid || (data.time_series && data.time_series.bids.length > 0 ? 
+                    data.time_series.bids[data.time_series.bids.length - 1] : 0);
+                document.getElementById('avgBid').textContent = '$' + avgBid.toFixed(2);
+                
+                // Update creative leaderboard
+                if (data.creative_performance) {
+                    const leaderboard = document.getElementById('creativeLeaderboard');
+                    leaderboard.innerHTML = '';
+                    
+                    data.creative_performance.forEach((creative, idx) => {
+                        const card = document.createElement('div');
+                        card.className = 'creative-card';
+                        card.innerHTML = `
+                            <div class="creative-header">
+                                <div class="creative-rank">#${idx + 1}</div>
+                                <div class="creative-performance">
+                                    <div class="creative-metric">
+                                        <div class="creative-metric-value">${(creative.ctr * 100).toFixed(2)}%</div>
+                                        <div class="creative-metric-label">CTR</div>
+                                    </div>
+                                    <div class="creative-metric">
+                                        <div class="creative-metric-value">${creative.roas.toFixed(1)}x</div>
+                                        <div class="creative-metric-label">ROAS</div>
+                                    </div>
+                                    <div class="creative-metric">
+                                        <div class="creative-metric-value">${creative.conversions}</div>
+                                        <div class="creative-metric-label">Conversions</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="creative-content">
+                                <div class="creative-headline">${creative.headline}</div>
+                                <div class="creative-body">${creative.body_copy}</div>
+                                <span class="creative-cta">${creative.cta_text}</span>
+                            </div>
+                            <div style="color: #94A3B8; font-size: 0.875rem;">
+                                Channel: ${creative.channel} | Format: ${creative.format}
+                            </div>
+                        `;
+                        leaderboard.appendChild(card);
+                    });
+                }
+                
+                // Update competitors
+                if (data.competitor_insights) {
+                    const grid = document.getElementById('competitorGrid');
+                    grid.innerHTML = '';
+                    
+                    for (const [name, competitor] of Object.entries(data.competitor_insights)) {
+                        const card = document.createElement('div');
+                        card.className = 'competitor-card';
+                        card.innerHTML = `
+                            <div class="competitor-name">${competitor.product}</div>
+                            <div class="competitor-company">${competitor.company}</div>
+                            <div class="competitor-stats">
+                                <div class="competitor-stat">
+                                    <div class="competitor-stat-value">$${competitor.avg_bid.toFixed(2)}</div>
+                                    <div class="competitor-stat-label">Avg Bid</div>
+                                </div>
+                                <div class="competitor-stat">
+                                    <div class="competitor-stat-value">${competitor.impressions_won.toLocaleString()}</div>
+                                    <div class="competitor-stat-label">Impressions</div>
+                                </div>
+                                <div class="competitor-stat">
+                                    <div class="competitor-stat-value">${(competitor.budget_utilization * 100).toFixed(0)}%</div>
+                                    <div class="competitor-stat-label">Budget Used</div>
+                                </div>
+                                <div class="competitor-stat">
+                                    <div class="competitor-stat-value">${competitor.primary_channel}</div>
+                                    <div class="competitor-stat-label">Focus</div>
+                                </div>
+                            </div>
+                        `;
+                        grid.appendChild(card);
+                    }
+                }
+                
+                // Update discovered clusters
+                if (data.discovered_clusters) {
+                    const clusterList = document.getElementById('clusterList');
+                    clusterList.innerHTML = '';
+                    document.getElementById('activeSegments').textContent = data.discovered_clusters.length;
+                    
+                    data.discovered_clusters.forEach(cluster => {
+                        const card = document.createElement('div');
+                        card.className = 'cluster-card';
+                        card.innerHTML = `
+                            <div class="cluster-name">${cluster.name}</div>
+                            <div class="cluster-description">${cluster.description}</div>
+                            <div class="cluster-metrics">
+                                <div class="cluster-metric">
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <span>Engagement</span>
+                                        <span>${(cluster.engagement_score * 100).toFixed(0)}%</span>
+                                    </div>
+                                    <div class="cluster-metric-bar">
+                                        <div class="cluster-metric-fill" style="width: ${cluster.engagement_score * 100}%"></div>
+                                    </div>
+                                </div>
+                                <div class="cluster-metric">
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <span>Conversion Likelihood</span>
+                                        <span>${(cluster.conversion_likelihood * 100).toFixed(0)}%</span>
+                                    </div>
+                                    <div class="cluster-metric-bar">
+                                        <div class="cluster-metric-fill" style="width: ${cluster.conversion_likelihood * 100}%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        clusterList.appendChild(card);
+                    });
+                }
+                
+                // Update event log
+                if (data.events && data.events.length > 0) {
+                    const eventLog = document.getElementById('eventLog');
+                    const eventCount = document.getElementById('eventCount');
+                    eventLog.innerHTML = '';
+                    eventCount.textContent = `${data.events.length} events`;
+                    
+                    data.events.slice().reverse().forEach(event => {
+                        const div = document.createElement('div');
+                        div.className = 'event-item';
+                        const timestamp = new Date(event.timestamp).toLocaleTimeString();
+                        div.innerHTML = `<span class="event-timestamp">${timestamp}</span> ${event.message}`;
+                        eventLog.appendChild(div);
+                    });
+                    
+                    // Auto-scroll to bottom
+                    eventLog.parentElement.scrollTop = eventLog.parentElement.scrollHeight;
+                }
+                
+                // Update component status grid
+                if (data.component_status) {
+                    const grid = document.getElementById('componentsGrid');
+                    grid.innerHTML = '';
+                    for (const [name, status] of Object.entries(data.component_status)) {
+                        const div = document.createElement('div');
+                        div.className = `component-status ${status}`;
+                        div.innerHTML = `
+                            <span class="component-name">${name.replace(/_/g, ' ')}</span>
+                            <span class="component-indicator"></span>
+                        `;
+                        grid.appendChild(div);
+                    }
+                }
+                
+                // Update Learning Insights with what RL is learning
+                if (data.learning_insights) {
+                    const learningInsights = document.getElementById('learningInsights');
+                    if (learningInsights) {
+                        let insightsHTML = '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">';
+                        
+                        // Discovered patterns
+                        if (data.learning_insights.discovered_patterns && data.learning_insights.discovered_patterns.length > 0) {
+                            insightsHTML += `
+                                <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px;">
+                                    <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Discovered Patterns</h4>
+                                    <ul style="list-style: none; padding: 0;">
+                                        ${data.learning_insights.discovered_patterns.map(p => 
+                                            `<li style="padding: 0.25rem 0; color: #CBD5E1;">✓ ${p}</li>`
+                                        ).join('')}
+                                    </ul>
+                                </div>
+                            `;
+                        }
+                        
+                        // Top strategies
+                        if (data.learning_insights.top_strategies && data.learning_insights.top_strategies.length > 0) {
+                            insightsHTML += `
+                                <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px;">
+                                    <h4 style="color: var(--secondary); margin-bottom: 0.5rem;">Top Performing Strategies</h4>
+                                    <ul style="list-style: none; padding: 0;">
+                                        ${data.learning_insights.top_strategies.map(s => 
+                                            `<li style="padding: 0.25rem 0; color: #CBD5E1;">🎯 ${s}</li>`
+                                        ).join('')}
+                                    </ul>
+                                </div>
+                            `;
+                        }
+                        
+                        // RL Stats
+                        if (data.rl_stats) {
+                            insightsHTML += `
+                                <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px;">
+                                    <h4 style="color: var(--success); margin-bottom: 0.5rem;">RL Agent Stats</h4>
+                                    <div style="display: grid; gap: 0.5rem;">
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <span style="color: #94A3B8;">Episodes:</span>
+                                            <span style="color: white; font-weight: 600;">${data.rl_stats.learning_episodes || 0}</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <span style="color: #94A3B8;">Exploration:</span>
+                                            <span style="color: white; font-weight: 600;">${((data.rl_stats.exploration_rate || 0) * 100).toFixed(1)}%</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <span style="color: #94A3B8;">Avg Reward:</span>
+                                            <span style="color: white; font-weight: 600;">${(data.rl_stats.average_reward || 0).toFixed(2)}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                        
+                        insightsHTML += '</div>';
+                        learningInsights.innerHTML = insightsHTML;
+                    }
+                }
+                
+                // Update charts - ORIGINAL LOGIC
+                if (data.time_series && data.time_series.timestamps && data.time_series.timestamps.length > 0) {
+                    const labels = data.time_series.timestamps.slice(-20).map(t => 
+                        new Date(t * 1000).toLocaleTimeString()
+                    );
+                    charts.performance.data.labels = labels;
+                    
+                    // ROI data
+                    charts.performance.data.datasets[0].data = data.time_series.roi ? data.time_series.roi.slice(-20) : [];
+                    
+                    // Win Rate data
+                    charts.performance.data.datasets[1].data = data.time_series.win_rate ? data.time_series.win_rate.slice(-20).map(v => v * 100) : [];
+                    
+                    // Bid data
+                    charts.performance.data.datasets[2].data = data.time_series.bids ? data.time_series.bids.slice(-20) : [];
+                    
+                    charts.performance.update();
+                    
+                    // Learning chart - ORIGINAL LOGIC
+                    charts.learning.data.labels = labels;
+                    charts.learning.data.datasets[0].data = data.time_series.q_values ? data.time_series.q_values.slice(-20) : [];
+                    charts.learning.data.datasets[1].data = data.time_series.exploration_rate ? data.time_series.exploration_rate.slice(-20).map(v => v * 100) : [];
+                    charts.learning.update();
+                }
+                
+                // Update attribution chart
+                if (data.component_tracking && data.component_tracking.attribution) {
+                    const attr = data.component_tracking.attribution;
+                    charts.attribution.data.datasets[0].data = [
+                        attr.first_touch || 0,
+                        attr.last_touch || 0,
+                        attr.multi_touch || 0,
+                        attr.data_driven || 0
+                    ];
+                    charts.attribution.update();
+                }
+                
+                // Update channel chart with actual data
+                if (data.component_tracking && data.component_tracking.channels) {
+                    const channels = data.component_tracking.channels;
+                    const spend = [
+                        channels.google?.spend || 0,
+                        channels.facebook?.spend || 0,
+                        channels.tiktok?.spend || 0
+                    ];
+                    const revenue = [
+                        channels.google?.revenue || 0,
+                        channels.facebook?.revenue || 0,
+                        channels.tiktok?.revenue || 0
+                    ];
+                    charts.channel.data.datasets[0].data = spend;
+                    charts.channel.data.datasets[1].data = revenue;
+                    charts.channel.update();
+                }
+                
+            } catch (error) {
+                console.error('Error updating dashboard:', error);
+            }
+        }
+        
+        // Start auto-update with smooth interval
+        updateDashboard();
+        setInterval(updateDashboard, 1000);  // Update every second for smooth movement
+    </script>
+</body>
+</html>

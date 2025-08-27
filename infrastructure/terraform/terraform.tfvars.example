@@ -1,0 +1,14 @@
+# GAELP Infrastructure Configuration
+# Copy this file to terraform.tfvars and fill in your values
+
+# GCP Project Configuration
+project_id = "your-gaelp-project-id"
+region     = "us-central1"
+zone       = "us-central1-a"
+environment = "dev"
+
+# Example values:
+# project_id = "gaelp-platform-dev"
+# region     = "us-central1"
+# zone       = "us-central1-a"
+# environment = "dev"

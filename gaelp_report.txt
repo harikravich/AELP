@@ -1,0 +1,48 @@
+============================================================
+GAELP Multi-Touch Journey Tracking Report
+============================================================
+Generated: 2025-08-21T14:25:09.139960
+
+Configuration:
+  Users: 1000
+  Time Horizon: 30 days
+  Daily Budget: $1000.0
+
+Training Metrics:
+  Total Episodes: 50
+  Avg Conversions: 1.00
+  Avg CAC: $17.23
+
+Channel Performance:
+  search:
+    Spend: $2.09
+    Conversions: 0
+    ROAS: 0.00x
+  social:
+    Spend: $3.22
+    Conversions: 0
+    ROAS: 0.00x
+  display:
+    Spend: $3.91
+    Conversions: 0
+    ROAS: 0.00x
+  video:
+    Spend: $1.91
+    Conversions: 0
+    ROAS: 0.00x
+  email:
+    Spend: $2.17
+    Conversions: 0
+    ROAS: 0.00x
+  direct:
+    Spend: $4.55
+    Conversions: 0
+    ROAS: 0.00x
+  affiliate:
+    Spend: $3.85
+    Conversions: 0
+    ROAS: 0.00x
+  retargeting:
+    Spend: $1.57
+    Conversions: 1
+    ROAS: 76.44x

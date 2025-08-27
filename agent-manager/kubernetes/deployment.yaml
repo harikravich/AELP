@@ -1,0 +1,152 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agent-manager
+  namespace: gaelp
+  labels:
+    app: agent-manager
+    component: api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: agent-manager
+  template:
+    metadata:
+      labels:
+        app: agent-manager
+        component: api
+    spec:
+      serviceAccountName: agent-manager
+      containers:
+      - name: agent-manager
+        image: gcr.io/gaelp-project/agent-manager:latest
+        ports:
+        - containerPort: 8000
+          name: http
+        - containerPort: 8080
+          name: metrics
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: agent-manager-secrets
+              key: db-host
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: agent-manager-secrets
+              key: db-name
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: agent-manager-secrets
+              key: db-user
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: agent-manager-secrets
+              key: db-password
+        - name: REDIS_HOST
+          valueFrom:
+            secretKeyRef:
+              name: agent-manager-secrets
+              key: redis-host
+        - name: JWT_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: agent-manager-secrets
+              key: jwt-secret
+        - name: K8S_NAMESPACE
+          value: "agent-training"
+        - name: K8S_IN_CLUSTER
+          value: "true"
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        volumeMounts:
+        - name: config
+          mountPath: /app/config/production.yaml
+          subPath: production.yaml
+      volumes:
+      - name: config
+        configMap:
+          name: agent-manager-config
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: agent-manager-service
+  namespace: gaelp
+  labels:
+    app: agent-manager
+spec:
+  selector:
+    app: agent-manager
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8000
+  - name: metrics
+    port: 8080
+    targetPort: 8080
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: agent-manager
+  namespace: gaelp
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: agent-manager
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services", "secrets", "configmaps"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: ["apps"]
+  resources: ["deployments", "replicasets"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: ["batch"]
+  resources: ["jobs"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: ["autoscaling"]
+  resources: ["horizontalpodautoscalers"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: agent-manager
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: agent-manager
+subjects:
+- kind: ServiceAccount
+  name: agent-manager
+  namespace: gaelp

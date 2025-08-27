@@ -1,0 +1,84 @@
+{
+  "strategies": [
+    {
+      "name": "dynamic_creative_optimization",
+      "description": "A/B test multiple creatives and auto-optimize",
+      "performance": 7.868984083483204,
+      "confidence": 1.0,
+      "discovery_episode": 31,
+      "evidence": [
+        "Tested 11 times",
+        "Avg ROAS: 7.87x",
+        "Best ROAS: 11.51x",
+        "Consistency: 76.7%"
+      ]
+    },
+    {
+      "name": "carousel_professionals",
+      "description": "Use carousel ads targeting professionals with multiple product views",
+      "performance": 8.984787617558327,
+      "confidence": 0.6,
+      "discovery_episode": 33,
+      "evidence": [
+        "Tested 6 times",
+        "Avg ROAS: 8.98x",
+        "Best ROAS: 12.56x",
+        "Consistency: 68.8%"
+      ]
+    },
+    {
+      "name": "cross_platform_synergy",
+      "description": "Coordinate campaigns across multiple platforms",
+      "performance": 7.801822885299237,
+      "confidence": 0.7,
+      "discovery_episode": 34,
+      "evidence": [
+        "Tested 7 times",
+        "Avg ROAS: 7.80x",
+        "Best ROAS: 9.96x",
+        "Consistency: 86.0%"
+      ]
+    },
+    {
+      "name": "morning_optimization",
+      "description": "Increase bids during morning hours (6-9 AM) when engagement peaks",
+      "performance": 6.568032155765256,
+      "confidence": 0.9,
+      "discovery_episode": 38,
+      "evidence": [
+        "Tested 9 times",
+        "Avg ROAS: 6.57x",
+        "Best ROAS: 8.78x",
+        "Consistency: 68.1%"
+      ]
+    },
+    {
+      "name": "automated_bidding",
+      "description": "Use ML-powered bid strategies for efficiency",
+      "performance": 7.043776463110855,
+      "confidence": 0.7,
+      "discovery_episode": 40,
+      "evidence": [
+        "Tested 7 times",
+        "Avg ROAS: 7.04x",
+        "Best ROAS: 8.29x",
+        "Consistency: 91.9%"
+      ]
+    },
+    {
+      "name": "lookalike_expansion",
+      "description": "Find new audiences similar to best customers",
+      "performance": 7.108346649726675,
+      "confidence": 0.5,
+      "discovery_episode": 41,
+      "evidence": [
+        "Tested 5 times",
+        "Avg ROAS: 7.11x",
+        "Best ROAS: 8.53x",
+        "Consistency: 83.7%"
+      ]
+    }
+  ],
+  "episodes": 75,
+  "best_roas": 12.556248546449538
+}

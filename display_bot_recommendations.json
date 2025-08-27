@@ -1,0 +1,23 @@
+[
+  {
+    "priority": "IMMEDIATE",
+    "action": "Exclude high-bot placements",
+    "details": "Exclude 3 placements immediately",
+    "impact": "Remove 100,000 bot sessions",
+    "implementation": "Add placement exclusions in Google Ads"
+  },
+  {
+    "priority": "MEDIUM",
+    "action": "Optimize quality placements",
+    "details": "Increase bids on 3 quality placements",
+    "impact": "Improve overall campaign performance",
+    "implementation": "Bid adjustments +20-50% for quality sites"
+  },
+  {
+    "priority": "HIGH",
+    "action": "Implement automated bot detection",
+    "details": "Set up automated rules for ongoing bot filtering",
+    "impact": "Continuous protection against new bot sources",
+    "implementation": "Google Ads automated rules + custom scripts"
+  }
+]

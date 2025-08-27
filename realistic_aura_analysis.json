@@ -1,0 +1,38 @@
+{
+  "total_conversions": 46,
+  "total_revenue": "8244",
+  "total_cost": 843.2294798856786,
+  "avg_cac": 18.331075649688668,
+  "roas": 9.776698036123792,
+  "avg_journey_days": 8.717391304347826,
+  "avg_touches": 2.260869565217391,
+  "conversion_rate": 0.08582089552238806,
+  "conversions_by_persona": {
+    "budget_conscious": 1,
+    "concerned_parent": 1,
+    "crisis_parent": 44
+  },
+  "cac_by_persona": {
+    "budget_conscious": 0.5,
+    "concerned_parent": 2.1915413427154364,
+    "crisis_parent": 2.372129585962256
+  },
+  "conversions_by_channel": {
+    "display": 1,
+    "retargeting": 25,
+    "search": 20
+  },
+  "cpc_by_channel": {
+    "display": 0.5184725101648302,
+    "retargeting": 1.0133322428394267,
+    "search": 0.9032093418519537,
+    "social": 0.7313387534478996,
+    "video": 0.6420671785004698
+  },
+  "avg_competitors_faced": 1.271412680756396,
+  "high_competition_hours": {
+    "6": 1.5714285714285714,
+    "9": 1.525,
+    "3": 1.4722222222222223
+  }
+}

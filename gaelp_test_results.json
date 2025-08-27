@@ -1,0 +1,62 @@
+{
+  "no_fallbacks": {
+    "status": "FAIL",
+    "details": [
+      "Found forbidden patterns: [('fallback', 6), ('simplified', 6), ('mock', 6), ('dummy', 6), ('TODO', 2), ('FIXME', 2)]"
+    ]
+  },
+  "user_persistence": {
+    "status": "FAIL",
+    "details": [
+      "Error testing persistence: PersistentUserDatabase.__init__() got an unexpected keyword argument 'db_path'"
+    ]
+  },
+  "auction_win_rate": {
+    "status": "FAIL",
+    "details": [
+      "Error testing auctions: cannot import name 'MonteCarloSimulator' from 'monte_carlo_simulator' (/home/hariravichandran/AELP/monte_carlo_simulator.py)"
+    ]
+  },
+  "conversion_delays": {
+    "status": "FAIL",
+    "details": [
+      "Error testing delays: 'ConversionLagModel' object has no attribute 'predict_lag'"
+    ]
+  },
+  "no_hardcoded": {
+    "status": "FAIL",
+    "details": [
+      "Found 3 hardcoded patterns"
+    ]
+  },
+  "rl_not_bandits": {
+    "status": "FAIL",
+    "details": [
+      "RL implementation unclear"
+    ]
+  },
+  "recsim_usage": {
+    "status": "FAIL",
+    "details": [
+      "RecSim not properly used"
+    ]
+  },
+  "auctiongym_usage": {
+    "status": "FAIL",
+    "details": [
+      "AuctionGym error: Auction.__init__() got an unexpected keyword argument 'num_agents'"
+    ]
+  },
+  "learning_occurs": {
+    "status": "FAIL",
+    "details": [
+      "Error testing learning: OnlineLearner.__init__() missing 1 required positional argument: 'config'"
+    ]
+  },
+  "data_flows": {
+    "status": "FAIL",
+    "details": [
+      "Error testing data flow: cannot import name 'MonteCarloSimulator' from 'monte_carlo_simulator' (/home/hariravichandran/AELP/monte_carlo_simulator.py)"
+    ]
+  }
+}

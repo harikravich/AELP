@@ -1,0 +1,5588 @@
+{
+  "generation_timestamp": 1755911552.3960772,
+  "total_headlines": 60,
+  "headlines": [
+    {
+      "id": "mental_health_detection_claude_0_1755911539",
+      "headline": "Here are 10 unique ad headlines focusing on Aura Balance's mental health detection capabilities:",
+      "category": "mental_health_detection",
+      "segment": "concerned_parents",
+      "urgency_level": 0.6538719448178094,
+      "clinical_authority": 0.7118335924979261,
+      "provider": "claude",
+      "ctr_simulation": 0.016,
+      "conversion_rate": 0.125,
+      "statistical_significance": 0.008,
+      "test_impressions": 1000
+    },
+    {
+      "id": "mental_health_detection_claude_1_1755911539",
+      "headline": "Uncover invisible mental health struggles with AI",
+      "category": "mental_health_detection",
+      "segment": "crisis_parents",
+      "urgency_level": 0.8238030704740837,
+      "clinical_authority": 0.8041244820483483,
+      "provider": "claude",
+      "ctr_simulation": 0.024,
+      "conversion_rate": 0.16666666666666666,
+      "statistical_significance": 0.008,
+      "test_impressions": 1000
+    },
+    {
+      "id": "mental_health_detection_claude_2_1755911539",
+      "headline": "Spot teen depression before it spirals out of control",
+      "category": "mental_health_detection",
+      "segment": "crisis_parents",
+      "urgency_level": 0.7379004373708506,
+      "clinical_authority": 0.8062051116350151,
+      "provider": "claude",
+      "ctr_simulation": 0.023,
+      "conversion_rate": 0.21739130434782608,
+      "statistical_significance": 0.0045000000000000005,
+      "test_impressions": 1000
+    },
+    {
+      "id": "mental_health_detection_claude_3_1755911539",
+      "headline": "AI guardian: Protecting your child's emotional wellbeing",
+      "category": "mental_health_detection",
+      "segment": "crisis_parents",
+      "urgency_level": 0.8173469802995191,
+      "clinical_authority": 0.7037164932190707,
+      "provider": "claude",
+      "ctr_simulation": 0.019,
+      "conversion_rate": 0.21052631578947367,
+      "statistical_significance": 0.0005,
+      "test_impressions": 1000
+    },
+    {
+      "id": "mental_health_detection_claude_4_1755911539",
+      "headline": "Detect worrying trends in your teen's mental health",
+      "category": "mental_health_detection",
+      "segment": "concerned_parents",
+      "urgency_level": 0.8192059463341113,
+      "clinical_authority": 0.7964863216627389,
+      "provider": "claude",
+      "ctr_simulation": 0.023,
+      "conversion_rate": 0.08695652173913043,
+      "statistical_significance": 0.0045000000000000005,
+      "test_impressions": 1000
+    },
+    {
+      "id": "mental_health_detection_claude_5_1755911539",
+      "headline": "Cutting-edge AI monitors your child's emotional landscape",
+      "category": "mental_health_detection",
+      "segment": "concerned_parents",
+      "urgency_level": 0.7476847009546905,
+      "clinical_authority": 0.878083440971009,
+      "provider": "claude",
+      "ctr_simulation": 0.023,
+      "conversion_rate": 0.08695652173913043,
+      "statistical_significance": 0.0045000000000000005,
+      "test_impressions": 1000
+    },
+    {
+      "id": "mental_health_detection_claude_6_1755911539",
+      "headline": "Don't miss the signs - Aura Balance's early detection",
+      "category": "mental_health_detection",
+      "segment": "concerned_parents",
+      "urgency_level": 0.8982324229628127,
+      "clinical_authority": 0.8451606811974471,
+      "provider": "claude",
+      "ctr_simulation": 0.023,
+      "conversion_rate": 0.08695652173913043,
+      "statistical_significance": 0.0045000000000000005,
+      "test_impressions": 1000
+    },
+    {
+      "id": "mental_health_detection_claude_7_1755911539",
+      "headline": "Mind the gap: AI reveals hidden mental health changes",
+      "category": "mental_health_detection",
+      "segment": "crisis_parents",
+      "urgency_level": 0.7092822370323467,
+      "clinical_authority": 0.7119241892855923,
+      "provider": "claude",
+      "ctr_simulation": 0.018,
+      "conversion_rate": 0.16666666666666666,
+      "statistical_significance": 0.002,
+      "test_impressions": 1000
+    },
+    {
+      "id": "mental_health_detection_claude_8_1755911539",
+      "headline": "Proactive mental health support with Aura Balance's insights",
+      "category": "mental_health_detection",
+      "segment": "concerned_parents",
+      "urgency_level": 0.6858006660140913,
+      "clinical_authority": 0.803295020279178,
+      "provider": "claude",
+      "ctr_simulation": 0.023,
+      "conversion_rate": 0.13043478260869565,
+      "statistical_significance": 0.0045000000000000005,
+      "test_impressions": 1000
+    },
+    {
+      "id": "mental_health_detection_claude_9_1755911539",
+      "headline": "Empowered parenting: AI that sees what you might miss",
+      "category": "mental_health_detection",
+      "segment": "concerned_parents",
+      "urgency_level": 0.767146125035873,
+      "clinical_authority": 0.8284561921002809,
+      "provider": "claude",
+      "ctr_simulation": 0.023,
+      "conversion_rate": 0.08695652173913043,
+      "statistical_significance": 0.0045000000000000005,
+      "test_impressions": 1000
+    },
+    {
+      "id": "clinical_authority_claude_0_1755911540",
+      "headline": "Clinically-backed teen mental health tracking.",
+      "category": "clinical_authority",
+      "segment": "concerned_parents",
+      "urgency_level": 0.3706846823108326,
+      "clinical_authority": 0.9238503806425038,
+      "provider": "claude",
+      "ctr_simulation": 0.008,
+      "conversion_rate": 0.125,
+      "statistical_significance": 0.07200000000000001,
+      "test_impressions": 1000
+    },
+    {
+      "id": "clinical_authority_claude_1_1755911540",
+      "headline": "Therapist-endorsed app for adolescent wellbeing.",
+      "category": "clinical_authority",
+      "segment": "concerned_parents",
+      "urgency_level": 0.5236729746783881,
+      "clinical_authority": 0.8396427153745956,
+      "provider": "claude",
+      "ctr_simulation": 0.009,
+      "conversion_rate": 0.1111111111111111,
+      "statistical_significance": 0.0605,
+      "test_impressions": 1000
+    },
+    {
+      "id": "clinical_authority_claude_2_1755911540",
+      "headline": "CDC-approved behavioral monitoring for parents.",
+      "category": "clinical_authority",
+      "segment": "concerned_parents",
+      "urgency_level": 0.341589968094796,
+      "clinical_authority": 0.9013665302565422,
+      "provider": "claude",
+      "ctr_simulation": 0.008,
+      "conversion_rate": 0.125,
+      "statistical_significance": 0.07200000000000001,
+      "test_impressions": 1000
+    },
+    {
+      "id": "clinical_authority_claude_3_1755911540",
+      "headline": "Scientifically-validated teen mental health solution.",
+      "category": "clinical_authority",
+      "segment": "researchers",
+      "urgency_level": 0.4540251168643158,
+      "clinical_authority": 0.9350292167848046,
+      "provider": "claude",
+      "ctr_simulation": 0.016,
+      "conversion_rate": 0.125,
+      "statistical_significance": 0.008,
+      "test_impressions": 1000
+    },
+    {
+      "id": "clinical_authority_claude_4_1755911540",
+      "headline": "Professionally-developed teen behavioral health assistant.",
+      "category": "clinical_authority",
+      "segment": "researchers",
+      "urgency_level": 0.3586115805225366,
+      "clinical_authority": 0.9786592417603606,
+      "provider": "claude",
+      "ctr_simulation": 0.014,
+      "conversion_rate": 0.14285714285714285,
+      "statistical_significance": 0.018000000000000002,
+      "test_impressions": 1000
+    },
+    {
+      "id": "clinical_authority_claude_5_1755911540",
+      "headline": "Pediatrician-recommended app for adolescent monitoring.",
+      "category": "clinical_authority",
+      "segment": "concerned_parents",
+      "urgency_level": 0.540604853695315,
+      "clinical_authority": 0.9089273734814411,
+      "provider": "claude",
+      "ctr_simulation": 0.009,
+      "conversion_rate": 0.1111111111111111,
+      "statistical_significance": 0.0605,
+      "test_impressions": 1000
+    },
+    {
+      "id": "clinical_authority_claude_6_1755911540",
+      "headline": "Psychologist-designed teen mental health tracker.",
+      "category": "clinical_authority",
+      "segment": "concerned_parents",
+      "urgency_level": 0.46854648193043835,
+      "clinical_authority": 0.9218943184579667,
+      "provider": "claude",
+      "ctr_simulation": 0.009,
+      "conversion_rate": 0.1111111111111111,
+      "statistical_significance": 0.0605,
+      "test_impressions": 1000
+    },
+    {
+      "id": "clinical_authority_claude_7_1755911540",
+      "headline": "AAP standard-compliant teen behavioral management.",
+      "category": "clinical_authority",
+      "segment": "concerned_parents",
+      "urgency_level": 0.4685681378477844,
+      "clinical_authority": 0.8356471136633847,
+      "provider": "claude",
+      "ctr_simulation": 0.009,
+      "conversion_rate": 0.1111111111111111,
+      "statistical_significance": 0.0605,
+      "test_impressions": 1000
+    },
+    {
+      "id": "clinical_authority_claude_8_1755911540",
+      "headline": "Clinically-validated teen wellbeing monitoring platform.",
+      "category": "clinical_authority",
+      "segment": "researchers",
+      "urgency_level": 0.5666852499665566,
+      "clinical_authority": 0.8652625442027962,
+      "provider": "claude",
+      "ctr_simulation": 0.023,
+      "conversion_rate": 0.08695652173913043,
+      "statistical_significance": 0.0045000000000000005,
+      "test_impressions": 1000
+    },
+    {
+      "id": "clinical_authority_claude_9_1755911540",
+      "headline": "Expertly-crafted teen mental health monitoring app.",
+      "category": "clinical_authority",
+      "segment": "researchers",
+      "urgency_level": 0.4786315044208263,
+      "clinical_authority": 0.8775077761928628,
+      "provider": "claude",
+      "ctr_simulation": 0.014,
+      "conversion_rate": 0.07142857142857142,
+      "statistical_significance": 0.018000000000000002,
+      "test_impressions": 1000
+    },
+    {
+      "id": "crisis_messaging_claude_0_1755911542",
+      "headline": "Here are 10 unique ad headlines for crisis situations where parents need immediate help:",
+      "category": "crisis_messaging",
+      "segment": "crisis_parents",
+      "urgency_level": 0.9482308644736022,
+      "clinical_authority": 0.666556766646115,
+      "provider": "claude",
+      "ctr_simulation": 0.023,
+      "conversion_rate": 0.17391304347826086,
+      "statistical_significance": 0.0045000000000000005,
+      "test_impressions": 1000
+    },
+    {
+      "id": "crisis_messaging_claude_1_1755911542",
+      "headline": "Your teen in crisis? Get expert help now.",
+      "category": "crisis_messaging",
+      "segment": "crisis_parents",
+      "urgency_level": 0.8539635292972867,
+      "clinical_authority": 0.6950647081313032,
+      "provider": "claude",
+      "ctr_simulation": 0.025,
+      "conversion_rate": 0.16,
+      "statistical_significance": 0.0125,
+      "test_impressions": 1000
+    },
+    {
+      "id": "crisis_messaging_claude_2_1755911542",
+      "headline": "Sudden changes? Our crisis team responds today.",
+      "category": "crisis_messaging",
+      "segment": "crisis_parents",
+      "urgency_level": 0.8374232155874111,
+      "clinical_authority": 0.6372535385872888,
+      "provider": "claude",
+      "ctr_simulation": 0.024,
+      "conversion_rate": 0.16666666666666666,
+      "statistical_significance": 0.008,
+      "test_impressions": 1000
+    },
+    {
+      "id": "crisis_messaging_claude_3_1755911542",
+      "headline": "Withdraw, harm, decline? Urgent care for families.",
+      "category": "crisis_messaging",
+      "segment": "crisis_parents",
+      "urgency_level": 0.9026779632744678,
+      "clinical_authority": 0.7742015913319092,
+      "provider": "claude",
+      "ctr_simulation": 0.025,
+      "conversion_rate": 0.16,
+      "statistical_significance": 0.0125,
+      "test_impressions": 1000
+    },
+    {
+      "id": "crisis_messaging_claude_4_1755911542",
+      "headline": "Struggling teen? Immediate assessment and next steps.",
+      "category": "crisis_messaging",
+      "segment": "crisis_parents",
+      "urgency_level": 0.8536568058963822,
+      "clinical_authority": 0.7881940035390872,
+      "provider": "claude",
+      "ctr_simulation": 0.025,
+      "conversion_rate": 0.16,
+      "statistical_significance": 0.0125,
+      "test_impressions": 1000
+    },
+    {
+      "id": "crisis_messaging_claude_5_1755911542",
+      "headline": "Behavior crisis? Rapid response for your family.",
+      "category": "crisis_messaging",
+      "segment": "crisis_parents",
+      "urgency_level": 0.9860772335026725,
+      "clinical_authority": 0.7241339842891802,
+      "provider": "claude",
+      "ctr_simulation": 0.025,
+      "conversion_rate": 0.16,
+      "statistical_significance": 0.0125,
+      "test_impressions": 1000
+    },
+    {
+      "id": "crisis_messaging_claude_6_1755911542",
+      "headline": "Depressed, anxious child? 24/7 support available.",
+      "category": "crisis_messaging",
+      "segment": "crisis_parents",
+      "urgency_level": 0.9930993326675642,
+      "clinical_authority": 0.7976057382097879,
+      "provider": "claude",
+      "ctr_simulation": 0.029,
+      "conversion_rate": 0.13793103448275862,
+      "statistical_significance": 0.0405,
+      "test_impressions": 1000
+    },
+    {
+      "id": "crisis_messaging_claude_7_1755911542",
+      "headline": "Teens in crisis? Specialized care starts today.",
+      "category": "crisis_messaging",
+      "segment": "crisis_parents",
+      "urgency_level": 0.949476337965158,
+      "clinical_authority": 0.6892604011138956,
+      "provider": "claude",
+      "ctr_simulation": 0.025,
+      "conversion_rate": 0.16,
+      "statistical_significance": 0.0125,
+      "test_impressions": 1000
+    },
+    {
+      "id": "crisis_messaging_claude_8_1755911542",
+      "headline": "Worried about your child? Speak to experts now.",
+      "category": "crisis_messaging",
+      "segment": "crisis_parents",
+      "urgency_level": 0.8180227857402941,
+      "clinical_authority": 0.7634629488725423,
+      "provider": "claude",
+      "ctr_simulation": 0.029,
+      "conversion_rate": 0.13793103448275862,
+      "statistical_significance": 0.0405,
+      "test_impressions": 1000
+    },
+    {
+      "id": "crisis_messaging_claude_9_1755911542",
+      "headline": "Urgent teen mental health help is here.",
+      "category": "crisis_messaging",
+      "segment": "crisis_parents",
+      "urgency_level": 0.925500036626669,
+      "clinical_authority": 0.7269145228112401,
+      "provider": "claude",
+      "ctr_simulation": 0.025,
+      "conversion_rate": 0.16,
+      "statistical_significance": 0.0125,
+      "test_impressions": 1000
+    },
+    {
+      "id": "prevention_messaging_claude_0_1755911543",
+      "headline": "Here are 10 unique prevention-focused headlines for proactive parents:",
+      "category": "prevention_messaging",
+      "segment": "tech_savvy_parents",
+      "urgency_level": 0.4408287731323946,
+      "clinical_authority": 0.6236847415297484,
+      "provider": "claude",
+      "ctr_simulation": 0.004,
+      "conversion_rate": 0.25,
+      "statistical_significance": 0.128,
+      "test_impressions": 1000
+    },
+    {
+      "id": "prevention_messaging_claude_1_1755911543",
+      "headline": "Empower Your Teen's Wellbeing with Proactive Monitoring",
+      "category": "prevention_messaging",
+      "segment": "researchers",
+      "urgency_level": 0.23651684736043152,
+      "clinical_authority": 0.546008917696152,
+      "provider": "claude",
+      "ctr_simulation": 0.004,
+      "conversion_rate": 0.25,
+      "statistical_significance": 0.128,
+      "test_impressions": 1000
+    },
+    {
+      "id": "prevention_messaging_claude_2_1755911543",
+      "headline": "Strengthen Family Bonds, Spot Issues Early On",
+      "category": "prevention_messaging",
+      "segment": "tech_savvy_parents",
+      "urgency_level": 0.429174730935448,
+      "clinical_authority": 0.5170544549065821,
+      "provider": "claude",
+      "ctr_simulation": 0.004,
+      "conversion_rate": 0.25,
+      "statistical_significance": 0.128,
+      "test_impressions": 1000
+    },
+    {
+      "id": "prevention_messaging_claude_3_1755911543",
+      "headline": "Proactive Wellness Checks Prevent Bigger Problems Later",
+      "category": "prevention_messaging",
+      "segment": "tech_savvy_parents",
+      "urgency_level": 0.25246888825214603,
+      "clinical_authority": 0.5850208911255507,
+      "provider": "claude",
+      "ctr_simulation": 0.001,
+      "conversion_rate": 0.0,
+      "statistical_significance": 0.1805,
+      "test_impressions": 1000
+    },
+    {
+      "id": "prevention_messaging_claude_4_1755911543",
+      "headline": "Build Resilience: Catch Teen Struggles Before Crisis",
+      "category": "prevention_messaging",
+      "segment": "researchers",
+      "urgency_level": 0.3635076516838864,
+      "clinical_authority": 0.5981163706456734,
+      "provider": "claude",
+      "ctr_simulation": 0.006,
+      "conversion_rate": 0.16666666666666666,
+      "statistical_significance": 0.098,
+      "test_impressions": 1000
+    },
+    {
+      "id": "prevention_messaging_claude_5_1755911543",
+      "headline": "Stay Ahead of Teen Troubles - Proactive Wellness",
+      "category": "prevention_messaging",
+      "segment": "tech_savvy_parents",
+      "urgency_level": 0.20661622108306776,
+      "clinical_authority": 0.5029636863522974,
+      "provider": "claude",
+      "ctr_simulation": 0.0,
+      "conversion_rate": 0.0,
+      "statistical_significance": 0.2,
+      "test_impressions": 1000
+    },
+    {
+      "id": "prevention_messaging_claude_6_1755911543",
+      "headline": "Nurture Thriving Teens Through Preventative Wellbeing Tracking",
+      "category": "prevention_messaging",
+      "segment": "tech_savvy_parents",
+      "urgency_level": 0.42524519345459144,
+      "clinical_authority": 0.5039449908217141,
+      "provider": "claude",
+      "ctr_simulation": 0.001,
+      "conversion_rate": 0.0,
+      "statistical_significance": 0.1805,
+      "test_impressions": 1000
+    },
+    {
+      "id": "prevention_messaging_claude_7_1755911543",
+      "headline": "Proactive Care: Elevate Your Teen's Mental Health",
+      "category": "prevention_messaging",
+      "segment": "tech_savvy_parents",
+      "urgency_level": 0.24327382549182547,
+      "clinical_authority": 0.5047068773556443,
+      "provider": "claude",
+      "ctr_simulation": 0.001,
+      "conversion_rate": 0.0,
+      "statistical_significance": 0.1805,
+      "test_impressions": 1000
+    },
+    {
+      "id": "prevention_messaging_claude_8_1755911543",
+      "headline": "Preempt Problems, Prioritize Teen Wellness Monitoring",
+      "category": "prevention_messaging",
+      "segment": "researchers",
+      "urgency_level": 0.39594706973213456,
+      "clinical_authority": 0.5380627666291935,
+      "provider": "claude",
+      "ctr_simulation": 0.006,
+      "conversion_rate": 0.16666666666666666,
+      "statistical_significance": 0.098,
+      "test_impressions": 1000
+    },
+    {
+      "id": "prevention_messaging_claude_9_1755911543",
+      "headline": "Proactive Parenting: Empower Teen Wellbeing & Resilience",
+      "category": "prevention_messaging",
+      "segment": "tech_savvy_parents",
+      "urgency_level": 0.39265202567766344,
+      "clinical_authority": 0.6893435089930483,
+      "provider": "claude",
+      "ctr_simulation": 0.004,
+      "conversion_rate": 0.25,
+      "statistical_significance": 0.128,
+      "test_impressions": 1000
+    },
+    {
+      "id": "balance_ai_features_claude_0_1755911544",
+      "headline": "Invisible AI Tracks Teen Wellness",
+      "category": "balance_ai_features",
+      "segment": "tech_savvy_parents",
+      "urgency_level": 0.4871682750687899,
+      "clinical_authority": 0.7008238549917107,
+      "provider": "claude",
+      "ctr_simulation": 0.008,
+      "conversion_rate": 0.125,
+      "statistical_significance": 0.07200000000000001,
+      "test_impressions": 1000
+    },
+    {
+      "id": "balance_ai_features_claude_1_1755911544",
+      "headline": "AI Decodes Your Child's Moods",
+      "category": "balance_ai_features",
+      "segment": "researchers",
+      "urgency_level": 0.4583508794129937,
+      "clinical_authority": 0.6262386338493366,
+      "provider": "claude",
+      "ctr_simulation": 0.009,
+      "conversion_rate": 0.1111111111111111,
+      "statistical_significance": 0.0605,
+      "test_impressions": 1000
+    },
+    {
+      "id": "balance_ai_features_claude_2_1755911544",
+      "headline": "One-Click Access to Teen Wellbeing",
+      "category": "balance_ai_features",
+      "segment": "tech_savvy_parents",
+      "urgency_level": 0.43078774325315916,
+      "clinical_authority": 0.7497850162175874,
+      "provider": "claude",
+      "ctr_simulation": 0.008,
+      "conversion_rate": 0.125,
+      "statistical_significance": 0.07200000000000001,
+      "test_impressions": 1000
+    },
+    {
+      "id": "balance_ai_features_claude_3_1755911544",
+      "headline": "Automated Insights into Teen Behavior",
+      "category": "balance_ai_features",
+      "segment": "tech_savvy_parents",
+      "urgency_level": 0.4741586238480979,
+      "clinical_authority": 0.7955878562784922,
+      "provider": "claude",
+      "ctr_simulation": 0.009,
+      "conversion_rate": 0.1111111111111111,
+      "statistical_significance": 0.0605,
+      "test_impressions": 1000
+    },
+    {
+      "id": "balance_ai_features_claude_4_1755911544",
+      "headline": "AI-Powered Emotional Intelligence for Parents",
+      "category": "balance_ai_features",
+      "segment": "tech_savvy_parents",
+      "urgency_level": 0.5202268461510122,
+      "clinical_authority": 0.7181030104970574,
+      "provider": "claude",
+      "ctr_simulation": 0.008,
+      "conversion_rate": 0.125,
+      "statistical_significance": 0.07200000000000001,
+      "test_impressions": 1000
+    },
+    {
+      "id": "balance_ai_features_claude_5_1755911544",
+      "headline": "Breakthrough Tech Monitors Teen Mental Health",
+      "category": "balance_ai_features",
+      "segment": "researchers",
+      "urgency_level": 0.4961082454599256,
+      "clinical_authority": 0.7293975742010319,
+      "provider": "claude",
+      "ctr_simulation": 0.012,
+      "conversion_rate": 0.0,
+      "statistical_significance": 0.032,
+      "test_impressions": 1000
+    },
+    {
+      "id": "balance_ai_features_claude_6_1755911544",
+      "headline": "Unlock Hidden Truths with Behavior AI",
+      "category": "balance_ai_features",
+      "segment": "researchers",
+      "urgency_level": 0.588117093417263,
+      "clinical_authority": 0.7010026082786056,
+      "provider": "claude",
+      "ctr_simulation": 0.017,
+      "conversion_rate": 0.058823529411764705,
+      "statistical_significance": 0.0045000000000000005,
+      "test_impressions": 1000
+    },
+    {
+      "id": "balance_ai_features_claude_7_1755911544",
+      "headline": "Advanced AI Scores Your Teen's Wellness",
+      "category": "balance_ai_features",
+      "segment": "tech_savvy_parents",
+      "urgency_level": 0.4934937583584664,
+      "clinical_authority": 0.7542635490237429,
+      "provider": "claude",
+      "ctr_simulation": 0.008,
+      "conversion_rate": 0.125,
+      "statistical_significance": 0.07200000000000001,
+      "test_impressions": 1000
+    },
+    {
+      "id": "balance_ai_features_claude_8_1755911544",
+      "headline": "Effortless Teenage Mood Monitoring with AI",
+      "category": "balance_ai_features",
+      "segment": "tech_savvy_parents",
+      "urgency_level": 0.4495799160264613,
+      "clinical_authority": 0.7797732243620661,
+      "provider": "claude",
+      "ctr_simulation": 0.008,
+      "conversion_rate": 0.125,
+      "statistical_significance": 0.07200000000000001,
+      "test_impressions": 1000
+    },
+    {
+      "id": "balance_ai_features_claude_9_1755911544",
+      "headline": "Cutting-Edge AI Reveals Teen Emotional Patterns",
+      "category": "balance_ai_features",
+      "segment": "tech_savvy_parents",
+      "urgency_level": 0.5322947901741166,
+      "clinical_authority": 0.634376750000939,
+      "provider": "claude",
+      "ctr_simulation": 0.008,
+      "conversion_rate": 0.125,
+      "statistical_significance": 0.07200000000000001,
+      "test_impressions": 1000
+    },
+    {
+      "id": "ios_exclusive_claude_0_1755911546",
+      "headline": "Here are 10 unique ad headlines emphasizing iOS exclusivity and premium positioning:",
+      "category": "ios_exclusive",
+      "segment": "tech_savvy_parents",
+      "urgency_level": 0.4959301780509102,
+      "clinical_authority": 0.6772190795493548,
+      "provider": "claude",
+      "ctr_simulation": 0.007,
+      "conversion_rate": 0.14285714285714285,
+      "statistical_significance": 0.08449999999999999,
+      "test_impressions": 1000
+    },
+    {
+      "id": "ios_exclusive_claude_1_1755911546",
+      "headline": "Protect Your iPhone Family with Aura Balance",
+      "category": "ios_exclusive",
+      "segment": "premium_buyers",
+      "urgency_level": 0.35568369035654324,
+      "clinical_authority": 0.5342067947714753,
+      "provider": "claude",
+      "ctr_simulation": 0.004,
+      "conversion_rate": 0.25,
+      "statistical_significance": 0.128,
+      "test_impressions": 1000
+    },
+    {
+      "id": "ios_exclusive_claude_2_1755911546",
+      "headline": "Streamlined iOS Parenting - Aura Balance Premium",
+      "category": "ios_exclusive",
+      "segment": "tech_savvy_parents",
+      "urgency_level": 0.335883752953938,
+      "clinical_authority": 0.5077614546779702,
+      "provider": "claude",
+      "ctr_simulation": 0.002,
+      "conversion_rate": 0.0,
+      "statistical_significance": 0.162,
+      "test_impressions": 1000
+    },
+    {
+      "id": "ios_exclusive_claude_3_1755911546",
+      "headline": "Elevate Your Apple Home with Aura Balance",
+      "category": "ios_exclusive",
+      "segment": "premium_buyers",
+      "urgency_level": 0.4492370364598346,
+      "clinical_authority": 0.5019654141417466,
+      "provider": "claude",
+      "ctr_simulation": 0.004,
+      "conversion_rate": 0.25,
+      "statistical_significance": 0.128,
+      "test_impressions": 1000
+    },
+    {
+      "id": "ios_exclusive_claude_4_1755911546",
+      "headline": "Secure Your iLife - Aura Balance for iOS",
+      "category": "ios_exclusive",
+      "segment": "tech_savvy_parents",
+      "urgency_level": 0.48103502267032755,
+      "clinical_authority": 0.6830118366449824,
+      "provider": "claude",
+      "ctr_simulation": 0.008,
+      "conversion_rate": 0.125,
+      "statistical_significance": 0.07200000000000001,
+      "test_impressions": 1000
+    },
+    {
+      "id": "ios_exclusive_claude_5_1755911546",
+      "headline": "Aura Balance: The Exclusive iOS Family Safety",
+      "category": "ios_exclusive",
+      "segment": "tech_savvy_parents",
+      "urgency_level": 0.49834294177177973,
+      "clinical_authority": 0.5705812854902154,
+      "provider": "claude",
+      "ctr_simulation": 0.006,
+      "conversion_rate": 0.16666666666666666,
+      "statistical_significance": 0.098,
+      "test_impressions": 1000
+    },
+    {
+      "id": "ios_exclusive_claude_6_1755911546",
+      "headline": "Safeguard Your iOS Ecosystem with Aura Balance",
+      "category": "ios_exclusive",
+      "segment": "premium_buyers",
+      "urgency_level": 0.292803188831812,
+      "clinical_authority": 0.5252365412382222,
+      "provider": "claude",
+      "ctr_simulation": 0.002,
+      "conversion_rate": 0.0,
+      "statistical_significance": 0.162,
+      "test_impressions": 1000
+    },
+    {
+      "id": "ios_exclusive_claude_7_1755911546",
+      "headline": "Aura Balance - Tailored for Your iPhones",
+      "category": "ios_exclusive",
+      "segment": "premium_buyers",
+      "urgency_level": 0.217778862881819,
+      "clinical_authority": 0.5642637753894828,
+      "provider": "claude",
+      "ctr_simulation": 0.002,
+      "conversion_rate": 0.0,
+      "statistical_significance": 0.162,
+      "test_impressions": 1000
+    },
+    {
+      "id": "ios_exclusive_claude_8_1755911546",
+      "headline": "Seamless iOS Parenting Made Effortless with Aura",
+      "category": "ios_exclusive",
+      "segment": "premium_buyers",
+      "urgency_level": 0.312292992699397,
+      "clinical_authority": 0.57413852658566,
+      "provider": "claude",
+      "ctr_simulation": 0.004,
+      "conversion_rate": 0.25,
+      "statistical_significance": 0.128,
+      "test_impressions": 1000
+    },
+    {
+      "id": "ios_exclusive_claude_9_1755911546",
+      "headline": "Aura Balance - The Elite iOS Family Solution",
+      "category": "ios_exclusive",
+      "segment": "tech_savvy_parents",
+      "urgency_level": 0.2399546206321305,
+      "clinical_authority": 0.551987533614801,
+      "provider": "claude",
+      "ctr_simulation": 0.002,
+      "conversion_rate": 0.0,
+      "statistical_significance": 0.162,
+      "test_impressions": 1000
+    }
+  ],
+  "testing_results": {
+    "mental_health_detection_claude_0_1755911539": {
+      "total_impressions": 1000,
+      "total_clicks": 16,
+      "total_conversions": 2,
+      "ctr": 0.016,
+      "conversion_rate": 0.125,
+      "statistical_significance": 0.008,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "mental_health_detection_claude_1_1755911539": {
+      "total_impressions": 1000,
+      "total_clicks": 24,
+      "total_conversions": 4,
+      "ctr": 0.024,
+      "conversion_rate": 0.16666666666666666,
+      "statistical_significance": 0.008,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 0,
+          "ctr": 0.04,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "mental_health_detection_claude_2_1755911539": {
+      "total_impressions": 1000,
+      "total_clicks": 23,
+      "total_conversions": 5,
+      "ctr": 0.023,
+      "conversion_rate": 0.21739130434782608,
+      "statistical_significance": 0.0045000000000000005,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 2,
+          "ctr": 0.03,
+          "conversion_rate": 0.6666666666666666
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 0,
+          "ctr": 0.04,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "mental_health_detection_claude_3_1755911539": {
+      "total_impressions": 1000,
+      "total_clicks": 19,
+      "total_conversions": 4,
+      "ctr": 0.019,
+      "conversion_rate": 0.21052631578947367,
+      "statistical_significance": 0.0005,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 1,
+          "ctr": 0.03,
+          "conversion_rate": 0.3333333333333333
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "mental_health_detection_claude_4_1755911539": {
+      "total_impressions": 1000,
+      "total_clicks": 23,
+      "total_conversions": 2,
+      "ctr": 0.023,
+      "conversion_rate": 0.08695652173913043,
+      "statistical_significance": 0.0045000000000000005,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 0,
+          "ctr": 0.04,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "mental_health_detection_claude_5_1755911539": {
+      "total_impressions": 1000,
+      "total_clicks": 23,
+      "total_conversions": 2,
+      "ctr": 0.023,
+      "conversion_rate": 0.08695652173913043,
+      "statistical_significance": 0.0045000000000000005,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 0,
+          "ctr": 0.04,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "mental_health_detection_claude_6_1755911539": {
+      "total_impressions": 1000,
+      "total_clicks": 23,
+      "total_conversions": 2,
+      "ctr": 0.023,
+      "conversion_rate": 0.08695652173913043,
+      "statistical_significance": 0.0045000000000000005,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 0,
+          "ctr": 0.04,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "mental_health_detection_claude_7_1755911539": {
+      "total_impressions": 1000,
+      "total_clicks": 18,
+      "total_conversions": 3,
+      "ctr": 0.018,
+      "conversion_rate": 0.16666666666666666,
+      "statistical_significance": 0.002,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "mental_health_detection_claude_8_1755911539": {
+      "total_impressions": 1000,
+      "total_clicks": 23,
+      "total_conversions": 3,
+      "ctr": 0.023,
+      "conversion_rate": 0.13043478260869565,
+      "statistical_significance": 0.0045000000000000005,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 1,
+          "ctr": 0.03,
+          "conversion_rate": 0.3333333333333333
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 0,
+          "ctr": 0.04,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "mental_health_detection_claude_9_1755911539": {
+      "total_impressions": 1000,
+      "total_clicks": 23,
+      "total_conversions": 2,
+      "ctr": 0.023,
+      "conversion_rate": 0.08695652173913043,
+      "statistical_significance": 0.0045000000000000005,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 0,
+          "ctr": 0.04,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "clinical_authority_claude_0_1755911540": {
+      "total_impressions": 1000,
+      "total_clicks": 8,
+      "total_conversions": 1,
+      "ctr": 0.008,
+      "conversion_rate": 0.125,
+      "statistical_significance": 0.07200000000000001,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "clinical_authority_claude_1_1755911540": {
+      "total_impressions": 1000,
+      "total_clicks": 9,
+      "total_conversions": 1,
+      "ctr": 0.009,
+      "conversion_rate": 0.1111111111111111,
+      "statistical_significance": 0.0605,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "clinical_authority_claude_2_1755911540": {
+      "total_impressions": 1000,
+      "total_clicks": 8,
+      "total_conversions": 1,
+      "ctr": 0.008,
+      "conversion_rate": 0.125,
+      "statistical_significance": 0.07200000000000001,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "clinical_authority_claude_3_1755911540": {
+      "total_impressions": 1000,
+      "total_clicks": 16,
+      "total_conversions": 2,
+      "ctr": 0.016,
+      "conversion_rate": 0.125,
+      "statistical_significance": 0.008,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "clinical_authority_claude_4_1755911540": {
+      "total_impressions": 1000,
+      "total_clicks": 14,
+      "total_conversions": 2,
+      "ctr": 0.014,
+      "conversion_rate": 0.14285714285714285,
+      "statistical_significance": 0.018000000000000002,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "clinical_authority_claude_5_1755911540": {
+      "total_impressions": 1000,
+      "total_clicks": 9,
+      "total_conversions": 1,
+      "ctr": 0.009,
+      "conversion_rate": 0.1111111111111111,
+      "statistical_significance": 0.0605,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "clinical_authority_claude_6_1755911540": {
+      "total_impressions": 1000,
+      "total_clicks": 9,
+      "total_conversions": 1,
+      "ctr": 0.009,
+      "conversion_rate": 0.1111111111111111,
+      "statistical_significance": 0.0605,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "clinical_authority_claude_7_1755911540": {
+      "total_impressions": 1000,
+      "total_clicks": 9,
+      "total_conversions": 1,
+      "ctr": 0.009,
+      "conversion_rate": 0.1111111111111111,
+      "statistical_significance": 0.0605,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "clinical_authority_claude_8_1755911540": {
+      "total_impressions": 1000,
+      "total_clicks": 23,
+      "total_conversions": 2,
+      "ctr": 0.023,
+      "conversion_rate": 0.08695652173913043,
+      "statistical_significance": 0.0045000000000000005,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 0,
+          "ctr": 0.04,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "clinical_authority_claude_9_1755911540": {
+      "total_impressions": 1000,
+      "total_clicks": 14,
+      "total_conversions": 1,
+      "ctr": 0.014,
+      "conversion_rate": 0.07142857142857142,
+      "statistical_significance": 0.018000000000000002,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "crisis_messaging_claude_0_1755911542": {
+      "total_impressions": 1000,
+      "total_clicks": 23,
+      "total_conversions": 4,
+      "ctr": 0.023,
+      "conversion_rate": 0.17391304347826086,
+      "statistical_significance": 0.0045000000000000005,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 1,
+          "ctr": 0.03,
+          "conversion_rate": 0.3333333333333333
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 0,
+          "ctr": 0.04,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "crisis_messaging_claude_1_1755911542": {
+      "total_impressions": 1000,
+      "total_clicks": 25,
+      "total_conversions": 4,
+      "ctr": 0.025,
+      "conversion_rate": 0.16,
+      "statistical_significance": 0.0125,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 0,
+          "ctr": 0.04,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 0,
+          "ctr": 0.04,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "crisis_messaging_claude_2_1755911542": {
+      "total_impressions": 1000,
+      "total_clicks": 24,
+      "total_conversions": 4,
+      "ctr": 0.024,
+      "conversion_rate": 0.16666666666666666,
+      "statistical_significance": 0.008,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 0,
+          "ctr": 0.04,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "crisis_messaging_claude_3_1755911542": {
+      "total_impressions": 1000,
+      "total_clicks": 25,
+      "total_conversions": 4,
+      "ctr": 0.025,
+      "conversion_rate": 0.16,
+      "statistical_significance": 0.0125,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 0,
+          "ctr": 0.04,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 0,
+          "ctr": 0.04,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "crisis_messaging_claude_4_1755911542": {
+      "total_impressions": 1000,
+      "total_clicks": 25,
+      "total_conversions": 4,
+      "ctr": 0.025,
+      "conversion_rate": 0.16,
+      "statistical_significance": 0.0125,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 0,
+          "ctr": 0.04,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 0,
+          "ctr": 0.04,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "crisis_messaging_claude_5_1755911542": {
+      "total_impressions": 1000,
+      "total_clicks": 25,
+      "total_conversions": 4,
+      "ctr": 0.025,
+      "conversion_rate": 0.16,
+      "statistical_significance": 0.0125,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 0,
+          "ctr": 0.04,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 0,
+          "ctr": 0.04,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "crisis_messaging_claude_6_1755911542": {
+      "total_impressions": 1000,
+      "total_clicks": 29,
+      "total_conversions": 4,
+      "ctr": 0.029,
+      "conversion_rate": 0.13793103448275862,
+      "statistical_significance": 0.0405,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 0,
+          "ctr": 0.04,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 5,
+          "conversions": 0,
+          "ctr": 0.05,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 0,
+          "ctr": 0.04,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "crisis_messaging_claude_7_1755911542": {
+      "total_impressions": 1000,
+      "total_clicks": 25,
+      "total_conversions": 4,
+      "ctr": 0.025,
+      "conversion_rate": 0.16,
+      "statistical_significance": 0.0125,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 0,
+          "ctr": 0.04,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 0,
+          "ctr": 0.04,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "crisis_messaging_claude_8_1755911542": {
+      "total_impressions": 1000,
+      "total_clicks": 29,
+      "total_conversions": 4,
+      "ctr": 0.029,
+      "conversion_rate": 0.13793103448275862,
+      "statistical_significance": 0.0405,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 0,
+          "ctr": 0.04,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 6,
+          "conversions": 0,
+          "ctr": 0.06,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "crisis_messaging_claude_9_1755911542": {
+      "total_impressions": 1000,
+      "total_clicks": 25,
+      "total_conversions": 4,
+      "ctr": 0.025,
+      "conversion_rate": 0.16,
+      "statistical_significance": 0.0125,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 0,
+          "ctr": 0.04,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 1,
+          "ctr": 0.04,
+          "conversion_rate": 0.25
+        },
+        {
+          "impressions": 100,
+          "clicks": 4,
+          "conversions": 0,
+          "ctr": 0.04,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "prevention_messaging_claude_0_1755911543": {
+      "total_impressions": 1000,
+      "total_clicks": 4,
+      "total_conversions": 1,
+      "ctr": 0.004,
+      "conversion_rate": 0.25,
+      "statistical_significance": 0.128,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "prevention_messaging_claude_1_1755911543": {
+      "total_impressions": 1000,
+      "total_clicks": 4,
+      "total_conversions": 1,
+      "ctr": 0.004,
+      "conversion_rate": 0.25,
+      "statistical_significance": 0.128,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "prevention_messaging_claude_2_1755911543": {
+      "total_impressions": 1000,
+      "total_clicks": 4,
+      "total_conversions": 1,
+      "ctr": 0.004,
+      "conversion_rate": 0.25,
+      "statistical_significance": 0.128,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "prevention_messaging_claude_3_1755911543": {
+      "total_impressions": 1000,
+      "total_clicks": 1,
+      "total_conversions": 0,
+      "ctr": 0.001,
+      "conversion_rate": 0.0,
+      "statistical_significance": 0.1805,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "prevention_messaging_claude_4_1755911543": {
+      "total_impressions": 1000,
+      "total_clicks": 6,
+      "total_conversions": 1,
+      "ctr": 0.006,
+      "conversion_rate": 0.16666666666666666,
+      "statistical_significance": 0.098,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "prevention_messaging_claude_5_1755911543": {
+      "total_impressions": 1000,
+      "total_clicks": 0,
+      "total_conversions": 0,
+      "ctr": 0.0,
+      "conversion_rate": 0.0,
+      "statistical_significance": 0.2,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "prevention_messaging_claude_6_1755911543": {
+      "total_impressions": 1000,
+      "total_clicks": 1,
+      "total_conversions": 0,
+      "ctr": 0.001,
+      "conversion_rate": 0.0,
+      "statistical_significance": 0.1805,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "prevention_messaging_claude_7_1755911543": {
+      "total_impressions": 1000,
+      "total_clicks": 1,
+      "total_conversions": 0,
+      "ctr": 0.001,
+      "conversion_rate": 0.0,
+      "statistical_significance": 0.1805,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "prevention_messaging_claude_8_1755911543": {
+      "total_impressions": 1000,
+      "total_clicks": 6,
+      "total_conversions": 1,
+      "ctr": 0.006,
+      "conversion_rate": 0.16666666666666666,
+      "statistical_significance": 0.098,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "prevention_messaging_claude_9_1755911543": {
+      "total_impressions": 1000,
+      "total_clicks": 4,
+      "total_conversions": 1,
+      "ctr": 0.004,
+      "conversion_rate": 0.25,
+      "statistical_significance": 0.128,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "balance_ai_features_claude_0_1755911544": {
+      "total_impressions": 1000,
+      "total_clicks": 8,
+      "total_conversions": 1,
+      "ctr": 0.008,
+      "conversion_rate": 0.125,
+      "statistical_significance": 0.07200000000000001,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "balance_ai_features_claude_1_1755911544": {
+      "total_impressions": 1000,
+      "total_clicks": 9,
+      "total_conversions": 1,
+      "ctr": 0.009,
+      "conversion_rate": 0.1111111111111111,
+      "statistical_significance": 0.0605,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "balance_ai_features_claude_2_1755911544": {
+      "total_impressions": 1000,
+      "total_clicks": 8,
+      "total_conversions": 1,
+      "ctr": 0.008,
+      "conversion_rate": 0.125,
+      "statistical_significance": 0.07200000000000001,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "balance_ai_features_claude_3_1755911544": {
+      "total_impressions": 1000,
+      "total_clicks": 9,
+      "total_conversions": 1,
+      "ctr": 0.009,
+      "conversion_rate": 0.1111111111111111,
+      "statistical_significance": 0.0605,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "balance_ai_features_claude_4_1755911544": {
+      "total_impressions": 1000,
+      "total_clicks": 8,
+      "total_conversions": 1,
+      "ctr": 0.008,
+      "conversion_rate": 0.125,
+      "statistical_significance": 0.07200000000000001,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "balance_ai_features_claude_5_1755911544": {
+      "total_impressions": 1000,
+      "total_clicks": 12,
+      "total_conversions": 0,
+      "ctr": 0.012,
+      "conversion_rate": 0.0,
+      "statistical_significance": 0.032,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "balance_ai_features_claude_6_1755911544": {
+      "total_impressions": 1000,
+      "total_clicks": 17,
+      "total_conversions": 1,
+      "ctr": 0.017,
+      "conversion_rate": 0.058823529411764705,
+      "statistical_significance": 0.0045000000000000005,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 3,
+          "conversions": 0,
+          "ctr": 0.03,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "balance_ai_features_claude_7_1755911544": {
+      "total_impressions": 1000,
+      "total_clicks": 8,
+      "total_conversions": 1,
+      "ctr": 0.008,
+      "conversion_rate": 0.125,
+      "statistical_significance": 0.07200000000000001,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "balance_ai_features_claude_8_1755911544": {
+      "total_impressions": 1000,
+      "total_clicks": 8,
+      "total_conversions": 1,
+      "ctr": 0.008,
+      "conversion_rate": 0.125,
+      "statistical_significance": 0.07200000000000001,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "balance_ai_features_claude_9_1755911544": {
+      "total_impressions": 1000,
+      "total_clicks": 8,
+      "total_conversions": 1,
+      "ctr": 0.008,
+      "conversion_rate": 0.125,
+      "statistical_significance": 0.07200000000000001,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "ios_exclusive_claude_0_1755911546": {
+      "total_impressions": 1000,
+      "total_clicks": 7,
+      "total_conversions": 1,
+      "ctr": 0.007,
+      "conversion_rate": 0.14285714285714285,
+      "statistical_significance": 0.08449999999999999,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "ios_exclusive_claude_1_1755911546": {
+      "total_impressions": 1000,
+      "total_clicks": 4,
+      "total_conversions": 1,
+      "ctr": 0.004,
+      "conversion_rate": 0.25,
+      "statistical_significance": 0.128,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "ios_exclusive_claude_2_1755911546": {
+      "total_impressions": 1000,
+      "total_clicks": 2,
+      "total_conversions": 0,
+      "ctr": 0.002,
+      "conversion_rate": 0.0,
+      "statistical_significance": 0.162,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "ios_exclusive_claude_3_1755911546": {
+      "total_impressions": 1000,
+      "total_clicks": 4,
+      "total_conversions": 1,
+      "ctr": 0.004,
+      "conversion_rate": 0.25,
+      "statistical_significance": 0.128,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "ios_exclusive_claude_4_1755911546": {
+      "total_impressions": 1000,
+      "total_clicks": 8,
+      "total_conversions": 1,
+      "ctr": 0.008,
+      "conversion_rate": 0.125,
+      "statistical_significance": 0.07200000000000001,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 0,
+          "ctr": 0.02,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "ios_exclusive_claude_5_1755911546": {
+      "total_impressions": 1000,
+      "total_clicks": 6,
+      "total_conversions": 1,
+      "ctr": 0.006,
+      "conversion_rate": 0.16666666666666666,
+      "statistical_significance": 0.098,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "ios_exclusive_claude_6_1755911546": {
+      "total_impressions": 1000,
+      "total_clicks": 2,
+      "total_conversions": 0,
+      "ctr": 0.002,
+      "conversion_rate": 0.0,
+      "statistical_significance": 0.162,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "ios_exclusive_claude_7_1755911546": {
+      "total_impressions": 1000,
+      "total_clicks": 2,
+      "total_conversions": 0,
+      "ctr": 0.002,
+      "conversion_rate": 0.0,
+      "statistical_significance": 0.162,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "ios_exclusive_claude_8_1755911546": {
+      "total_impressions": 1000,
+      "total_clicks": 4,
+      "total_conversions": 1,
+      "ctr": 0.004,
+      "conversion_rate": 0.25,
+      "statistical_significance": 0.128,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 2,
+          "conversions": 1,
+          "ctr": 0.02,
+          "conversion_rate": 0.5
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        }
+      ]
+    },
+    "ios_exclusive_claude_9_1755911546": {
+      "total_impressions": 1000,
+      "total_clicks": 2,
+      "total_conversions": 0,
+      "ctr": 0.002,
+      "conversion_rate": 0.0,
+      "statistical_significance": 0.162,
+      "world_results": [
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 1,
+          "conversions": 0,
+          "ctr": 0.01,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        },
+        {
+          "impressions": 100,
+          "clicks": 0,
+          "conversions": 0,
+          "ctr": 0.0,
+          "conversion_rate": 0.0
+        }
+      ]
+    }
+  }
+}

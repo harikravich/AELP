@@ -1,0 +1,41 @@
+============================================================
+GAELP Multi-Touch Attribution Analysis Report
+============================================================
+Generated: 2025-08-21T14:30:55.668640
+
+Model Performance:
+  • Average Reward: 164.78
+  • Conversion Rate: 100.00%
+  • Customer Acquisition Cost: $18.44
+  • Return on Ad Spend: 6.51x
+  • Average Journey Length: 27.2 touches
+
+Attribution Model Comparison:
+Channel      | First Touch | Last Touch | Linear
+--------------------------------------------------
+search       |         291 |        312 |  278.1
+social       |         308 |        181 |  254.0
+display      |         286 |         81 |  151.1
+video        |           0 |         78 |   74.1
+email        |           0 |        123 |   62.9
+direct       |           0 |          9 |    3.7
+affiliate    |           0 |          0 |    0.0
+retargeting  |           0 |        101 |   61.2
+
+Top Customer Journey Paths:
+  1. display -> social (16 occurrences)
+  2. social -> social (15 occurrences)
+  3. search -> video (13 occurrences)
+  4. social -> search (12 occurrences)
+  5. social -> display (12 occurrences)
+
+Key Insights:
+  • Best first-touch channel: social
+  • Best last-touch channel: search
+  • Most consistent performer: search
+
+Recommendations:
+  1. Increase budget allocation to high-performing channels
+  2. Optimize journey paths with highest conversion rates
+  3. Reduce touches for users showing high intent
+  4. Implement cross-channel coordination for better synergy

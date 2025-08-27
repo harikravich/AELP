@@ -1,0 +1,9 @@
+[
+  {
+    "email": "demo_parent@example.com",
+    "timestamp": "2025-08-23T01:50:25.626105",
+    "accounts_found": 3,
+    "risk_score": 65,
+    "source": "social_scanner_demo"
+  }
+]

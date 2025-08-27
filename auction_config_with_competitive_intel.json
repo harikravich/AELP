@@ -1,0 +1,118 @@
+{
+  "experiment_name": "competitive_intelligence_auction_test",
+  "description": "Auction simulation with integrated competitive intelligence",
+  "random_seed": 42,
+  "num_runs": 1,
+  "num_iter": 20,
+  "rounds_per_iter": 100,
+  "output_dir": "./results/competitive_intel_test",
+  
+  "auction_config": {
+    "allocation": "SecondPrice",
+    "max_slots": 1,
+    "num_participants_per_round": 5,
+    "enable_competitive_intel": true
+  },
+  
+  "environment": {
+    "embedding_size": 10,
+    "embedding_var": 1.0,
+    "obs_embedding_size": 5
+  },
+  
+  "competitive_intelligence": {
+    "enabled": true,
+    "lookback_days": 30,
+    "confidence_threshold": 0.2,
+    "update_patterns_every": 5
+  },
+  
+  "safety_controls": {
+    "enabled": true,
+    "daily_spend_limit": 1000.0,
+    "per_auction_limit": 50.0,
+    "bid_multiplier_limit": 3.0,
+    "emergency_stop_threshold": 1500.0
+  },
+  
+  "agents": [
+    {
+      "name": "Truthful Agent",
+      "num_copies": 1,
+      "num_items": 10,
+      "use_competitive_intel": false,
+      "quality_score": 7.0,
+      "daily_budget": 500.0,
+      "allocator": {
+        "type": "OracleAllocator",
+        "kwargs": {}
+      },
+      "bidder": {
+        "type": "TruthfulBidder",
+        "kwargs": {}
+      }
+    },
+    {
+      "name": "Competitive Intel Agent",
+      "num_copies": 2,
+      "num_items": 10,
+      "use_competitive_intel": true,
+      "quality_score": 7.5,
+      "daily_budget": 750.0,
+      "allocator": {
+        "type": "LogisticTSAllocator",
+        "kwargs": {
+          "thompson_sampling": true
+        }
+      },
+      "bidder": {
+        "type": "EmpiricalShadedBidder",
+        "kwargs": {
+          "gamma_sigma": 0.1,
+          "init_gamma": 0.8
+        }
+      }
+    },
+    {
+      "name": "Standard Shaded Agent",
+      "num_copies": 2,
+      "num_items": 10,
+      "use_competitive_intel": false,
+      "quality_score": 6.5,
+      "daily_budget": 600.0,
+      "allocator": {
+        "type": "LogisticTSAllocator",
+        "kwargs": {
+          "thompson_sampling": false
+        }
+      },
+      "bidder": {
+        "type": "EmpiricalShadedBidder",
+        "kwargs": {
+          "gamma_sigma": 0.15,
+          "init_gamma": 0.9
+        }
+      }
+    }
+  ],
+  
+  "monitoring": {
+    "log_competitive_decisions": true,
+    "track_market_patterns": true,
+    "safety_alerts": true,
+    "performance_metrics": [
+      "win_rate",
+      "avg_cpc", 
+      "budget_utilization",
+      "competitive_adjustments",
+      "safety_violations"
+    ]
+  },
+  
+  "output_settings": {
+    "save_competitive_intel_summary": true,
+    "save_bid_adjustment_history": true,
+    "save_safety_events": true,
+    "plot_competitive_metrics": true
+  }
+}

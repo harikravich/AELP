@@ -1,0 +1,25 @@
+{
+  "timestamp": "2025-08-21T15:38:58.005635",
+  "validation_status": "PASSED",
+  "capabilities_validated": [
+    "Statistical significance testing",
+    "A/B testing infrastructure",
+    "Holdout test set management",
+    "Performance metrics calculation",
+    "Multiple testing corrections",
+    "Report generation",
+    "Train/test split management"
+  ],
+  "final_report_summary": {
+    "total_experiments": 5,
+    "statistically_significant": 4,
+    "practically_significant": 5,
+    "significance_rate": 0.8,
+    "average_effect_size": 0.36266564104304183,
+    "average_power": 0.801637388280137,
+    "power_analysis": {
+      "well_powered_experiments": 4,
+      "underpowered_experiments": 1
+    }
+  }
+}

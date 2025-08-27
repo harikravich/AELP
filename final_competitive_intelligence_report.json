@@ -1,0 +1,240 @@
+{
+  "timestamp": "2025-08-22T17:14:57.001826",
+  "executive_summary": {
+    "key_insight": "Massive behavioral health market gap - competitors focus on safety/control, missing mental wellness",
+    "opportunity_size": "41+ keywords with zero competition, 15k+ monthly volume",
+    "competitive_advantage": "Only AI-powered behavioral health monitoring solution in market",
+    "immediate_action": "Launch behavioral health campaigns before competitors recognize gap"
+  },
+  "competitor_analysis": {
+    "bark": {
+      "position": "Market leader in safety alerts",
+      "pricing": "$14-27/month",
+      "key_weakness": "Zero behavioral health focus - purely reactive",
+      "missed_opportunity": "Teen depression monitoring (1,200 volume, uncontested)"
+    },
+    "qustodio": {
+      "position": "Traditional parental controls",
+      "pricing": "$8.25-13.95/month",
+      "key_weakness": "Manual monitoring only - no AI insights",
+      "missed_opportunity": "Digital wellness AI (890 volume, uncontested)"
+    },
+    "life360": {
+      "position": "Location tracking specialist",
+      "pricing": "$7.99-14.99/month",
+      "key_weakness": "Physical location only - missing digital wellness",
+      "missed_opportunity": "Complete family wellness monitoring"
+    }
+  },
+  "market_gaps": [
+    {
+      "category": "behavioral_health",
+      "opportunity_score": 0.6666666666666667,
+      "keywords": [
+        "teen depression monitoring",
+        "digital wellness ai",
+        "mood tracking app",
+        "mental health early warning",
+        "behavioral pattern recognition",
+        "ai behavioral analysis",
+        "teen anxiety monitoring",
+        "predictive mental health"
+      ],
+      "volume_estimate": 4000,
+      "reasoning": "Competitors cover only 8/24 possible keyword combinations"
+    },
+    {
+      "category": "crisis_intervention",
+      "opportunity_score": 0.4444444444444444,
+      "keywords": [
+        "emergency teen help",
+        "teen crisis monitoring",
+        "teen mental health crisis",
+        "urgent behavioral alert",
+        "crisis parent support",
+        "teen suicide prevention app"
+      ],
+      "volume_estimate": 3000,
+      "reasoning": "Competitors cover only 10/18 possible keyword combinations"
+    },
+    {
+      "category": "clinical_authority",
+      "opportunity_score": 0.33333333333333337,
+      "keywords": [
+        "cdc screen time app",
+        "psychologist recommended monitoring",
+        "aap guidelines tracker",
+        "pediatrician approved app",
+        "clinical mental health app",
+        "evidence based monitoring"
+      ],
+      "volume_estimate": 3000,
+      "reasoning": "Competitors cover only 12/18 possible keyword combinations"
+    }
+  ],
+  "conquest_campaigns": [
+    {
+      "target": "bark",
+      "keywords": [
+        "bark alternatives",
+        "bark vs",
+        "is bark worth it",
+        "bark reviews",
+        "better than bark",
+        "bark competitor",
+        "bark app alternative"
+      ],
+      "volume": 3400,
+      "message": "Aura - Beyond Alerts to AI Insights. Bark catches problems, Aura prevents them.",
+      "angle": "behavioral_health_vs_safety_alerts"
+    },
+    {
+      "target": "qustodio",
+      "keywords": [
+        "qustodio alternatives",
+        "qustodio vs",
+        "qustodio reviews",
+        "better than qustodio",
+        "qustodio competitor"
+      ],
+      "volume": 2100,
+      "message": "Aura - AI-Powered vs Manual Monitoring. Smart behavioral insights, not just screen limits.",
+      "angle": "ai_intelligence_vs_manual_controls"
+    },
+    {
+      "target": "life360",
+      "keywords": [
+        "life360 alternatives",
+        "life360 vs",
+        "life360 reviews",
+        "better than life360",
+        "life360 competitor"
+      ],
+      "volume": 5600,
+      "message": "Aura - Monitor Digital AND Physical Wellness. Complete family protection beyond location.",
+      "angle": "complete_wellness_vs_location_only"
+    }
+  ],
+  "high_value_keywords": [
+    {
+      "keyword": "teen depression monitoring",
+      "volume": 1200,
+      "competition": 0.2,
+      "opportunity_score": 0.9,
+      "category": "behavioral_health",
+      "competitor_bidding": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      },
+      "suggested_bid": 5.5
+    },
+    {
+      "keyword": "digital wellness ai",
+      "volume": 890,
+      "competition": 0.1,
+      "opportunity_score": 0.95,
+      "category": "ai_powered",
+      "competitor_bidding": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      },
+      "suggested_bid": 3.25
+    },
+    {
+      "keyword": "mood tracking app",
+      "volume": 2400,
+      "competition": 0.3,
+      "opportunity_score": 0.85,
+      "category": "behavioral_health",
+      "competitor_bidding": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      },
+      "suggested_bid": 4.75
+    },
+    {
+      "keyword": "emergency teen help",
+      "volume": 780,
+      "competition": 0.4,
+      "opportunity_score": 0.8,
+      "category": "crisis_intervention",
+      "competitor_bidding": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      },
+      "suggested_bid": 8.5
+    },
+    {
+      "keyword": "cdc screen time app",
+      "volume": 120,
+      "competition": 0.05,
+      "opportunity_score": 0.98,
+      "category": "clinical_authority",
+      "competitor_bidding": {
+        "bark": false,
+        "qustodio": false,
+        "life360": false
+      },
+      "suggested_bid": 2.0
+    }
+  ],
+  "recommendations": {
+    "immediate_actions": [
+      {
+        "priority": "HIGH",
+        "action": "Launch Behavioral Health Campaign",
+        "keywords": [
+          "teen depression monitoring",
+          "mood tracking app",
+          "mental health early warning"
+        ],
+        "rationale": "Zero competitor coverage, high parent concern",
+        "budget": "$8,000/month"
+      },
+      {
+        "priority": "HIGH",
+        "action": "Target Crisis Keywords",
+        "keywords": [
+          "emergency teen help",
+          "teen crisis monitoring",
+          "urgent behavioral alert"
+        ],
+        "rationale": "Highest conversion rates, immediate need",
+        "budget": "$5,000/month"
+      },
+      {
+        "priority": "MEDIUM",
+        "action": "Launch Conquest Campaigns",
+        "keywords": [
+          "bark alternatives",
+          "qustodio vs",
+          "life360 reviews"
+        ],
+        "rationale": "Steal competitor traffic with superior positioning",
+        "budget": "$6,000/month"
+      }
+    ],
+    "positioning_strategy": {
+      "primary": "The only AI-powered behavioral health monitoring solution",
+      "vs_bark": "Beyond alerts - prevent problems before they happen",
+      "vs_qustodio": "Smart AI insights vs manual screen time limits",
+      "vs_life360": "Complete digital + physical wellness monitoring",
+      "unique_value": "Clinical backing + AI behavioral analysis"
+    },
+    "messaging_framework": {
+      "headline": "AI-Powered Teen Behavioral Health Monitoring",
+      "subhead": "Detect mood changes and mental health risks before they become problems",
+      "value_props": [
+        "Only solution with AI behavioral analysis",
+        "Clinically-backed approach to digital wellness",
+        "Predictive insights, not just reactive alerts",
+        "Complete family mental health monitoring"
+      ],
+      "cta": "Start Free Behavioral Health Assessment"
+    }
+  }
+}

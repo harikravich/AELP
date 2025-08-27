@@ -1,0 +1,791 @@
+openapi: 3.0.3
+info:
+  title: GAELP Agent API
+  description: API for managing ad campaign optimization agents
+  version: 1.0.0
+  contact:
+    name: GAELP Platform Team
+    email: api@gaelp.dev
+
+servers:
+  - url: https://api.gaelp.dev/v1/agents
+    description: Production server
+  - url: https://staging-api.gaelp.dev/v1/agents
+    description: Staging server
+
+security:
+  - apiKey: []
+  - bearerAuth: []
+
+paths:
+  /:
+    post:
+      summary: Register a new agent
+      description: Create and register a new ad campaign optimization agent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                agent_name:
+                  type: string
+                  example: "DQN_AdOptimizer_v1"
+                agent_type:
+                  type: string
+                  enum: [dqn, ppo, sac, a3c, genetic, bayesian]
+                  example: "dqn"
+                model_config:
+                  type: object
+                  properties:
+                    hidden_layers:
+                      type: array
+                      items:
+                        type: integer
+                      example: [256, 128, 64]
+                    learning_rate:
+                      type: number
+                      format: float
+                      example: 0.001
+                    discount_factor:
+                      type: number
+                      format: float
+                      example: 0.95
+                    exploration_strategy:
+                      type: string
+                      enum: [epsilon_greedy, ucb, thompson]
+                      example: "epsilon_greedy"
+                specialization:
+                  type: object
+                  properties:
+                    campaign_types:
+                      type: array
+                      items:
+                        type: string
+                        enum: [awareness, conversion, retention, acquisition]
+                      example: ["conversion", "acquisition"]
+                    verticals:
+                      type: array
+                      items:
+                        type: string
+                      example: ["e-commerce", "saas", "healthcare"]
+                    budget_ranges:
+                      type: array
+                      items:
+                        type: string
+                        enum: [micro, small, medium, large, enterprise]
+                      example: ["small", "medium"]
+              required:
+                - agent_name
+                - agent_type
+                - model_config
+      responses:
+        '201':
+          description: Agent registered successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  agent_id:
+                    type: string
+                    format: uuid
+                    example: "agent_123e4567-e89b-12d3-a456-426614174000"
+                  status:
+                    type: string
+                    enum: [registered, training, ready, error]
+                    example: "registered"
+                  model_endpoint:
+                    type: string
+                    format: uri
+                    example: "https://api.gaelp.dev/v1/agents/agent_123e4567/predict"
+                  created_at:
+                    type: string
+                    format: date-time
+
+  /{agent_id}/select-campaign:
+    post:
+      summary: Get campaign selection from agent
+      description: Request agent to select optimal campaign configuration based on market context
+      parameters:
+        - name: agent_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                market_context:
+                  type: object
+                  properties:
+                    product_info:
+                      type: object
+                      properties:
+                        category:
+                          type: string
+                          example: "fitness_tracker"
+                        price_point:
+                          type: string
+                          enum: [budget, mid, premium, luxury]
+                          example: "mid"
+                        key_features:
+                          type: array
+                          items:
+                            type: string
+                          example: ["heart_rate", "gps", "water_resistant"]
+                        brand_sentiment:
+                          type: number
+                          format: float
+                          minimum: -1
+                          maximum: 1
+                          example: 0.6
+                    market_conditions:
+                      type: object
+                      properties:
+                        competition_intensity:
+                          type: number
+                          format: float
+                          minimum: 0
+                          maximum: 1
+                          example: 0.7
+                        market_saturation:
+                          type: number
+                          format: float
+                          example: 0.4
+                        seasonal_factor:
+                          type: number
+                          format: float
+                          example: 1.2
+                        trend_momentum:
+                          type: number
+                          format: float
+                          example: 0.8
+                    target_metrics:
+                      type: object
+                      properties:
+                        primary_objective:
+                          type: string
+                          enum: [awareness, clicks, conversions, revenue, retention]
+                          example: "conversions"
+                        target_cpa:
+                          type: number
+                          format: float
+                          example: 25.0
+                        target_roas:
+                          type: number
+                          format: float
+                          example: 4.0
+                        min_conversion_rate:
+                          type: number
+                          format: float
+                          example: 0.02
+                    constraints:
+                      type: object
+                      properties:
+                        max_daily_budget:
+                          type: number
+                          format: float
+                          example: 500.0
+                        excluded_demographics:
+                          type: array
+                          items:
+                            type: string
+                        brand_safety_level:
+                          type: string
+                          enum: [strict, moderate, permissive]
+                          example: "moderate"
+              required:
+                - market_context
+      responses:
+        '200':
+          description: Campaign configuration generated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  campaign_config:
+                    type: object
+                    properties:
+                      creative_strategy:
+                        type: object
+                        properties:
+                          message_angle:
+                            type: string
+                            example: "problem_solution"
+                          tone:
+                            type: string
+                            enum: [professional, casual, urgent, friendly, authoritative]
+                            example: "friendly"
+                          visual_style:
+                            type: string
+                            enum: [minimal, bold, lifestyle, product_focused]
+                            example: "lifestyle"
+                          cta_strategy:
+                            type: string
+                            enum: [direct, soft, urgency, value]
+                            example: "value"
+                      targeting_strategy:
+                        type: object
+                        properties:
+                          primary_audience:
+                            type: object
+                            properties:
+                              demographics:
+                                type: object
+                              interests:
+                                type: array
+                                items:
+                                  type: string
+                              behaviors:
+                                type: array
+                                items:
+                                  type: string
+                          lookalike_audiences:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                source_type:
+                                  type: string
+                                similarity_percentage:
+                                  type: integer
+                          exclusions:
+                            type: object
+                      budget_strategy:
+                        type: object
+                        properties:
+                          allocation_method:
+                            type: string
+                            enum: [even, performance_based, front_loaded, back_loaded]
+                            example: "performance_based"
+                          bid_strategy:
+                            type: string
+                            enum: [target_cpa, target_roas, maximize_clicks, maximize_conversions]
+                            example: "target_cpa"
+                          daily_budget:
+                            type: number
+                            format: float
+                            example: 150.0
+                          max_bid:
+                            type: number
+                            format: float
+                            example: 3.50
+                  confidence_score:
+                    type: number
+                    format: float
+                    minimum: 0
+                    maximum: 1
+                    description: Agent's confidence in the recommendation
+                    example: 0.87
+                  expected_performance:
+                    type: object
+                    properties:
+                      predicted_ctr:
+                        type: number
+                        format: float
+                        example: 0.025
+                      predicted_conversion_rate:
+                        type: number
+                        format: float
+                        example: 0.035
+                      predicted_cpa:
+                        type: number
+                        format: float
+                        example: 22.5
+                      predicted_roas:
+                        type: number
+                        format: float
+                        example: 4.2
+
+  /{agent_id}/update-policy:
+    post:
+      summary: Update agent policy with performance data
+      description: Update the agent's policy/model with new performance data for continuous learning
+      parameters:
+        - name: agent_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                performance_data:
+                  type: object
+                  properties:
+                    campaign_id:
+                      type: string
+                      example: "campaign_789"
+                    state:
+                      type: object
+                      description: The state that led to the action
+                      properties:
+                        market_context:
+                          type: object
+                        previous_performance:
+                          type: object
+                    action:
+                      type: object
+                      description: The action taken by the agent
+                      properties:
+                        campaign_config:
+                          type: object
+                        creative_choices:
+                          type: object
+                        targeting_decisions:
+                          type: object
+                    reward:
+                      type: number
+                      format: float
+                      description: Reward signal based on performance
+                      example: 0.75
+                    next_state:
+                      type: object
+                      description: The resulting state after action
+                      properties:
+                        market_response:
+                          type: object
+                        performance_metrics:
+                          type: object
+                    terminal:
+                      type: boolean
+                      description: Whether this was the final step
+                      example: false
+                    metadata:
+                      type: object
+                      properties:
+                        timestamp:
+                          type: string
+                          format: date-time
+                        environment_id:
+                          type: string
+                        episode_id:
+                          type: string
+                training_config:
+                  type: object
+                  properties:
+                    batch_size:
+                      type: integer
+                      example: 32
+                    learning_rate:
+                      type: number
+                      format: float
+                      example: 0.001
+                    update_frequency:
+                      type: string
+                      enum: [immediate, batch, episodic]
+                      example: "batch"
+              required:
+                - performance_data
+      responses:
+        '200':
+          description: Policy updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  updated_weights:
+                    type: object
+                    properties:
+                      model_version:
+                        type: string
+                        example: "v1.2.3"
+                      weight_checksum:
+                        type: string
+                        example: "sha256:abc123..."
+                      update_timestamp:
+                        type: string
+                        format: date-time
+                      performance_delta:
+                        type: number
+                        format: float
+                        description: Change in model performance
+                        example: 0.05
+                  training_metrics:
+                    type: object
+                    properties:
+                      loss:
+                        type: number
+                        format: float
+                        example: 0.023
+                      accuracy:
+                        type: number
+                        format: float
+                        example: 0.87
+                      convergence_rate:
+                        type: number
+                        format: float
+                        example: 0.92
+                  next_training_schedule:
+                    type: string
+                    format: date-time
+
+  /{agent_id}/creative-variants:
+    post:
+      summary: Generate creative variants
+      description: Request agent to generate multiple creative variants for A/B testing
+      parameters:
+        - name: agent_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_info:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: "FitTrack Pro"
+                    description:
+                      type: string
+                      example: "Advanced fitness tracker with AI coaching"
+                    key_benefits:
+                      type: array
+                      items:
+                        type: string
+                      example: ["24/7 heart monitoring", "AI workout recommendations", "30-day battery"]
+                    price:
+                      type: number
+                      format: float
+                      example: 199.99
+                    images:
+                      type: array
+                      items:
+                        type: string
+                        format: uri
+                      example: ["https://cdn.example.com/fittrack1.jpg"]
+                target_audience:
+                  type: object
+                  properties:
+                    primary_segment:
+                      type: string
+                      example: "fitness_enthusiasts"
+                    pain_points:
+                      type: array
+                      items:
+                        type: string
+                      example: ["inconsistent workouts", "lack of motivation"]
+                    motivations:
+                      type: array
+                      items:
+                        type: string
+                      example: ["health improvement", "performance tracking"]
+                creative_constraints:
+                  type: object
+                  properties:
+                    max_variants:
+                      type: integer
+                      example: 5
+                    required_elements:
+                      type: array
+                      items:
+                        type: string
+                      example: ["product_image", "price", "cta_button"]
+                    brand_guidelines:
+                      type: object
+                      properties:
+                        colors:
+                          type: array
+                          items:
+                            type: string
+                        fonts:
+                          type: array
+                          items:
+                            type: string
+                        tone:
+                          type: string
+              required:
+                - product_info
+                - target_audience
+      responses:
+        '200':
+          description: Creative variants generated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ad_creatives:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        creative_id:
+                          type: string
+                          example: "creative_001"
+                        variant_name:
+                          type: string
+                          example: "Feature-Focused"
+                        headline:
+                          type: string
+                          example: "Track Every Beat, Achieve Every Goal"
+                        description:
+                          type: string
+                          example: "FitTrack Pro's AI coaching adapts to your fitness level"
+                        call_to_action:
+                          type: string
+                          example: "Start Your Fitness Journey"
+                        visual_elements:
+                          type: object
+                          properties:
+                            primary_image:
+                              type: string
+                              format: uri
+                            background_color:
+                              type: string
+                              example: "#1E40AF"
+                            text_color:
+                              type: string
+                              example: "#FFFFFF"
+                        predicted_performance:
+                          type: object
+                          properties:
+                            estimated_ctr:
+                              type: number
+                              format: float
+                              example: 0.028
+                            audience_fit_score:
+                              type: number
+                              format: float
+                              example: 0.82
+                        testing_priority:
+                          type: integer
+                          minimum: 1
+                          maximum: 10
+                          example: 8
+
+  /{agent_id}/optimize-targeting:
+    post:
+      summary: Optimize targeting parameters
+      description: Request agent to optimize targeting based on audience data and performance
+      parameters:
+        - name: agent_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                audience_data:
+                  type: object
+                  properties:
+                    current_performance:
+                      type: object
+                      properties:
+                        segment_performance:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              segment_id:
+                                type: string
+                              ctr:
+                                type: number
+                                format: float
+                              conversion_rate:
+                                type: number
+                                format: float
+                              cpa:
+                                type: number
+                                format: float
+                              audience_size:
+                                type: integer
+                    available_audiences:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          audience_id:
+                            type: string
+                          demographics:
+                            type: object
+                          interests:
+                            type: array
+                            items:
+                              type: string
+                          estimated_size:
+                            type: integer
+                          competition_level:
+                            type: number
+                            format: float
+                    budget_constraints:
+                      type: object
+                      properties:
+                        remaining_budget:
+                          type: number
+                          format: float
+                        target_cpa:
+                          type: number
+                          format: float
+                        max_audience_size:
+                          type: integer
+              required:
+                - audience_data
+      responses:
+        '200':
+          description: Targeting optimization complete
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  targeting_params:
+                    type: object
+                    properties:
+                      optimized_segments:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            segment_id:
+                              type: string
+                            allocation_percentage:
+                              type: number
+                              format: float
+                            bid_adjustment:
+                              type: number
+                              format: float
+                            expected_performance:
+                              type: object
+                      new_audiences:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            audience_definition:
+                              type: object
+                            predicted_performance:
+                              type: object
+                            test_budget_allocation:
+                              type: number
+                              format: float
+                      exclusions:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            audience_id:
+                              type: string
+                            reason:
+                              type: string
+                  optimization_rationale:
+                    type: object
+                    properties:
+                      key_insights:
+                        type: array
+                        items:
+                          type: string
+                      expected_improvement:
+                        type: object
+                        properties:
+                          cpa_reduction:
+                            type: number
+                            format: float
+                          volume_increase:
+                            type: number
+                            format: float
+                          confidence_level:
+                            type: number
+                            format: float
+
+  /{agent_id}:
+    get:
+      summary: Get agent information
+      description: Retrieve agent details, status, and performance metrics
+      parameters:
+        - name: agent_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Agent information retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  agent_info:
+                    type: object
+                    properties:
+                      agent_id:
+                        type: string
+                      name:
+                        type: string
+                      type:
+                        type: string
+                      status:
+                        type: string
+                        enum: [training, ready, updating, error, maintenance]
+                      version:
+                        type: string
+                      created_at:
+                        type: string
+                        format: date-time
+                      last_updated:
+                        type: string
+                        format: date-time
+                  performance_metrics:
+                    type: object
+                    properties:
+                      total_campaigns:
+                        type: integer
+                      success_rate:
+                        type: number
+                        format: float
+                      average_improvement:
+                        type: number
+                        format: float
+                      specialization_scores:
+                        type: object
+                  model_metadata:
+                    type: object
+                    properties:
+                      parameters_count:
+                        type: integer
+                      training_episodes:
+                        type: integer
+                      last_training_loss:
+                        type: number
+                        format: float
+
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

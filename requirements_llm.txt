@@ -1,0 +1,43 @@
+# LLM Persona Integration Dependencies for GAELP
+
+# Core LLM API clients
+httpx>=0.24.0
+anthropic>=0.3.0
+openai>=1.0.0
+
+# Data handling and validation
+pydantic>=1.10.0
+dataclasses-json>=0.5.9
+
+# Caching and state management
+redis>=4.5.0
+hiredis>=2.2.0
+
+# Monitoring and observability
+google-cloud-monitoring>=3.11.0
+prometheus-client>=0.16.0
+
+# Rate limiting and cost control
+slowapi>=0.1.8
+python-dateutil>=2.8.0
+
+# Configuration and environment
+python-dotenv>=1.0.0
+click>=8.1.0
+
+# Testing and development
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+pytest-mock>=3.10.0
+aiofiles>=23.0.0
+
+# Existing GAELP dependencies (if not already installed)
+google-cloud-bigquery>=3.4.0
+google-cloud-pubsub>=2.18.0
+numpy>=1.21.0
+pandas>=1.5.0
+
+# Optional: For advanced persona modeling
+scikit-learn>=1.1.0
+nltk>=3.8
+textblob>=0.17.0

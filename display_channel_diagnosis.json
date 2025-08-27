@@ -1,0 +1,87 @@
+{
+  "diagnosis_date": "2025-08-23T01:42:37.502683",
+  "current_performance": {
+    "sessions": 150000,
+    "conversions": 15,
+    "cvr": 0.01
+  },
+  "target_performance": {
+    "cvr_target": 1.0,
+    "conversions_target": 1500,
+    "improvement_factor": 100
+  },
+  "critical_issues": [
+    {
+      "issue": "MASSIVE BOT TRAFFIC",
+      "severity": "CRITICAL",
+      "impact": "85% of traffic is non-human",
+      "solution": "Implement fraud detection and bot filtering"
+    },
+    {
+      "issue": "LANDING PAGE FAILURES",
+      "severity": "CRITICAL",
+      "impact": "6 major landing page issues",
+      "solution": "Create display-specific landing pages with behavioral health focus"
+    },
+    {
+      "issue": "TARGETING COMPLETELY WRONG",
+      "severity": "CRITICAL",
+      "impact": "Only 0% relevance to target audience",
+      "solution": "Rebuild targeting for behavioral health parents"
+    },
+    {
+      "issue": "CONVERSION TRACKING BROKEN",
+      "severity": "CRITICAL",
+      "impact": "Missing majority of conversions",
+      "solution": "Fix pixel implementation and attribution"
+    },
+    {
+      "issue": "CREATIVE COMPLETELY IRRELEVANT",
+      "severity": "HIGH",
+      "impact": "Only 0% creative relevance",
+      "solution": "Create behavioral health focused display ads"
+    }
+  ],
+  "implementation_phases": [
+    {
+      "phase": "IMMEDIATE (Week 1)",
+      "actions": [
+        "Implement bot detection and filtering",
+        "Audit and exclude fraudulent placements",
+        "Fix conversion tracking pixels",
+        "Create display-specific landing page"
+      ],
+      "target": "Reduce bot traffic, improve tracking"
+    },
+    {
+      "phase": "TARGETING REBUILD (Week 2)",
+      "actions": [
+        "Create behavioral health parent audiences",
+        "Exclude generic parental control terms",
+        "Add mental health and wellness keywords",
+        "Implement placement exclusions"
+      ],
+      "target": "Attract right audience (parents concerned about teen mental health)"
+    },
+    {
+      "phase": "CREATIVE OVERHAUL (Week 3)",
+      "actions": [
+        "Create behavioral health focused display ads",
+        "Develop crisis/concern messaging",
+        "Add Balance product demonstrations",
+        "Create mobile-optimized responsive ads"
+      ],
+      "target": "Relevant messaging that resonates with concerned parents"
+    },
+    {
+      "phase": "OPTIMIZATION (Week 4+)",
+      "actions": [
+        "A/B test landing page variations",
+        "Refine audience targeting based on conversions",
+        "Optimize bid strategies for quality traffic",
+        "Implement automated placement exclusions"
+      ],
+      "target": "Achieve 1%+ CVR consistently"
+    }
+  ]
+}

@@ -1,0 +1,625 @@
+hariravichandran@thrive-backend:~/AELP$ python3 gaelp_live_dashboard_enhanced.py 
+✅ Patched scipy.stats.dirichlet_multinomial.rvs for edward2 compatibility
+2025-08-23 04:13:21.461355: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2025-08-23 04:13:21.548255: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+
+Failed to import TF-Keras. Please note that TF-Keras is not installed by default when you install TensorFlow Probability. This is so that JAX-only users do not have to install TensorFlow or TF-Keras. To use TensorFlow Probability with TensorFlow, please install the tf-keras or tf-keras-nightly package.
+This can be be done through installing the tensorflow-probability[tf] extra.
+
+
+/home/hariravichandran/.local/lib/python3.10/site-packages/edward2/__init__.py:41: UserWarning: TensorFlow backend for Edward2 is not available.
+  warnings.warn("TensorFlow backend for Edward2 is not available.")
+✅ Patched edward2.traceable for compatibility
+✅ AuctionGym integration loaded - NO SIMPLIFIED MECHANICS!
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+INFO:dynamic_discovery:Loaded discoveries from cache: 4381 segments, 2 devices, 0 channels
+✅ PROPER RL Agent initialized - NO BANDITS!
+✅ CompetitiveIntelligence module loaded with sklearn ML
+INFO:competitive_intelligence:CompetitiveIntelligence initialized with sklearn ML models
+============================================================
+GAELP ENHANCED DASHBOARD - ALL 19 COMPONENTS ACTIVE
+============================================================
+Components:
+ 1. ✅ RL_AGENT (Q-learning + PPO)
+ 2. ✅ RECSIM (User simulation)
+ 3. ✅ AUCTIONGYM (Real auctions)
+ 4. ✅ MULTI_CHANNEL (Google/FB/Bing)
+ 5. ✅ CONVERSION_LAG (Survival analysis)
+ 6. ✅ COMPETITIVE_INTEL (ML analysis)
+ 7. ✅ CREATIVE_OPTIMIZATION
+ 8. ✅ DELAYED_REWARDS
+ 9. ✅ SAFETY_SYSTEM
+10. ✅ IMPORTANCE_SAMPLING
+11. ✅ MODEL_VERSIONING
+12. ✅ MONTE_CARLO
+13. ✅ JOURNEY_DATABASE
+14. ✅ TEMPORAL_EFFECTS
+15. ✅ ATTRIBUTION
+16. ✅ BUDGET_PACING
+17. ✅ IDENTITY_RESOLUTION
+18. ✅ CRITEO_MODEL
+19. ✅ JOURNEY_TIMEOUT
+============================================================
+Starting server at http://localhost:5000
+============================================================
+ * Serving Flask app 'gaelp_live_dashboard_enhanced'
+ * Debug mode: on
+INFO:werkzeug:WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.128.0.2:5000
+INFO:werkzeug:Press CTRL+C to quit
+INFO:werkzeug: * Restarting with watchdog (inotify)
+✅ Patched scipy.stats.dirichlet_multinomial.rvs for edward2 compatibility
+
+
+Failed to import TF-Keras. Please note that TF-Keras is not installed by default when you install TensorFlow Probability. This is so that JAX-only users do not have to install TensorFlow or TF-Keras. To use TensorFlow Probability with TensorFlow, please install the tf-keras or tf-keras-nightly package.
+This can be be done through installing the tensorflow-probability[tf] extra.
+
+
+/home/hariravichandran/.local/lib/python3.10/site-packages/edward2/__init__.py:41: UserWarning: TensorFlow backend for Edward2 is not available.
+  warnings.warn("TensorFlow backend for Edward2 is not available.")
+✅ Patched edward2.traceable for compatibility
+✅ AuctionGym integration loaded - NO SIMPLIFIED MECHANICS!
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+INFO:dynamic_discovery:Loaded discoveries from cache: 4381 segments, 2 devices, 0 channels
+✅ PROPER RL Agent initialized - NO BANDITS!
+✅ CompetitiveIntelligence module loaded with sklearn ML
+INFO:competitive_intelligence:CompetitiveIntelligence initialized with sklearn ML models
+============================================================
+GAELP ENHANCED DASHBOARD - ALL 19 COMPONENTS ACTIVE
+============================================================
+Components:
+ 1. ✅ RL_AGENT (Q-learning + PPO)
+ 2. ✅ RECSIM (User simulation)
+ 3. ✅ AUCTIONGYM (Real auctions)
+ 4. ✅ MULTI_CHANNEL (Google/FB/Bing)
+ 5. ✅ CONVERSION_LAG (Survival analysis)
+ 6. ✅ COMPETITIVE_INTEL (ML analysis)
+ 7. ✅ CREATIVE_OPTIMIZATION
+ 8. ✅ DELAYED_REWARDS
+ 9. ✅ SAFETY_SYSTEM
+10. ✅ IMPORTANCE_SAMPLING
+11. ✅ MODEL_VERSIONING
+12. ✅ MONTE_CARLO
+13. ✅ JOURNEY_DATABASE
+14. ✅ TEMPORAL_EFFECTS
+15. ✅ ATTRIBUTION
+16. ✅ BUDGET_PACING
+17. ✅ IDENTITY_RESOLUTION
+18. ✅ CRITEO_MODEL
+19. ✅ JOURNEY_TIMEOUT
+============================================================
+Starting server at http://localhost:5000
+============================================================
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 114-124-658
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:44] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:44] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:44] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:44] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:44] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:44] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:44] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:44] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:44] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:44] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:44] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:44] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:44] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:44] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:45] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:46] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:47] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:48] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:49] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:50] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:51] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:52] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:53] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:54] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:55] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:56] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:57] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:58] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:59] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:13:59] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:00] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:01] "GET /api/status HTTP/1.1" 200 -
+INFO:gaelp_parameter_manager:Loaded GA4 patterns from discovered_patterns.json
+INFO:gaelp_parameter_manager:Processed 0 channel performance records
+INFO:gaelp_parameter_manager:Processed 0 user segments
+INFO:gaelp_parameter_manager:Processed 0 device performance records
+INFO:gaelp_parameter_manager:Processed temporal patterns with 0 hourly patterns
+INFO:gaelp_parameter_manager:✅ ParameterManager initialized with 0 channels, 0 segments, 0 device types
+INFO:gaelp_master_integration:🚀 Initializing GAELP components...
+🚀 Initializing GAELP components...
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:02] "GET /api/status HTTP/1.1" 200 -
+INFO:user_journey_database:BigQuery connection established
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:03] "GET /api/status HTTP/1.1" 200 -
+INFO:persistent_user_database:BigQuery connection established successfully
+INFO:persistent_user_database:Dataset aura-thrive-platform.gaelp_users already exists
+INFO:persistent_user_database:Table persistent_users already exists
+INFO:persistent_user_database:Table journey_sessions already exists
+INFO:persistent_user_database:Table persistent_touchpoints already exists
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:04] "GET /api/status HTTP/1.1" 200 -
+INFO:persistent_user_database:Table competitor_exposures already exists
+INFO:persistent_user_database:All persistent user database tables ensured
+INFO:persistent_user_database:PersistentUserDatabase initialized with dataset: gaelp_users
+INFO:user_journey_database:BigQuery connection established
+INFO:training_orchestrator.delayed_conversion_system:Initialized realistic conversion patterns for 4 segments
+INFO:training_orchestrator.delayed_conversion_system:DelayedConversionSystem initialized with segment-based conversion tracking
+INFO:auction_gym_integration:Initialized empirical bidder: Qustodio with $199.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Bark with $244.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Circle with $229.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Norton with $180.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Competitor5 with $150.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Competitor6 with $200.0 budget
+INFO:auction_gym_integration:AuctionGym initialized with second_price auction, 4 slots
+INFO:auction_gym_integration:Initialized empirical bidder: Qustodio with $199.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Bark with $244.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Circle with $229.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Norton with $180.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Competitor5 with $150.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Competitor6 with $200.0 budget
+INFO:auction_gym_integration:AuctionGym initialized with second_price auction, 5 slots
+✅ GA4DiscoveryEngine initialized with MCP GA4 functions
+INFO:NO_FALLBACKS:✅ MONTE_CARLO_SIMULATOR - strict mode active
+INFO:monte_carlo_simulator:🎲 MonteCarloSimulator initialized for 0 parallel worlds
+INFO:competitor_agents:Initialized Qustodio agent with $99.0 annual budget
+INFO:competitor_agents:Initialized Q-Learning agent Qustodio with aggressive profile
+INFO:competitor_agents:Initialized Bark agent with $144.0 annual budget
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:05] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:06] "GET /api/status HTTP/1.1" 200 -
+INFO:competitor_agents:Initialized Policy Gradient agent Bark with premium profile
+INFO:competitor_agents:Initialized Circle agent with $129.0 annual budget
+INFO:competitor_agents:Initialized Rule-Based agent Circle with defensive profile
+INFO:competitor_agents:Initialized Norton agent with $100.0 annual budget
+INFO:competitor_agents:Initialized Random agent Norton as baseline
+INFO:competitor_agents:Initialized CompetitorAgentManager with 4 agents
+INFO:auction_gym_integration:Initialized empirical bidder: Qustodio with $199.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Bark with $244.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Circle with $229.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Norton with $180.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Competitor5 with $150.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Competitor6 with $200.0 budget
+INFO:auction_gym_integration:AuctionGym initialized with second_price auction, 4 slots
+INFO:training_orchestrator.delayed_reward_system:Initialized conversion lag model: weibull
+WARNING:training_orchestrator.delayed_reward_system:Redis connection failed: Error 111 connecting to localhost:6379. Connection refused.
+INFO:training_orchestrator.delayed_reward_system:Database connection established
+INFO:gaelp_master_integration:Initialized 5 A/B test variants for creative optimization
+INFO:budget_pacer:Budget pacer initialized with advanced pacing algorithms
+INFO:importance_sampler:Updated importance weights: {'crisis_parent': np.float64(4.999950000499995), 'regular_parent': np.float64(0.5555549382722907)}
+INFO:criteo_response_model:Loading Criteo data for model training...
+INFO:criteo_response_model:Training gradient_boosting CTR model...
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:07] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:08] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:09] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:10] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:11] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:12] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:13] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:14] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:15] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:16] "GET /api/status HTTP/1.1" 200 -
+INFO:criteo_response_model:Training complete. AUC: 1.0000
+INFO:criteo_response_model:Criteo CTR model trained successfully
+INFO:gaelp_master_integration:CriteoUserResponseModel initialized with trained CTR data
+INFO:training_orchestrator.journey_timeout:JourneyTimeoutManager initialized with 2-day timeout
+INFO:model_versioning:Connected to existing git repository
+INFO:model_versioning:Loaded metadata: 1 models, 1 experiments
+INFO:model_versioning:Initialized ModelVersioningSystem with models_dir: models
+INFO:dynamic_discovery:Loaded discoveries from cache: 4381 segments, 2 devices, 0 channels
+INFO:training_orchestrator.rl_agent_proper:Initialized PROPER RL Agent with dynamic discovery - NO HARDCODING
+2025-08-23 04:14:16,589 - safety_system - INFO - Safety system initialized with configuration: SafetyConfig(max_bid_absolute=0.5, daily_loss_threshold=50000.0, hourly_loss_threshold=25.0, consecutive_loss_limit=5, minimum_roi_threshold=2.0, roi_lookback_hours=24, max_competitor_spend_ratio=1.5, anomaly_z_score_threshold=3.0, anomaly_lookback_hours=168, emergency_loss_threshold=500.0, emergency_bid_spike_multiplier=10.0, max_concurrent_campaigns=100, max_daily_budget_total=1000.0)
+INFO:safety_system:Safety system initialized with configuration: SafetyConfig(max_bid_absolute=0.5, daily_loss_threshold=50000.0, hourly_loss_threshold=25.0, consecutive_loss_limit=5, minimum_roi_threshold=2.0, roi_lookback_hours=24, max_competitor_spend_ratio=1.5, anomaly_z_score_threshold=3.0, anomaly_lookback_hours=168, emergency_loss_threshold=500.0, emergency_bid_spike_multiplier=10.0, max_concurrent_campaigns=100, max_daily_budget_total=1000.0)
+INFO:gaelp_master_integration:All components initialized successfully
+INFO:gaelp_master_integration:GAELP Master Orchestrator initialized with 12 components
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:16] "POST /api/start HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:17] "GET /api/status HTTP/1.1" 200 -
+INFO:persistent_user_database:Inserted persistent user user_1755922456.591364_1157
+INFO:persistent_user_database:Created new persistent user user_1755922456.591364_1157 for episode None
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+💾 Saved 0 segments, 0 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+ERROR:gaelp_master_integration:Fixed environment step failed: 'DiscoveredPatterns' object has no attribute 'user_patterns'
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:18] "GET /api/status HTTP/1.1" 200 -
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/e9f0c35d-6ab5-40a3-8dee-4718435fa69d?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: e9f0c35d-6ab5-40a3-8dee-4718435fa69d
+
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:19] "GET /api/status HTTP/1.1" 200 -
+INFO:persistent_user_database:Inserted persistent user user_1755922458.703359_9771
+INFO:persistent_user_database:Created new persistent user user_1755922458.703359_9771 for episode None
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+💾 Saved 0 segments, 0 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+ERROR:gaelp_master_integration:Fixed environment step failed: 'DiscoveredPatterns' object has no attribute 'user_patterns'
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:20] "GET /api/status HTTP/1.1" 200 -
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/3691b3a7-7945-473d-9a37-a02b1e545ac4?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: 3691b3a7-7945-473d-9a37-a02b1e545ac4
+
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:21] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:22] "GET /api/status HTTP/1.1" 200 -
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/f8639159-c852-4a42-80c1-e06fc0188753?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: f8639159-c852-4a42-80c1-e06fc0188753
+
+INFO:persistent_user_database:Inserted persistent user user_1755922462.499736_8148
+INFO:persistent_user_database:Created new persistent user user_1755922462.499736_8148 for episode None
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+💾 Saved 0 segments, 0 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+ERROR:gaelp_master_integration:Fixed environment step failed: 'DiscoveredPatterns' object has no attribute 'user_patterns'
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:23] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:24] "GET /api/status HTTP/1.1" 200 -
+INFO:persistent_user_database:Inserted persistent user user_1755922463.350288_1760
+INFO:persistent_user_database:Created new persistent user user_1755922463.350288_1760 for episode None
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+💾 Saved 0 segments, 0 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+ERROR:gaelp_master_integration:Fixed environment step failed: 'DiscoveredPatterns' object has no attribute 'user_patterns'
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:25] "GET /api/status HTTP/1.1" 200 -
+INFO:persistent_user_database:Inserted persistent user user_1755922464.6551_541
+INFO:persistent_user_database:Created new persistent user user_1755922464.6551_541 for episode None
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+💾 Saved 0 segments, 0 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+ERROR:gaelp_master_integration:Fixed environment step failed: 'DiscoveredPatterns' object has no attribute 'user_patterns'
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:26] "GET /api/status HTTP/1.1" 200 -
+INFO:persistent_user_database:Inserted persistent user user_1755922465.74232_636
+INFO:persistent_user_database:Created new persistent user user_1755922465.74232_636 for episode None
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+💾 Saved 0 segments, 0 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+ERROR:gaelp_master_integration:Fixed environment step failed: 'DiscoveredPatterns' object has no attribute 'user_patterns'
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:27] "GET /api/status HTTP/1.1" 200 -
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/06d456ed-6e96-4ced-83e9-1b74b3764abd?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: 06d456ed-6e96-4ced-83e9-1b74b3764abd
+
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:28] "GET /api/status HTTP/1.1" 200 -
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/c445cd15-41ad-48f1-8199-84ed4e856f3b?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: c445cd15-41ad-48f1-8199-84ed4e856f3b
+
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/2c410ebe-d9bd-480a-a206-b5506511ac4f?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: 2c410ebe-d9bd-480a-a206-b5506511ac4f
+
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:29] "GET /api/status HTTP/1.1" 200 -
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/5b77d9f9-6db3-49e1-a470-c7ca86a621ef?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: 5b77d9f9-6db3-49e1-a470-c7ca86a621ef
+
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:30] "GET /api/status HTTP/1.1" 200 -
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/2eda5d49-dde4-4f13-862b-852d3e5fe5b9?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: 2eda5d49-dde4-4f13-862b-852d3e5fe5b9
+
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/909c991c-096f-4ad4-acee-dffede527dab?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: 909c991c-096f-4ad4-acee-dffede527dab
+
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:31] "GET /api/status HTTP/1.1" 200 -
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/44460657-00ad-4047-bfd5-e49ee4c22418?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: 44460657-00ad-4047-bfd5-e49ee4c22418
+
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:32] "GET /api/status HTTP/1.1" 200 -
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/5429be71-178c-443e-b9fe-aea5471df4b9?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: 5429be71-178c-443e-b9fe-aea5471df4b9
+
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/b4e354da-6afe-4155-a431-ff8238e8edf3?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: b4e354da-6afe-4155-a431-ff8238e8edf3
+
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:33] "GET /api/status HTTP/1.1" 200 -
+INFO:persistent_user_database:Inserted persistent user user_1755922473.357179_1975
+INFO:persistent_user_database:Created new persistent user user_1755922473.357179_1975 for episode None
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+💾 Saved 0 segments, 0 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+ERROR:gaelp_master_integration:Fixed environment step failed: 'DiscoveredPatterns' object has no attribute 'user_patterns'
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:34] "GET /api/status HTTP/1.1" 200 -
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/705022ad-87b3-4143-934e-0103c9321beb?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: 705022ad-87b3-4143-934e-0103c9321beb
+
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:35] "GET /api/status HTTP/1.1" 200 -
+INFO:persistent_user_database:Inserted persistent user user_1755922475.103184_2367
+INFO:persistent_user_database:Created new persistent user user_1755922475.103184_2367 for episode None
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+💾 Saved 0 segments, 0 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+ERROR:gaelp_master_integration:Fixed environment step failed: 'DiscoveredPatterns' object has no attribute 'user_patterns'
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:36] "GET /api/status HTTP/1.1" 200 -
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/1b436d76-9d08-437d-bec9-3d4227fe6661?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: 1b436d76-9d08-437d-bec9-3d4227fe6661
+
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:37] "GET /api/status HTTP/1.1" 200 -
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/c7246ea4-049e-4db1-aadc-d04760d0a4f7?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: c7246ea4-049e-4db1-aadc-d04760d0a4f7
+
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/8e2fc92a-6a67-4c7a-8381-67047d61538a?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: 8e2fc92a-6a67-4c7a-8381-67047d61538a
+
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:38] "GET /api/status HTTP/1.1" 200 -
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/0a8f33ae-6142-4733-97df-984d6d9bf624?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: 0a8f33ae-6142-4733-97df-984d6d9bf624
+
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:39] "GET /api/status HTTP/1.1" 200 -
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/01f54b2c-47ce-44f6-9874-74356f52e72a?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: 01f54b2c-47ce-44f6-9874-74356f52e72a
+
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:40] "GET /api/status HTTP/1.1" 200 -
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/eb192828-9ead-4be3-97ea-4e0ecf4cb223?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: eb192828-9ead-4be3-97ea-4e0ecf4cb223
+
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/0cea7be3-15e5-44f9-b4e3-3910a139662b?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: 0cea7be3-15e5-44f9-b4e3-3910a139662b
+
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:41] "GET /api/status HTTP/1.1" 200 -
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/17c609e2-7fd3-46bd-89ca-1eb80fa16dd4?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: 17c609e2-7fd3-46bd-89ca-1eb80fa16dd4
+
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:42] "GET /api/status HTTP/1.1" 200 -
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/8950096b-25ae-4875-b2a8-199b58b38cf5?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: 8950096b-25ae-4875-b2a8-199b58b38cf5
+
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:43] "GET /api/status HTTP/1.1" 200 -
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/3d1b41b9-4263-4699-a1cc-e8b61102cdff?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: 3d1b41b9-4263-4699-a1cc-e8b61102cdff
+
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:44] "GET /api/status HTTP/1.1" 200 -
+INFO:persistent_user_database:Inserted persistent user user_1755922483.870202_8479
+INFO:persistent_user_database:Created new persistent user user_1755922483.870202_8479 for episode None
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+💾 Saved 0 segments, 0 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+ERROR:gaelp_master_integration:Fixed environment step failed: 'DiscoveredPatterns' object has no attribute 'user_patterns'
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:45] "GET /api/status HTTP/1.1" 200 -
+INFO:persistent_user_database:Inserted persistent user user_1755922484.809222_6361
+INFO:persistent_user_database:Created new persistent user user_1755922484.809222_6361 for episode None
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+💾 Saved 0 segments, 0 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+ERROR:gaelp_master_integration:Fixed environment step failed: 'DiscoveredPatterns' object has no attribute 'user_patterns'
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/fe5cd26c-8ec6-4bac-b31f-286960a0b765?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: fe5cd26c-8ec6-4bac-b31f-286960a0b765
+
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:46] "GET /api/status HTTP/1.1" 200 -
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/481c89f0-6f74-4a1e-8fca-ee91948fbd7c?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: 481c89f0-6f74-4a1e-8fca-ee91948fbd7c
+
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:47] "GET /api/status HTTP/1.1" 200 -
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/913ea661-5f18-4d26-b74e-3f795b8b00b2?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: 913ea661-5f18-4d26-b74e-3f795b8b00b2
+
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:48] "GET /api/status HTTP/1.1" 200 -
+INFO:persistent_user_database:Inserted persistent user user_1755922487.926123_4973
+INFO:persistent_user_database:Created new persistent user user_1755922487.926123_4973 for episode None
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+💾 Saved 0 segments, 0 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+ERROR:gaelp_master_integration:Fixed environment step failed: 'DiscoveredPatterns' object has no attribute 'user_patterns'
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:49] "GET /api/status HTTP/1.1" 200 -
+INFO:persistent_user_database:Inserted persistent user user_1755922488.914915_6630
+INFO:persistent_user_database:Created new persistent user user_1755922488.914915_6630 for episode None
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+💾 Saved 0 segments, 0 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+ERROR:gaelp_master_integration:Fixed environment step failed: 'DiscoveredPatterns' object has no attribute 'user_patterns'
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:50] "GET /api/status HTTP/1.1" 200 -
+INFO:persistent_user_database:Inserted persistent user user_1755922489.846484_5912
+INFO:persistent_user_database:Created new persistent user user_1755922489.846484_5912 for episode None
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+💾 Saved 0 segments, 0 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+ERROR:gaelp_master_integration:Fixed environment step failed: 'DiscoveredPatterns' object has no attribute 'user_patterns'
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/81641aa6-9688-4ba0-b9cd-ceca2bd4c5fe?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: 81641aa6-9688-4ba0-b9cd-ceca2bd4c5fe
+
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:51] "GET /api/status HTTP/1.1" 200 -
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/1cc6a2e6-b42f-4043-880c-b9163ed23ca7?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: 1cc6a2e6-b42f-4043-880c-b9163ed23ca7
+
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:52] "GET /api/status HTTP/1.1" 200 -
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/7f62faf8-6605-4278-8649-b234f0900690?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: 7f62faf8-6605-4278-8649-b234f0900690
+
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:53] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:54] "GET /api/status HTTP/1.1" 200 -
+INFO:persistent_user_database:Inserted persistent user user_1755922493.470837_6869
+INFO:persistent_user_database:Created new persistent user user_1755922493.470837_6869 for episode None
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+💾 Saved 0 segments, 0 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+ERROR:gaelp_master_integration:Fixed environment step failed: 'DiscoveredPatterns' object has no attribute 'user_patterns'
+ERROR:gaelp_master_integration:Fixed environment step failed: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/aura-thrive-platform/queries/8985c864-0178-45ce-8c0e-6ba320cb7c9a?maxResults=0&location=US&prettyPrint=false: Value of type STRING cannot be assigned to journey_history, which has type JSON at [16:31]
+
+Location: US
+Job ID: 8985c864-0178-45ce-8c0e-6ba320cb7c9a
+
+INFO:werkzeug:75.69.239.120 - - [23/Aug/2025 04:14:55] "GET /api/status HTTP/1.1" 200 -

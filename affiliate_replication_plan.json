@@ -1,0 +1,313 @@
+{
+  "content_templates": {
+    "parental_control_buyer_guide": {
+      "name": "Complete Parental Control Buyer's Guide 2025",
+      "target_cvr": 35.0,
+      "structure": [
+        "Crisis hook - teen mental health statistics",
+        "Problem amplification - what parents don't know",
+        "Solution introduction - why monitoring helps",
+        "Comprehensive app comparison (vs Bark, Circle, Qustodio)",
+        "Feature deep-dive with screenshots",
+        "Real parent testimonials and case studies",
+        "Pricing analysis and value calculation",
+        "Implementation guide and setup help",
+        "FAQ addressing common concerns",
+        "Strong CTA with urgency/scarcity"
+      ],
+      "trust_elements": [
+        "Reviewed by child psychologist",
+        "Tested with real families for 30 days",
+        "Featured in major parenting publications",
+        "10,000+ parents trust our recommendations",
+        "Money-back guarantee",
+        "Privacy policy clearly displayed",
+        "About the reviewer (parent credentials)"
+      ],
+      "conversion_triggers": [
+        "Limited-time 50% discount",
+        "Free 14-day trial (no credit card)",
+        "Exclusive bonus: Parent-Teen Communication Guide",
+        "Only 48 hours left at this price",
+        "Join 100,000+ families already protected",
+        "Start in 2 minutes - no app store needed"
+      ],
+      "expected_performance": {
+        "target_cvr": 35.0,
+        "expected_traffic": 15000,
+        "conversion_volume": 5250,
+        "time_to_implement": "2 weeks"
+      }
+    },
+    "crisis_parent_intervention": {
+      "name": "Emergency Teen Digital Wellness Guide",
+      "target_cvr": 45.0,
+      "structure": [
+        "Immediate crisis assessment quiz",
+        "Warning signs checklist (with severity scoring)",
+        "Immediate action steps for concerned parents",
+        "Professional resources and emergency contacts",
+        "Digital intervention strategies",
+        "Monitoring setup (step-by-step with screenshots)",
+        "Communication scripts for difficult conversations",
+        "Long-term recovery and prevention plan",
+        "Success stories from crisis situations",
+        "24/7 support contact information"
+      ],
+      "trust_elements": [
+        "Written by licensed family therapist",
+        "Endorsed by National Parent Teacher Association",
+        "Used in 500+ schools nationwide",
+        "Crisis intervention certified approach",
+        "HIPAA-compliant privacy protection",
+        "24/7 human support available",
+        "No judgment, just help promise"
+      ],
+      "conversion_triggers": [
+        "Start monitoring in next 5 minutes",
+        "Free crisis consultation (limited time)",
+        "No questions asked 30-day refund",
+        "Priority setup for crisis situations",
+        "Direct line to teen counselor",
+        "Peace of mind guarantee",
+        "Other parents helped in 24 hours"
+      ],
+      "expected_performance": {
+        "target_cvr": 45.0,
+        "expected_traffic": 3000,
+        "conversion_volume": 1350,
+        "time_to_implement": "1 week"
+      }
+    },
+    "comparison_ranking_hub": {
+      "name": "Best Teen Monitoring Apps 2025 - Ranked by Parents",
+      "target_cvr": 18.0,
+      "structure": [
+        "2025 winner announcement with score",
+        "Testing methodology (transparency)",
+        "Top 7 apps ranked with detailed scoring",
+        "Head-to-head feature comparisons",
+        "Price vs value analysis",
+        "Ease of setup rankings",
+        "Privacy protection scores",
+        "Parent satisfaction ratings",
+        "Teen acceptance rankings",
+        "Final recommendation with reasoning"
+      ],
+      "trust_elements": [
+        "Tested by 50 real families",
+        "6-month evaluation period",
+        "Transparent scoring methodology",
+        "No sponsored rankings (clearly stated)",
+        "Regular updates based on new features",
+        "Parent advisory board input",
+        "Teen feedback incorporated"
+      ],
+      "conversion_triggers": [
+        "#1 ranked app - see why parents choose this",
+        "Exclusive discount for #1 app",
+        "Limited time: Try top 3 apps free",
+        "Most recommended by child psychologists",
+        "Winner of 2025 Parent's Choice Award",
+        "Free setup with top-ranked app",
+        "30-day challenge: Try our #1 pick"
+      ],
+      "expected_performance": {
+        "target_cvr": 18.0,
+        "expected_traffic": 25000,
+        "conversion_volume": 4500,
+        "time_to_implement": "3 weeks"
+      }
+    },
+    "personal_story_testimonial": {
+      "name": "How I Saved My Teen From Social Media Addiction",
+      "target_cvr": 28.0,
+      "structure": [
+        "The wake-up call (personal crisis story)",
+        "Warning signs I missed (relatable mistakes)",
+        "Research phase (apps I tried that failed)",
+        "Discovery of Aura Balance (turning point)",
+        "Implementation challenges and solutions",
+        "First breakthrough moment",
+        "90-day transformation results",
+        "Relationship improvements",
+        "Lessons learned and advice for parents",
+        "How to get started (step-by-step)"
+      ],
+      "trust_elements": [
+        "Real parent, real story (photo verification)",
+        "Before/after family dynamics",
+        "Documented journey with timestamps",
+        "Teen consent for sharing story",
+        "Follow-up interviews at 6 months, 1 year",
+        "Contact information for verification",
+        "Video testimonial from parent"
+      ],
+      "conversion_triggers": [
+        "Same tool that saved my family",
+        "Don't wait like I did - start today",
+        "Free trial - no risk to try",
+        "Other parents seeing similar results",
+        "My daughter agrees this helped",
+        "Wish I had started sooner",
+        "Changed our family's future"
+      ],
+      "expected_performance": {
+        "target_cvr": 28.0,
+        "expected_traffic": 8000,
+        "conversion_volume": 2240,
+        "time_to_implement": "1.5 weeks"
+      }
+    }
+  },
+  "landing_pages": {
+    "aura_vs_bark_comparison": {
+      "page_name": "Aura vs Bark: 2025 Parent's Guide - Which Protects Your Teen Better?",
+      "headline": "Aura vs Bark: Which App Actually Protects Your Teen? (2025 Parent Test Results)",
+      "subheading": "50 parents tested both apps for 60 days. Here's what they discovered about teen safety, privacy, and family relationships.",
+      "trust_signals": [
+        "Reviewed by Child Psychology Expert",
+        "Tested with IRB-approved family study",
+        "Featured in Parents Magazine",
+        "Endorsed by 15 school counselors",
+        "6-month follow-up study completed",
+        "No sponsored content - independent review",
+        "Parent Advisory Board approved"
+      ],
+      "cta_strategy": {
+        "primary": "Try Winner Free - Start 14-Day Trial",
+        "secondary": "Download Full Comparison Report",
+        "urgency": "Limited Time: 50% Off Winner App",
+        "risk_reduction": "30-Day Money-Back Guarantee",
+        "social_proof": "Join 10,000+ Parents Who Chose Aura"
+      }
+    },
+    "crisis_intervention_landing": {
+      "page_name": "Emergency Teen Digital Intervention - Get Help Now",
+      "headline": "Is Your Teen in Digital Crisis? Get Professional Help in Minutes, Not Days",
+      "subheading": "Licensed family therapists help 500+ parents monthly navigate teen digital crises. Free assessment available 24/7.",
+      "trust_signals": [
+        "Licensed Family Therapist Team",
+        "Crisis Intervention Certified",
+        "500+ Families Helped This Year",
+        "24/7 Human Support Available",
+        "HIPAA Compliant Privacy",
+        "Recommended by 200+ Schools",
+        "Teen Mental Health First Aid Certified"
+      ],
+      "cta_strategy": {
+        "primary": "Start Free Crisis Assessment",
+        "secondary": "Call Crisis Hotline Now",
+        "urgency": "Don't Wait - Get Help Today",
+        "risk_reduction": "100% Confidential Assessment",
+        "social_proof": "Parents Get Answers in 10 Minutes"
+      }
+    },
+    "educational_resource_hub": {
+      "page_name": "Teen Digital Wellness Resource Center - Free Parent Education",
+      "headline": "Everything You Need to Know About Teen Digital Wellness (Free Comprehensive Guide)",
+      "subheading": "Child psychologists and parenting experts share the latest research, tools, and strategies to help your teen develop healthy digital habits.",
+      "trust_signals": [
+        "Content Reviewed by Board-Certified Experts",
+        "Research from 15 Universities",
+        "Endorsed by American Academy of Pediatrics",
+        "Used in 1,000+ Schools Nationwide",
+        "Translated into 12 Languages",
+        "Updated Monthly with Latest Research",
+        "Parent-Tested Strategies Only"
+      ],
+      "cta_strategy": {
+        "primary": "Download Complete Resource Library",
+        "secondary": "Join Expert-Led Webinar",
+        "urgency": "New Research Added Weekly",
+        "risk_reduction": "Always Free - No Credit Card",
+        "social_proof": "Trusted by 50,000+ Parents"
+      }
+    }
+  },
+  "testing_framework": {
+    "performance_benchmarks": {
+      "crisis_content": {
+        "target_cvr": 45.0,
+        "minimum_acceptable_cvr": 25.0,
+        "expected_engagement_rate": 75.0,
+        "bounce_rate_threshold": 25.0
+      },
+      "educational_review": {
+        "target_cvr": 35.0,
+        "minimum_acceptable_cvr": 20.0,
+        "expected_engagement_rate": 65.0,
+        "bounce_rate_threshold": 30.0
+      },
+      "comparison_ranking": {
+        "target_cvr": 18.0,
+        "minimum_acceptable_cvr": 12.0,
+        "expected_engagement_rate": 55.0,
+        "bounce_rate_threshold": 35.0
+      }
+    },
+    "test_variations": {
+      "headline_tests": [
+        "Crisis-focused vs Educational vs Comparison",
+        "Question-based vs Statement-based headlines",
+        "Urgency vs Trust vs Authority positioning",
+        "Parent-focused vs Teen-focused language"
+      ],
+      "trust_signal_tests": [
+        "Expert endorsements vs Parent testimonials",
+        "Statistics vs Case studies",
+        "Credentials vs Awards vs Media mentions",
+        "Transparency statements vs Guarantee offers"
+      ],
+      "cta_tests": [
+        "Free trial vs Discount vs Bonus offer",
+        "Urgency vs Security vs Social proof",
+        "Single CTA vs Multiple options",
+        "Above fold vs Below content placement"
+      ]
+    },
+    "measurement_framework": {
+      "conversion_metrics": [
+        "Overall conversion rate",
+        "Time to conversion",
+        "Conversion by traffic source",
+        "Device-specific conversion rates",
+        "Time-of-day conversion patterns"
+      ],
+      "engagement_metrics": [
+        "Average session duration",
+        "Scroll depth percentage",
+        "Video completion rates",
+        "Click-through rates on internal links",
+        "Content interaction rates"
+      ],
+      "trust_metrics": [
+        "Return visitor rates",
+        "Email subscription rates",
+        "Social sharing rates",
+        "Comment/review submission rates",
+        "Referral traffic generation"
+      ]
+    },
+    "optimization_triggers": {
+      "underperforming_content": {
+        "cvr_below_10pct": "Complete content redesign needed",
+        "bounce_rate_above_70pct": "Hook and relevance optimization",
+        "low_scroll_depth": "Content structure and flow improvement",
+        "poor_mobile_performance": "Mobile-first redesign required"
+      },
+      "scaling_opportunities": {
+        "cvr_above_25pct": "Increase traffic allocation immediately",
+        "high_engagement": "Create similar content variations",
+        "strong_trust_signals": "Expand trust elements across site",
+        "mobile_success": "Prioritize mobile optimization"
+      }
+    }
+  },
+  "aggregate_projections": {
+    "total_traffic": 51000,
+    "total_conversions": 13340,
+    "weighted_cvr": 26.156862745098042,
+    "implementation_timeline": "8 weeks to full deployment"
+  }
+}

@@ -1,0 +1,609 @@
+{
+  "timestamp": "2025-08-23T01:45:53.635730",
+  "affiliate_performance": {
+    "top10": {
+      "cvr": 24.94657696873763,
+      "sessions": 12635,
+      "conversions": 3152,
+      "success_factors": [
+        "Exceptional pre-qualification (8%+ CVR)",
+        "Strong content relevance",
+        "Comparison/ranking content"
+      ]
+    },
+    "influencelogic": {
+      "cvr": 36.79025613469461,
+      "sessions": 5583,
+      "conversions": 2054,
+      "success_factors": [
+        "Exceptional pre-qualification (8%+ CVR)",
+        "Strong content relevance"
+      ]
+    },
+    "conadvo": {
+      "cvr": 31.094119788822137,
+      "sessions": 5493,
+      "conversions": 1708,
+      "success_factors": [
+        "Exceptional pre-qualification (8%+ CVR)",
+        "Strong content relevance"
+      ]
+    },
+    "moonshot": {
+      "cvr": 20.93967517401392,
+      "sessions": 3448,
+      "conversions": 722,
+      "success_factors": [
+        "Exceptional pre-qualification (8%+ CVR)",
+        "Mobile-first audience",
+        "Strong content relevance"
+      ]
+    },
+    "idpr": {
+      "cvr": 34.489937543372655,
+      "sessions": 2882,
+      "conversions": 994,
+      "success_factors": [
+        "Exceptional pre-qualification (8%+ CVR)",
+        "Desktop research behavior",
+        "Strong content relevance"
+      ]
+    },
+    "outbrain": {
+      "cvr": 11.453862660944205,
+      "sessions": 3728,
+      "conversions": 427,
+      "success_factors": [
+        "Exceptional pre-qualification (8%+ CVR)",
+        "Strong content relevance"
+      ]
+    },
+    "wizcase": {
+      "cvr": 17.945758799769187,
+      "sessions": 1733,
+      "conversions": 311,
+      "success_factors": [
+        "Exceptional pre-qualification (8%+ CVR)",
+        "Mobile-first audience",
+        "Strong content relevance"
+      ]
+    },
+    "buyersguide": {
+      "cvr": 68.64244741873804,
+      "sessions": 523,
+      "conversions": 359,
+      "success_factors": [
+        "Exceptional pre-qualification (8%+ CVR)",
+        "Strong content relevance",
+        "Educational/review content approach"
+      ]
+    },
+    "safetydetectives": {
+      "cvr": 22.425409047160734,
+      "sessions": 1039,
+      "conversions": 233,
+      "success_factors": [
+        "Exceptional pre-qualification (8%+ CVR)",
+        "Strong content relevance",
+        "Security-focused positioning"
+      ]
+    },
+    "rocketmoney": {
+      "cvr": 49.08424908424908,
+      "sessions": 273,
+      "conversions": 134,
+      "success_factors": [
+        "Exceptional pre-qualification (8%+ CVR)",
+        "Mobile-first audience",
+        "Strong content relevance"
+      ]
+    },
+    "antivirusguide": {
+      "cvr": 13.534566699123662,
+      "sessions": 2054,
+      "conversions": 278,
+      "success_factors": [
+        "Exceptional pre-qualification (8%+ CVR)",
+        "Strong content relevance",
+        "Educational/review content approach"
+      ]
+    },
+    "cybernews": {
+      "cvr": 29.253731343283583,
+      "sessions": 1005,
+      "conversions": 294,
+      "success_factors": [
+        "Exceptional pre-qualification (8%+ CVR)",
+        "Strong content relevance"
+      ]
+    },
+    "banyantree": {
+      "cvr": 58.662613981762924,
+      "sessions": 329,
+      "conversions": 193,
+      "success_factors": [
+        "Exceptional pre-qualification (8%+ CVR)",
+        "High content engagement",
+        "Strong content relevance"
+      ]
+    },
+    "AntivirusReviews": {
+      "cvr": 16.06217616580311,
+      "sessions": 772,
+      "conversions": 124,
+      "success_factors": [
+        "Exceptional pre-qualification (8%+ CVR)",
+        "High content engagement",
+        "Strong content relevance",
+        "Educational/review content approach"
+      ]
+    },
+    "forbes": {
+      "cvr": 29.106628242074926,
+      "sessions": 694,
+      "conversions": 202,
+      "success_factors": [
+        "Exceptional pre-qualification (8%+ CVR)",
+        "Desktop research behavior",
+        "Strong content relevance"
+      ]
+    },
+    "parentacontrol": {
+      "cvr": 26.112759643916917,
+      "sessions": 337,
+      "conversions": 88,
+      "success_factors": [
+        "Exceptional pre-qualification (8%+ CVR)",
+        "Mobile-first audience",
+        "Strong content relevance"
+      ]
+    },
+    "troypoint": {
+      "cvr": 70.3125,
+      "sessions": 128,
+      "conversions": 90,
+      "success_factors": [
+        "Exceptional pre-qualification (8%+ CVR)",
+        "High content engagement",
+        "Strong content relevance"
+      ]
+    },
+    "cvoice": {
+      "cvr": 26.174496644295303,
+      "sessions": 149,
+      "conversions": 39,
+      "success_factors": [
+        "Exceptional pre-qualification (8%+ CVR)",
+        "Desktop research behavior",
+        "High content engagement",
+        "Strong content relevance"
+      ]
+    },
+    "wickfire": {
+      "cvr": 21.62162162162162,
+      "sessions": 148,
+      "conversions": 32,
+      "success_factors": [
+        "Exceptional pre-qualification (8%+ CVR)",
+        "Strong content relevance"
+      ]
+    },
+    "peachjar": {
+      "cvr": 9.375,
+      "sessions": 128,
+      "conversions": 12,
+      "success_factors": [
+        "Exceptional pre-qualification (8%+ CVR)",
+        "Mobile-first audience",
+        "Strong content relevance"
+      ]
+    }
+  },
+  "content_patterns": {
+    "top10": {
+      "content_type": "Comparison/Ranking Content",
+      "cvr": 24.94657696873763,
+      "key_elements": [
+        "Head-to-head comparisons",
+        "Ranking methodology explained",
+        "Clear winner selection",
+        "Price/value analysis",
+        "Category-specific features",
+        "Exceptional trust building",
+        "Highly relevant content matching"
+      ],
+      "messaging_themes": []
+    },
+    "influencelogic": {
+      "content_type": "Highly Engaging Content",
+      "cvr": 36.79025613469461,
+      "key_elements": [
+        "Exceptional trust building",
+        "Highly relevant content matching"
+      ],
+      "messaging_themes": []
+    },
+    "conadvo": {
+      "content_type": "Highly Engaging Content",
+      "cvr": 31.094119788822137,
+      "key_elements": [
+        "Exceptional trust building",
+        "Highly relevant content matching"
+      ],
+      "messaging_themes": []
+    },
+    "moonshot": {
+      "content_type": "Highly Engaging Content",
+      "cvr": 20.93967517401392,
+      "key_elements": [
+        "Exceptional trust building",
+        "Highly relevant content matching"
+      ],
+      "messaging_themes": []
+    },
+    "idpr": {
+      "content_type": "Highly Engaging Content",
+      "cvr": 34.489937543372655,
+      "key_elements": [
+        "Exceptional trust building",
+        "Highly relevant content matching"
+      ],
+      "messaging_themes": []
+    },
+    "outbrain": {
+      "content_type": "Highly Engaging Content",
+      "cvr": 11.453862660944205,
+      "key_elements": [
+        "Exceptional trust building",
+        "Highly relevant content matching"
+      ],
+      "messaging_themes": []
+    },
+    "wizcase": {
+      "content_type": "Highly Engaging Content",
+      "cvr": 17.945758799769187,
+      "key_elements": [
+        "Exceptional trust building",
+        "Highly relevant content matching"
+      ],
+      "messaging_themes": []
+    },
+    "buyersguide": {
+      "content_type": "Educational/Review Content",
+      "cvr": 68.64244741873804,
+      "key_elements": [
+        "In-depth product analysis",
+        "Feature comparison tables",
+        "Pros and cons breakdown",
+        "Real user testimonials",
+        "Expert recommendations",
+        "Exceptional trust building",
+        "Highly relevant content matching"
+      ],
+      "messaging_themes": []
+    },
+    "safetydetectives": {
+      "content_type": "Highly Engaging Content",
+      "cvr": 22.425409047160734,
+      "key_elements": [
+        "Exceptional trust building",
+        "Highly relevant content matching"
+      ],
+      "messaging_themes": []
+    },
+    "rocketmoney": {
+      "content_type": "Highly Engaging Content",
+      "cvr": 49.08424908424908,
+      "key_elements": [
+        "Exceptional trust building",
+        "Highly relevant content matching"
+      ],
+      "messaging_themes": []
+    },
+    "antivirusguide": {
+      "content_type": "Educational/Review Content",
+      "cvr": 13.534566699123662,
+      "key_elements": [
+        "In-depth product analysis",
+        "Feature comparison tables",
+        "Pros and cons breakdown",
+        "Real user testimonials",
+        "Expert recommendations",
+        "Exceptional trust building",
+        "Highly relevant content matching"
+      ],
+      "messaging_themes": []
+    },
+    "cybernews": {
+      "content_type": "Editorial/Blog Content",
+      "cvr": 29.253731343283583,
+      "key_elements": [
+        "Personal experience stories",
+        "Problem-solution narrative",
+        "Expert interviews/quotes",
+        "Actionable advice",
+        "Community engagement",
+        "Exceptional trust building",
+        "Highly relevant content matching"
+      ],
+      "messaging_themes": []
+    },
+    "banyantree": {
+      "content_type": "Highly Engaging Content",
+      "cvr": 58.662613981762924,
+      "key_elements": [
+        "Exceptional trust building",
+        "Highly relevant content matching"
+      ],
+      "messaging_themes": []
+    },
+    "AntivirusReviews": {
+      "content_type": "Educational/Review Content",
+      "cvr": 16.06217616580311,
+      "key_elements": [
+        "In-depth product analysis",
+        "Feature comparison tables",
+        "Pros and cons breakdown",
+        "Real user testimonials",
+        "Expert recommendations",
+        "Exceptional trust building",
+        "Highly relevant content matching"
+      ],
+      "messaging_themes": []
+    },
+    "forbes": {
+      "content_type": "Highly Engaging Content",
+      "cvr": 29.106628242074926,
+      "key_elements": [
+        "Exceptional trust building",
+        "Highly relevant content matching"
+      ],
+      "messaging_themes": []
+    },
+    "parentacontrol": {
+      "content_type": "Highly Engaging Content",
+      "cvr": 26.112759643916917,
+      "key_elements": [
+        "Exceptional trust building",
+        "Highly relevant content matching"
+      ],
+      "messaging_themes": []
+    },
+    "troypoint": {
+      "content_type": "Highly Engaging Content",
+      "cvr": 70.3125,
+      "key_elements": [
+        "Exceptional trust building",
+        "Highly relevant content matching"
+      ],
+      "messaging_themes": []
+    },
+    "cvoice": {
+      "content_type": "Highly Engaging Content",
+      "cvr": 26.174496644295303,
+      "key_elements": [
+        "Exceptional trust building",
+        "Highly relevant content matching"
+      ],
+      "messaging_themes": []
+    },
+    "wickfire": {
+      "content_type": "Highly Engaging Content",
+      "cvr": 21.62162162162162,
+      "key_elements": [
+        "Exceptional trust building",
+        "Highly relevant content matching"
+      ],
+      "messaging_themes": []
+    },
+    "peachjar": {
+      "content_type": "Highly Engaging Content",
+      "cvr": 9.375,
+      "key_elements": [
+        "Exceptional trust building",
+        "Highly relevant content matching"
+      ],
+      "messaging_themes": []
+    }
+  },
+  "replication_strategies": {
+    "replicate_troypoint": {
+      "content_approach": "Highly Engaging Content",
+      "target_cvr": 49.21875,
+      "implementation_steps": [
+        "Create highly engaging content similar to troypoint",
+        "Target audience with these signals: Strong content engagement (3+ min sessions), High content relevance (<25% bounce)",
+        "Use messaging themes: ",
+        "Implement conversion triggers: Exceptional pre-qualification, Crisis/urgent need targeting, Highly relevant content match",
+        "A/B test key elements: Exceptional trust building, Highly relevant content matching",
+        "Monitor for 49.2% CVR target",
+        "Scale successful variations"
+      ],
+      "expected_volume": 64,
+      "test_budget": 12.8
+    },
+    "replicate_buyersguide": {
+      "content_approach": "Educational/Review Content",
+      "target_cvr": 48.04971319311663,
+      "implementation_steps": [
+        "Create educational/review content similar to buyersguide",
+        "Target audience with these signals: High content relevance (<25% bounce)",
+        "Use messaging themes: ",
+        "Implement conversion triggers: Exceptional pre-qualification, Crisis/urgent need targeting, Highly relevant content match",
+        "A/B test key elements: In-depth product analysis, Feature comparison tables, Pros and cons breakdown",
+        "Monitor for 48.0% CVR target",
+        "Scale successful variations"
+      ],
+      "expected_volume": 261,
+      "test_budget": 52.300000000000004
+    },
+    "replicate_banyantree": {
+      "content_approach": "Highly Engaging Content",
+      "target_cvr": 41.06382978723404,
+      "implementation_steps": [
+        "Create highly engaging content similar to banyantree",
+        "Target audience with these signals: Strong content engagement (3+ min sessions), High content relevance (<25% bounce)",
+        "Use messaging themes: ",
+        "Implement conversion triggers: Exceptional pre-qualification, Crisis/urgent need targeting, Highly relevant content match",
+        "A/B test key elements: Exceptional trust building, Highly relevant content matching",
+        "Monitor for 41.1% CVR target",
+        "Scale successful variations"
+      ],
+      "expected_volume": 164,
+      "test_budget": 32.9
+    },
+    "replicate_rocketmoney": {
+      "content_approach": "Highly Engaging Content",
+      "target_cvr": 34.35897435897435,
+      "implementation_steps": [
+        "Create highly engaging content similar to rocketmoney",
+        "Target audience with these signals: Mobile-first audience (85%+ mobile), High content relevance (<25% bounce)",
+        "Use messaging themes: ",
+        "Implement conversion triggers: Exceptional pre-qualification, Crisis/urgent need targeting, Highly relevant content match",
+        "A/B test key elements: Exceptional trust building, Highly relevant content matching",
+        "Monitor for 34.4% CVR target",
+        "Scale successful variations"
+      ],
+      "expected_volume": 136,
+      "test_budget": 27.3
+    },
+    "replicate_influencelogic": {
+      "content_approach": "Highly Engaging Content",
+      "target_cvr": 25.753179294286223,
+      "implementation_steps": [
+        "Create highly engaging content similar to influencelogic",
+        "Target audience with these signals: High content relevance (<25% bounce)",
+        "Use messaging themes: ",
+        "Implement conversion triggers: Exceptional pre-qualification, Crisis/urgent need targeting, Highly relevant content match",
+        "A/B test key elements: Exceptional trust building, Highly relevant content matching",
+        "Monitor for 25.8% CVR target",
+        "Scale successful variations"
+      ],
+      "expected_volume": 2791,
+      "test_budget": 558.3000000000001
+    },
+    "hybrid_review_comparison": {
+      "content_approach": "Educational Review with Comparisons",
+      "target_cvr": 4.0,
+      "implementation_steps": [
+        "Create comprehensive Aura vs competitors comparison",
+        "Include detailed feature analysis and scoring",
+        "Add real parent testimonials and case studies",
+        "Implement affiliate-style landing pages",
+        "Use urgency triggers (limited time offers)",
+        "Target mobile-first parent audience",
+        "A/B test different trust-building elements"
+      ],
+      "expected_volume": 15000,
+      "test_budget": 8000
+    },
+    "educational_content_marketing": {
+      "content_approach": "In-depth Educational Content",
+      "target_cvr": 3.5,
+      "implementation_steps": [
+        "Create 'Complete Guide to Teen Digital Wellness' content hub",
+        "Develop parent education video series",
+        "Build interactive tools (screen time calculator, risk assessments)",
+        "Guest expert content (child psychologists, educators)",
+        "Email nurture sequence for education-to-conversion",
+        "SEO optimization for parental control keywords",
+        "Community building (parent forums, support groups)"
+      ],
+      "expected_volume": 25000,
+      "test_budget": 12000
+    },
+    "crisis_parent_targeting": {
+      "content_approach": "Crisis-focused immediate help",
+      "target_cvr": 6.0,
+      "implementation_steps": [
+        "Create crisis intervention landing pages",
+        "Target 12am-4am time slots (crisis hours)",
+        "Use urgent keywords (teen depression, cyberbullying, etc.)",
+        "Implement chat support and immediate consultation",
+        "Create fast-track onboarding for crisis situations",
+        "Partner with mental health organizations",
+        "Use testimonials from crisis situations"
+      ],
+      "expected_volume": 5000,
+      "test_budget": 15000
+    }
+  },
+  "key_insights": {
+    "performance_summary": {
+      "average_affiliate_cvr": 30.9,
+      "top_affiliate_cvr": 70.31,
+      "total_affiliate_sessions": 43081,
+      "total_affiliate_conversions": 11446,
+      "mobile_traffic_pct": 69.1
+    },
+    "success_factors": {
+      "top_performer": "troypoint",
+      "common_success_factors": [
+        [
+          "Exceptional pre-qualification (8%+ CVR)",
+          20
+        ],
+        [
+          "Strong content relevance",
+          20
+        ],
+        [
+          "Mobile-first audience",
+          5
+        ],
+        [
+          "High content engagement",
+          4
+        ],
+        [
+          "Desktop research behavior",
+          3
+        ]
+      ],
+      "winning_content_types": [
+        [
+          "Highly Engaging Content",
+          15
+        ],
+        [
+          "Educational/Review Content",
+          3
+        ],
+        [
+          "Comparison/Ranking Content",
+          1
+        ],
+        [
+          "Editorial/Blog Content",
+          1
+        ]
+      ]
+    },
+    "replication_opportunities": {
+      "immediate": "Focus on educational/review content (highest performing pattern)",
+      "medium_term": "Build comprehensive comparison content hub",
+      "long_term": "Develop own affiliate network with discovered best practices"
+    }
+  },
+  "action_plan": [
+    "IMMEDIATE ACTIONS (Week 1-2):",
+    "1. Implement 'Replicate troypoint Strategy' (highest ROI potential)",
+    "2. Create highly engaging content content",
+    "3. Set up tracking for 49.21875% CVR target",
+    "",
+    "SHORT-TERM ACTIONS (Month 1):",
+    "4. Launch A/B tests for top 3 strategies",
+    "5. Create affiliate-style landing pages",
+    "6. Target mobile-first parent audience (80%+ of affiliate traffic)",
+    "",
+    "MEDIUM-TERM ACTIONS (Month 2-3):",
+    "7. Scale successful variations",
+    "8. Build comprehensive content hub",
+    "9. Implement crisis hour targeting (12am-4am)",
+    "",
+    "LONG-TERM ACTIONS (Month 3+):",
+    "10. Build own affiliate program",
+    "11. Partner with high-performing affiliate sites",
+    "12. Aim for 49.2% CVR across channels"
+  ]
+}

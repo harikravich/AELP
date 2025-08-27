@@ -1,0 +1,44 @@
+{
+  "exclude": [
+    {
+      "url": "suspicious-ads-network.com",
+      "reason": "Bot score: 0.90",
+      "sessions_saved": 45000
+    },
+    {
+      "url": "fake-traffic-source.tk",
+      "reason": "Bot score: 0.90",
+      "sessions_saved": 30000
+    },
+    {
+      "url": "bot-generated-content.ml",
+      "reason": "Bot score: 0.90",
+      "sessions_saved": 25000
+    }
+  ],
+  "monitor": [],
+  "keep": [
+    {
+      "url": "parenting-blog-network.com",
+      "quality_score": 1.2,
+      "sessions": 15000
+    },
+    {
+      "url": "mental-health-resources.org",
+      "quality_score": 1.2,
+      "sessions": 12000
+    },
+    {
+      "url": "family-wellness-magazine.com",
+      "quality_score": 1.2,
+      "sessions": 8000
+    }
+  ],
+  "summary": {
+    "total_analyzed": 6,
+    "to_exclude": 3,
+    "to_monitor": 0,
+    "to_keep": 3,
+    "sessions_filtered": 100000
+  }
+}

@@ -1,0 +1,29 @@
+# GAELP Performance Dashboard Requirements
+# Visualization and dashboard dependencies
+
+# Core dashboard framework
+streamlit==1.29.0
+
+# Interactive plotting
+plotly==5.17.0
+plotly-express==0.4.1
+
+# Data processing
+pandas==2.0.3
+numpy==1.24.3
+
+# Image export support (requires kaleido for plotly image export)
+kaleido==0.2.1
+
+# Enhanced data display
+matplotlib==3.7.2
+seaborn==0.12.2
+
+# Async support for real-time updates
+asyncio-throttle==1.0.2
+
+# File handling and utilities
+pathlib2==2.3.7
+
+# For better performance with large datasets
+pyarrow==13.0.0

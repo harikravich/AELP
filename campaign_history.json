@@ -1,0 +1,451 @@
+[
+  {
+    "id": "campaign_simulation_1",
+    "timestamp": "2025-08-21T04:59:52.296217",
+    "phase": "simulation",
+    "episode": 1,
+    "creative": {
+      "type": "video",
+      "duration": "30 seconds",
+      "script": "30-second product demonstration",
+      "style": "Screen recording with voiceover",
+      "hook": "Watch how Analytics Platform solves data silos in under 2 minutes",
+      "thumbnail": "Eye-catching preview frame",
+      "captions": "Auto-generated with key points highlighted"
+    },
+    "targeting": {
+      "age_range": "25-54",
+      "interests": [
+        "Business",
+        "Technology",
+        "Leadership",
+        "Analytics"
+      ],
+      "behaviors": [
+        "Business decision makers",
+        "Technology early adopters"
+      ],
+      "job_titles": [
+        "Manager",
+        "Director",
+        "VP",
+        "C-Suite"
+      ],
+      "education": "College+",
+      "income": "$75k+",
+      "devices": [
+        "Desktop",
+        "Mobile"
+      ],
+      "locations": "Major business hubs"
+    },
+    "budget_config": {
+      "daily_budget": 70.3565443251133,
+      "bid_strategy": "cpm",
+      "max_cpc": 3.5178272162556654,
+      "optimization_goal": "conversions"
+    },
+    "predicted_performance": {
+      "expected_ctr": 0.042,
+      "expected_conversion_rate": 0.052000000000000005,
+      "expected_cpc": 2.2,
+      "expected_impressions": 1279,
+      "expected_roas": 1.925122879091981
+    }
+  },
+  {
+    "id": "campaign_simulation_2",
+    "timestamp": "2025-08-21T04:59:52.306207",
+    "phase": "simulation",
+    "episode": 2,
+    "creative": {
+      "type": "image",
+      "headline": "Finally, analytics That Actually Works",
+      "body": "Stop struggling with {pain_point}. Our customers say it changed their lives.",
+      "cta": "See Success Stories",
+      "visual_description": "\ud83d\ude0a Happy customer testimonial image",
+      "colors": {
+        "primary": "#7C3AED",
+        "secondary": "#FEF3C7",
+        "accent": "#F59E0B"
+      },
+      "layout": "standard_feed"
+    },
+    "targeting": {
+      "age_range": "18-34",
+      "interests": [
+        "Technology",
+        "Startups",
+        "Self-improvement",
+        "Innovation"
+      ],
+      "behaviors": [
+        "Mobile app users",
+        "Online shoppers",
+        "Early adopters"
+      ],
+      "job_titles": [
+        "Entry level",
+        "Individual contributor",
+        "Freelancer"
+      ],
+      "education": "Some college+",
+      "income": "$30k-75k",
+      "devices": [
+        "Mobile primary"
+      ],
+      "locations": "Urban areas"
+    },
+    "budget_config": {
+      "daily_budget": 44.05283440767005,
+      "bid_strategy": "cpm",
+      "max_cpc": 2.2026417203835025,
+      "optimization_goal": "conversions"
+    },
+    "predicted_performance": {
+      "expected_ctr": 0.034999999999999996,
+      "expected_conversion_rate": 0.027,
+      "expected_cpc": 1.2000000000000002,
+      "expected_impressions": 1468,
+      "expected_roas": 4.349362317030789
+    }
+  },
+  {
+    "id": "campaign_simulation_3",
+    "timestamp": "2025-08-21T04:59:52.315406",
+    "phase": "simulation",
+    "episode": 3,
+    "creative": {
+      "type": "video",
+      "duration": "30 seconds",
+      "script": "30-second product demonstration",
+      "style": "Screen recording with voiceover",
+      "hook": "Watch how Analytics Platform solves data silos in under 2 minutes",
+      "thumbnail": "Eye-catching preview frame",
+      "captions": "Auto-generated with key points highlighted"
+    },
+    "targeting": {
+      "age_range": "25-54",
+      "interests": [
+        "Business",
+        "Technology",
+        "Leadership",
+        "Analytics"
+      ],
+      "behaviors": [
+        "Business decision makers",
+        "Technology early adopters"
+      ],
+      "job_titles": [
+        "Manager",
+        "Director",
+        "VP",
+        "C-Suite"
+      ],
+      "education": "College+",
+      "income": "$75k+",
+      "devices": [
+        "Desktop",
+        "Mobile"
+      ],
+      "locations": "Major business hubs"
+    },
+    "budget_config": {
+      "daily_budget": 67.96218171885081,
+      "bid_strategy": "conversions",
+      "max_cpc": 3.398109085942541,
+      "optimization_goal": "conversions"
+    },
+    "predicted_performance": {
+      "expected_ctr": 0.042,
+      "expected_conversion_rate": 0.052000000000000005,
+      "expected_cpc": 2.2,
+      "expected_impressions": 1235,
+      "expected_roas": 3.298613701150636
+    }
+  },
+  {
+    "id": "campaign_simulation_4",
+    "timestamp": "2025-08-21T04:59:52.324109",
+    "phase": "simulation",
+    "episode": 4,
+    "creative": {
+      "type": "carousel",
+      "cards": [
+        "Problem",
+        "Solution",
+        "Results",
+        "CTA"
+      ],
+      "style": "Transformation journey",
+      "headline": "From chaos to clarity in 30 days",
+      "card_designs": "Consistent branding across cards"
+    },
+    "targeting": {
+      "age_range": "25-54",
+      "interests": [
+        "Business",
+        "Technology",
+        "Leadership",
+        "Analytics"
+      ],
+      "behaviors": [
+        "Business decision makers",
+        "Technology early adopters"
+      ],
+      "job_titles": [
+        "Manager",
+        "Director",
+        "VP",
+        "C-Suite"
+      ],
+      "education": "College+",
+      "income": "$75k+",
+      "devices": [
+        "Desktop",
+        "Mobile"
+      ],
+      "locations": "Major business hubs"
+    },
+    "budget_config": {
+      "daily_budget": 48.57748409837612,
+      "bid_strategy": "cpm",
+      "max_cpc": 2.428874204918806,
+      "optimization_goal": "conversions"
+    },
+    "predicted_performance": {
+      "expected_ctr": 0.036,
+      "expected_conversion_rate": 0.045500000000000006,
+      "expected_cpc": 1.9250000000000003,
+      "expected_impressions": 1009,
+      "expected_roas": 2.4815482477826745
+    }
+  },
+  {
+    "id": "campaign_simulation_5",
+    "timestamp": "2025-08-21T04:59:52.332721",
+    "phase": "simulation",
+    "episode": 5,
+    "creative": {
+      "type": "carousel",
+      "cards": [
+        "Problem",
+        "Solution",
+        "Results",
+        "CTA"
+      ],
+      "style": "Transformation journey",
+      "headline": "From chaos to clarity in 30 days",
+      "card_designs": "Consistent branding across cards"
+    },
+    "targeting": {
+      "age_range": "18-34",
+      "interests": [
+        "Technology",
+        "Startups",
+        "Self-improvement",
+        "Innovation"
+      ],
+      "behaviors": [
+        "Mobile app users",
+        "Online shoppers",
+        "Early adopters"
+      ],
+      "job_titles": [
+        "Entry level",
+        "Individual contributor",
+        "Freelancer"
+      ],
+      "education": "Some college+",
+      "income": "$30k-75k",
+      "devices": [
+        "Mobile primary"
+      ],
+      "locations": "Urban areas"
+    },
+    "budget_config": {
+      "daily_budget": 57.959155123274,
+      "bid_strategy": "cpm",
+      "max_cpc": 2.8979577561637004,
+      "optimization_goal": "conversions"
+    },
+    "predicted_performance": {
+      "expected_ctr": 0.041999999999999996,
+      "expected_conversion_rate": 0.03150000000000001,
+      "expected_cpc": 1.4000000000000001,
+      "expected_impressions": 1655,
+      "expected_roas": 2.1618653270317987
+    }
+  },
+  {
+    "id": "campaign_real_testing_1",
+    "timestamp": "2025-08-21T04:59:52.341589",
+    "phase": "real_testing",
+    "episode": 1,
+    "creative": {
+      "type": "carousel",
+      "cards": [
+        "Feature 1",
+        "Feature 2",
+        "Feature 3",
+        "CTA"
+      ],
+      "style": "Product images with benefits",
+      "headline": "Everything You Need to scale your business",
+      "card_designs": "Consistent branding across cards"
+    },
+    "targeting": {
+      "age_range": "25-54",
+      "interests": [
+        "Business",
+        "Technology",
+        "Leadership",
+        "Analytics"
+      ],
+      "behaviors": [
+        "Business decision makers",
+        "Technology early adopters"
+      ],
+      "job_titles": [
+        "Manager",
+        "Director",
+        "VP",
+        "C-Suite"
+      ],
+      "education": "College+",
+      "income": "$75k+",
+      "devices": [
+        "Desktop",
+        "Mobile"
+      ],
+      "locations": "Major business hubs"
+    },
+    "budget_config": {
+      "daily_budget": 59.88180815101663,
+      "bid_strategy": "conversions",
+      "max_cpc": 2.9940904075508317,
+      "optimization_goal": "conversions"
+    },
+    "predicted_performance": {
+      "expected_ctr": 0.036,
+      "expected_conversion_rate": 0.045500000000000006,
+      "expected_cpc": 1.9250000000000003,
+      "expected_impressions": 1244,
+      "expected_roas": 2.446381070097484
+    }
+  },
+  {
+    "id": "campaign_real_testing_2",
+    "timestamp": "2025-08-21T04:59:52.349954",
+    "phase": "real_testing",
+    "episode": 2,
+    "creative": {
+      "type": "image",
+      "headline": "Limited Time: 39% Off Analytics Platform",
+      "body": "Only {days} days left! Don't miss this exclusive offer.",
+      "cta": "Claim Your Discount",
+      "visual_description": "\u23f0 Countdown timer graphic",
+      "colors": {
+        "primary": "#7C3AED",
+        "secondary": "#FEF3C7",
+        "accent": "#F59E0B"
+      },
+      "layout": "standard_feed"
+    },
+    "targeting": {
+      "age_range": "18-34",
+      "interests": [
+        "Technology",
+        "Startups",
+        "Self-improvement",
+        "Innovation"
+      ],
+      "behaviors": [
+        "Mobile app users",
+        "Online shoppers",
+        "Early adopters"
+      ],
+      "job_titles": [
+        "Entry level",
+        "Individual contributor",
+        "Freelancer"
+      ],
+      "education": "Some college+",
+      "income": "$30k-75k",
+      "devices": [
+        "Mobile primary"
+      ],
+      "locations": "Urban areas"
+    },
+    "budget_config": {
+      "daily_budget": 62.8754436223579,
+      "bid_strategy": "cpc",
+      "max_cpc": 3.143772181117895,
+      "optimization_goal": "conversions"
+    },
+    "predicted_performance": {
+      "expected_ctr": 0.034999999999999996,
+      "expected_conversion_rate": 0.027,
+      "expected_cpc": 1.2000000000000002,
+      "expected_impressions": 2095,
+      "expected_roas": 2.5471610193538687
+    }
+  },
+  {
+    "id": "campaign_real_testing_3",
+    "timestamp": "2025-08-21T04:59:52.359823",
+    "phase": "real_testing",
+    "episode": 3,
+    "creative": {
+      "type": "carousel",
+      "cards": [
+        "Problem",
+        "Solution",
+        "Results",
+        "CTA"
+      ],
+      "style": "Transformation journey",
+      "headline": "From chaos to clarity in 30 days",
+      "card_designs": "Consistent branding across cards"
+    },
+    "targeting": {
+      "age_range": "25-54",
+      "interests": [
+        "Business",
+        "Technology",
+        "Leadership",
+        "Analytics"
+      ],
+      "behaviors": [
+        "Business decision makers",
+        "Technology early adopters"
+      ],
+      "job_titles": [
+        "Manager",
+        "Director",
+        "VP",
+        "C-Suite"
+      ],
+      "education": "College+",
+      "income": "$75k+",
+      "devices": [
+        "Desktop",
+        "Mobile"
+      ],
+      "locations": "Major business hubs"
+    },
+    "budget_config": {
+      "daily_budget": 65.86541661218635,
+      "bid_strategy": "cpc",
+      "max_cpc": 3.293270830609318,
+      "optimization_goal": "conversions"
+    },
+    "predicted_performance": {
+      "expected_ctr": 0.036,
+      "expected_conversion_rate": 0.045500000000000006,
+      "expected_cpc": 1.9250000000000003,
+      "expected_impressions": 1368,
+      "expected_roas": 2.3004088619991565
+    }
+  }
+]
