@@ -549,8 +549,8 @@ class GAELPLiveSystemEnhanced:
                     if step_count > 10:
                         self.component_status['LEARNING_SYSTEM'] = 'training'
                 
-                # Check if episode done (daily budget spent)
-                if result.get('done', False):
+                # Check if episode done (daily budget spent OR every 100 steps)
+                if result.get('done', False) or step_count % 100 == 0:
                     episode += 1
                     self.episode_count = episode  # UPDATE EPISODE COUNT!
                     
@@ -793,6 +793,11 @@ class GAELPLiveSystemEnhanced:
         # Update RL tracking from reward
         self.rl_tracking['q_learning_updates'] += 1
         self.rl_tracking['total_rewards'] += reward
+        
+        # DEBUG: Log rewards occasionally
+        if self.rl_tracking['q_learning_updates'] % 20 == 0:
+            avg_reward = self.rl_tracking['total_rewards'] / max(1, self.rl_tracking['q_learning_updates'])
+            self.log_event(f"🎯 RL Progress: {self.rl_tracking['q_learning_updates']} updates, avg reward: {avg_reward:.4f}", "debug")
         
         # Update learning_metrics for AI insights (from RL agent if available)
         if hasattr(self.master, 'rl_agent'):
