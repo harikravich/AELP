@@ -652,13 +652,18 @@ class GAELPLiveSystemEnhanced:
             total_auctions = metrics.get('total_auctions', self.auction_tracking['total_auctions'])
             
             # Calculate wins based on win rate or direct count
+            won_auctions = 0
             if 'auction_wins' in metrics:
-                self.auction_tracking['won_auctions'] = metrics.get('auction_wins')
+                won_auctions = metrics.get('auction_wins', 0)
             elif 'win_rate' in metrics and total_auctions > 0:
-                self.auction_tracking['won_auctions'] = int(total_auctions * metrics.get('win_rate', 0))
+                won_auctions = int(total_auctions * metrics.get('win_rate', 0))
+            
+            # Ensure won_auctions doesn't exceed total_auctions
+            won_auctions = min(won_auctions, total_auctions)
             
             self.auction_tracking['total_auctions'] = total_auctions
-            self.auction_tracking['lost_auctions'] = total_auctions - self.auction_tracking['won_auctions']
+            self.auction_tracking['won_auctions'] = won_auctions
+            self.auction_tracking['lost_auctions'] = max(0, total_auctions - won_auctions)  # Never negative!
             
             self.win_rate_tracking['auctions_won'] = self.auction_tracking['won_auctions']
             self.win_rate_tracking['auctions_entered'] = self.auction_tracking['total_auctions']
@@ -685,6 +690,11 @@ class GAELPLiveSystemEnhanced:
             # Update spend from budget tracking
             # CRITICAL FIX: Master returns 'total_spend' as STRING, not 'budget_spent'!
             total_spend = metrics.get('total_spend', metrics.get('budget_spent', self.metrics['total_spend']))
+            
+            # DEBUG: Log what we're getting
+            if total_spend != self.metrics['total_spend']:
+                self.log_event(f"💰 Spend update: {total_spend} (type: {type(total_spend).__name__})", "debug")
+            
             # Convert from string if needed (master returns Decimal as string)
             if isinstance(total_spend, str):
                 self.metrics['total_spend'] = float(total_spend)
@@ -1761,36 +1771,47 @@ class GAELPLiveSystemEnhanced:
         return channels
     
     def _format_discovered_clusters(self):
-        """Format discovered patterns from YOUR data"""
+        """Get REAL discovered segments from RL agent, NOT hardcoded"""
         clusters = []
         
-        # These are patterns discovered from YOUR conversion data
-        # Not from tracking users, but from analyzing YOUR metrics
+        # NO HARDCODED SEGMENTS! Only show what we've actually discovered
+        # Segments should only appear after 50+ episodes of learning
         
-        if self.metrics.get('total_impressions', 0) > 0:
-            # Pattern 1: Crisis hours
-            clusters.append({
-                'name': 'Late Night Crisis',
-                'description': 'High CTR/CVR between 10pm-2am on crisis keywords',
-                'engagement_score': 0.85,
-                'conversion_likelihood': 0.45
-            })
+        if self.episode_count < 50:
+            # Haven't learned enough yet
+            return []
+        
+        # Get REAL segments from RL agent's Q-table
+        if hasattr(self.master, 'rl_agent') and hasattr(self.master.rl_agent, 'q_table'):
+            q_table = self.master.rl_agent.q_table
             
-            # Pattern 2: Parent research behavior
-            clusters.append({
-                'name': 'Researching Parents',
-                'description': 'Multiple page views, comparison searches, reviews',
-                'engagement_score': 0.65,
-                'conversion_likelihood': 0.25
-            })
+            # Find segments with significant learning (100+ observations)
+            segment_stats = {}
+            for state_action, q_value in q_table.items():
+                if isinstance(state_action, tuple) and len(state_action) > 1:
+                    # Extract segment from state if available
+                    state = state_action[0] if isinstance(state_action[0], tuple) else (state_action[0],)
+                    # Look for segment-like patterns in Q-values
+                    if q_value > 0.01:  # Positive Q-value means we've learned something works
+                        segment_name = f"discovered_segment_{len(segment_stats) + 1}"
+                        if segment_name not in segment_stats:
+                            segment_stats[segment_name] = {
+                                'observations': 0,
+                                'avg_reward': 0
+                            }
+                        segment_stats[segment_name]['observations'] += 1
+                        segment_stats[segment_name]['avg_reward'] = q_value
             
-            # Pattern 3: Direct intent
-            clusters.append({
-                'name': 'Immediate Need',
-                'description': 'Direct traffic, single session conversion',
-                'engagement_score': 0.95,
-                'conversion_likelihood': 0.75
-            })
+            # Only show segments with 100+ observations
+            for seg_name, stats in segment_stats.items():
+                if stats['observations'] >= 100:
+                    clusters.append({
+                        'name': seg_name.replace('_', ' ').title(),
+                        'description': f"Discovered after {stats['observations']} observations",
+                        'engagement_score': min(0.95, stats['avg_reward'] * 10),
+                        'conversion_likelihood': min(0.75, stats['avg_reward'] * 5)
+                    })
+        
         return clusters
     
     def _get_auction_performance(self):
