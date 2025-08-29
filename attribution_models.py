@@ -15,13 +15,8 @@ from datetime import datetime, timedelta
 from abc import ABC, abstractmethod
 import logging
 
-# Import conversion lag model for dynamic attribution windows
-try:
-    from conversion_lag_model import ConversionLagModel, ConversionJourney
-    CONVERSION_LAG_MODEL_AVAILABLE = True
-except ImportError:
-    CONVERSION_LAG_MODEL_AVAILABLE = False
-    print("Warning: ConversionLagModel not available. Dynamic attribution windows disabled.")
+# Import conversion lag model for dynamic attribution windows - REQUIRED
+from conversion_lag_model import ConversionLagModel, ConversionJourney
 
 logger = logging.getLogger(__name__)
 

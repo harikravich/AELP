@@ -10,36 +10,17 @@ from typing import Dict, Any, List, Tuple
 from dataclasses import dataclass
 import logging
 
-# Import CreativeIntegration for rich ad content
-try:
-    from creative_integration import get_creative_integration, SimulationContext
-    CREATIVE_INTEGRATION_AVAILABLE = True
-except ImportError as e:
-    logging.warning(f"Creative Integration not available: {e}")
-    CREATIVE_INTEGRATION_AVAILABLE = False
+# Import CreativeIntegration for rich ad content - REQUIRED
+from creative_integration import get_creative_integration, SimulationContext
 
-# Import AuctionGym integration
-try:
-    from auction_gym_integration import AuctionGymWrapper, AUCTION_GYM_AVAILABLE
-    AUCTION_INTEGRATION_AVAILABLE = True
-except ImportError as e:
-    logging.warning(f"AuctionGym integration not available: {e}")
-    AUCTION_INTEGRATION_AVAILABLE = False
+# Import AuctionGym integration - REQUIRED
+from auction_gym_integration import AuctionGymWrapper, AUCTION_GYM_AVAILABLE
 
-# Import RecSim-AuctionGym bridge
-try:
-    # Apply edward2 patch before importing RecSim
-    import edward2_patch
-    from recsim_auction_bridge import RecSimAuctionBridge, UserSegment
-    from recsim_user_model import RecSimUserModel
-    RECSIM_BRIDGE_AVAILABLE = True
-    RECSIM_AVAILABLE = True
-except ImportError as e:
-    logging.error(f"RecSim-AuctionGym bridge REQUIRED. No fallbacks. Fix dependency: {e}")
-    RECSIM_BRIDGE_AVAILABLE = False
-    RECSIM_AVAILABLE = False
-    RecSimUserModel = None
-    UserSegment = None
+# Import RecSim-AuctionGym bridge - REQUIRED
+# Apply edward2 patch before importing RecSim
+import edward2_patch
+from recsim_auction_bridge import RecSimAuctionBridge, UserSegment
+from recsim_user_model import RecSimUserModel
 
 logger = logging.getLogger(__name__)
 
@@ -52,16 +33,13 @@ class AdAuction:
         self.max_slots = max_slots
         self.recsim_bridge = recsim_bridge
         
-        # Initialize AuctionGym wrapper if available
-        if AUCTION_INTEGRATION_AVAILABLE:
-            self.auction_gym = AuctionGymWrapper({
-                'competitors': {'count': n_competitors},
-                'num_slots': max_slots
-            })
-            self.use_auction_gym = True
-            logger.info("Using AuctionGym for realistic auction simulation")
-        else:
-            raise RuntimeError("AuctionGym integration is REQUIRED. No fallback auction allowed. Fix dependencies.")
+        # Initialize AuctionGym wrapper - REQUIRED
+        self.auction_gym = AuctionGymWrapper({
+            'competitors': {'count': n_competitors},
+            'num_slots': max_slots
+        })
+        self.use_auction_gym = True
+        logger.info("Using AuctionGym for realistic auction simulation")
         
     def _init_competitors(self):
         """REMOVED - No fallback competitors allowed"""
@@ -224,15 +202,10 @@ class UserBehaviorModel:
         from behavioral_health_persona_factory import BehavioralHealthPersonaFactory
         self.persona_factory = persona_factory if persona_factory else BehavioralHealthPersonaFactory()
         
-        # Use RecSim-AuctionGym bridge if available, otherwise use dynamic discovery
-        if RECSIM_BRIDGE_AVAILABLE:
-            self.recsim_bridge = RecSimAuctionBridge()
-            self.use_recsim_bridge = True
-            logger.info("Using RecSim-AuctionGym bridge for user behavior model")
-        else:
-            self.use_recsim_bridge = False
-            self.user_segments = {}  # Populated dynamically as segments are discovered
-            logger.info("Using dynamic discovery for user behavior model")
+        # Use RecSim-AuctionGym bridge - REQUIRED
+        self.recsim_bridge = RecSimAuctionBridge()
+        self.use_recsim_bridge = True
+        logger.info("Using RecSim-AuctionGym bridge for user behavior model")
         
         self.interaction_count = 0
         self.current_users = {}
@@ -408,11 +381,9 @@ class EnhancedGAELPEnvironment:
     """
     
     def __init__(self, max_budget: float = 10000.0, max_steps: int = 100):
-        # Initialize RecSim-AuctionGym bridge if available
-        self.recsim_bridge = None
-        if RECSIM_BRIDGE_AVAILABLE:
-            self.recsim_bridge = RecSimAuctionBridge()
-            logger.info("Enhanced environment using RecSim-AuctionGym bridge")
+        # Initialize RecSim-AuctionGym bridge - REQUIRED
+        self.recsim_bridge = RecSimAuctionBridge()
+        logger.info("Enhanced environment using RecSim-AuctionGym bridge")
         
         self.auction = AdAuction(n_competitors=10, recsim_bridge=self.recsim_bridge)
         self.user_model = UserBehaviorModel()
@@ -457,7 +428,7 @@ class EnhancedGAELPEnvironment:
         }
         
         # If using RecSim bridge, generate realistic query for this user
-        if self.recsim_bridge and RECSIM_BRIDGE_AVAILABLE:
+        if self.recsim_bridge:
             # Let the bridge generate or retrieve user with realistic behavior
             query_data = self.recsim_bridge.generate_query_from_state(
                 user_id=user_id,
@@ -501,7 +472,7 @@ class EnhancedGAELPEnvironment:
                     results['clicks'] = 1
                     
                     # If using RecSim bridge, get more sophisticated conversion behavior
-                    if self.recsim_bridge and RECSIM_BRIDGE_AVAILABLE and 'user_segment' in auction_result:
+                    if self.recsim_bridge and 'user_segment' in auction_result:
                         # Use segment-specific conversion logic
                         user_segment = auction_result['user_segment']
                         segment_conversion_rates = {
@@ -575,7 +546,7 @@ class EnhancedGAELPEnvironment:
         }
         
         # Add RecSim-specific information if available
-        if self.recsim_bridge and RECSIM_BRIDGE_AVAILABLE:
+        if self.recsim_bridge:
             if 'user_segment' in auction_result:
                 episode_info['user_segment'] = auction_result['user_segment']
             if 'query' in context:
@@ -627,7 +598,7 @@ def test_enhanced_environment():
     
     print("Testing Enhanced GAELP Environment with RecSim Integration")
     print("=" * 60)
-    print(f"RecSim Available: {RECSIM_AVAILABLE}")
+    print(f"RecSim Available: True")
     print("=" * 60)
     
     total_reward = 0
@@ -683,7 +654,7 @@ def test_enhanced_environment():
         
         if step % 5 == 0:
             print(f"Step {step} ({strategy['name']}): ROAS={obs['roas']:.2f}, Cost=${obs['total_cost']:.2f}, Revenue=${obs['total_revenue']:.2f}")
-            if RECSIM_AVAILABLE and hasattr(env.user_model, 'recsim_model'):
+            if hasattr(env.user_model, 'recsim_model'):
                 user_analytics = env.user_model.get_user_analytics()
                 if user_analytics:
                     print(f"    Overall CTR: {user_analytics.get('overall_ctr', 0):.3f}")
@@ -702,7 +673,7 @@ def test_enhanced_environment():
     print(f"  Average Reward: {total_reward/len(env.episode_data):.3f}")
     
     # Show user behavior analytics if RecSim is available
-    if RECSIM_AVAILABLE and hasattr(env.user_model, 'recsim_model'):
+    if hasattr(env.user_model, 'recsim_model'):
         print(f"\nUser Behavior Analytics (RecSim):")
         print("=" * 40)
         analytics = env.user_model.get_user_analytics()
@@ -721,7 +692,7 @@ def test_enhanced_environment():
 def test_user_segments():
     """Test specific user segment behaviors"""
     
-    if not RECSIM_AVAILABLE:
+    if False:  # RecSim is now required
         print("RecSim not available - skipping user segment tests")
         return
     

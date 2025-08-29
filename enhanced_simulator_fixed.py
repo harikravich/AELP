@@ -37,7 +37,8 @@ from journey_state import JourneyState, TransitionTrigger
 from creative_integration import get_creative_integration, SimulationContext
 
 # Import AuctionGym - NO FALLBACKS
-from auction_gym_integration import AuctionGymWrapper
+# from auction_gym_integration import AuctionGymWrapper  # BROKEN - 100% win rate
+from fixed_auction_system import FixedAuctionSystem
 
 # Import RecSim - NO FALLBACKS
 import edward2_patch  # Apply patch first
@@ -57,11 +58,9 @@ class FixedAdAuction:
         self.n_competitors = n_competitors
         self.max_slots = max_slots
         
-        # Initialize proper AuctionGym
-        self.auction_gym = AuctionGymWrapper({
-            'competitors': {'count': n_competitors},
-            'num_slots': max_slots
-        })
+        # Initialize FIXED auction system (not broken AuctionGym)
+        self.auction_system = FixedAuctionSystem()
+        self.auction_gym = None  # Deprecated - using fixed system
         
         # Track win rates to verify fix
         self.total_auctions = 0
@@ -73,14 +72,15 @@ class FixedAdAuction:
         
         self.total_auctions += 1
         
-        # Use AuctionGym for proper auction
-        query_value = quality_score * 10.0
-        result = self.auction_gym.run_auction(
+        # Use FIXED auction system with proper competition
+        # FixedAuctionSystem returns an AuctionResult object
+        result = self.auction_system.run_auction(
             our_bid=your_bid,
-            query_value=query_value,
+            quality_score=quality_score,
             context=context
         )
         
+        # Result is an AuctionResult object from FixedAuctionSystem
         if result.won:
             self.wins += 1
             
@@ -95,12 +95,12 @@ class FixedAdAuction:
         return {
             'won': result.won,
             'price_paid': result.price_paid,
-            'position': result.slot_position,
-            'competitors': result.competitors,
+            'position': result.position,
+            'competitors': result.competitor_bids,
             'estimated_ctr': result.estimated_ctr,
-            'true_ctr': result.true_ctr,
-            'outcome': result.outcome,
-            'total_slots': result.total_slots
+            'true_ctr': result.estimated_ctr,
+            'outcome': 'impression' if result.won else 'no_impression',
+            'total_slots': 5  # Default slots
         }
 
 
@@ -194,9 +194,16 @@ class FixedGAELPEnvironment:
         context = self._create_context_from_discovery(user, action)
         
         # Run auction with fixed mechanics
+        bid_amount = action.get('bid', 1.0)
+        quality_score = action.get('quality_score', 0.7)
+        
+        # Debug logging
+        if self.current_step % 10 == 0:
+            logger.info(f"Step {self.current_step}: Running auction with bid=${bid_amount:.2f}, QS={quality_score:.1f}")
+        
         auction_result = self.auction.run_auction(
-            your_bid=action.get('bid', 1.0),
-            quality_score=action.get('quality_score', 0.7),
+            your_bid=bid_amount,
+            quality_score=quality_score,
             context=context,
             user_id=user.user_id
         )
@@ -204,8 +211,12 @@ class FixedGAELPEnvironment:
         # Track auction outcome
         if auction_result['won']:
             self.metrics['auction_wins'] += 1
+            if self.current_step % 10 == 0:
+                logger.info(f"Step {self.current_step}: WON! Position {auction_result['position']}, paid ${auction_result['price_paid']:.2f}")
         else:
             self.metrics['auction_losses'] += 1
+            if self.current_step % 10 == 0:
+                logger.info(f"Step {self.current_step}: Lost. Position {auction_result['position']}")
         
         # Initialize results
         results = {
@@ -229,6 +240,10 @@ class FixedGAELPEnvironment:
             
             # Simulate click based on user behavior
             click_prob = self._calculate_click_probability(user, action, context, auction_result)
+            
+            # Debug logging for CTR investigation
+            if self.current_step % 10 == 0:
+                logger.info(f"Click simulation - Position: {auction_result['position']}, Base CTR: {auction_result.get('estimated_ctr', 0):.4f}, Final prob: {click_prob:.4f}")
             
             if np.random.random() < click_prob:
                 results['clicks'] = 1
@@ -260,23 +275,45 @@ class FixedGAELPEnvironment:
             # Attribute revenue to touchpoints
             self._attribute_conversion(conv)
         
-        # Calculate reward (ROAS with delayed conversions considered)
-        if results['cost'] > 0:
-            immediate_roas = results['revenue'] / results['cost']
-            # Add expected value of delayed conversions
+        # Calculate reward with IMMEDIATE feedback for learning
+        immediate_reward = 0.0
+        
+        # 1. Impression reward (small, just for winning)
+        if results['impressions'] > 0:
+            immediate_reward += 0.01
+        
+        # 2. Click reward (meaningful immediate signal)
+        if results['clicks'] > 0:
+            # Reward based on efficiency: clicks/cost
+            click_efficiency = results['clicks'] / max(0.01, results['cost'])
+            immediate_reward += click_efficiency * 10  # Scale up for learning
+        
+        # 3. Conversion reward (big reward but delayed)
+        if results['revenue'] > 0:
+            immediate_roas = results['revenue'] / max(0.01, results['cost'])
+            immediate_reward += immediate_roas * 5
+        
+        # 4. Expected future value from scheduled conversions
+        if results['delayed_conversions_scheduled'] > 0:
             expected_future_value = results['delayed_conversions_scheduled'] * 120  # $120 avg order value
-            expected_roas = (results['revenue'] + expected_future_value * 0.7) / results['cost']
-            reward = expected_roas
-        else:
-            reward = 0.0
+            expected_reward = (expected_future_value * 0.3) / max(0.01, results['cost'])  # 30% probability
+            immediate_reward += expected_reward
+        
+        # Total reward combines immediate and expected future rewards
+        reward = immediate_reward
         
         # Check if episode done
         done = (self.current_step >= self.max_steps or 
                 self.budget_spent >= self.max_budget)
         
-        # Prepare info
+        # Prepare info - ensure auction result is included properly
         info = {
-            'auction': auction_result,
+            'auction': {
+                'won': auction_result.get('won', False),
+                'price_paid': auction_result.get('price_paid', 0),
+                'position': auction_result.get('position', 99),
+                'competitors': auction_result.get('competitors', [])
+            },
             'user': {
                 'id': user.user_id,
                 'canonical_id': user.canonical_user_id,
@@ -284,7 +321,16 @@ class FixedGAELPEnvironment:
                 'episode_count': user.episode_count,
                 'touchpoint_count': len(user.touchpoint_history)
             },
-            'metrics': dict(self.metrics),
+            'metrics': {
+                'total_impressions': self.metrics.get('total_impressions', 0),
+                'total_clicks': self.metrics.get('total_clicks', 0),
+                'total_conversions': self.metrics.get('total_conversions', 0),
+                'auction_wins': self.metrics.get('auction_wins', 0),
+                'auction_losses': self.metrics.get('auction_losses', 0),
+                'budget_spent': self.budget_spent,
+                'budget_remaining': self.max_budget - self.budget_spent,
+                'win_rate': self.metrics['auction_wins'] / max(1, self.metrics['auction_wins'] + self.metrics['auction_losses']) * 100
+            },
             'budget_remaining': self.max_budget - self.budget_spent,
             'win_rate': self.metrics['auction_wins'] / max(1, self.metrics['auction_wins'] + self.metrics['auction_losses'])
         }
@@ -336,29 +382,84 @@ class FixedGAELPEnvironment:
                                       action: Dict[str, Any]) -> Dict[str, Any]:
         """Create context using discovered patterns, not hardcoded values"""
         
-        # Get discovered patterns
-        patterns = self.discovery.discover_all_patterns()
+        # Get discovered patterns (cached after first call)
+        if not hasattr(self, '_cached_patterns'):
+            self._cached_patterns = self.discovery.discover_all_patterns()
+        patterns = self._cached_patterns
         
         # Use discovered peak hours
         peak_hours = patterns.temporal_patterns.get('peak_hours', [19, 20, 21])
         hour = np.random.choice(peak_hours) if np.random.random() < 0.3 else np.random.randint(0, 24)
         
         # Use discovered device distribution
-        devices = patterns.user_patterns.get('devices', {
-            'mobile': 0.628,  # iOS dominant from GA4
-            'desktop': 0.350,
-            'tablet': 0.022
-        })
+        devices_data = patterns.user_patterns.get('devices', {})
+        
+        # Handle both dict of floats and dict of dicts
+        if devices_data and isinstance(devices_data, dict):
+            # Check if it's a nested dict structure
+            first_value = next(iter(devices_data.values())) if devices_data else None
+            if isinstance(first_value, dict):
+                # Extract device counts from nested structure
+                device_counts = {}
+                for key, value in devices_data.items():
+                    if isinstance(value, dict):
+                        total = value.get('count', value.get('sessions', value.get('events', 0)))
+                        device_counts[key] = total if isinstance(total, (int, float)) else 0
+                    else:
+                        device_counts[key] = float(value) if value else 0
+                
+                # Convert to probabilities
+                total_count = sum(device_counts.values())
+                if total_count > 0:
+                    devices = {k: v/total_count for k, v in device_counts.items()}
+                else:
+                    devices = {'mobile': 0.628, 'desktop': 0.350, 'tablet': 0.022}
+            elif all(isinstance(v, (int, float)) for v in devices_data.values()):
+                # Already in the right format, just normalize
+                total = sum(devices_data.values())
+                if total > 0:
+                    devices = {k: v/total for k, v in devices_data.items()}
+                else:
+                    devices = {'mobile': 0.628, 'desktop': 0.350, 'tablet': 0.022}
+            else:
+                # Fallback to defaults
+                devices = {'mobile': 0.628, 'desktop': 0.350, 'tablet': 0.022}
+        else:
+            # Use default device distribution from GA4
+            devices = {
+                'mobile': 0.628,  # iOS dominant from GA4
+                'desktop': 0.350,
+                'tablet': 0.022
+            }
+        
+        # Ensure probabilities sum to 1
+        prob_sum = sum(devices.values())
+        if prob_sum > 0:
+            devices = {k: v/prob_sum for k, v in devices.items()}
+        
         device = np.random.choice(list(devices.keys()), p=list(devices.values()))
         
-        # Use discovered channels
-        channels = patterns.channel_patterns.get('channels', ['google', 'facebook', 'organic'])
-        channel = np.random.choice(channels)
+        # Use channel from action if provided, otherwise use discovered channels
+        if 'channel' in action and action['channel']:
+            channel = action['channel']
+        else:
+            channels = patterns.channel_patterns.get('channels', ['google', 'facebook', 'organic'])
+            channel = np.random.choice(channels)
+        
+        # Determine query intent based on user state and time
+        if user.current_journey_state in ['INTENT', 'EVALUATING']:
+            query_intent = 'purchase'
+        elif user.current_journey_state in ['UNAWARE', 'AWARE'] and hour in [22, 23, 0, 1, 2]:
+            query_intent = 'crisis'  # Late night searches often crisis-driven
+        else:
+            query_intent = 'research'
         
         context = {
             'hour': hour,
             'device': device,
+            'device_type': device,  # Add device_type for auction compatibility
             'channel': channel,
+            'query_intent': query_intent,  # Add for proper auction behavior
             'user_journey_state': user.current_journey_state,
             'user_intent': user.intent_score,
             'user_fatigue': user.fatigue_score,

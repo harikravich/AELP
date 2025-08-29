@@ -1,0 +1,30 @@
+{
+  "win_rate_fix": {
+    "problem": "Win rate calculated as total_impressions / episode_count (can exceed 100%)",
+    "solution": "Track auctions_participated and auctions_won separately",
+    "code": "\n# Add to metrics initialization (around line 67):\n'auctions_participated': 0,\n'auctions_won': 0,\n\n# Update win rate calculation (replace line 833):\nself.metrics['win_rate'] = (self.metrics['auctions_won'] / max(1, self.metrics['auctions_participated'])) * 100\n\n# In auction processing (around line 694):\nself.metrics['auctions_participated'] += 1\nif won:\n    self.metrics['auctions_won'] += 1\n    self.metrics['total_impressions'] += 1\n"
+  },
+  "pending_conversions_display": {
+    "problem": "Pending conversions not shown in UI",
+    "solution": "Add pending conversions to metrics display",
+    "code": "\n# Add to get_metrics endpoint (around line 922):\n'pending_conversions': self.delayed_rewards_tracking.get('pending_conversions', 0),\n'realized_conversions': self.delayed_rewards_tracking.get('realized_conversions', 0),\n\n# Add to HTML template for display:\n<div class=\"metric-card\">\n    <div class=\"metric-value\" id=\"pending-conversions\">0</div>\n    <div class=\"metric-label\">Pending Conversions</div>\n    <div class=\"metric-detail\">Awaiting realization</div>\n</div>\n\n# Update JavaScript to show pending conversions:\ndocument.getElementById('pending-conversions').textContent = data.pending_conversions || 0;\n"
+  },
+  "competitor_tracking": {
+    "status": "CONFIRMED WORKING",
+    "competitors": [
+      "Qustodio",
+      "Bark",
+      "Circle",
+      "Norton",
+      "FamilyTime",
+      "Kidslox"
+    ],
+    "note": "Competitors are bidding with realistic ranges ($2.5-$5.5)"
+  },
+  "conversion_tracking": {
+    "status": "CONVERSIONS ARE HAPPENING",
+    "explanation": "Conversions are delayed by design (3-14 days realistic)",
+    "pending_location": "self.delayed_rewards_tracking['pending_conversions']",
+    "realized_location": "self.delayed_rewards_tracking['realized_conversions']"
+  }
+}

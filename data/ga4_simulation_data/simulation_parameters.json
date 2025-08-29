@@ -1,0 +1,55 @@
+{
+  "peak_hours": [
+    15,
+    12,
+    14,
+    16,
+    13
+  ],
+  "avg_sessions_per_user": 1.3269819328805732,
+  "channel_cvr": {
+    "Cross-network": 0.0055414805353312035,
+    "Direct": 0.0031926930340077393,
+    "Display": 2.4700506360380388e-05,
+    "Email": 0.02439839359121917,
+    "Mobile Push Notifications": 0.0007638689964671059,
+    "Organic Search": 0.0038943270334908893,
+    "Organic Shopping": 0.0,
+    "Organic Social": 0.011675946040560695,
+    "Organic Video": 0.00379110251450677,
+    "Paid Other": 0.0018467643467643465,
+    "Paid Search": 0.017300004403360613,
+    "Paid Shopping": 0.041067282115875466,
+    "Paid Social": 0.01590569144898692,
+    "Paid Video": 0.005168056073094832,
+    "Referral": 0.017198238366930726,
+    "Unassigned": 0.03139673460784305
+  },
+  "device_distribution": {
+    "desktop": 758680,
+    "mobile": 1188381,
+    "smart tv": 88,
+    "tablet": 43425
+  },
+  "avg_order_value": 66.1474794491408,
+  "bounce_rate_by_channel": {
+    "Cross-network": 0.04730693060597988,
+    "Direct": 0.04525760734278329,
+    "Display": 0.05188539268951651,
+    "Email": 0.07527103207582107,
+    "Mobile Push Notifications": 0.06096311149304561,
+    "Organic Search": 0.044576500972789215,
+    "Organic Shopping": 0.0,
+    "Organic Social": 0.03781904341723934,
+    "Organic Video": 0.043539651837524174,
+    "Paid Other": 0.2016772700983227,
+    "Paid Search": 0.06099139554831512,
+    "Paid Shopping": 0.0339031029568114,
+    "Paid Social": 0.03369861228451414,
+    "Paid Video": 0.133028204133414,
+    "Referral": 0.047081663784342705,
+    "Unassigned": 0.06138075564582253
+  },
+  "pages_per_session": 5.147708419226317,
+  "returning_user_rate": 0.1472653649194844
+}

@@ -1,0 +1,351 @@
+{
+  "demo_timestamp": "2025-08-27 03:18:26.280690",
+  "tests_completed": [
+    {
+      "test_name": "basic_learning_mechanics",
+      "timestamp": "2025-08-27 03:18:26.281086",
+      "learning_verified": false,
+      "issues": [
+        "entropy_valid"
+      ],
+      "metrics": {
+        "episode_reward": 3.4327666463106996,
+        "episode_length": 20,
+        "total_loss": 24.86468505859375,
+        "entropy": 0.5310626029968262,
+        "grad_norm": 886.0771484375
+      },
+      "verification_results": {
+        "learning_verified": false,
+        "verification_timestamp": "2025-08-27 03:18:31.714818",
+        "training_step": 1,
+        "checks": {
+          "gradient_flow": {
+            "has_gradients": true,
+            "gradient_norms": {
+              "shared_fc1.weight": 0.23022398352622986,
+              "shared_fc1.bias": 0.0001366555952699855,
+              "shared_fc2.weight": 0.2135702669620514,
+              "shared_fc2.bias": 0.0003567280655261129,
+              "actor_fc.weight": 0.038269221782684326,
+              "actor_fc.bias": 0.000134703514049761,
+              "actor_out.weight": 0.028940120711922646,
+              "actor_out.bias": 0.00030071596847847104,
+              "critic_fc.weight": 0.299106240272522,
+              "critic_fc.bias": 0.0013036648742854595,
+              "critic_out.weight": 0.24413573741912842,
+              "critic_out.bias": 0.0037263885606080294
+            },
+            "total_gradient_norm": 0.5000000467173475,
+            "problems": [
+              "bid_fc.weight: No gradient computed!",
+              "bid_fc.bias: No gradient computed!"
+            ],
+            "gradient_stats": {
+              "mean_norm": 0.0883503689377297,
+              "std_norm": 0.11413829127428211,
+              "min_norm": 0.000134703514049761,
+              "max_norm": 0.299106240272522
+            }
+          },
+          "weight_updates": {
+            "weights_changed": true,
+            "total_change": 0.1652452542912215,
+            "parameter_changes": {
+              "shared_fc1.weight": 0.015563853085041046,
+              "shared_fc1.bias": 0.00590055575594306,
+              "shared_fc2.weight": 0.04019319266080856,
+              "shared_fc2.bias": 0.007051263004541397,
+              "actor_fc.weight": 0.03112521767616272,
+              "actor_fc.bias": 0.004818857181817293,
+              "actor_out.weight": 0.012597834691405296,
+              "actor_out.bias": 0.0026036875788122416,
+              "critic_fc.weight": 0.03400062769651413,
+              "critic_fc.bias": 0.0051940386183559895,
+              "critic_out.weight": 0.005196128040552139,
+              "critic_out.bias": 0.000999998301267624,
+              "bid_fc.weight": 0.0,
+              "bid_fc.bias": 0.0
+            },
+            "problems": [],
+            "weight_stats": {
+              "mean_change": 0.011803232449372964,
+              "std_change": 0.012984442976512807,
+              "min_change": 0.0,
+              "max_change": 0.04019319266080856,
+              "unchanged_params": 2,
+              "total_params": 14,
+              "change_from_initial": 0.1652452542912215
+            }
+          },
+          "loss_improvement": {
+            "loss_improving": false,
+            "policy_trend": "unknown",
+            "value_trend": "unknown",
+            "total_trend": "unknown",
+            "problems": [],
+            "loss_stats": {}
+          },
+          "entropy_evolution": {
+            "entropy_valid": false,
+            "entropy_trend": "unknown",
+            "exploration_health": "unknown",
+            "problems": [],
+            "entropy_stats": {}
+          },
+          "performance_improvement": {
+            "performance_improving": false,
+            "reward_trend": "unknown",
+            "roas_trend": "unknown",
+            "conversion_trend": "unknown",
+            "problems": [],
+            "performance_stats": {}
+          }
+        },
+        "learning_checks": {
+          "gradients_flowing": true,
+          "weights_updating": true,
+          "entropy_valid": false,
+          "no_critical_problems": true
+        },
+        "critical_checks_passed": false
+      },
+      "update_metrics": {
+        "policy_loss": 6.520969867706299,
+        "value_loss": 36.69805145263672,
+        "entropy_loss": -0.5310626029968262,
+        "total_loss": 24.86468505859375,
+        "entropy": 0.5310626029968262,
+        "grad_norm": 886.0771484375,
+        "mean_reward": 0.17163832485675812,
+        "mean_advantage": -5.306388854980469,
+        "batch_size": 20
+      }
+    },
+    {
+      "test_name": "multi_episode_learning",
+      "timestamp": "2025-08-27 03:18:31.720807",
+      "learning_verified": false,
+      "issues": [
+        "Low verification rate: 66.7%"
+      ],
+      "episode_data": [
+        {
+          "episode": 0,
+          "reward": 38.92810334639273,
+          "steps": 25,
+          "policy_loss": 27.115318298339844,
+          "entropy": 0.4197944700717926,
+          "learning_verified": false,
+          "weights_changed": true
+        },
+        {
+          "episode": 1,
+          "reward": 7.228025273096316,
+          "steps": 25,
+          "policy_loss": -0.0740017369389534,
+          "entropy": 0.5175380110740662,
+          "learning_verified": true,
+          "weights_changed": true
+        },
+        {
+          "episode": 2,
+          "reward": 20.029719812423064,
+          "steps": 25,
+          "policy_loss": -1.1701843738555908,
+          "entropy": 0.3237651586532593,
+          "learning_verified": true,
+          "weights_changed": true
+        },
+        {
+          "episode": 3,
+          "reward": 10.851254255239132,
+          "steps": 25,
+          "policy_loss": 2.9108524322509766,
+          "entropy": 0.14567770063877106,
+          "learning_verified": false,
+          "weights_changed": true
+        },
+        {
+          "episode": 4,
+          "reward": -15.863501284238637,
+          "steps": 25,
+          "policy_loss": 1.05399751663208,
+          "entropy": 0.03702158480882645,
+          "learning_verified": true,
+          "weights_changed": true
+        },
+        {
+          "episode": 5,
+          "reward": -5.8232996138377775,
+          "steps": 25,
+          "policy_loss": -1.9672976732254028,
+          "entropy": 0.0027063293382525444,
+          "learning_verified": true,
+          "weights_changed": true
+        },
+        {
+          "episode": 6,
+          "reward": -0.10821109878525753,
+          "steps": 25,
+          "policy_loss": -1.8814646005630493,
+          "entropy": 5.0919941713800654e-05,
+          "learning_verified": false,
+          "weights_changed": true
+        },
+        {
+          "episode": 7,
+          "reward": 11.485642060239229,
+          "steps": 25,
+          "policy_loss": -0.4328296482563019,
+          "entropy": 0.0001724421454127878,
+          "learning_verified": true,
+          "weights_changed": true
+        },
+        {
+          "episode": 8,
+          "reward": -3.8601142689091863,
+          "steps": 25,
+          "policy_loss": 0.22129133343696594,
+          "entropy": 0.01549664419144392,
+          "learning_verified": true,
+          "weights_changed": true
+        },
+        {
+          "episode": 9,
+          "reward": -5.286947600479476,
+          "steps": 25,
+          "policy_loss": -2.0104310512542725,
+          "entropy": 0.00045721392962150276,
+          "learning_verified": false,
+          "weights_changed": true
+        },
+        {
+          "episode": 10,
+          "reward": 5.5211404162695175,
+          "steps": 25,
+          "policy_loss": -1.492295265197754,
+          "entropy": 0.002231799066066742,
+          "learning_verified": true,
+          "weights_changed": true
+        },
+        {
+          "episode": 11,
+          "reward": 5.825440238384857,
+          "steps": 25,
+          "policy_loss": -0.9144131541252136,
+          "entropy": 2.1275442122714594e-05,
+          "learning_verified": true,
+          "weights_changed": true
+        },
+        {
+          "episode": 12,
+          "reward": 5.8166730266568925,
+          "steps": 25,
+          "policy_loss": -0.6541009545326233,
+          "entropy": 5.362589945434593e-06,
+          "learning_verified": false,
+          "weights_changed": true
+        },
+        {
+          "episode": 13,
+          "reward": 4.77502689317631,
+          "steps": 25,
+          "policy_loss": -1.6525524854660034,
+          "entropy": 0.00011670766252791509,
+          "learning_verified": true,
+          "weights_changed": true
+        },
+        {
+          "episode": 14,
+          "reward": 9.220186350540043,
+          "steps": 25,
+          "policy_loss": -1.0488948822021484,
+          "entropy": 4.4155029172543436e-05,
+          "learning_verified": true,
+          "weights_changed": true
+        }
+      ],
+      "learning_trends": {
+        "reward_improvement": -0.49065501727879535,
+        "reward_trend": "declining",
+        "loss_improvement": 1.1931311211918088,
+        "loss_trend": "improving",
+        "entropy_change": 0.9983243144075559,
+        "entropy_trend": "decreasing",
+        "grad_norm_mean": 530.3744696299235,
+        "grad_norm_std": 1134.0386849776378,
+        "grad_norm_stable": "False",
+        "verification_rate": 0.6666666666666666,
+        "verification_consistent": "False"
+      },
+      "verification_rate": 0.6666666666666666,
+      "verified_episodes": 10,
+      "total_episodes": 15,
+      "final_report": "================================================================================\nLEARNING VERIFICATION REPORT - multi_episode_test\n================================================================================\nGenerated: 2025-08-27 03:18:33.076956\nTraining Steps: 5\n\n\u26a0\ufe0f  LEARNING STATUS: NOT VERIFIED \u274c\n\u2705 Gradient Flow: HEALTHY\n   Total gradient norm: 0.500000\n\u2705 Weight Updates: ACTIVE\n   Total weight change: 0.370920\n\u274c Entropy Evolution: PROBLEMATIC\n\n================================================================================"
+    },
+    {
+      "test_name": "detailed_gradient_flow",
+      "timestamp": "2025-08-27 03:18:33.078086",
+      "gradient_health": "good",
+      "issues": [
+        "bid_fc.weight: No gradient computed!",
+        "bid_fc.bias: No gradient computed!",
+        "bid_fc.weight: No gradient computed!",
+        "bid_fc.bias: No gradient computed!",
+        "bid_fc.weight: No gradient computed!",
+        "bid_fc.bias: No gradient computed!",
+        "bid_fc.weight: No gradient computed!",
+        "bid_fc.bias: No gradient computed!",
+        "bid_fc.weight: No gradient computed!",
+        "bid_fc.bias: No gradient computed!"
+      ],
+      "gradient_analysis": {
+        "all_have_gradients": true,
+        "mean_gradient_norm": 0.1682121102937654,
+        "std_gradient_norm": 0.01179887185773256,
+        "gradient_norms": [
+          0.18695738123792824,
+          0.15403535613187647,
+          0.15982037942572125,
+          0.17586704887438862,
+          0.1643803857989123
+        ],
+        "total_problems": 10,
+        "problems": [
+          "bid_fc.weight: No gradient computed!",
+          "bid_fc.bias: No gradient computed!",
+          "bid_fc.weight: No gradient computed!",
+          "bid_fc.bias: No gradient computed!",
+          "bid_fc.weight: No gradient computed!",
+          "bid_fc.bias: No gradient computed!",
+          "bid_fc.weight: No gradient computed!",
+          "bid_fc.bias: No gradient computed!",
+          "bid_fc.weight: No gradient computed!",
+          "bid_fc.bias: No gradient computed!"
+        ]
+      }
+    }
+  ],
+  "overall_status": "critical",
+  "critical_issues": [
+    "entropy_valid",
+    "Low verification rate: 66.7%",
+    "bid_fc.weight: No gradient computed!",
+    "bid_fc.bias: No gradient computed!",
+    "bid_fc.weight: No gradient computed!",
+    "bid_fc.bias: No gradient computed!",
+    "bid_fc.weight: No gradient computed!",
+    "bid_fc.bias: No gradient computed!",
+    "bid_fc.weight: No gradient computed!",
+    "bid_fc.bias: No gradient computed!",
+    "bid_fc.weight: No gradient computed!",
+    "bid_fc.bias: No gradient computed!"
+  ],
+  "summary_metrics": {
+    "tests_passed": 1,
+    "total_tests": 3,
+    "pass_rate": 0.3333333333333333,
+    "critical_issues_count": 12
+  }
+}

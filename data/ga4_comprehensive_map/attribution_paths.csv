@@ -1,0 +1,51 @@
+channel,source_medium,sessions_per_user,engagement_duration,conversions,sessions
+Unassigned,auraappdesktop / (not set),30.0,890.0,0,30
+Referral,aura004.lightning.force.com / referral,24.152364273204903,4544877.0,6,13791
+Referral,aura004--uat.sandbox.my.salesforce-setup.com / referral,19.0,93.0,0,19
+Organic Search,aol.com / referral,18.0,401.0,0,18
+Unassigned,linkprefer / ir_affiliate,18.0,0.0,0,18
+Organic Search,search.google.com / referral,13.0,0.0,0,13
+Referral,branch--special-exclusive-aura-com-e12fe2.webflow.io / referral,11.0,643.0,0,11
+Referral,link.edgepilot.com / referral,11.0,4812.0,1,253
+Referral,intxprivacynow.atlassian.net / referral,10.35483870967742,37486.0,59,321
+Unassigned,militarycom / (not set),10.025641025641026,26827.0,5,391
+Referral,admin.test.aurasvc.io / referral,9.666666666666666,3973.0,5,58
+Referral,decagon.ai / referral,9.5,120.0,0,19
+Referral,api.cactus-search.com / referral,9.0,2953.0,0,9
+Referral,aurahub.okta.com / referral,8.666666666666666,12520.0,0,78
+Referral,app.asana.com / referral,8.36,9792.0,0,209
+Referral,ads.google.com / referral,8.0,105.0,0,8
+Referral,cmp.optimizely.com / referral,7.111111111111111,4564.0,0,64
+Paid Social,reddit / paidsocial,7.0,373.0,0,14
+Referral,app.getbee.io / referral,7.0,379.0,0,7
+Referral,branch--free-trial-aura-com-958c95.webflow.io / referral,7.0,261.0,0,7
+Referral,usc-word-edit.officeapps.live.com / referral,6.25,171.0,0,25
+Organic Search,yandex.by / referral,6.0,103.0,0,6
+Referral,app4.greenhouse.io / referral,6.0,37.0,0,6
+Referral,mail.breezelinebiz.net / referral,6.0,1422.0,1,6
+Referral,screenapp.io / referral,6.0,16.0,0,6
+Referral,aura004--uat.sandbox.lightning.force.com / referral,5.857142857142857,14212.0,0,82
+Referral,search.nortonbrowser.com / referral,5.833333333333333,3210.0,2,35
+Unassigned,batten / ir_affiliate,5.666666666666667,172.0,0,17
+Unassigned,(not set) / ir_affiliate,5.615384615384615,4807.0,0,73
+Referral,localhost:3004 / referral,5.4375,4274.0,9,87
+Organic Social,accountscenter.instagram.com / referral,5.0,449.0,0,5
+Referral,bogleheads.org / referral,5.0,0.0,0,5
+Referral,ch-cs.fiservapps.com / referral,5.0,1339.0,0,5
+Referral,cliq.zoho.in / referral,5.0,135.0,0,10
+Referral,localhost:63342 / referral,5.0,1503.0,4,15
+Referral,profjay2.website / referral,5.0,8.0,0,5
+Referral,rewardany.com / referral,5.0,2.0,0,10
+Unassigned,(not set) / ir_affi,5.0,2716.0,0,5
+Organic Search,ntp.msn.com / referral,4.838709677419355,121565.0,2,900
+Referral,tagassistant.google.com / referral,4.833333333333333,5437.0,15,29
+Organic Social,messages.google.com / referral,4.666666666666667,9996.0,0,98
+Referral,identityguard.lightning.force.com / referral,4.666666666666667,280.0,0,14
+Referral,brokerdealer-encrypted.com / referral,4.5,1220.0,0,9
+Referral,my.stripo.email / referral,4.5,90.0,0,9
+Referral,app.clickup.com / referral,4.25,370.0,0,17
+Referral,metlife.com / referral,4.068181818181818,22545.0,7,179
+Organic Social,adsmanager.facebook.com / referral,4.0,243.0,0,12
+Referral,app.impact.com / referral,4.0,256.0,0,20
+Referral,aura-com.webflow.io / referral,4.0,1055.0,0,12
+Referral,comdata.lightning.force.com / referral,4.0,19.0,0,4

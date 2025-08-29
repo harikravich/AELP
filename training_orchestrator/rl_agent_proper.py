@@ -306,10 +306,16 @@ class ProperRLAgent:
     def get_creative_action(self, state: JourneyState) -> int:
         """Select creative using PPO policy"""
         
-        state_vector = torch.FloatTensor(state.to_vector()).unsqueeze(0).to(self.device)
+        state_vector = state.to_vector(self.discovery)
+        
+        # Initialize networks on first observation
+        if self.policy_network is None:
+            self._initialize_networks(len(state_vector))
+        
+        state_tensor = torch.FloatTensor(state_vector).unsqueeze(0).to(self.device)
         
         with torch.no_grad():
-            policy_logits, _ = self.policy_network(state_vector)
+            policy_logits, _ = self.policy_network(state_tensor)
             probs = torch.softmax(policy_logits, dim=1)
             action = torch.multinomial(probs, 1).item()
         

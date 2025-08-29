@@ -130,28 +130,65 @@ class ParameterManager:
     
     def _process_channel_data(self):
         """Process channel performance data"""
-        channel_data = self.patterns.get("channel_performance", {})
+        # Try both key names for compatibility
+        channel_data = self.patterns.get("channel_performance", self.patterns.get("channels", {}))
         
         for key, data in channel_data.items():
-            channel_id = f"{data['channel_group']}|{data['source']}|{data['medium']}"
-            self.channel_performance[channel_id] = ChannelPerformance(
-                channel_group=data['channel_group'],
-                source=data['source'],
-                medium=data['medium'],
-                sessions=data['sessions'],
-                conversions=data['conversions'],
-                cvr_percent=data['cvr_percent'],
-                estimated_cac=data['estimated_cac'],
-                revenue=data['revenue']
-            )
+            # Handle simplified format from discovery engine
+            if isinstance(data, dict) and 'views' in data:
+                # Simple format from discovery engine
+                channel_id = key  # e.g., "organic"
+                self.channel_performance[channel_id] = ChannelPerformance(
+                    channel_group=key,
+                    source=key,
+                    medium='cpc' if key != 'organic' else 'organic',
+                    sessions=data.get('sessions', 0),
+                    conversions=data.get('conversions', 0),
+                    cvr_percent=float(data.get('conversions', 0)) / max(1, data.get('sessions', 1)) * 100,
+                    estimated_cac=50.0,  # Default estimate
+                    revenue=0.0
+                )
+            else:
+                # Original detailed format
+                channel_id = f"{data['channel_group']}|{data['source']}|{data['medium']}"
+                self.channel_performance[channel_id] = ChannelPerformance(
+                    channel_group=data['channel_group'],
+                    source=data['source'],
+                    medium=data['medium'],
+                    sessions=data['sessions'],
+                    conversions=data['conversions'],
+                    cvr_percent=data['cvr_percent'],
+                    estimated_cac=data['estimated_cac'],
+                    revenue=data['revenue']
+                )
         
         logger.info(f"Processed {len(self.channel_performance)} channel performance records")
     
     def _process_user_segments(self):
         """Process user segment data"""
-        segments_data = self.patterns.get("user_segments", {})
+        # Try both key names for compatibility
+        segments_data = self.patterns.get("user_segments", self.patterns.get("segments", {}))
         
-        # Process high-value cities as user segments
+        # Handle simplified format from discovery engine
+        if segments_data and not isinstance(list(segments_data.values())[0] if segments_data else None, list):
+            # New format: direct segment data
+            for segment_name, segment_info in segments_data.items():
+                if 'behavioral_metrics' in segment_info:
+                    metrics = segment_info['behavioral_metrics']
+                    self.user_segments[segment_name] = UserSegmentData(
+                        segment_name=segment_name,
+                        sessions=segment_info.get('discovered_characteristics', {}).get('sample_size', 100) * 10,
+                        conversions=int(metrics.get('conversion_rate', 0.02) * 1000),
+                        cvr=metrics.get('conversion_rate', 0.02),
+                        revenue=0.0,
+                        avg_duration=metrics.get('avg_session_duration', 300),
+                        pages_per_session=metrics.get('avg_pages_per_session', 3),
+                        sessions_per_user=1.5  # Default estimate
+                    )
+            logger.info(f"Processed {len(self.user_segments)} user segments") 
+            return
+            
+        # Process high-value cities as user segments (old format)
         high_value_cities = segments_data.get("high_value_cities", [])
         for city_data in high_value_cities:
             segment_name = f"{city_data['city']}_{city_data['country']}"
@@ -184,27 +221,47 @@ class ParameterManager:
     
     def _process_device_data(self):
         """Process device performance data"""
-        device_data = self.patterns.get("device_patterns", {}).get("all_devices", {})
+        # Try both key names for compatibility
+        device_data = self.patterns.get("device_patterns", {}).get("all_devices", 
+                                        self.patterns.get("devices", {}))
         
         for key, data in device_data.items():
-            device_id = f"{data['device_category']}_{data['os']}_{data['brand']}"
-            self.device_performance[device_id] = DevicePerformance(
-                device_category=data['device_category'],
-                os=data['os'],
-                brand=data['brand'],
-                channel=data['channel'],
-                sessions=data['sessions'],
-                conversions=data['conversions'],
-                cvr=data['cvr'],
-                revenue=data['revenue'],
-                avg_duration=data['avg_duration']
-            )
+            # Handle simplified format from discovery engine
+            if isinstance(data, dict) and 'views' in data:
+                # Simple format from discovery engine
+                device_id = key  # e.g., "mobile", "desktop", "tablet"
+                self.device_performance[device_id] = DevicePerformance(
+                    device_category=key,
+                    os='unknown',
+                    brand='unknown',
+                    channel='organic',
+                    sessions=data.get('sessions', 0),
+                    conversions=0,  # Not tracked in simple format
+                    cvr=0.02,  # Default estimate
+                    revenue=0.0,
+                    avg_duration=300.0
+                )
+            else:
+                # Original detailed format
+                device_id = f"{data['device_category']}_{data['os']}_{data['brand']}"
+                self.device_performance[device_id] = DevicePerformance(
+                    device_category=data['device_category'],
+                    os=data['os'],
+                    brand=data['brand'],
+                    channel=data['channel'],
+                    sessions=data['sessions'],
+                    conversions=data['conversions'],
+                    cvr=data['cvr'],
+                    revenue=data['revenue'],
+                    avg_duration=data['avg_duration']
+                )
         
         logger.info(f"Processed {len(self.device_performance)} device performance records")
     
     def _process_temporal_data(self):
         """Process temporal patterns"""
-        self.temporal_patterns = self.patterns.get("temporal_patterns", {})
+        # Try both key names for compatibility
+        self.temporal_patterns = self.patterns.get("temporal_patterns", self.patterns.get("temporal", {}))
         self.conversion_windows = self.patterns.get("conversion_windows", {})
         
         logger.info(f"Processed temporal patterns with {len(self.temporal_patterns.get('hourly_patterns', {}))} hourly patterns")

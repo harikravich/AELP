@@ -227,75 +227,75 @@ async def test_online_learner_direct():
     
     # Test initialization
     assert len(learner.bandit_arms) == 3
-        assert not learner.emergency_mode
-        assert learner.online_updates_count == 0
-        assert learner.baseline_performance is None
-        
-        print(f"  - Initialized with {len(learner.bandit_arms)} bandit arms")
-        print(f"  - Emergency mode: {learner.emergency_mode}")
-        
-        # Test action selection (exploitation)
-        state = {
-            "budget_constraints": {"daily_budget": 100, "budget_utilization": 0.3},
-            "performance_history": {"avg_roas": 1.2, "avg_bid": 2.0},
-            "market_context": {"competition_level": 0.5}
-        }
-        
-        exploit_action = await learner.select_action(state, deterministic=True)
-        assert isinstance(exploit_action, dict)
-        assert "budget" in exploit_action
-        assert "bid_amount" in exploit_action
-        
-        print(f"  - Exploitation action budget: {exploit_action['budget']:.2f}")
-        
-        # Test exploration vs exploitation decision
-        strategy, confidence = await learner.explore_vs_exploit(state)
-        assert strategy in ["explore", "exploit"]
-        assert 0 <= confidence <= 1
-        
-        print(f"  - Strategy decision: {strategy} (confidence: {confidence:.3f})")
-        
-        # Test safe exploration
-        base_action = {
+    assert not learner.emergency_mode
+    assert learner.online_updates_count == 0
+    assert learner.baseline_performance is None
+    
+    print(f"  - Initialized with {len(learner.bandit_arms)} bandit arms")
+    print(f"  - Emergency mode: {learner.emergency_mode}")
+    
+    # Test action selection (exploitation)
+    state = {
+        "budget_constraints": {"daily_budget": 100, "budget_utilization": 0.3},
+        "performance_history": {"avg_roas": 1.2, "avg_bid": 2.0},
+        "market_context": {"competition_level": 0.5}
+    }
+    
+    exploit_action = await learner.select_action(state, deterministic=True)
+    assert isinstance(exploit_action, dict)
+    assert "budget" in exploit_action
+    assert "bid_amount" in exploit_action
+    
+    print(f"  - Exploitation action budget: {exploit_action['budget']:.2f}")
+    
+    # Test exploration vs exploitation decision
+    strategy, confidence = await learner.explore_vs_exploit(state)
+    assert strategy in ["explore", "exploit"]
+    assert 0 <= confidence <= 1
+    
+    print(f"  - Strategy decision: {strategy} (confidence: {confidence:.3f})")
+    
+    # Test safe exploration
+    base_action = {
             "budget": 80.0,
             "bid_amount": 2.5,
             "audience_size": 0.6,
             "creative_type": "image",
             "target_audience": "professionals"
-        }
-        
-        safe_action = await learner.safe_exploration(state, base_action)
-        assert isinstance(safe_action, dict)
-        
-        # Should be similar but with small safe variations
-        budget_diff = abs(safe_action["budget"] - base_action["budget"])
-        assert budget_diff <= base_action["budget"] * 0.2  # Within 20%
-        
-        print(f"  - Safe exploration: budget {base_action['budget']:.2f} -> {safe_action['budget']:.2f}")
-        
-        # Test episode recording
-        episode_data = {
+    }
+    
+    safe_action = await learner.safe_exploration(state, base_action)
+    assert isinstance(safe_action, dict)
+    
+    # Should be similar but with small safe variations
+    budget_diff = abs(safe_action["budget"] - base_action["budget"])
+    assert budget_diff <= base_action["budget"] * 0.2  # Within 20%
+    
+    print(f"  - Safe exploration: budget {base_action['budget']:.2f} -> {safe_action['budget']:.2f}")
+    
+    # Test episode recording
+    episode_data = {
             "state": state,
             "action": exploit_action,
             "reward": 0.75,
             "success": True,
             "safety_violation": False,
             "arm_id": "balanced"
-        }
-        
-        learner.record_episode(episode_data)
-        assert len(learner.episode_history) == 1
-        
-        # Check bandit arm was updated
-        balanced_arm = learner.bandit_arms["balanced"]
-        assert balanced_arm.total_pulls == 1
-        assert abs(balanced_arm.total_rewards - 0.75) < 1e-10
-        
-        print(f"  - Recorded episode: reward={episode_data['reward']}")
-        print(f"  - Balanced arm pulls: {balanced_arm.total_pulls}")
-        
-        # Test online update
-        experiences = [
+    }
+    
+    learner.record_episode(episode_data)
+    assert len(learner.episode_history) == 1
+    
+    # Check bandit arm was updated
+    balanced_arm = learner.bandit_arms["balanced"]
+    assert balanced_arm.total_pulls == 1
+    assert abs(balanced_arm.total_rewards - 0.75) < 1e-10
+    
+    print(f"  - Recorded episode: reward={episode_data['reward']}")
+    print(f"  - Balanced arm pulls: {balanced_arm.total_pulls}")
+    
+    # Test online update
+    experiences = [
             {
                 "state": state,
                 "action": exploit_action,
@@ -305,55 +305,55 @@ async def test_online_learner_direct():
                 "safety_violation": False,
                 "arm_id": "balanced"
             }
-        ]
-        
-        update_result = await learner.online_update(experiences, force_update=True)
-        assert "status" in update_result
-        assert learner.online_updates_count >= 1
-        
-        print(f"  - Online update result: {update_result.get('status')}")
-        print(f"  - Update count: {learner.online_updates_count}")
-        
-        # Test performance metrics
-        metrics = learner.get_performance_metrics()
-        assert "online_updates_count" in metrics
-        assert "bandit_arms" in metrics
-        assert "episodes_recorded" in metrics
-        
-        print(f"  - Episodes recorded: {metrics['episodes_recorded']}")
-        print(f"  - Safety violations: {metrics['safety_violations']}")
-        
-        # Test baseline performance update
-        baseline_episodes = [
+    ]
+    
+    update_result = await learner.online_update(experiences, force_update=True)
+    assert "status" in update_result
+    assert learner.online_updates_count >= 1
+    
+    print(f"  - Online update result: {update_result.get('status')}")
+    print(f"  - Update count: {learner.online_updates_count}")
+    
+    # Test performance metrics
+    metrics = learner.get_performance_metrics()
+    assert "online_updates_count" in metrics
+    assert "bandit_arms" in metrics
+    assert "episodes_recorded" in metrics
+    
+    print(f"  - Episodes recorded: {metrics['episodes_recorded']}")
+    print(f"  - Safety violations: {metrics['safety_violations']}")
+    
+    # Test baseline performance update
+    baseline_episodes = [
             {"reward": 0.6}, {"reward": 0.8}, {"reward": 0.7}, {"reward": 0.9}
-        ]
-        learner.update_baseline_performance(baseline_episodes)
-        expected_baseline = np.mean([ep["reward"] for ep in baseline_episodes])
-        
-        assert abs(learner.baseline_performance - expected_baseline) < 1e-10
-        print(f"  - Baseline performance: {learner.baseline_performance:.3f}")
-        
-        # Test emergency mode handling
-        # Simulate multiple safety violations
-        for i in range(learner.config.safety_violation_limit):
+    ]
+    learner.update_baseline_performance(baseline_episodes)
+    expected_baseline = np.mean([ep["reward"] for ep in baseline_episodes])
+    
+    assert abs(learner.baseline_performance - expected_baseline) < 1e-10
+    print(f"  - Baseline performance: {learner.baseline_performance:.3f}")
+    
+    # Test emergency mode handling
+    # Simulate multiple safety violations
+    for i in range(learner.config.safety_violation_limit):
             violation_episode = {
                 "reward": -0.5,
                 "success": False,
                 "safety_violation": True
             }
             learner.record_episode(violation_episode)
-        
-        assert learner.emergency_mode
-        print(f"  - Emergency mode activated after violations")
-        
-        # In emergency mode, should always exploit
-        emergency_strategy, emergency_confidence = await learner.explore_vs_exploit(state)
-        assert emergency_strategy == "exploit"
-        assert emergency_confidence == 1.0
-        
-        print(f"  - Emergency strategy: {emergency_strategy}")
-        
-        await learner.shutdown()
+    
+    assert learner.emergency_mode
+    print(f"  - Emergency mode activated after violations")
+    
+    # In emergency mode, should always exploit
+    emergency_strategy, emergency_confidence = await learner.explore_vs_exploit(state)
+    assert emergency_strategy == "exploit"
+    assert emergency_confidence == 1.0
+    
+    print(f"  - Emergency strategy: {emergency_strategy}")
+    
+    await learner.shutdown()
     
     print("✅ Online Learner (Direct) tests passed!")
     return True

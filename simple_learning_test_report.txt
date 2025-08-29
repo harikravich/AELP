@@ -1,0 +1,43 @@
+================================================================================
+🔍 SIMPLE LEARNING VERIFICATION TEST REPORT
+================================================================================
+Generated: now
+Device: cpu
+
+❌ OVERALL STATUS: MULTIPLE FAILURES ❌
+Tests Passed: 3/5
+
+📋 DETAILED TEST RESULTS:
+
+🔍 GRADIENT_FLOW: ✅ PASSED
+   ✅ policy_gradients_flow
+   ✅ value_gradients_flow
+   ✅ gradients_nonzero
+   ✅ no_nan_gradients
+
+🔍 WEIGHT_UPDATES: ✅ PASSED
+   ✅ policy_weights_update
+   ✅ value_weights_update
+   ✅ weight_changes_significant
+
+🔍 LOSS_IMPROVEMENT: ❌ FAILED
+   ❌ policy_loss_decreases
+   ❌ value_loss_decreases
+   ❌ loss_trend_downward
+
+🔍 ENTROPY_CHANGES: ❌ FAILED
+   ✅ entropy_computed
+   ❌ entropy_changes
+   ✅ entropy_reasonable
+
+🔍 MEMORY_EFFICIENCY: ✅ PASSED
+   ✅ no_memory_leak
+   ✅ gradients_cleared
+   ✅ reasonable_memory
+
+💡 RECOMMENDATIONS:
+   ❌ Fix failed basic learning tests before proceeding:
+      • Check learning rate and loss function design
+      • Verify policy network outputs valid probability distributions
+
+================================================================================

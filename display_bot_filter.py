@@ -293,8 +293,9 @@ class DisplayBotFilter:
         print("🤖 DISPLAY BOT FILTERING ANALYSIS")
         print("="*80)
         
-        # Simulate current display placement data (would come from real data)
-        mock_placement_data = self.generate_mock_placement_data()
+        # TODO: Replace with real GA4 data
+        # For now, raise error to force real data implementation
+        raise NotImplementedError("Must use real placement data from GA4, not mock data")
         
         # Analyze placements
         placement_analysis = self.analyze_placements(mock_placement_data)

@@ -175,7 +175,7 @@ class DelayedConversionSystem:
         # Crisis parents - urgent need, quick decisions
         self.segment_patterns[ConversionSegment.CRISIS_PARENT] = ConversionPattern(
             segment=ConversionSegment.CRISIS_PARENT,
-            min_days=1, max_days=3, median_days=1.5,
+            min_days=0.02, max_days=0.125, median_days=0.06,  # TESTING: 30min to 3 hours instead of days
             min_touchpoints=2, max_touchpoints=4, median_touchpoints=3.0,
             conversion_probability_curve=[0.15, 0.35, 0.25, 0.15, 0.10],  # Peak on day 2
             key_channels=['google_search', 'direct', 'social_organic'],
@@ -186,7 +186,7 @@ class DelayedConversionSystem:
         # Concerned parents - moderately urgent, research a bit
         self.segment_patterns[ConversionSegment.CONCERNED_PARENT] = ConversionPattern(
             segment=ConversionSegment.CONCERNED_PARENT,
-            min_days=3, max_days=7, median_days=5.0,
+            min_days=0.125, max_days=0.5, median_days=0.25,  # TESTING: 3-12 hours instead of days
             min_touchpoints=4, max_touchpoints=6, median_touchpoints=5.0,
             conversion_probability_curve=[0.05, 0.10, 0.15, 0.20, 0.25, 0.15, 0.10],  # Peak on day 5
             key_channels=['facebook_ads', 'google_search', 'email', 'direct'],
@@ -197,7 +197,7 @@ class DelayedConversionSystem:
         # Researchers - thorough evaluation, longer cycle
         self.segment_patterns[ConversionSegment.RESEARCHER] = ConversionPattern(
             segment=ConversionSegment.RESEARCHER,
-            min_days=5, max_days=14, median_days=9.0,
+            min_days=0.25, max_days=1.0, median_days=0.5,  # TESTING: 6-24 hours instead of days
             min_touchpoints=6, max_touchpoints=10, median_touchpoints=8.0,
             conversion_probability_curve=[0.02, 0.05, 0.08, 0.12, 0.15, 0.18, 0.20, 0.15, 0.05],  # Gradual build
             key_channels=['google_search', 'content', 'email', 'reviews', 'direct'],

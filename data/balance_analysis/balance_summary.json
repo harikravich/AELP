@@ -1,0 +1,11 @@
+{
+  "total_campaigns": 500,
+  "balance_campaigns": 9,
+  "balance_performance": {
+    "sessions": 24131,
+    "conversions": 77,
+    "cvr": 0.0031909162488085864,
+    "aov": 74.69532467532466,
+    "revenue": 5751.539999999999
+  }
+}

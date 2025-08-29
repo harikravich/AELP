@@ -187,32 +187,6 @@ class DisplayChannelDiagnostic:
                         'other': 25000
                     }
                 }
-                    property=f"properties/{self.ga_property_id}",
-                    dimensions=[
-                        Dimension(name="sessionDefaultChannelGroup"),
-                        Dimension(name="country"),
-                        Dimension(name="deviceCategory"),
-                        Dimension(name="sessionSource")
-                    ],
-                    metrics=[
-                        Metric(name="sessions"),
-                        Metric(name="totalUsers"),
-                        Metric(name="conversions"),
-                        Metric(name="bounceRate"),
-                        Metric(name="averageSessionDuration"),
-                        Metric(name="screenPageViewsPerSession"),
-                        Metric(name="newUsers")
-                    ],
-                    date_ranges=[DateRange(start_date="30daysAgo", end_date="yesterday")],
-                    dimension_filter=FilterExpression(
-                        filter=Filter(
-                            field_name="sessionDefaultChannelGroup",
-                            string_filter=Filter.StringFilter(value="Display")
-                        )
-                    )
-                )
-                
-                response = self.client.run_report(request)
                 # Process response...
                 print("✅ GA4 data pulled successfully")
                 

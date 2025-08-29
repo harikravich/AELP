@@ -15,6 +15,7 @@ Key Features:
 
 import asyncio
 import logging
+import os
 import pickle
 import time
 import uuid
@@ -133,8 +134,8 @@ class DelayedRewardConfig:
     
     # Storage settings
     use_redis_cache: bool = True
-    redis_host: str = "localhost"
-    redis_port: int = 6379
+    redis_host: str = os.environ.get('REDIS_HOST', 'localhost')
+    redis_port: int = int(os.environ.get('REDIS_PORT', 6379))
     redis_db: int = 0
     redis_ttl_seconds: int = 604800  # 7 days
     
@@ -338,7 +339,12 @@ class DelayedRewardSystem:
     def _start_background_tasks(self):
         """Start background cleanup and attribution tasks"""
         
-        loop = asyncio.get_event_loop()
+        try:
+            loop = asyncio.get_event_loop()
+        except RuntimeError:
+            # No event loop in current thread, create a new one
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
         
         self.cleanup_task = loop.create_task(self._periodic_cleanup())
         self.attribution_task = loop.create_task(self._periodic_attribution())

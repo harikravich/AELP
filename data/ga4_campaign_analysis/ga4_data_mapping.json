@@ -1,0 +1,15 @@
+{
+  "data_available": {
+    "campaigns": 50,
+    "landing_pages": 30,
+    "events": 48,
+    "segments": 41
+  },
+  "recommendations": [
+    "Use campaign-specific CVRs for different ad groups",
+    "Model iOS vs Android conversion differently",
+    "Include landing page quality in Quality Score",
+    "Track multi-product conversion paths",
+    "Separate Parental Controls from other features"
+  ]
+}

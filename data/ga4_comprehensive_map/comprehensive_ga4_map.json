@@ -1,0 +1,99 @@
+{
+  "aura_specific_insights": {
+    "ios_performance": {
+      "total_sessions": 772293,
+      "total_conversions": 10184,
+      "overall_cvr": 0.013186705045882844,
+      "avg_order_value": 65.77342880638811,
+      "top_channels": {
+        "Unassigned": 0.04681209105637352,
+        "Referral": 0.03603311526660105,
+        "Paid Search": 0.023602113892651874,
+        "Paid Social": 0.022560096536159195,
+        "Email": 0.02168384879725086
+      }
+    }
+  },
+  "campaigns": {},
+  "features": {
+    "antivirus": {
+      "sessions": 31997,
+      "conversions": 941,
+      "cvr": 0.0294090070944151,
+      "aov": 123.79541976620617,
+      "bounce_rate": 0.02725512535324124
+    },
+    "general": {
+      "sessions": 815054,
+      "conversions": 4267,
+      "cvr": 0.005235235947556849,
+      "aov": 120.48994141082729,
+      "bounce_rate": 0.10582526385348974
+    },
+    "identity_theft": {
+      "sessions": 36567,
+      "conversions": 0,
+      "cvr": 0.0,
+      "aov": 0.0,
+      "bounce_rate": 0.014288794764285
+    },
+    "parental_controls": {
+      "sessions": 87177,
+      "conversions": 262,
+      "cvr": 0.003005379859366576,
+      "aov": 94.1998854961832,
+      "bounce_rate": 0.04175166315922131
+    },
+    "password_manager": {
+      "sessions": 53113,
+      "conversions": 40,
+      "cvr": 0.0007531112910210306,
+      "aov": 58.217499999999994,
+      "bounce_rate": 0.017069536441202415
+    },
+    "vpn": {
+      "sessions": 40422,
+      "conversions": 790,
+      "cvr": 0.019543812775221416,
+      "aov": 60.93022784810126,
+      "bounce_rate": 0.057521777879496805
+    }
+  },
+  "conversion_paths": {
+    "Referral": {
+      "avg_sessions_to_convert": 4.833333333333333,
+      "engagement_duration": 5437.0,
+      "cvr": 0.5172413793103449
+    }
+  },
+  "user_segments": {
+    "concerned_parent": {
+      "description": "US-based parent with iOS device seeking child safety",
+      "sessions": 83889,
+      "cvr": 0.014972165599780662,
+      "aov": 86.83948248407643,
+      "device": "mobile/tablet",
+      "primary_feature": "parental_controls"
+    },
+    "security_focused": {
+      "description": "Desktop user interested in VPN and antivirus",
+      "sessions": 53261,
+      "cvr": 0.01137793131935187,
+      "aov": 92.21257425742574,
+      "device": "desktop",
+      "primary_feature": "vpn"
+    }
+  },
+  "recommendations": [
+    "1. MODEL iOS SEPARATELY: iOS has different CVR (1.20%) and is critical for Parental Controls",
+    "2. FEATURE-SPECIFIC BIDDING: VPN (3.98% CVR) should bid higher than Identity (0% CVR)",
+    "3. MULTI-TOUCH ATTRIBUTION: Average 1.33 sessions before conversion, some channels need 2+",
+    "4. CAMPAIGN SEGMENTATION: 'balance_parentingpressure' campaigns target parents specifically",
+    "5. DEVICE TARGETING: Mobile/tablet for parents, desktop for security-conscious users",
+    "6. GEOGRAPHIC OPTIMIZATION: US traffic converts better for parental controls",
+    "7. TIME-BASED BIDDING: Peak hours differ by feature (parents: evening, security: business hours)",
+    "8. LANDING PAGE QUALITY: Feature-specific pages have 2-4x better conversion",
+    "9. CREATIVE TESTING: Parent-focused vs security-focused messaging",
+    "10. BUDGET ALLOCATION: Allocate more to iOS campaigns for Parental Controls growth"
+  ]
+}

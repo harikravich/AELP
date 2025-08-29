@@ -345,9 +345,27 @@ class GA4DiscoveryEngine:
     
     def _save_patterns_to_cache(self):
         """Save discovered patterns to cache file"""
+        # Preserve paid channels that were manually added
+        existing_channels = {}
+        try:
+            with open('discovered_patterns.json', 'r') as f:
+                existing_data = json.load(f)
+                existing_channels = existing_data.get('channels', {})
+        except:
+            pass
+        
+        # Merge channels - keep paid channels
+        merged_channels = {}
+        # First add paid channels
+        for channel, data in existing_channels.items():
+            if channel in ['google', 'facebook', 'bing', 'tiktok']:
+                merged_channels[channel] = data
+        # Then add discovered channels (like organic)
+        merged_channels.update(self.patterns.channels)
+        
         cache_data = {
             'segments': self.patterns.segments,
-            'channels': self.patterns.channels,
+            'channels': merged_channels,
             'devices': self.patterns.devices,
             'temporal': self.patterns.temporal,
             'last_updated': datetime.now().isoformat()

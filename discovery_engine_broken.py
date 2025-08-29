@@ -232,20 +232,6 @@ class GA4DiscoveryEngine:
         """DEPRECATED: Using MCP GA4 functions instead"""
         print("⚠️ Method deprecated - using MCP GA4 functions")
         return
-                Dimension(name="country"),
-                Dimension(name="sessionDefaultChannelGroup"),
-                Dimension(name="dayOfWeek")
-            ],
-            metrics=[
-                Metric(name="sessions"),
-                Metric(name="conversions"),
-                Metric(name="averageSessionDuration"),
-                Metric(name="bounceRate")
-            ],
-            limit=1000
-        )
-        
-        response = self.client.run_report(request)
         
         # Build feature matrix for clustering
         features = []

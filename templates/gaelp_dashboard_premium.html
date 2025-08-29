@@ -605,6 +605,11 @@
                 <div class="metric-change" id="conversionsChange">--</div>
             </div>
             <div class="metric-card">
+                <div class="metric-label">Delayed Conversions</div>
+                <div class="metric-value" id="delayedConversions">0</div>
+                <div class="metric-change">Pending: <span id="pendingConversions">0</span></div>
+            </div>
+            <div class="metric-card">
                 <div class="metric-label">Impressions</div>
                 <div class="metric-value" id="totalImpressions">0</div>
                 <div class="metric-change" id="impressionsChange">--</div>
@@ -630,7 +635,7 @@
         <div class="tab-container">
             <div class="tab-header">
                 <button class="tab-button active" onclick="switchTab('creatives')">Creative Performance</button>
-                <button class="tab-button" onclick="switchTab('competitors')">Competitor Analysis</button>
+                <button class="tab-button" onclick="switchTab('auction')">Auction Performance</button>
                 <button class="tab-button" onclick="switchTab('clusters')">Discovered Segments</button>
                 <button class="tab-button" onclick="switchTab('learning')">AI Learning Insights</button>
                 <button class="tab-button" onclick="switchTab('channels')">Channel Performance</button>
@@ -645,11 +650,11 @@
                 </div>
             </div>
             
-            <!-- Competitor Analysis Tab -->
-            <div class="tab-content" id="competitorsTab">
-                <h3 style="margin-bottom: 1.5rem;">Real-Time Competitor Tracking</h3>
-                <div class="competitor-grid" id="competitorGrid">
-                    <!-- Will be populated dynamically -->
+            <!-- Auction Performance Tab -->
+            <div class="tab-content" id="auctionTab">
+                <h3 style="margin-bottom: 1.5rem;">Auction Win Rate Analysis</h3>
+                <div class="auction-stats" id="auctionStats">
+                    <!-- Will be populated with win rate, bid distribution, etc -->
                 </div>
             </div>
             
@@ -808,7 +813,7 @@
             data: {
                 labels: [],
                 datasets: [{
-                    label: 'Q-Values',
+                    label: 'Win Rate %',
                     data: [],
                     borderColor: '#10B981',
                     backgroundColor: 'rgba(16, 185, 129, 0.1)',
@@ -937,23 +942,41 @@
             try {
                 const response = await fetch('/api/status');
                 const data = await response.json();
+                console.log('Dashboard update:', {
+                    impressions: data.metrics?.total_impressions,
+                    events: data.events?.length,
+                    timeSeriesPoints: data.time_series?.timestamps?.length
+                });
                 
-                // Update header stats
-                const roas = data.metrics.total_revenue / Math.max(1, data.metrics.total_spend);
-                document.getElementById('liveROAS').textContent = roas.toFixed(1) + 'x';
-                document.getElementById('winRate').textContent = (data.metrics.win_rate * 100).toFixed(1) + '%';
+                // Update header stats with safety checks
+                if (data.metrics) {
+                    const roas = (data.metrics.total_revenue || 0) / Math.max(1, data.metrics.total_spend || 1);
+                    document.getElementById('liveROAS').textContent = roas.toFixed(1) + 'x';
+                    document.getElementById('winRate').textContent = ((data.metrics.win_rate || 0) * 100).toFixed(1) + '%';
+                    
+                    // Update all metrics with defaults
+                    document.getElementById('totalSpend').textContent = '$' + (data.metrics.total_spend || 0).toFixed(2);
+                    document.getElementById('totalRevenue').textContent = '$' + (data.metrics.total_revenue || 0).toFixed(0);
+                    document.getElementById('totalClicks').textContent = (data.metrics.total_clicks || 0).toLocaleString();
+                    document.getElementById('totalConversions').textContent = data.metrics.total_conversions || 0;
+                }
                 
-                // Update all metrics
-                document.getElementById('totalSpend').textContent = '$' + data.metrics.total_spend.toFixed(2);
-                document.getElementById('totalRevenue').textContent = '$' + data.metrics.total_revenue.toFixed(0);
-                document.getElementById('totalClicks').textContent = data.metrics.total_clicks.toLocaleString();
-                document.getElementById('totalConversions').textContent = data.metrics.total_conversions;
-                document.getElementById('totalImpressions').textContent = data.metrics.total_impressions.toLocaleString();
-                document.getElementById('avgCPA').textContent = '$' + data.metrics.current_cpa.toFixed(2);
+                // Update delayed conversions display
+                if (data.component_tracking && data.component_tracking.delayed_rewards) {
+                    document.getElementById('delayedConversions').textContent = 
+                        data.component_tracking.delayed_rewards.realized_conversions || 0;
+                    document.getElementById('pendingConversions').textContent = 
+                        data.component_tracking.delayed_rewards.pending_conversions || 0;
+                }
                 
-                // Calculate and display CTR
-                const ctr = (data.metrics.total_clicks / Math.max(1, data.metrics.total_impressions)) * 100;
-                document.getElementById('ctr').textContent = ctr.toFixed(2) + '%';
+                    document.getElementById('totalImpressions').textContent = (data.metrics.total_impressions || 0).toLocaleString();
+                    document.getElementById('avgCPA').textContent = '$' + (data.metrics.current_cpa || 0).toFixed(2);
+                
+                // Calculate and display CTR with safety
+                if (data.metrics) {
+                    const ctr = ((data.metrics.total_clicks || 0) / Math.max(1, data.metrics.total_impressions || 1)) * 100;
+                    document.getElementById('ctr').textContent = ctr.toFixed(2) + '%';
+                }
                 
                 // Display average bid
                 const avgBid = data.metrics.avg_bid || (data.time_series && data.time_series.bids.length > 0 ? 
@@ -999,38 +1022,36 @@
                     });
                 }
                 
-                // Update competitors
-                if (data.competitor_insights) {
-                    const grid = document.getElementById('competitorGrid');
-                    grid.innerHTML = '';
+                // Update auction performance (REAL data - your win rate)
+                const auctionDiv = document.getElementById('auctionStats');
+                if (auctionDiv && data.component_tracking) {
+                    const auction = data.component_tracking.auction || {};
+                    const winRate = data.component_tracking.win_rate || {};
                     
-                    for (const [name, competitor] of Object.entries(data.competitor_insights)) {
-                        const card = document.createElement('div');
-                        card.className = 'competitor-card';
-                        card.innerHTML = `
-                            <div class="competitor-name">${competitor.product}</div>
-                            <div class="competitor-company">${competitor.company}</div>
-                            <div class="competitor-stats">
-                                <div class="competitor-stat">
-                                    <div class="competitor-stat-value">$${competitor.avg_bid.toFixed(2)}</div>
-                                    <div class="competitor-stat-label">Avg Bid</div>
-                                </div>
-                                <div class="competitor-stat">
-                                    <div class="competitor-stat-value">${competitor.impressions_won.toLocaleString()}</div>
-                                    <div class="competitor-stat-label">Impressions</div>
-                                </div>
-                                <div class="competitor-stat">
-                                    <div class="competitor-stat-value">${(competitor.budget_utilization * 100).toFixed(0)}%</div>
-                                    <div class="competitor-stat-label">Budget Used</div>
-                                </div>
-                                <div class="competitor-stat">
-                                    <div class="competitor-stat-value">${competitor.primary_channel}</div>
-                                    <div class="competitor-stat-label">Focus</div>
-                                </div>
+                    auctionDiv.innerHTML = `
+                        <div class="auction-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                            <div class="stat-card" style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 12px;">
+                                <div class="stat-value" style="font-size: 2rem; font-weight: bold; color: #00ff88;">${auction.total_auctions || 0}</div>
+                                <div class="stat-label" style="color: #999; margin-top: 0.5rem;">Total Auctions</div>
                             </div>
-                        `;
-                        grid.appendChild(card);
-                    }
+                            <div class="stat-card" style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 12px;">
+                                <div class="stat-value" style="font-size: 2rem; font-weight: bold; color: #00ff88;">${auction.won_auctions || 0}</div>
+                                <div class="stat-label" style="color: #999; margin-top: 0.5rem;">Auctions Won</div>
+                            </div>
+                            <div class="stat-card" style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 12px;">
+                                <div class="stat-value" style="font-size: 2rem; font-weight: bold; color: #ff6b6b;">${auction.lost_auctions || 0}</div>
+                                <div class="stat-label" style="color: #999; margin-top: 0.5rem;">Auctions Lost</div>
+                            </div>
+                            <div class="stat-card" style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 12px;">
+                                <div class="stat-value" style="font-size: 2rem; font-weight: bold; color: #ffa500;">${((winRate.win_rate || 0) * 100).toFixed(1)}%</div>
+                                <div class="stat-label" style="color: #999; margin-top: 0.5rem;">Win Rate</div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 2rem;">
+                            <h4>Market Position</h4>
+                            <p style="color: #999;">Based on your win rate, you're competing effectively in the market. Adjust bids to optimize for profitability.</p>
+                        </div>
+                    `;
                 }
                 
                 // Update discovered clusters
@@ -1177,17 +1198,18 @@
                     charts.performance.data.datasets[0].data = data.time_series.roi ? data.time_series.roi.slice(-20) : [];
                     
                     // Win Rate data
-                    charts.performance.data.datasets[1].data = data.time_series.win_rate ? data.time_series.win_rate.slice(-20).map(v => v * 100) : [];
+                    charts.performance.data.datasets[1].data = data.time_series.win_rate ? data.time_series.win_rate.slice(-20) : [];
                     
                     // Bid data
                     charts.performance.data.datasets[2].data = data.time_series.bids ? data.time_series.bids.slice(-20) : [];
                     
                     charts.performance.update();
                     
-                    // Learning chart - ORIGINAL LOGIC
+                    // Learning chart - REALISTIC DATA
                     charts.learning.data.labels = labels;
-                    charts.learning.data.datasets[0].data = data.time_series.q_values ? data.time_series.q_values.slice(-20) : [];
-                    charts.learning.data.datasets[1].data = data.time_series.exploration_rate ? data.time_series.exploration_rate.slice(-20).map(v => v * 100) : [];
+                    // Show win rate instead of q_values (REAL metric)
+                    charts.learning.data.datasets[0].data = data.time_series.win_rate ? data.time_series.win_rate.slice(-20) : [];
+                    charts.learning.data.datasets[1].data = data.time_series.exploration_rate ? data.time_series.exploration_rate.slice(-20) : [];
                     charts.learning.update();
                 }
                 

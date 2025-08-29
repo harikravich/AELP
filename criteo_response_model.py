@@ -308,11 +308,35 @@ class CriteoUserResponseModel:
         self.feature_mapping = CriteoFeatureMapping()
         self.user_profiles = {}
         self.interaction_history = []
+        self.model = None
+        self.label_encoders = {}
         
-        # Load pre-trained model if path provided
-        if model_path and Path(model_path).exists():
+        # First try to load the GA4-trained model
+        ga4_model_path = Path("/home/hariravichandran/AELP/models/criteo_ga4_trained.pkl")
+        if ga4_model_path.exists():
+            print(f"Loading GA4-trained Criteo model from {ga4_model_path}")
+            self.load_ga4_model(ga4_model_path)
+        elif model_path and Path(model_path).exists():
             self.load_model(model_path)
         else:
+            self._train_default_model()
+    
+    def load_ga4_model(self, filepath: Path):
+        """Load the GA4-trained model"""
+        try:
+            with open(filepath, 'rb') as f:
+                model_data = pickle.load(f)
+            
+            self.model = model_data['model']
+            self.label_encoders = model_data['label_encoders']
+            self.feature_names = model_data['feature_names']
+            self.training_ctr = model_data.get('training_ctr', 0.074)  # 7.4% from GA4
+            
+            logger.info(f"Loaded GA4-trained model with AUC: {model_data.get('auc_score', 'N/A'):.4f}")
+            logger.info(f"Training CTR: {self.training_ctr*100:.2f}%")
+            
+        except Exception as e:
+            logger.error(f"Error loading GA4 model: {e}")
             self._train_default_model()
     
     def _train_default_model(self):
@@ -465,21 +489,51 @@ class CriteoUserResponseModel:
     def predict_ctr(self, features: Dict[str, Any]) -> float:
         """Predict CTR for given features"""
         
-        if self.ctr_model is None:
-            logger.warning("No CTR model available, using default prediction")
-            return 0.05
+        # Use GA4 model if available
+        if self.model is not None:
+            try:
+                # Prepare feature vector for GA4 model
+                feature_vector = np.zeros(39)
+                
+                # Map numerical features
+                for i in range(13):
+                    key = f'num_{i}'
+                    if key in features:
+                        feature_vector[i] = features[key]
+                
+                # Map categorical features with encoding
+                for i in range(26):
+                    key = f'cat_{i}'
+                    if key in features and key in self.label_encoders:
+                        val = features[key]
+                        encoder = self.label_encoders[key]
+                        if val in encoder.classes_:
+                            feature_vector[13 + i] = encoder.transform([val])[0]
+                        else:
+                            feature_vector[13 + i] = 0  # Unknown category
+                
+                # Get prediction
+                ctr = self.model.predict_proba([feature_vector])[0, 1]
+                return float(ctr)
+                
+            except Exception as e:
+                logger.error(f"Error with GA4 model prediction: {e}")
         
-        try:
-            # Convert to DataFrame for model prediction
-            feature_df = pd.DataFrame([features])
-            
-            # Predict CTR - the feature engineering happens inside the CTR model
-            ctr = self.ctr_model.predict_ctr(feature_df)[0]
-            return float(ctr)
-            
-        except Exception as e:
-            logger.error(f"Error predicting CTR: {e}")
-            return 0.05
+        # Fall back to Criteo model if available
+        if self.ctr_model is not None:
+            try:
+                # Convert to DataFrame for model prediction
+                feature_df = pd.DataFrame([features])
+                
+                # Predict CTR - the feature engineering happens inside the CTR model
+                ctr = self.ctr_model.predict_ctr(feature_df)[0]
+                return float(ctr)
+                
+            except Exception as e:
+                logger.error(f"Error predicting CTR: {e}")
+        
+        # Default fallback
+        return 0.05
     
     def simulate_user_response(self, 
                              user_id: str,

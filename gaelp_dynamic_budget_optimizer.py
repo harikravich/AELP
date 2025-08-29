@@ -381,21 +381,13 @@ class ChannelOptimizer:
             
         except Exception as e:
             logger.error(f"Error calculating optimal allocation: {e}")
-            return self._fallback_allocation(daily_budget)
+            # No fallback - fail loudly if optimization fails
+            logger.critical("OPTIMIZATION FAILED - No fallback allowed!")
+            raise RuntimeError("Budget optimization failed. Fix the optimizer instead of using fallbacks.")
     
-    def _fallback_allocation(self, daily_budget: Decimal) -> Dict[GAELPChannel, Decimal]:
-        """Emergency fallback allocation (should never be used in production)"""
-        logger.critical("Using fallback allocation - investigate optimization failure!")
-        
-        total_min = sum(c.min_daily_budget for c in self.channel_constraints.values())
-        if daily_budget < total_min:
-            raise ValueError(f"Budget ${daily_budget} below minimum requirements")
-        
-        # Proportional allocation above minimums
-        allocation = {}
-        remaining = daily_budget - total_min
-        
-        total_priority = sum(c.priority_score for c in self.channel_constraints.values())
+    def _removed_fallback_allocation(self, daily_budget: Decimal) -> Dict[GAELPChannel, Decimal]:
+        """REMOVED - No fallback allocations allowed in production"""
+        raise RuntimeError("Fallback allocation not allowed. Fix the optimization failure.")
         
         for channel, constraints in self.channel_constraints.items():
             proportional_share = remaining * Decimal(str(constraints.priority_score / total_priority))

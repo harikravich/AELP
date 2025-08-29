@@ -1,0 +1,101 @@
+country,city,device,user_type,sessions,conversions,revenue
+United States,(not set),mobile,new,11399,180,15244.639999999996
+United States,(not set),desktop,new,7732,77,8309.519999999999
+United States,New York,mobile,new,5787,72,6392.470000000001
+United States,Los Angeles,mobile,new,5549,75,7789.08
+United States,(not set),mobile,returning,4214,45,4014.59
+United States,(not set),desktop,returning,3854,20,2452.6099999999997
+United States,New York,desktop,new,3565,57,5948.2
+United States,Chicago,mobile,new,3181,60,6100.49
+United States,Los Angeles,desktop,new,2959,41,4862.27
+United States,Ashburn,desktop,new,2951,6,745.86
+United States,Chicago,desktop,new,2944,51,4187.13
+United States,New York,desktop,returning,2643,18,1801.7300000000002
+United States,Dallas,mobile,new,2492,47,2913.63
+United States,Houston,mobile,new,2300,42,3145.5
+United States,New York,mobile,returning,2247,20,1668.58
+United States,Atlanta,mobile,new,2008,31,2559.6900000000005
+United States,Seattle,mobile,new,1981,46,3277.5799999999995
+United States,San Jose,desktop,new,1949,16,1905.1200000000001
+United States,Los Angeles,mobile,returning,1903,15,1709.8000000000002
+United States,Phoenix,mobile,new,1677,34,3013.78
+United States,Los Angeles,desktop,returning,1635,24,1808.81
+United States,Houston,desktop,returning,1614,6,629.85
+United States,Flint Hill,desktop,new,1582,0,0.0
+United States,Dallas,desktop,returning,1492,8,497.98
+United States,Denver,mobile,new,1433,26,2619.6400000000003
+United States,Las Vegas,mobile,new,1316,26,2190.62
+United States,Charlotte,mobile,new,1291,24,2162.67
+United States,Chicago,desktop,returning,1271,6,482.88
+United States,Miami,mobile,new,1245,14,1769.8
+United States,Philadelphia,mobile,new,1223,29,2195.7200000000003
+United States,Ashburn,mobile,new,1195,5,345.99
+United States,Phoenix,desktop,new,1122,10,878.94
+United States,Boston,mobile,new,1110,16,1248.91
+United States,Columbus,mobile,new,1106,15,1671.71
+United States,Chicago,mobile,returning,1092,15,1723.6799999999998
+United States,San Francisco,mobile,new,1044,12,984.9300000000001
+United States,Newark,desktop,new,1043,2,139.98
+United States,Boydton,desktop,new,1017,0,0.0
+United States,Denver,desktop,returning,1010,10,1503.47
+United States,Austin,mobile,new,1005,23,1791.6400000000003
+United States,Dallas,mobile,returning,991,9,1009.85
+United States,Washington,mobile,new,948,6,383.99
+United States,Orlando,mobile,new,947,18,959.6600000000001
+United States,Jacksonville,mobile,new,941,19,1401.9
+United States,Raleigh,mobile,new,908,17,1025.8999999999999
+United States,Indianapolis,mobile,new,875,22,2104.92
+United States,Fort Worth,mobile,new,847,18,1622.88
+United States,Houston,desktop,new,830,22,2331.8
+United States,San Diego,mobile,new,830,6,550.8399999999999
+United States,Baltimore,mobile,new,826,6,504.96000000000004
+United States,Houston,mobile,returning,823,5,456.87
+United States,Nashville,mobile,new,817,16,1511.94
+United States,Miami,desktop,returning,807,1,384.0
+United States,Minneapolis,mobile,new,795,15,1077.67
+United States,Moses Lake,desktop,new,794,0,0.0
+United States,Portland,mobile,new,786,21,1647.88
+United States,Oklahoma City,mobile,new,784,19,1649.93
+United States,Atlanta,desktop,returning,778,5,946.87
+United States,Kansas City,mobile,new,775,13,1282.93
+United States,Sacramento,mobile,new,768,14,1273.68
+United States,Detroit,mobile,new,754,13,1061.94
+United States,Dallas,desktop,new,747,17,1679.45
+United States,Seattle,mobile,returning,728,10,1619.97
+United States,(not set),mobile,(not set),722,0,0.0
+United States,Des Moines,desktop,new,718,0,0.0
+United States,Atlanta,mobile,returning,713,6,483.88
+United States,Phoenix,desktop,returning,700,5,886.74
+United States,Salt Lake City,mobile,new,670,13,881.85
+United States,San Antonio,mobile,new,668,14,1119.92
+United States,Phoenix,mobile,returning,652,6,509.97
+United States,(not set),desktop,(not set),643,1,12.0
+United States,Tampa,mobile,new,636,14,1152.96
+United States,Atlanta,desktop,new,623,21,2624.58
+United States,Los Angeles,mobile,(not set),614,0,0.0
+United States,San Jose,mobile,new,602,12,1015.84
+United States,San Antonio,desktop,returning,598,2,294.0
+United Kingdom,London,mobile,new,579,0,0.0
+United States,Seattle,desktop,returning,567,11,1565.0
+United States,Reston,desktop,returning,563,6,537.96
+United States,Louisville,mobile,new,562,10,874.8100000000001
+United States,Columbus,desktop,returning,559,8,360.0
+United States,Miami,mobile,returning,559,5,558.98
+United States,Lancaster,desktop,returning,558,1,108.0
+United States,Birmingham,mobile,new,546,12,859.94
+United States,Denver,mobile,returning,545,3,239.86
+United States,Charlotte,mobile,returning,542,5,438.98
+United States,Denver,desktop,new,536,15,2154.8599999999997
+United States,Pittsburgh,mobile,new,531,6,367.96
+United States,Cleveland,mobile,new,521,8,1067.73
+United States,Seattle,desktop,new,509,16,2057.71
+(not set),(not set),mobile,new,493,0,0.0
+United States,San Jose,desktop,returning,486,12,1641.93
+United States,Las Vegas,desktop,returning,477,4,397.86
+United States,Las Vegas,desktop,new,476,11,1374.85
+United States,Philadelphia,mobile,returning,474,8,575.96
+United States,Las Vegas,mobile,returning,472,2,81.99
+United States,Lexington,mobile,new,464,3,247.98000000000002
+United States,Philadelphia,desktop,returning,464,1,215.88
+United States,Virginia Beach,mobile,new,455,10,908.9300000000001
+United States,Columbus,desktop,new,445,95,152.98
