@@ -529,6 +529,11 @@ class GAELPLiveSystemEnhanced:
                 result = self.orchestrator.step_fixed_environment()
                 step_count += 1
                 
+                # DEBUG: Log what master returns
+                if step_count % 10 == 0:
+                    metrics = result.get('metrics', {})
+                    self.log_event(f"🔍 Master metrics: spend={metrics.get('total_spend', 'MISSING')}, auctions={metrics.get('total_auctions', 0)}", "debug")
+                
                 # Update dashboard with REAL data
                 self.update_from_realistic_step(result)
                 
@@ -1349,10 +1354,11 @@ class GAELPLiveSystemEnhanced:
         self._update_attribution_model()
         
         # Update RL stats with real data
+        # ALWAYS update episode count regardless of master
+        self.rl_stats['learning_episodes'] = self.episode_count
+        
         if self.master and hasattr(self.master, 'rl_agent'):
             self.rl_stats['exploration_rate'] = getattr(self.master.rl_agent, 'epsilon', 0.1)
-            # Use REAL episode count!
-            self.rl_stats['learning_episodes'] = self.episode_count
             self.rl_stats['average_reward'] = (
                 self.rl_tracking['total_rewards'] / max(1, self.episode_count if self.episode_count > 0 else 1)
             )

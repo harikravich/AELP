@@ -306,6 +306,10 @@ class FixedGAELPEnvironment:
         done = (self.current_step >= self.max_steps or 
                 self.budget_spent >= self.max_budget)
         
+        # DEBUG: Log why episode ends
+        if done and self.current_step <= 5:
+            logger.warning(f"Episode ending early! step={self.current_step}/{self.max_steps}, budget=${self.budget_spent:.2f}/${self.max_budget}")
+        
         # Prepare info - ensure auction result is included properly
         info = {
             'auction': {
