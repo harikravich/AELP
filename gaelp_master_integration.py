@@ -1876,7 +1876,7 @@ class MasterOrchestrator:
             
             action = {
                 'channel': channel_list[channel_idx],
-                'bid': min(10.0, max(8.0, bid_value * 2.0)),  # MUCH higher bids to actually WIN auctions
+                'bid': min(4.0, max(1.5, bid_value * 1.2)),  # Realistic bids ($1.50-$4.00) for ~40% win rate
                 'creative_type': 'behavioral_health',
                 'audience_segment': segment_list[segment_idx],
                 'quality_score': 8.0  # Better quality score for learning
@@ -1926,7 +1926,7 @@ class MasterOrchestrator:
             
             action = {
                 'channel': best_channel,
-                'bid': 9.0,  # HIGH bid to WIN auctions and get data
+                'bid': 2.5,  # Realistic bid for ~30-40% win rate
                 'creative_type': 'behavioral_health',
                 'audience_segment': best_segment,
                 'quality_score': 8.0,  # Better quality score for learning phase

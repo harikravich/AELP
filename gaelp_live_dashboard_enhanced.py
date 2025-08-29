@@ -648,9 +648,17 @@ class GAELPLiveSystemEnhanced:
         
         # Also update from metrics if available
         if metrics:
-            self.auction_tracking['won_auctions'] = metrics.get('auction_wins', self.auction_tracking['won_auctions'])
-            self.auction_tracking['lost_auctions'] = metrics.get('auction_losses', self.auction_tracking['lost_auctions'])
-            self.auction_tracking['total_auctions'] = self.auction_tracking['won_auctions'] + self.auction_tracking['lost_auctions']
+            # Get total_auctions from master
+            total_auctions = metrics.get('total_auctions', self.auction_tracking['total_auctions'])
+            
+            # Calculate wins based on win rate or direct count
+            if 'auction_wins' in metrics:
+                self.auction_tracking['won_auctions'] = metrics.get('auction_wins')
+            elif 'win_rate' in metrics and total_auctions > 0:
+                self.auction_tracking['won_auctions'] = int(total_auctions * metrics.get('win_rate', 0))
+            
+            self.auction_tracking['total_auctions'] = total_auctions
+            self.auction_tracking['lost_auctions'] = total_auctions - self.auction_tracking['won_auctions']
             
             self.win_rate_tracking['auctions_won'] = self.auction_tracking['won_auctions']
             self.win_rate_tracking['auctions_entered'] = self.auction_tracking['total_auctions']
@@ -675,13 +683,24 @@ class GAELPLiveSystemEnhanced:
             self.metrics['total_clicks'] = metrics.get('total_clicks', self.metrics['total_clicks'])
             
             # Update spend from budget tracking
-            self.metrics['total_spend'] = metrics.get('budget_spent', self.metrics['total_spend'])
+            # CRITICAL FIX: Master returns 'total_spend' as STRING, not 'budget_spent'!
+            total_spend = metrics.get('total_spend', metrics.get('budget_spent', self.metrics['total_spend']))
+            # Convert from string if needed (master returns Decimal as string)
+            if isinstance(total_spend, str):
+                self.metrics['total_spend'] = float(total_spend)
+            else:
+                self.metrics['total_spend'] = total_spend
             
             # Track conversions (these happen with delay, so may be 0 initially)
             self.metrics['total_conversions'] = metrics.get('total_conversions', self.metrics['total_conversions'])
             
-            # Calculate revenue based on conversions (Balance AOV = $74.70)
-            self.metrics['total_revenue'] = self.metrics['total_conversions'] * 74.70
+            # Get revenue from metrics or calculate based on conversions (Balance AOV = $74.70)
+            total_revenue = metrics.get('total_revenue', self.metrics['total_conversions'] * 74.70)
+            # Convert from string if needed (master returns Decimal as string)
+            if isinstance(total_revenue, str):
+                self.metrics['total_revenue'] = float(total_revenue)
+            else:
+                self.metrics['total_revenue'] = total_revenue
         
         # Calculate rates (REAL)
         if self.metrics['total_impressions'] > 0:
@@ -740,12 +759,21 @@ class GAELPLiveSystemEnhanced:
             self._update_attribution_model()
         
         # Update platform tracking if we have platform data
-        if 'platform' in step_info:
+        # Check for channel in auction info or platform in step_info
+        auction_info = step_info.get('auction', {})
+        platform = None
+        
+        if 'channel' in auction_info:
+            platform = auction_info['channel']
+        elif 'platform' in step_info:
             platform = step_info['platform']
-            if platform in self.platform_tracking:
-                self.platform_tracking[platform]['impressions'] += 1 if won else 0
-                self.platform_tracking[platform]['clicks'] += 1 if step_info.get('clicked') else 0
-                self.platform_tracking[platform]['spend'] += step_info.get('cost', 0)
+        elif 'channel' in step_info:
+            platform = step_info['channel']
+            
+        if platform and platform in self.platform_tracking:
+            self.platform_tracking[platform]['impressions'] += 1 if won else 0
+            self.platform_tracking[platform]['clicks'] += 1 if step_info.get('clicked') else 0
+            self.platform_tracking[platform]['spend'] += auction_info.get('price', step_info.get('cost', 0))
         
         # Update RL tracking from reward
         self.rl_tracking['q_learning_updates'] += 1
