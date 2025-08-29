@@ -1821,6 +1821,7 @@ class MasterOrchestrator:
             'budget_remaining': self.fixed_environment.max_budget - self.fixed_environment.budget_spent,
             'total_impressions': self.fixed_environment.metrics.get('total_impressions', 0),
             'total_clicks': self.fixed_environment.metrics.get('total_clicks', 0),
+            'total_auctions': self.metrics.total_auctions,  # Use master's auction count
             'auction_wins': self.fixed_environment.metrics.get('auction_wins', 0),
             'auction_losses': self.fixed_environment.metrics.get('auction_losses', 0),
             'win_rate': (self.fixed_environment.metrics.get('auction_wins', 0) / 
@@ -1955,6 +1956,7 @@ class MasterOrchestrator:
                 # Update auction metrics from fixed environment
                 if 'auction' in info:
                     self.metrics.total_auctions += 1
+                    logger.info(f"Auction #{self.metrics.total_auctions}: won={won}")
                     if won:
                         # Auction won - spend already tracked by fixed environment
                         pass
