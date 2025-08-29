@@ -135,7 +135,9 @@ class GAELPConfig:
         total_revenue = sum(perf.revenue for perf in self.pm.channel_performance.values())
         daily_revenue = total_revenue / 90
         
-        self.daily_budget_total: Decimal = Decimal(str(daily_revenue * 0.3))  # 30% revenue as budget
+        # Ensure minimum budget of $1000 for learning
+        calculated_budget = daily_revenue * 0.3
+        self.daily_budget_total: Decimal = Decimal(str(max(1000.0, calculated_budget)))  # Min $1k budget
         
         # Safety settings from real CAC data - handle empty channel performance
         if self.pm.channel_performance.values():
@@ -1949,6 +1951,15 @@ class MasterOrchestrator:
                 state, reward, done, info = result
                 won = info.get('auction', {}).get('won', False)
                 logger.debug(f"Auction result: won={won}, position={info.get('auction', {}).get('position', 'N/A')}")
+                
+                # Update auction metrics from fixed environment
+                if 'auction' in info:
+                    self.metrics.total_auctions += 1
+                    if won:
+                        # Auction won - spend already tracked by fixed environment
+                        pass
+                    else:
+                        self.metrics.competitor_wins += 1
             else:
                 # Fallback for unexpected return format
                 state = result
