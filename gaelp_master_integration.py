@@ -2039,21 +2039,21 @@ class MasterOrchestrator:
             channel_ctr = self.fixed_environment.metrics.get('total_clicks', 0) / max(1, self.fixed_environment.metrics.get('total_impressions', 1))
             channel_performance = min(1.0, channel_ctr * 20)  # Normalize to 0-1
             
-            # Create a journey state with proper parameters from environment
+            # Create a journey state with proper parameters from environment - ensure no None values
             journey_state = JourneyState(
                 stage=user_data.get('stage', 1),  # Use actual user stage or default
                 touchpoints_seen=user_data.get('touchpoints_seen', self.fixed_environment.metrics.get('total_impressions', 0) % 10),
-                days_since_first_touch=user_data.get('days_since_first_touch', 0.0),
-                ad_fatigue_level=user_data.get('ad_fatigue_level', 0.3),
+                days_since_first_touch=float(user_data.get('days_since_first_touch', 0.0)),
+                ad_fatigue_level=float(user_data.get('ad_fatigue_level', 0.3)),
                 segment=segment_list[0] if segment_list else 'concerned_parents',
                 device='desktop',  # TODO: Get from actual context
                 hour_of_day=datetime.now().hour,
                 day_of_week=datetime.now().weekday(),
-                previous_clicks=user_data.get('previous_clicks', self.fixed_environment.metrics.get('total_clicks', 0)),
-                previous_impressions=user_data.get('previous_impressions', self.fixed_environment.metrics.get('total_impressions', 0)),
-                estimated_ltv=user_data.get('estimated_ltv', 100.0),
-                competition_level=competition_level,
-                channel_performance=channel_performance
+                previous_clicks=int(user_data.get('previous_clicks', self.fixed_environment.metrics.get('total_clicks', 0) or 0)),
+                previous_impressions=int(user_data.get('previous_impressions', max(1, self.fixed_environment.metrics.get('total_impressions', 1)))),
+                estimated_ltv=float(user_data.get('estimated_ltv', 100.0)),
+                competition_level=float(competition_level),
+                channel_performance=float(channel_performance)
             )
             
             # Get bid action from RL agent with error handling
@@ -2264,18 +2264,18 @@ class MasterOrchestrator:
                 
                 next_journey_state = JourneyState(
                     stage=2 if info.get('clicked', False) else 1,  # Progress stage on click
-                    touchpoints_seen=self.fixed_environment.metrics.get('total_impressions', 0) % 10,
+                    touchpoints_seen=int(self.fixed_environment.metrics.get('total_impressions', 0) % 10),
                     days_since_first_touch=1.0,
-                    ad_fatigue_level=min(0.9, 0.3 + self.fixed_environment.metrics.get('total_impressions', 0) * 0.01),
+                    ad_fatigue_level=float(min(0.9, 0.3 + self.fixed_environment.metrics.get('total_impressions', 0) * 0.01)),
                     segment=segment_list[0] if segment_list else 'concerned_parents',
                     device='desktop',
                     hour_of_day=datetime.now().hour,
                     day_of_week=datetime.now().weekday(),
-                    previous_clicks=self.fixed_environment.metrics.get('total_clicks', 0),
-                    previous_impressions=self.fixed_environment.metrics.get('total_impressions', 0),
+                    previous_clicks=int(self.fixed_environment.metrics.get('total_clicks', 0) or 0),
+                    previous_impressions=int(max(1, self.fixed_environment.metrics.get('total_impressions', 1))),
                     estimated_ltv=100.0,
-                    competition_level=next_competition,
-                    channel_performance=next_channel_perf
+                    competition_level=float(next_competition),
+                    channel_performance=float(next_channel_perf)
                 )
                 
                 # Store experience for training - convert action dict to index
@@ -2316,7 +2316,8 @@ class MasterOrchestrator:
                         # Calculate CTR and CVR for current state (handle None values)
                         prev_clicks = journey_state.previous_clicks if journey_state.previous_clicks is not None else 0
                         prev_impr = journey_state.previous_impressions if journey_state.previous_impressions is not None else 1
-                        ctr = prev_clicks / max(1, prev_impr)
+                        # Ensure float conversion to avoid type errors
+                        ctr = float(prev_clicks) / max(1.0, float(prev_impr))
                         cvr = 0.05  # Default conversion rate
                         
                         state_dict = {
@@ -2333,7 +2334,8 @@ class MasterOrchestrator:
                         # Calculate for next state (handle None values)
                         next_clicks = next_journey_state.previous_clicks if next_journey_state.previous_clicks is not None else 0
                         next_impr = next_journey_state.previous_impressions if next_journey_state.previous_impressions is not None else 1
-                        next_ctr = next_clicks / max(1, next_impr)
+                        # Ensure float conversion to avoid type errors
+                        next_ctr = float(next_clicks) / max(1.0, float(next_impr))
                         next_state_dict = {
                             'hour': next_journey_state.hour_of_day,
                             'day_of_week': next_journey_state.day_of_week,

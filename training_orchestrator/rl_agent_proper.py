@@ -325,33 +325,90 @@ class ProperRLAgent:
     
     def store_experience(self, state: JourneyState, action: int, reward: float, 
                         next_state: JourneyState, done: bool, info: Dict = None):
-        """Store experience in replay buffer"""
+        """Store experience in replay buffer with robust error handling"""
         
-        state_vector = state.to_vector(self.discovery)
-        
-        # Initialize networks on first observation
-        if self.q_network is None:
-            self._initialize_networks(len(state_vector))
-        
-        next_vector = next_state.to_vector(self.discovery) if next_state else np.zeros(len(state_vector))
-        
-        exp = Experience(
-            state=state_vector,
-            action=action,
-            reward=reward,
-            next_state=next_vector,
-            done=done,
-            info=info or {}
+        try:
+            # Validate and clean state before conversion
+            state = self._validate_journey_state(state)
+            state_vector = state.to_vector(self.discovery)
+            
+            # Initialize networks on first observation
+            if self.q_network is None:
+                self._initialize_networks(len(state_vector))
+            
+            # Validate next state
+            if next_state:
+                next_state = self._validate_journey_state(next_state)
+                next_vector = next_state.to_vector(self.discovery)
+            else:
+                next_vector = np.zeros(len(state_vector))
+            
+            # Clean info dict to ensure JSON serialization
+            clean_info = self._clean_info_dict(info or {})
+            
+            exp = Experience(
+                state=state_vector,
+                action=action,
+                reward=reward,
+                next_state=next_vector,
+                done=done,
+                info=clean_info
+            )
+            self.replay_buffer.push(exp)
+            
+            # Update discovery system with outcome for learning
+            if clean_info:
+                self.discovery.observe({
+                    'stage': state.stage,
+                    'outcome': reward,
+                    'bid': clean_info.get('bid', 1.0)
+                })
+                
+            # Log successful storage
+            if len(self.replay_buffer) % 10 == 0:
+                logger.info(f"Successfully stored experience. Buffer size: {len(self.replay_buffer)}")
+                
+        except Exception as e:
+            logger.error(f"Failed to store experience: {e}")
+            logger.error(f"State: {state}, Action: {action}, Reward: {reward}")
+    
+    def _validate_journey_state(self, state: JourneyState) -> JourneyState:
+        """Validate and fix None values in JourneyState"""
+        # Create a new state with validated values
+        return JourneyState(
+            stage=state.stage if state.stage is not None else 1,
+            touchpoints_seen=state.touchpoints_seen if state.touchpoints_seen is not None else 0,
+            days_since_first_touch=state.days_since_first_touch if state.days_since_first_touch is not None else 0.0,
+            ad_fatigue_level=state.ad_fatigue_level if state.ad_fatigue_level is not None else 0.0,
+            segment=state.segment if state.segment is not None else 'default',
+            device=state.device if state.device is not None else 'desktop',
+            hour_of_day=state.hour_of_day if state.hour_of_day is not None else 12,
+            day_of_week=state.day_of_week if state.day_of_week is not None else 0,
+            previous_clicks=state.previous_clicks if state.previous_clicks is not None else 0,
+            previous_impressions=state.previous_impressions if state.previous_impressions is not None else 1,
+            estimated_ltv=state.estimated_ltv if state.estimated_ltv is not None else 100.0,
+            competition_level=getattr(state, 'competition_level', 0.5),
+            channel_performance=getattr(state, 'channel_performance', 0.5)
         )
-        self.replay_buffer.push(exp)
-        
-        # Update discovery system with outcome for learning
-        if info:
-            self.discovery.observe({
-                'stage': state.stage,
-                'outcome': reward,
-                'bid': info.get('bid', 1.0)
-            })
+    
+    def _clean_info_dict(self, info: Dict) -> Dict:
+        """Clean info dict for JSON serialization"""
+        import json
+        clean_info = {}
+        for key, value in info.items():
+            try:
+                # Test JSON serialization
+                json.dumps(value)
+                clean_info[key] = value
+            except (TypeError, ValueError):
+                # Convert non-serializable objects to strings
+                if hasattr(value, '__dict__'):
+                    clean_info[key] = str(value)
+                elif isinstance(value, (list, tuple)):
+                    clean_info[key] = [str(item) for item in value]
+                else:
+                    clean_info[key] = str(value)
+        return clean_info
     
     def train_dqn(self, batch_size: int = 32):
         """Train Q-network using experience replay"""
@@ -359,32 +416,46 @@ class ProperRLAgent:
         if len(self.replay_buffer) < batch_size:
             return
         
-        batch = self.replay_buffer.sample(batch_size)
+        loss = None  # Initialize loss variable
         
-        states = torch.FloatTensor([e.state for e in batch]).to(self.device)
-        actions = torch.LongTensor([e.action for e in batch]).to(self.device)
-        rewards = torch.FloatTensor([e.reward for e in batch]).to(self.device)
-        next_states = torch.FloatTensor([e.next_state for e in batch]).to(self.device)
-        dones = torch.FloatTensor([e.done for e in batch]).to(self.device)
-        
-        current_q_values = self.q_network(states).gather(1, actions.unsqueeze(1))
-        
-        with torch.no_grad():
-            next_q_values = self.target_network(next_states).max(1)[0]
-            target_q_values = rewards + (1 - dones) * self.gamma * next_q_values
-        
-        loss = nn.MSELoss()(current_q_values.squeeze(), target_q_values)
-        
-        self.q_optimizer.zero_grad()
-        loss.backward()
-        torch.nn.utils.clip_grad_norm_(self.q_network.parameters(), 1.0)
-        self.q_optimizer.step()
-        
-        self.training_steps += 1
-        
-        # Update target network
-        if self.training_steps % 100 == 0:
-            self.target_network.load_state_dict(self.q_network.state_dict())
+        try:
+            batch = self.replay_buffer.sample(batch_size)
+            
+            states = torch.FloatTensor([e.state for e in batch]).to(self.device)
+            actions = torch.LongTensor([e.action for e in batch]).to(self.device)
+            rewards = torch.FloatTensor([e.reward for e in batch]).to(self.device)
+            next_states = torch.FloatTensor([e.next_state for e in batch]).to(self.device)
+            dones = torch.FloatTensor([e.done for e in batch]).to(self.device)
+            
+            current_q_values = self.q_network(states).gather(1, actions.unsqueeze(1))
+            
+            with torch.no_grad():
+                next_q_values = self.target_network(next_states).max(1)[0]
+                target_q_values = rewards + (1 - dones) * self.gamma * next_q_values
+            
+            loss = nn.MSELoss()(current_q_values.squeeze(), target_q_values)
+            
+            self.q_optimizer.zero_grad()
+            loss.backward()
+            torch.nn.utils.clip_grad_norm_(self.q_network.parameters(), 1.0)
+            self.q_optimizer.step()
+            
+            self.training_steps += 1
+            
+            # Update target network
+            if self.training_steps % 100 == 0:
+                self.target_network.load_state_dict(self.q_network.state_dict())
+                
+            # Log training progress
+            if self.training_steps % 50 == 0:
+                logger.info(f"DQN Training step {self.training_steps}, Loss: {loss.item():.4f}")
+                
+        except Exception as e:
+            logger.error(f"Training failed at step {self.training_steps}: {e}")
+            if loss is not None:
+                logger.error(f"Loss value: {loss.item()}")
+            else:
+                logger.error("Loss was not computed due to early failure")
     
     def train_ppo(self, states: List[JourneyState], actions: List[int], 
                   advantages: List[float], returns: List[float], 
