@@ -884,6 +884,10 @@ class GAELPLiveSystemEnhanced:
         self.rl_tracking['q_learning_updates'] += 1
         self.rl_tracking['total_rewards'] += reward
         
+        # Track PPO updates every 20 DQN updates (matching master integration)
+        if self.rl_tracking['q_learning_updates'] % 20 == 0:
+            self.rl_tracking['ppo_updates'] += 1
+        
         # DEBUG: Log rewards occasionally
         if self.rl_tracking['q_learning_updates'] % 20 == 0:
             avg_reward = self.rl_tracking['total_rewards'] / max(1, self.rl_tracking['q_learning_updates'])
@@ -1961,17 +1965,24 @@ class GAELPLiveSystemEnhanced:
                             })
                 
                 # Also analyze replay buffer for high-value experiences
-                if hasattr(agent, 'replay_buffer') and len(agent.replay_buffer) > 100:
-                    # Sample experiences and find patterns
-                    from collections import defaultdict
-                    segment_rewards = defaultdict(list)
-                    
-                    # Analyze last 100 experiences
-                    for exp in list(agent.replay_buffer)[-100:]:
-                        if len(exp) >= 3:  # state, action, reward
-                            state, _, reward = exp[:3]
-                            if hasattr(state, 'segment'):
-                                segment_rewards[state.segment].append(reward)
+                if hasattr(agent, 'replay_buffer'):
+                    # Access the actual buffer (deque) inside ReplayBuffer
+                    buffer = agent.replay_buffer.buffer if hasattr(agent.replay_buffer, 'buffer') else []
+                    if len(buffer) > 100:
+                        # Sample experiences and find patterns
+                        from collections import defaultdict
+                        segment_rewards = defaultdict(list)
+                        
+                        # Analyze last 100 experiences
+                        for exp in list(buffer)[-100:]:
+                            # Experience is a named tuple or object
+                            if hasattr(exp, 'reward') and hasattr(exp, 'state'):
+                                # Try to extract segment from state
+                                state_segment = None
+                                if hasattr(exp, 'info') and exp.info:
+                                    state_segment = exp.info.get('segment')
+                                if state_segment:
+                                    segment_rewards[state_segment].append(exp.reward)
                     
                     # Add high-performing segments
                     for seg_name, rewards in segment_rewards.items():

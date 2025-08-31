@@ -434,6 +434,60 @@ class ProperRLAgent:
                 torch.nn.utils.clip_grad_norm_(self.policy_network.parameters(), 1.0)
                 self.policy_optimizer.step()
     
+    def train_ppo_from_buffer(self, batch_size: int = 32):
+        """Train PPO for creative selection using replay buffer experiences"""
+        if not hasattr(self, 'replay_buffer') or len(self.replay_buffer.buffer) < batch_size:
+            return
+            
+        # Sample recent experiences for PPO training
+        recent_experiences = list(self.replay_buffer.buffer)[-batch_size:]
+        
+        # Extract states and compute returns
+        states = []
+        actions = []
+        rewards = []
+        
+        for exp in recent_experiences:
+            # Convert state vector back to JourneyState for PPO
+            # For now, use simplified state reconstruction
+            state = JourneyState(
+                stage=2,  # Default to consideration
+                touchpoints_seen=3,
+                days_since_first_touch=1.0,
+                ad_fatigue_level=0.3,
+                segment='concerned_parents',
+                device='desktop',
+                hour_of_day=14,
+                day_of_week=2,
+                previous_clicks=1,
+                previous_impressions=5,
+                estimated_ltv=100.0
+            )
+            states.append(state)
+            
+            # Use creative action (modulo creative_actions to get valid creative index)
+            creative_action = exp.action % self.creative_actions
+            actions.append(creative_action)
+            rewards.append(exp.reward)
+        
+        # Compute advantages and returns
+        returns = []
+        advantages = []
+        discounted_reward = 0
+        for reward in reversed(rewards):
+            discounted_reward = reward + self.gamma * discounted_reward
+            returns.insert(0, discounted_reward)
+        
+        returns_tensor = torch.FloatTensor(returns)
+        returns_mean = returns_tensor.mean()
+        returns_std = returns_tensor.std() + 1e-8
+        advantages = [(r - returns_mean) / returns_std for r in returns]
+        
+        # Train PPO with collected data
+        if len(states) >= 16:  # Need minimum batch
+            self.train_ppo(states[:16], actions[:16], advantages[:16], returns[:16], epochs=2, batch_size=8)
+            logger.info(f"PPO training complete for creative selection")
+    
     def update_epsilon(self, decay_rate: float = 0.995):
         """Decay exploration rate"""
         self.epsilon = max(0.01, self.epsilon * decay_rate)

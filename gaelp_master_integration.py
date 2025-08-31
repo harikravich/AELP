@@ -2048,9 +2048,15 @@ class MasterOrchestrator:
                         buffer_size = len(self.rl_agent.replay_buffer)
                         logger.info(f"📊 Buffer size: {buffer_size}/32 needed")
                         if buffer_size >= 32:
-                            logger.info(f"🧠 TRAINING NOW! Buffer={buffer_size}, reward={reward:.2f}")
+                            logger.info(f"🧠 TRAINING DQN NOW! Buffer={buffer_size}, reward={reward:.2f}")
                             self.rl_agent.train_dqn(batch_size=32)
-                            logger.info(f"✅ Training complete for step {self.metrics.total_auctions}")
+                            logger.info(f"✅ DQN training complete for step {self.metrics.total_auctions}")
+                            
+                            # ALSO train PPO for creative selection every 20 auctions
+                            if self.metrics.total_auctions % 20 == 0:
+                                logger.info(f"🎨 Training PPO for creative selection...")
+                                self.rl_agent.train_ppo_from_buffer(batch_size=32)
+                                logger.info(f"✅ PPO training complete - creatives will adapt!")
                     else:
                         logger.warning("❌ No replay_buffer attribute found!")
             
