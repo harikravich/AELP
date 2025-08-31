@@ -244,6 +244,14 @@ class GAELPLiveSystemEnhanced:
             'tiktok': {'spend': 0, 'conversions': 0}
         }
         
+        # Channel performance for dashboard display
+        self.channel_performance = {
+            'google': {'spend': 0, 'conversions': 0, 'impressions': 0, 'clicks': 0},
+            'facebook': {'spend': 0, 'conversions': 0, 'impressions': 0, 'clicks': 0},
+            'bing': {'spend': 0, 'conversions': 0, 'impressions': 0, 'clicks': 0},
+            'tiktok': {'spend': 0, 'conversions': 0, 'impressions': 0, 'clicks': 0}
+        }
+        
         # 5. CONVERSION_LAG - Survival analysis
         self.conversion_lag_tracking = {
             'avg_lag_hours': 0,
@@ -549,8 +557,8 @@ class GAELPLiveSystemEnhanced:
                     if step_count > 10:
                         self.component_status['LEARNING_SYSTEM'] = 'training'
                 
-                # Check if episode done (daily budget spent OR every 100 steps)
-                if result.get('done', False) or step_count % 100 == 0:
+                # Check if episode done (daily budget spent OR every 25 steps for FASTER learning)
+                if result.get('done', False) or step_count % 25 == 0:
                     episode += 1
                     self.episode_count = episode  # UPDATE EPISODE COUNT!
                     
@@ -575,10 +583,25 @@ class GAELPLiveSystemEnhanced:
                     self.learning_metrics['epsilon'] = getattr(rl_agent, 'epsilon', 1.0)
                     self.learning_metrics['training_steps'] = step_count
                     
-                    # Calculate average reward if agent tracks it
-                    if hasattr(rl_agent, 'memory') and len(rl_agent.memory) > 0:
-                        recent_rewards = [exp[2] for exp in list(rl_agent.memory)[-100:]]
+                    # Update RL stats for dashboard
+                    self.rl_stats['exploration_rate'] = getattr(rl_agent, 'epsilon', 0.1)
+                    self.rl_stats['learning_episodes'] = self.episode_count
+                    
+                    # Get Q-table size
+                    if hasattr(rl_agent, 'q_table'):
+                        self.rl_stats['q_values'] = {'size': len(rl_agent.q_table)}
+                    
+                    # Get replay buffer size
+                    if hasattr(rl_agent, 'replay_buffer'):
+                        buffer_size = len(rl_agent.replay_buffer)
+                        self.rl_stats['buffer_size'] = buffer_size
+                        self.rl_stats['training_ready'] = buffer_size >= 32
+                    
+                    # Calculate average reward from recent experiences
+                    if hasattr(rl_agent, 'replay_buffer') and len(rl_agent.replay_buffer) > 0:
+                        recent_rewards = [exp.reward for exp in list(rl_agent.replay_buffer.buffer)[-100:]]
                         self.learning_metrics['avg_reward'] = np.mean(recent_rewards) if recent_rewards else 0.0
+                        self.rl_stats['average_reward'] = self.learning_metrics['avg_reward']
                 
                 # Track discoveries for AI insights
                 if result.get('step_info', {}).get('won', False):
@@ -604,8 +627,8 @@ class GAELPLiveSystemEnhanced:
                 
                 # No need for complex component tracking in realistic mode
                 
-                # Sleep to control simulation speed
-                time.sleep(0.1)  # 10 steps per second for real-time visualization
+                # Sleep to control simulation speed - ULTRA FAST MODE
+                time.sleep(0.001)  # 1000 steps per second!
                 
             except Exception as e:
                 import traceback
@@ -649,7 +672,14 @@ class GAELPLiveSystemEnhanced:
                 self.log_event(f"Journey DB store: {str(e)}", "debug")
         
         # Update tracking components with REAL data from fixed environment
-        won = step_info.get('won', False)
+        # Check both step_info and auction data for won status
+        won = step_info.get('won', step_info.get('auction', {}).get('won', False))
+        
+        # DEBUG: Log the structure we're getting
+        if self.metrics.get('total_impressions', 0) % 10 == 0:
+            auction_data = step_info.get('auction', {})
+            self.log_event(f"📦 step_info keys: {list(step_info.keys())[:5]}", "debug")
+            self.log_event(f"📦 auction won: {auction_data.get('won', 'MISSING')}", "debug")
         
         # Also update from metrics if available
         if metrics:
@@ -735,8 +765,68 @@ class GAELPLiveSystemEnhanced:
         # Update win rate
         self.metrics['win_rate'] = self.win_rate_tracking['win_rate']
         
+        # Track channel performance from actual auction wins
+        channel = step_info.get('channel', result.get('action', {}).get('channel', 'google'))
+        
+        # DEBUG: Log what we're getting EVERY TIME for now
+        if won:
+            auction_info = step_info.get('auction', {})
+            price = auction_info.get('price_paid', 0)
+            self.log_event(f"🎯 WON on {channel}! Price: ${price:.2f}", "success")
+        
+        if won:
+            # Update platform tracking (what _get_channel_performance reads)
+            if channel not in self.platform_tracking:
+                self.platform_tracking[channel] = {'impressions': 0, 'clicks': 0, 'spend': 0.0}
+            
+            # Get price from auction info or step info
+            auction_info = step_info.get('auction', {})
+            price = auction_info.get('price_paid', auction_info.get('price', step_info.get('cost', step_info.get('price', 0))))
+            self.platform_tracking[channel]['spend'] += price
+            self.platform_tracking[channel]['impressions'] += 1
+            
+            # Also update channel_performance for creative ROAS calculation
+            if channel not in self.channel_performance:
+                self.channel_performance[channel] = {'spend': 0, 'conversions': 0, 'impressions': 0, 'clicks': 0}
+            self.channel_performance[channel]['spend'] += price
+            self.channel_performance[channel]['impressions'] += 1
+            
+            # Track clicks
+            if step_info.get('clicked', False):
+                self.platform_tracking[channel]['clicks'] += 1
+                self.channel_performance[channel]['clicks'] += 1
+                
+                # Track creative click
+                creative_id = f'{channel}_creative_1'
+                if creative_id not in self.creative_tracking:
+                    self.creative_tracking[creative_id] = {'impressions': 0, 'clicks': 0, 'conversions': 0}
+                self.creative_tracking[creative_id]['clicks'] += 1
+            
+            # Track creative impressions
+            creative_id = f'{channel}_creative_1'
+            if creative_id not in self.creative_tracking:
+                self.creative_tracking[creative_id] = {'impressions': 0, 'clicks': 0, 'conversions': 0}
+            self.creative_tracking[creative_id]['impressions'] += 1
+        
         # Track for attribution if there was a conversion
-        if step_info.get('converted', False):
+        if step_info.get('converted', False) or step_info.get('delayed_conversions_scheduled', 0) > 0:
+            # Track conversion for channel tracking (what _get_channel_performance reads)
+            if channel not in self.channel_tracking:
+                self.channel_tracking[channel] = {'spend': 0, 'conversions': 0}
+            self.channel_tracking[channel]['conversions'] += 1
+            
+            # Also update channel_performance for creative ROAS
+            if channel in self.channel_performance:
+                self.channel_performance[channel]['conversions'] += 1
+            
+            # Track conversion for creative
+            creative_id = f'{channel}_creative_1'
+            if creative_id in self.creative_tracking:
+                self.creative_tracking[creative_id]['conversions'] += 1
+            
+            # Update attribution - last touch for now
+            self.attribution_tracking['last_touch'] = self.attribution_tracking.get('last_touch', 0) + 1
+            
             # 2. Process conversion through REAL AttributionEngine
             if hasattr(self.master, 'attribution_engine') and hasattr(self.master, 'journey_db'):
                 user_id = result.get('user_id', str(uuid.uuid4()))
@@ -1609,11 +1699,11 @@ class GAELPLiveSystemEnhanced:
                 'headline': 'Get Help Now - 24/7 Crisis Support',
                 'body_copy': 'Professional support for teens in crisis. Confidential & immediate help available.',
                 'cta_text': 'Start Chat Now',
-                'impressions': self.creative_tracking.get('crisis_help_v1', {}).get('impressions', 0),
-                'clicks': self.creative_tracking.get('crisis_help_v1', {}).get('clicks', 0),
-                'ctr': self.creative_tracking.get('crisis_help_v1', {}).get('clicks', 0) / max(1, self.creative_tracking.get('crisis_help_v1', {}).get('impressions', 1)),
-                'conversions': 0,  # Would track with YOUR pixel
-                'roas': 0.0
+                'impressions': self.creative_tracking.get('google_creative_1', {}).get('impressions', 0),
+                'clicks': self.creative_tracking.get('google_creative_1', {}).get('clicks', 0),
+                'ctr': self.creative_tracking.get('google_creative_1', {}).get('clicks', 0) / max(1, self.creative_tracking.get('google_creative_1', {}).get('impressions', 1)) * 100,
+                'conversions': self.creative_tracking.get('google_creative_1', {}).get('conversions', 0),
+                'roas': (self.creative_tracking.get('google_creative_1', {}).get('conversions', 0) * 74.70) / max(1, self.channel_performance.get('google', {}).get('spend', 1))
             },
             {
                 'creative_id': 'parent_concern_v1',
@@ -1622,11 +1712,11 @@ class GAELPLiveSystemEnhanced:
                 'headline': 'Is Your Teen OK?',
                 'body_copy': 'Learn the warning signs. Track mood changes. Get peace of mind.',
                 'cta_text': 'Learn More',
-                'impressions': self.creative_tracking.get('parent_concern_v1', {}).get('impressions', 0),
-                'clicks': self.creative_tracking.get('parent_concern_v1', {}).get('clicks', 0),
-                'ctr': self.creative_tracking.get('parent_concern_v1', {}).get('clicks', 0) / max(1, self.creative_tracking.get('parent_concern_v1', {}).get('impressions', 1)),
-                'conversions': 0,
-                'roas': 0.0
+                'impressions': self.creative_tracking.get('facebook_creative_1', {}).get('impressions', 0),
+                'clicks': self.creative_tracking.get('facebook_creative_1', {}).get('clicks', 0),
+                'ctr': self.creative_tracking.get('facebook_creative_1', {}).get('clicks', 0) / max(1, self.creative_tracking.get('facebook_creative_1', {}).get('impressions', 1)) * 100,
+                'conversions': self.creative_tracking.get('facebook_creative_1', {}).get('conversions', 0),
+                'roas': (self.creative_tracking.get('facebook_creative_1', {}).get('conversions', 0) * 74.70) / max(1, self.channel_performance.get('facebook', {}).get('spend', 1))
             },
             {
                 'creative_id': 'balance_feature_v1',
@@ -1635,11 +1725,11 @@ class GAELPLiveSystemEnhanced:
                 'headline': 'Mental Health Tracking That Works',
                 'body_copy': 'See how Balance helps families stay connected.',
                 'cta_text': 'Try Free',
-                'impressions': self.creative_tracking.get('balance_feature_v1', {}).get('impressions', 0),
-                'clicks': self.creative_tracking.get('balance_feature_v1', {}).get('clicks', 0),
-                'ctr': self.creative_tracking.get('balance_feature_v1', {}).get('clicks', 0) / max(1, self.creative_tracking.get('balance_feature_v1', {}).get('impressions', 1)),
-                'conversions': 0,
-                'roas': 0.0
+                'impressions': self.creative_tracking.get('tiktok_creative_1', {}).get('impressions', 0),
+                'clicks': self.creative_tracking.get('tiktok_creative_1', {}).get('clicks', 0),
+                'ctr': self.creative_tracking.get('tiktok_creative_1', {}).get('clicks', 0) / max(1, self.creative_tracking.get('tiktok_creative_1', {}).get('impressions', 1)) * 100,
+                'conversions': self.creative_tracking.get('tiktok_creative_1', {}).get('conversions', 0),
+                'roas': (self.creative_tracking.get('tiktok_creative_1', {}).get('conversions', 0) * 74.70) / max(1, self.channel_performance.get('tiktok', {}).get('spend', 1))
             }
         ]
         
@@ -1841,50 +1931,73 @@ class GAELPLiveSystemEnhanced:
         }
     
     def _get_discovered_segments(self):
-        """Get REAL segments discovered from Q-learning - NO FALLBACKS"""
+        """Get REAL segments discovered from DQN/PPO neural networks - NO FALLBACKS"""
         segments = []
         
-        # ONLY show segments after AT LEAST 50 episodes of learning
-        if self.episode_count < 50:
+        # Lower threshold to 10 episodes for faster discovery
+        if self.episode_count < 10:
             return []  # NO segments until we've learned enough
         
-        # Get REAL discoveries from RL agent's Q-table
+        # Get REAL discoveries from RL agent's neural networks and discovery system
         if hasattr(self, 'master') and hasattr(self.master, 'rl_agent'):
             agent = self.master.rl_agent
             
-            # Check if agent has Q-table (Q-learning) 
-            if hasattr(agent, 'q_table') and len(agent.q_table) > 0:
-                # Analyze Q-values to find winning state-action pairs
-                for state_action, q_value in agent.q_table.items():
-                    if q_value > 0.5:  # Good Q-value indicates discovered pattern
-                        state = state_action[0] if isinstance(state_action, tuple) else state_action
-                        
-                        # Parse state to extract segment characteristics
-                        # State typically encodes: (channel, audience, time_of_day, etc.)
-                        segment_name = f"Segment_{hash(str(state)) % 10000}"
-                        
-                        # Get visit count for confidence
-                        visits = agent.state_visits.get(state, 0) if hasattr(agent, 'state_visits') else 1
-                        
-                        if visits >= 100:  # Need MANY observations for real discovery
+            # Check if agent has discovery system (DynamicDiscoverySystem)
+            if hasattr(agent, 'discovery') and agent.discovery:
+                discovery = agent.discovery
+                
+                # Get discovered segments from the discovery system
+                if hasattr(discovery, 'discovered_segments'):
+                    for seg_name, seg_data in discovery.discovered_segments.items():
+                        obs = seg_data.get('observations', 0)
+                        if obs >= 20:  # Need at least 20 observations
                             segments.append({
-                                'name': segment_name,
-                                'confidence': min(q_value, 1.0),
-                                'observations': visits,
-                                'avg_reward': q_value,
-                                'discovered_episode': self.episode_count
+                                'name': seg_name,
+                                'confidence': min(obs / 100, 1.0),
+                                'observations': obs,
+                                'avg_reward': seg_data.get('avg_value', 0),
+                                'discovered_episode': seg_data.get('discovered_at', self.episode_count),
+                                'characteristics': seg_data.get('characteristics', {})
                             })
+                
+                # Also analyze replay buffer for high-value experiences
+                if hasattr(agent, 'replay_buffer') and len(agent.replay_buffer) > 100:
+                    # Sample experiences and find patterns
+                    from collections import defaultdict
+                    segment_rewards = defaultdict(list)
+                    
+                    # Analyze last 100 experiences
+                    for exp in list(agent.replay_buffer)[-100:]:
+                        if len(exp) >= 3:  # state, action, reward
+                            state, _, reward = exp[:3]
+                            if hasattr(state, 'segment'):
+                                segment_rewards[state.segment].append(reward)
+                    
+                    # Add high-performing segments
+                    for seg_name, rewards in segment_rewards.items():
+                        if len(rewards) >= 10:  # Need enough data
+                            avg_reward = np.mean(rewards)
+                            if avg_reward > 0.1:  # Positive average reward
+                                segments.append({
+                                    'name': seg_name,
+                                    'confidence': min(len(rewards) / 50, 1.0),
+                                    'observations': len(rewards),
+                                    'avg_reward': avg_reward,
+                                    'discovered_episode': self.episode_count
+                                })
             
-            # NO FALLBACK - if no Q-table, return empty
+            # NO FALLBACK - if no discovery system, return empty
             # We NEVER show fake segments
         
-        # Sort by confidence  
-        segments = sorted(segments, key=lambda x: x.get('confidence', 0), reverse=True)
+        # Sort by confidence and remove duplicates
+        seen = set()
+        unique_segments = []
+        for seg in sorted(segments, key=lambda x: x.get('confidence', 0), reverse=True):
+            if seg['name'] not in seen:
+                seen.add(seg['name'])
+                unique_segments.append(seg)
         
-        # Return empty list if no real segments discovered
-        # Dashboard should show "No segments discovered yet" message
-        
-        return segments[:10]  # Top 10 segments
+        return unique_segments[:10]  # Top 10 segments
     
     def _get_ai_insights(self):
         """Generate AI insights from agent learning"""

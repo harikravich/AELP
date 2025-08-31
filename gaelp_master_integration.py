@@ -265,7 +265,7 @@ class MasterOrchestrator:
             self.init_callback("🔧 Component 2/19: FIXED GAELP Environment - Core simulation with all improvements", "system")
         self.fixed_environment = FixedGAELPEnvironment(
             max_budget=float(self.config.daily_budget_total),
-            max_steps=1000  # Steps per episode
+            max_steps=100  # Faster episodes for quicker learning
         )
         
         # 3. Monte Carlo Simulator (now uses fixed environment)
@@ -1836,6 +1836,10 @@ class MasterOrchestrator:
         if not hasattr(self, 'fixed_environment'):
             return {}
         
+        # Initialize variables for training later
+        journey_state = None
+        bid_action_idx = 0
+        
         # Get action from RL agent or use intelligent defaults based on discovered patterns
         if hasattr(self, 'rl_agent') and self.rl_agent is not None:
             # Get current observation from environment to create journey state
@@ -1879,10 +1883,10 @@ class MasterOrchestrator:
             
             action = {
                 'channel': channel_list[channel_idx],
-                'bid': min(7.0, max(4.0, bid_value * 2.0)),  # Higher bids ($4-$7) to actually WIN and SPEND
+                'bid': min(5.0, max(2.5, bid_value * 1.5)),  # Higher bids ($2.50-$5.00) for 40-50% win rate
                 'creative_type': 'behavioral_health',
                 'audience_segment': segment_list[segment_idx],
-                'quality_score': 8.0  # Better quality score for learning
+                'quality_score': 7.5  # Realistic quality score
             }
         else:
             # Use discovered patterns to create intelligent action
@@ -1929,7 +1933,7 @@ class MasterOrchestrator:
             
             action = {
                 'channel': best_channel,
-                'bid': 5.0,  # Higher bid to actually WIN auctions
+                'bid': np.random.uniform(3.0, 4.5),  # Higher bids for 40-50% win rate
                 'creative_type': 'behavioral_health',
                 'audience_segment': best_segment,
                 'quality_score': 8.0,  # Better quality score for learning phase
@@ -1942,6 +1946,10 @@ class MasterOrchestrator:
             logger.debug(f"Using intelligent action: channel={best_channel}, segment={best_segment}, bid=${action['bid']:.2f}")
         
         try:
+            # Track previous metrics to detect changes
+            prev_clicks = self.fixed_environment.metrics.get('total_clicks', 0)
+            prev_conversions = self.fixed_environment.metrics.get('total_conversions', 0)
+            
             result = self.fixed_environment.step(action)
             
             # Log the action and result for debugging
@@ -1980,11 +1988,94 @@ class MasterOrchestrator:
                 # Reset environment if episode is done
                 self.fixed_environment.reset()
                 
+            # Add action details to info for tracking
+            info['action'] = action
+            info['channel'] = action.get('channel', 'google')
+            
+            # Extract click and conversion info from results
+            if 'metrics' in info:
+                info['clicked'] = info['metrics'].get('total_clicks', 0) > prev_clicks if 'prev_clicks' in locals() else False
+                info['converted'] = info['metrics'].get('total_conversions', 0) > prev_conversions if 'prev_conversions' in locals() else False
+            
+            # TRAIN THE RL AGENT with this experience
+            if hasattr(self, 'rl_agent') and self.rl_agent is not None and journey_state is not None:
+                from training_orchestrator.rl_agent_proper import JourneyState
+                from datetime import datetime
+                
+                # Create next journey state from environment state
+                pm = get_parameter_manager()
+                segments = pm.user_segments
+                segment_list = list(segments.keys()) if segments else ['concerned_parents']
+                
+                next_journey_state = JourneyState(
+                    stage=2 if info.get('clicked', False) else 1,  # Progress stage on click
+                    touchpoints_seen=self.fixed_environment.metrics.get('total_impressions', 0) % 10,
+                    days_since_first_touch=1.0,
+                    ad_fatigue_level=min(0.9, 0.3 + self.fixed_environment.metrics.get('total_impressions', 0) * 0.01),
+                    segment=segment_list[0] if segment_list else 'concerned_parents',
+                    device='desktop',
+                    hour_of_day=datetime.now().hour,
+                    day_of_week=datetime.now().weekday(),
+                    previous_clicks=self.fixed_environment.metrics.get('total_clicks', 0),
+                    previous_impressions=self.fixed_environment.metrics.get('total_impressions', 0),
+                    estimated_ltv=100.0
+                )
+                
+                # Store experience for training - convert action dict to index
+                # For RL training, we need action as an integer, not the full dict
+                # Use bid_action_idx if available, otherwise hash the channel
+                action_idx = 0
+                if 'bid_action_idx' in locals():
+                    action_idx = bid_action_idx
+                elif isinstance(action, dict):
+                    # Convert channel to action index
+                    channels = ['google', 'facebook', 'tiktok', 'bing']
+                    channel = action.get('channel', 'google')
+                    action_idx = channels.index(channel) if channel in channels else 0
+                
+                self.rl_agent.store_experience(journey_state, action_idx, reward, next_journey_state, done)
+                
+                # Log every 5th experience to track storage
+                if self.metrics.total_auctions % 5 == 0:
+                    buffer_size = len(self.rl_agent.replay_buffer) if hasattr(self.rl_agent, 'replay_buffer') else 0
+                    logger.info(f"💾 Stored experience #{self.metrics.total_auctions}, buffer={buffer_size}, reward={reward:.2f}")
+                
+                # Train every 10 steps for faster learning
+                if self.metrics.total_auctions % 10 == 0:
+                    logger.info(f"🎯 Training check: auctions={self.metrics.total_auctions}, has_buffer={hasattr(self.rl_agent, 'replay_buffer')}")
+                    # Train DQN if we have enough experiences
+                    if hasattr(self.rl_agent, 'replay_buffer'):
+                        buffer_size = len(self.rl_agent.replay_buffer)
+                        logger.info(f"📊 Buffer size: {buffer_size}/32 needed")
+                        if buffer_size >= 32:
+                            logger.info(f"🧠 TRAINING NOW! Buffer={buffer_size}, reward={reward:.2f}")
+                            self.rl_agent.train_dqn(batch_size=32)
+                            logger.info(f"✅ Training complete for step {self.metrics.total_auctions}")
+                    else:
+                        logger.warning("❌ No replay_buffer attribute found!")
+            
+            # CRITICAL FIX: Ensure 'won' flag is at top level of step_info for dashboard
+            if 'auction' in info:
+                info['won'] = info['auction'].get('won', False)
+                info['cost'] = info['auction'].get('price_paid', 0.0)
+                info['position'] = info['auction'].get('position', 0)
+            
+            # Add channel from action if not in info
+            if 'channel' not in info:
+                info['channel'] = action.get('channel', 'google')
+            
+            # Add clicked/converted flags from metrics changes
+            current_clicks = self.fixed_environment.metrics.get('total_clicks', 0)
+            current_conversions = self.fixed_environment.metrics.get('total_conversions', 0)
+            info['clicked'] = current_clicks > prev_clicks
+            info['converted'] = current_conversions > prev_conversions
+            
             return {
                 'reward': reward,
                 'done': done,
                 'step_info': info,
                 'state': state,
+                'action': action,
                 'metrics': self.get_fixed_environment_metrics()
             }
         except Exception as e:
