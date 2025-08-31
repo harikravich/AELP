@@ -35,6 +35,8 @@ class JourneyState:
     previous_clicks: int
     previous_impressions: int
     estimated_ltv: float
+    competition_level: float = 0.5  # 0-1, estimated from recent win rates
+    channel_performance: float = 0.5  # 0-1, recent channel CTR/CVR
     
     def to_vector(self, discovery: DynamicDiscoverySystem) -> np.ndarray:
         """Convert state to neural network input using dynamic discovery"""

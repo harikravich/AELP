@@ -1850,19 +1850,43 @@ class MasterOrchestrator:
             segments = pm.user_segments
             segment_list = list(segments.keys()) if segments else ['concerned_parents']
             
+            # Get actual user data from environment if available
+            user_data = {}
+            if hasattr(self.fixed_environment, 'current_user') and self.fixed_environment.current_user:
+                user = self.fixed_environment.current_user
+                user_data = {
+                    'touchpoints_seen': user.touchpoints,
+                    'days_since_first_touch': user.days_since_first_touch,
+                    'ad_fatigue_level': user.fatigue_level,
+                    'previous_clicks': user.clicks,
+                    'previous_impressions': user.impressions,
+                    'estimated_ltv': user.lifetime_value
+                }
+            
+            # Calculate competition level from recent win rate
+            recent_wins = self.fixed_environment.metrics.get('auction_wins', 0)
+            recent_total = recent_wins + self.fixed_environment.metrics.get('auction_losses', 0)
+            competition_level = 1.0 - (recent_wins / max(1, recent_total))  # Higher = more competition
+            
+            # Calculate channel performance from recent CTR
+            channel_ctr = self.fixed_environment.metrics.get('total_clicks', 0) / max(1, self.fixed_environment.metrics.get('total_impressions', 1))
+            channel_performance = min(1.0, channel_ctr * 20)  # Normalize to 0-1
+            
             # Create a journey state with proper parameters from environment
             journey_state = JourneyState(
-                stage=1,  # Start at consideration stage
-                touchpoints_seen=self.fixed_environment.metrics.get('total_impressions', 0) % 10,  # Modulo to keep reasonable
-                days_since_first_touch=0.0,
-                ad_fatigue_level=0.3,
+                stage=user_data.get('stage', 1),  # Use actual user stage or default
+                touchpoints_seen=user_data.get('touchpoints_seen', self.fixed_environment.metrics.get('total_impressions', 0) % 10),
+                days_since_first_touch=user_data.get('days_since_first_touch', 0.0),
+                ad_fatigue_level=user_data.get('ad_fatigue_level', 0.3),
                 segment=segment_list[0] if segment_list else 'concerned_parents',
-                device='desktop',
+                device='desktop',  # TODO: Get from actual context
                 hour_of_day=datetime.now().hour,
                 day_of_week=datetime.now().weekday(),
-                previous_clicks=self.fixed_environment.metrics.get('total_clicks', 0),
-                previous_impressions=self.fixed_environment.metrics.get('total_impressions', 0),
-                estimated_ltv=100.0
+                previous_clicks=user_data.get('previous_clicks', self.fixed_environment.metrics.get('total_clicks', 0)),
+                previous_impressions=user_data.get('previous_impressions', self.fixed_environment.metrics.get('total_impressions', 0)),
+                estimated_ltv=user_data.get('estimated_ltv', 100.0),
+                competition_level=competition_level,
+                channel_performance=channel_performance
             )
             
             # Get bid action from RL agent
@@ -2007,6 +2031,14 @@ class MasterOrchestrator:
                 segments = pm.user_segments
                 segment_list = list(segments.keys()) if segments else ['concerned_parents']
                 
+                # Recalculate competition and channel performance for next state
+                next_wins = self.fixed_environment.metrics.get('auction_wins', 0)
+                next_total = next_wins + self.fixed_environment.metrics.get('auction_losses', 0)
+                next_competition = 1.0 - (next_wins / max(1, next_total))
+                
+                next_ctr = self.fixed_environment.metrics.get('total_clicks', 0) / max(1, self.fixed_environment.metrics.get('total_impressions', 1))
+                next_channel_perf = min(1.0, next_ctr * 20)
+                
                 next_journey_state = JourneyState(
                     stage=2 if info.get('clicked', False) else 1,  # Progress stage on click
                     touchpoints_seen=self.fixed_environment.metrics.get('total_impressions', 0) % 10,
@@ -2018,7 +2050,9 @@ class MasterOrchestrator:
                     day_of_week=datetime.now().weekday(),
                     previous_clicks=self.fixed_environment.metrics.get('total_clicks', 0),
                     previous_impressions=self.fixed_environment.metrics.get('total_impressions', 0),
-                    estimated_ltv=100.0
+                    estimated_ltv=100.0,
+                    competition_level=next_competition,
+                    channel_performance=next_channel_perf
                 )
                 
                 # Store experience for training - convert action dict to index
