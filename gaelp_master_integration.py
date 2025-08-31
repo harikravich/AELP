@@ -2243,7 +2243,13 @@ class MasterOrchestrator:
                     self.rl_agent.store_experience(state_dict, action_idx, reward, next_state_dict, done, experience_info)
                     
                     # Track performance for adaptation
-                    self.rl_agent.performance_history.append(reward)
+                    if hasattr(self.rl_agent, 'performance_history'):
+                        self.rl_agent.performance_history.append(reward)
+                    elif not hasattr(self.rl_agent, '_performance_history_initialized'):
+                        # Initialize performance history if it doesn't exist
+                        self.rl_agent.performance_history = []
+                        self.rl_agent.performance_history.append(reward)
+                        self.rl_agent._performance_history_initialized = True
                     
                 except Exception as e:
                     logger.error(f"Failed to store experience: {e}")
