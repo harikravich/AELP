@@ -506,6 +506,9 @@ class RobustRLAgent:
                         next_state: JourneyState, done: bool, info: Dict = None):
         """Store experience with validation"""
         try:
+            # Log what we're receiving
+            logger.info(f"store_experience called with state type: {type(state)}, next_state type: {type(next_state)}")
+            
             # Validate inputs
             if not state.validate() or not next_state.validate():
                 logger.warning("Invalid state in experience, skipping")
@@ -528,10 +531,26 @@ class RobustRLAgent:
             
             if exp.validate():
                 self.replay_buffer.push(exp)
+                logger.info(f"Pushed experience to buffer, new size: {len(self.replay_buffer)}")
                 
-                # Track user state for persistence
+                # Track user state for persistence - store as dict for serialization
                 if 'user_id' in info:
-                    self.user_states[info['user_id']] = next_state
+                    # Convert JourneyState to dict for JSON serialization
+                    self.user_states[info['user_id']] = {
+                        'stage': next_state.stage,
+                        'touchpoints_seen': next_state.touchpoints_seen,
+                        'days_since_first_touch': next_state.days_since_first_touch,
+                        'ad_fatigue_level': next_state.ad_fatigue_level,
+                        'segment': next_state.segment,
+                        'device': next_state.device,
+                        'hour_of_day': next_state.hour_of_day,
+                        'day_of_week': next_state.day_of_week,
+                        'previous_clicks': next_state.previous_clicks,
+                        'previous_impressions': next_state.previous_impressions,
+                        'estimated_ltv': next_state.estimated_ltv,
+                        'competition_level': next_state.competition_level,
+                        'channel_performance': next_state.channel_performance
+                    }
             
         except Exception as e:
             logger.error(f"Error storing experience: {e}")

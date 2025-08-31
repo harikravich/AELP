@@ -55,11 +55,40 @@ class CreativeAsset:
 
 
 class CreativeContentLibrary:
-    """Manages actual creative content for campaigns"""
+    """Manages actual creative content for campaigns
     
-    def __init__(self):
+    NOW ENHANCED WITH:
+    - LLM-powered creative generation
+    - Infinite headline variations
+    - Dynamic creative optimization
+    - A/B testing framework
+    """
+    
+    def __init__(self, enable_llm_generation: bool = True):
         self.creatives = {}
+        self.enable_llm_generation = enable_llm_generation
+        self.llm_generator = None
+        
+        # Initialize LLM generator if enabled
+        if enable_llm_generation:
+            try:
+                from hybrid_llm_rl_integration import CreativeGenerator, LLMStrategyConfig
+                config = LLMStrategyConfig(
+                    model="gpt-4o-mini",
+                    temperature=0.9,  # Higher for creativity
+                    use_caching=True
+                )
+                self.llm_generator = CreativeGenerator(config)
+                print("✅ CreativeLibrary enhanced with LLM generation capabilities")
+            except Exception as e:
+                print(f"⚠️ LLM creative generation not available: {e}")
+                self.llm_generator = None
+        
         self._initialize_real_creatives()
+        
+        # Track generated creatives separately
+        self.generated_creatives = {}
+        self.creative_performance = {}  # Track which creatives work best
         
     def _initialize_real_creatives(self):
         """Initialize with actual Aura ad creatives"""
@@ -262,9 +291,187 @@ class CreativeContentLibrary:
     
     def get_creative_details(self, creative_id: str) -> Optional[CreativeAsset]:
         """Get full details for a creative"""
-        return self.creatives.get(creative_id)
+        # Check both original and generated creatives
+        if creative_id in self.creatives:
+            return self.creatives[creative_id]
+        return self.generated_creatives.get(creative_id)
+    
+    def generate_creative_variation(self, 
+                                   base_creative: CreativeAsset,
+                                   theme: str = None,
+                                   segment: str = "concerned_parents") -> CreativeAsset:
+        """Generate a new creative variation using LLM.
+        
+        Args:
+            base_creative: Creative to base variation on
+            theme: Optional theme override
+            segment: Target segment
+            
+        Returns:
+            New CreativeAsset with generated content
+        """
+        if not self.llm_generator:
+            # NO FALLBACKS - LLM generator is REQUIRED
+            raise RuntimeError("LLM generator is REQUIRED for creative variations. NO FALLBACKS.")
+        
+        # Use LLM to generate variation
+        if not theme:
+            theme = base_creative.value_prop
+        
+        # Determine emotional tone based on performance
+        if base_creative.ctr < 0.01:
+            tone = "urgent"
+        elif base_creative.conversion_rate < 0.02:
+            tone = "empowering"
+        else:
+            tone = base_creative.emotional_tone
+        
+        # Generate new headline
+        new_headline = self.llm_generator.generate_headline(theme, segment, tone)
+        
+        # Generate complete ad copy
+        ad_copy = self.llm_generator.generate_ad_copy(new_headline, theme)
+        
+        # Create new creative asset
+        new_creative = CreativeAsset(
+            creative_id=self._generate_id(f"LLM_{len(self.generated_creatives)}"),
+            channel=base_creative.channel,
+            format=base_creative.format,
+            headline=new_headline,
+            body_copy=ad_copy.get("description", base_creative.body_copy),
+            cta_text=ad_copy.get("cta", base_creative.cta_text),
+            primary_image=base_creative.primary_image,  # Reuse visual assets
+            thumbnail=base_creative.thumbnail,
+            background_color=base_creative.background_color,
+            emotional_tone=tone,
+            value_prop=theme
+        )
+        
+        # Store generated creative
+        self.generated_creatives[new_creative.creative_id] = new_creative
+        return new_creative
+    
+    def generate_creative_batch(self, 
+                               channel: str,
+                               n_variations: int = 5,
+                               themes: List[str] = None) -> List[CreativeAsset]:
+        """Generate multiple creative variations for testing.
+        
+        Args:
+            channel: Target channel
+            n_variations: Number of variations to generate
+            themes: Optional list of themes to use
+            
+        Returns:
+            List of generated CreativeAssets
+        """
+        if not themes:
+            themes = ["safety", "balance", "trust", "education", "peace", "control"]
+        
+        # Get base creatives for the channel
+        channel_creatives = [c for c in self.creatives.values() if c.channel == channel]
+        if not channel_creatives:
+            channel_creatives = list(self.creatives.values())[:3]
+        
+        generated = []
+        for i in range(n_variations):
+            base = random.choice(channel_creatives)
+            theme = random.choice(themes)
+            variation = self.generate_creative_variation(base, theme)
+            generated.append(variation)
+        
+        return generated
+    
+    def get_winning_creative(self, channel: str, metric: str = "roas") -> CreativeAsset:
+        """Get the best performing creative, considering both original and generated.
+        
+        Args:
+            channel: Channel to filter by
+            metric: Performance metric to optimize
+            
+        Returns:
+            Best performing creative
+        """
+        # Combine original and generated creatives
+        all_creatives = list(self.creatives.values()) + list(self.generated_creatives.values())
+        channel_creatives = [c for c in all_creatives if c.channel == channel]
+        
+        if not channel_creatives:
+            channel_creatives = all_creatives
+        
+        # Sort by metric
+        if metric == "ctr":
+            best = max(channel_creatives, key=lambda c: c.ctr)
+        elif metric == "conversion_rate":
+            best = max(channel_creatives, key=lambda c: c.conversion_rate)
+        else:  # roas
+            best = max(channel_creatives, key=lambda c: c.roas)
+        
+        return best
+    
+    def run_creative_tournament(self, channel: str, rounds: int = 10) -> Dict[str, any]:
+        """Run a tournament to find best creative through iterative testing.
+        
+        Args:
+            channel: Channel to test on
+            rounds: Number of tournament rounds
+            
+        Returns:
+            Tournament results and winner
+        """
+        # Start with existing creatives
+        contestants = [c for c in self.creatives.values() if c.channel == channel][:5]
+        
+        # Add some generated variations
+        if self.llm_generator:
+            contestants.extend(self.generate_creative_batch(channel, 5))
+        
+        results = {
+            "rounds": [],
+            "winner": None,
+            "performance_lift": 0.0
+        }
+        
+        for round_num in range(rounds):
+            # Simulate performance (in real system, this would be actual data)
+            for creative in contestants:
+                # Simulate impressions and clicks
+                creative.impressions += random.randint(100, 1000)
+                creative.clicks += random.randint(1, int(creative.impressions * 0.05))
+                creative.conversions += random.randint(0, int(creative.clicks * 0.1))
+                creative.spend += creative.clicks * random.uniform(0.5, 2.0)
+            
+            # Find worst performer
+            worst = min(contestants, key=lambda c: c.roas)
+            
+            # Generate new challenger based on best performer
+            best = max(contestants, key=lambda c: c.roas)
+            if self.llm_generator and round_num < rounds - 1:
+                # Create variation of winner
+                challenger = self.generate_creative_variation(best)
+                # Replace worst with challenger
+                contestants.remove(worst)
+                contestants.append(challenger)
+            
+            results["rounds"].append({
+                "round": round_num + 1,
+                "best_roas": best.roas,
+                "worst_roas": worst.roas,
+                "replaced": worst.creative_id if round_num < rounds - 1 else None
+            })
+        
+        # Final winner
+        winner = max(contestants, key=lambda c: c.roas)
+        baseline_roas = max([c.roas for c in self.creatives.values() if c.channel == channel], default=1.0)
+        
+        results["winner"] = winner.creative_id
+        results["winner_headline"] = winner.headline
+        results["performance_lift"] = (winner.roas / baseline_roas - 1) * 100 if baseline_roas > 0 else 0
+        
+        return results
 
 
 # Global instance
 import numpy as np
-creative_library = CreativeContentLibrary()
+# Enable LLM generation for infinite creative variations
+creative_library = CreativeContentLibrary(enable_llm_generation=True)

@@ -18,6 +18,7 @@ Key Features:
 import hashlib
 import json
 import logging
+import random
 from collections import defaultdict, deque
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -102,7 +103,14 @@ class IdentityResolver:
     - Geographic proximity
     - Temporal patterns
     - Technical fingerprinting
+    
+    NOW WITH iOS 14.5+ PRIVACY REALISM:
+    - 35% maximum match rate to reflect real-world cross-device limitations
+    - Probabilistic failures to simulate privacy restrictions
     """
+    
+    # iOS 14.5+ Reality: Only 35% of cross-device matches succeed
+    MAX_MATCH_RATE = 0.35  # Real-world limitation
     
     def __init__(self, 
                  min_confidence_threshold: float = 0.3,
@@ -176,6 +184,10 @@ class IdentityResolver:
         """
         Resolve the identity for a given device ID.
         
+        NOW WITH iOS 14.5+ REALISM:
+        - Only 35% of cross-device matches succeed due to privacy restrictions
+        - Even high-confidence matches can fail to simulate real-world limitations
+        
         Args:
             device_id: Device ID to resolve
             force_recalculate: Whether to force recalculation of matches
@@ -203,9 +215,17 @@ class IdentityResolver:
         best_match = max(potential_matches, key=lambda m: m.confidence_score)
         
         if best_match.confidence_score >= self.min_confidence_threshold:
-            # Add device to existing identity
+            # iOS 14.5+ PRIVACY LIMITATION: Only 35% of matches succeed
+            if random.random() > self.MAX_MATCH_RATE:
+                logger.info(f"Cross-device match failed for {device_id} (iOS 14.5+ privacy limitation)")
+                # Create new identity instead of matching
+                identity_id = self._create_new_identity(device_id)
+                return identity_id
+            
+            # Match succeeded (within the 35% success rate)
             existing_identity_id = self.device_to_identity.get(best_match.device_id_2)
             if existing_identity_id:
+                logger.info(f"Cross-device match succeeded for {device_id} -> {existing_identity_id} (within 35% success rate)")
                 self._add_device_to_identity(device_id, existing_identity_id, best_match.confidence_score)
                 return existing_identity_id
         

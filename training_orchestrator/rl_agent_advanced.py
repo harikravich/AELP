@@ -573,7 +573,7 @@ class AdvancedRLAgent:
         Train with all advanced features.
         """
         if len(self.memory) < self.config.min_buffer_size:
-            return {}
+            return {'loss': 0.0, 'td_error': 0.0, 'epsilon': self.epsilon, 'q_value': 0.0}
         
         # Sample from prioritized replay buffer
         states, actions, rewards, next_states, dones, indices, weights = \

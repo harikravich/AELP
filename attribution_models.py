@@ -51,24 +51,69 @@ class Journey:
 
 
 class AttributionModel(ABC):
-    """Abstract base class for attribution models."""
+    """Abstract base class for attribution models.
+    
+    NOW WITH iOS 14.5+ PRIVACY NOISE:
+    - Adds 20-30% attribution uncertainty to reflect real-world privacy limitations
+    - All derived models automatically inherit this noise
+    """
+    
+    # iOS 14.5+ Reality: Attribution has significant uncertainty
+    IOS_PRIVACY_NOISE_LEVEL = 0.25  # 25% uncertainty baseline
+    
+    def __init__(self, add_privacy_noise: bool = True):
+        """Initialize with optional privacy noise for realism."""
+        self.add_privacy_noise = add_privacy_noise
 
     @abstractmethod
     def calculate_attribution(self, journey: Journey) -> Dict[str, float]:
         """Calculate attribution weights for each touchpoint in the journey."""
         pass
+    
+    def _apply_privacy_noise(self, attributions: Dict[str, float]) -> Dict[str, float]:
+        """Apply iOS 14.5+ privacy noise to attribution values.
+        
+        Adds realistic uncertainty to attribution to reflect:
+        - Limited cross-device tracking
+        - Delayed/missing conversion signals
+        - Privacy-preserving aggregation
+        """
+        if not self.add_privacy_noise:
+            return attributions
+            
+        noisy_attributions = {}
+        total_after_noise = 0.0
+        
+        for touchpoint_id, value in attributions.items():
+            # Add Gaussian noise with 25% standard deviation
+            noise = np.random.normal(0, self.IOS_PRIVACY_NOISE_LEVEL)
+            # Ensure non-negative values
+            noisy_value = max(0, value * (1 + noise))
+            noisy_attributions[touchpoint_id] = noisy_value
+            total_after_noise += noisy_value
+        
+        # Renormalize to sum to 1.0 (preserving relative weights after noise)
+        if total_after_noise > 0:
+            for touchpoint_id in noisy_attributions:
+                noisy_attributions[touchpoint_id] /= total_after_noise
+        
+        return noisy_attributions
 
     def distribute_credit(self, journey: Journey) -> List[Tuple[Touchpoint, float]]:
-        """Distribute conversion credit among touchpoints."""
+        """Distribute conversion credit among touchpoints with privacy noise."""
         attributions = self.calculate_attribution(journey)
+        # Apply privacy noise
+        attributions = self._apply_privacy_noise(attributions)
         return [
             (tp, attributions.get(tp.id, 0.0) * journey.conversion_value)
             for tp in journey.touchpoints
         ]
 
     def get_touchpoint_value(self, touchpoint_id: str, journey: Journey) -> float:
-        """Get the attributed value for a specific touchpoint."""
+        """Get the attributed value for a specific touchpoint with privacy noise."""
         attributions = self.calculate_attribution(journey)
+        # Apply privacy noise
+        attributions = self._apply_privacy_noise(attributions)
         return attributions.get(touchpoint_id, 0.0) * journey.conversion_value
 
 
@@ -78,13 +123,15 @@ class TimeDecayAttribution(AttributionModel):
     More recent touchpoints receive higher attribution.
     """
 
-    def __init__(self, half_life_days: int = 7):
+    def __init__(self, half_life_days: int = 7, add_privacy_noise: bool = True):
         """
         Initialize time-decay attribution model.
         
         Args:
             half_life_days: Number of days for attribution to decay by half
+            add_privacy_noise: Whether to add iOS 14.5+ privacy noise
         """
+        super().__init__(add_privacy_noise=add_privacy_noise)
         self.half_life_days = half_life_days
         self.decay_constant = np.log(2) / (half_life_days * 24 * 3600)  # per second
 
@@ -121,7 +168,7 @@ class PositionBasedAttribution(AttributionModel):
     """
 
     def __init__(self, first_weight: float = 0.4, last_weight: float = 0.4, 
-                 middle_weight: float = 0.2):
+                 middle_weight: float = 0.2, add_privacy_noise: bool = True):
         """
         Initialize position-based attribution model.
         
@@ -129,7 +176,9 @@ class PositionBasedAttribution(AttributionModel):
             first_weight: Attribution weight for first touchpoint
             last_weight: Attribution weight for last touchpoint
             middle_weight: Attribution weight for middle touchpoints (distributed equally)
+            add_privacy_noise: Whether to add iOS 14.5+ privacy noise
         """
+        super().__init__(add_privacy_noise=add_privacy_noise)
         if abs(first_weight + last_weight + middle_weight - 1.0) > 1e-6:
             raise ValueError("Weights must sum to 1.0")
         
@@ -174,6 +223,10 @@ class LinearAttribution(AttributionModel):
     Linear attribution model.
     All touchpoints receive equal credit.
     """
+    
+    def __init__(self, add_privacy_noise: bool = True):
+        """Initialize linear attribution with optional privacy noise."""
+        super().__init__(add_privacy_noise=add_privacy_noise)
 
     def calculate_attribution(self, journey: Journey) -> Dict[str, float]:
         """Calculate linear attribution weights."""
@@ -192,8 +245,9 @@ class DataDrivenAttribution(AttributionModel):
     Uses machine learning to determine optimal attribution weights.
     """
 
-    def __init__(self):
+    def __init__(self, add_privacy_noise: bool = True):
         """Initialize data-driven attribution model."""
+        super().__init__(add_privacy_noise=add_privacy_noise)
         self.conversion_probability_model = None
         self.baseline_conversion_rate = 0.0
         self.is_trained = False
