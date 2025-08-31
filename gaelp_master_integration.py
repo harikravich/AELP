@@ -2256,21 +2256,30 @@ class MasterOrchestrator:
                 
                 # Log every 5th experience to track storage
                 if self.metrics.total_auctions % 5 == 0:
-                    buffer_size = len(self.rl_agent.replay_buffer) if hasattr(self.rl_agent, 'replay_buffer') else 0
+                    buffer_size = 0
+                    if hasattr(self.rl_agent, 'replay_buffer'):
+                        buffer_size = len(self.rl_agent.replay_buffer)
+                    elif hasattr(self.rl_agent, 'memory'):
+                        buffer_size = len(self.rl_agent.memory)
+                    elif hasattr(self.rl_agent, 'buffer'):
+                        buffer_size = len(self.rl_agent.buffer)
                     logger.info(f"💾 Stored experience #{self.metrics.total_auctions}, buffer={buffer_size}, reward={reward:.2f}")
                 
                 # Train every 10 steps for faster learning
                 if self.metrics.total_auctions % 10 == 0:
-                    # Check for both possible buffer attribute names
+                    # Check for all possible buffer attribute names
                     has_replay_buffer = hasattr(self.rl_agent, 'replay_buffer')
                     has_buffer = hasattr(self.rl_agent, 'buffer')
+                    has_memory = hasattr(self.rl_agent, 'memory')
                     
-                    logger.info(f"🎯 Training check: auctions={self.metrics.total_auctions}, has_replay_buffer={has_replay_buffer}, has_buffer={has_buffer}")
+                    logger.info(f"🎯 Training check: auctions={self.metrics.total_auctions}, has_replay_buffer={has_replay_buffer}, has_buffer={has_buffer}, has_memory={has_memory}")
                     
                     # Train DQN if we have enough experiences
                     buffer_size = 0
                     if has_replay_buffer:
                         buffer_size = len(self.rl_agent.replay_buffer)
+                    elif has_memory:
+                        buffer_size = len(self.rl_agent.memory)
                     elif has_buffer:
                         buffer_size = len(self.rl_agent.buffer)
                     
@@ -2303,8 +2312,8 @@ class MasterOrchestrator:
                                 import traceback
                                 logger.error(traceback.format_exc())
                     else:
-                        if not has_replay_buffer and not has_buffer:
-                            logger.warning("❌ No replay_buffer or buffer attribute found!")
+                        if not has_replay_buffer and not has_buffer and not has_memory:
+                            logger.warning("❌ No replay_buffer, memory, or buffer attribute found!")
                         else:
                             logger.info(f"⏳ Buffer too small: {buffer_size}/32")
             
