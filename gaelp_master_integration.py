@@ -443,17 +443,23 @@ class MasterOrchestrator:
         )
         # NO MOCK AGENTS - Use proper RL implementation
         
-        # NO BANDITS - Use PROPER RL!
-        from training_orchestrator.rl_agent_proper import ProperRLAgent, JourneyState
+        # NO BANDITS - Use ROBUST RL with safety!
+        from training_orchestrator.rl_agent_robust import RobustRLAgent, JourneyState
         from dynamic_discovery import DynamicDiscoverySystem
-        self.rl_agent = ProperRLAgent(
+        self.rl_agent = RobustRLAgent(
             bid_actions=10,
             creative_actions=5,
             learning_rate=0.0001,
             gamma=0.95,
             epsilon=0.15,
-            discovery_system=DynamicDiscoverySystem()  # Initialize with discovery system
+            epsilon_decay=0.995,
+            epsilon_min=0.01,
+            checkpoint_dir="checkpoints/rl_agent",
+            discovery_system=DynamicDiscoverySystem()
         )
+        
+        # Try to load existing checkpoint
+        self.rl_agent.load_checkpoint()
         self.journey_state_class = JourneyState
         # Keep online_learner reference for compatibility but use RL agent
         self.online_learner = self.rl_agent
@@ -1889,11 +1895,20 @@ class MasterOrchestrator:
                 channel_performance=channel_performance
             )
             
-            # Get bid action from RL agent
-            bid_action_idx, bid_value = self.rl_agent.get_bid_action(journey_state, explore=True)
+            # Get bid action from RL agent with error handling
+            try:
+                bid_action_idx, bid_value = self.rl_agent.get_bid_action(journey_state, explore=True)
+            except Exception as e:
+                logger.error(f"RL bid action failed: {e}")
+                bid_action_idx = 0
+                bid_value = 2.5  # Safe default
             
-            # Get creative action from RL agent  
-            creative_action = self.rl_agent.get_creative_action(journey_state)
+            # Get creative action from RL agent with error handling
+            try:
+                creative_action = self.rl_agent.get_creative_action(journey_state)
+            except Exception as e:
+                logger.error(f"RL creative action failed: {e}")
+                creative_action = 0  # Default creative
             
             # Use discovered patterns for segment selection
             segment_idx = creative_action % len(segment_list) if segment_list else 0
@@ -1905,9 +1920,25 @@ class MasterOrchestrator:
             channel_list = paid_channels if paid_channels else ['google', 'facebook']
             channel_idx = bid_action_idx % len(channel_list) if channel_list else 0
             
+            # Apply safety constraints to RL bid
+            safe_bid = bid_value
+            if self.safety_system:
+                is_safe, violations = self.safety_system.check_bid_safety(
+                    query="rl_generated",
+                    bid_amount=bid_value,
+                    campaign_id="behavioral_health",
+                    predicted_roi=0.3
+                )
+                if not is_safe:
+                    logger.warning(f"RL bid ${bid_value:.2f} violates safety: {violations}")
+                    safe_bid = min(2.5, bid_value * 0.5)  # Reduce unsafe bid
+            
+            # Final bid constraints
+            safe_bid = min(5.0, max(0.5, safe_bid))  # Absolute limits
+            
             action = {
                 'channel': channel_list[channel_idx],
-                'bid': min(5.0, max(2.5, bid_value * 1.5)),  # Higher bids ($2.50-$5.00) for 40-50% win rate
+                'bid': safe_bid,
                 'creative_type': 'behavioral_health',
                 'audience_segment': segment_list[segment_idx],
                 'quality_score': 7.5  # Realistic quality score
@@ -2009,8 +2040,28 @@ class MasterOrchestrator:
             reward = float(reward)
             
             if done:
-                # Reset environment if episode is done
+                # Episode ended - handle properly
+                self.rl_agent.episodes += 1
+                
+                # Log episode summary
+                logger.info(f"📊 Episode {self.rl_agent.episodes} complete:")
+                logger.info(f"   Total reward: {self.rl_agent.total_reward:.2f}")
+                logger.info(f"   Epsilon: {self.rl_agent.epsilon:.4f}")
+                logger.info(f"   Buffer size: {len(self.rl_agent.replay_buffer)}")
+                
+                # Get diagnostics
+                diagnostics = self.rl_agent.get_diagnostics()
+                logger.info(f"   Diagnostics: {diagnostics}")
+                
+                # Save checkpoint periodically
+                if self.rl_agent.episodes % 10 == 0:
+                    self.rl_agent.save_checkpoint()
+                
+                # Reset environment but maintain user states
                 self.fixed_environment.reset()
+                
+                # Reset episode reward tracking
+                self.rl_agent.total_reward = 0.0
                 
             # Add action details to info for tracking
             info['action'] = action
@@ -2067,7 +2118,21 @@ class MasterOrchestrator:
                     channel = action.get('channel', 'google')
                     action_idx = channels.index(channel) if channel in channels else 0
                 
-                self.rl_agent.store_experience(journey_state, action_idx, reward, next_journey_state, done)
+                # Store experience with user context
+                try:
+                    info = {
+                        'user_id': result.get('user_id', 'unknown'),
+                        'channel': action.get('channel'),
+                        'segment': journey_state.segment,
+                        'won': info.get('won', False)
+                    }
+                    self.rl_agent.store_experience(journey_state, action_idx, reward, next_journey_state, done, info)
+                    
+                    # Track performance for adaptation
+                    self.rl_agent.performance_history.append(reward)
+                    
+                except Exception as e:
+                    logger.error(f"Failed to store experience: {e}")
                 
                 # Log every 5th experience to track storage
                 if self.metrics.total_auctions % 5 == 0:
@@ -2082,15 +2147,31 @@ class MasterOrchestrator:
                         buffer_size = len(self.rl_agent.replay_buffer)
                         logger.info(f"📊 Buffer size: {buffer_size}/32 needed")
                         if buffer_size >= 32:
-                            logger.info(f"🧠 TRAINING DQN NOW! Buffer={buffer_size}, reward={reward:.2f}")
-                            self.rl_agent.train_dqn(batch_size=32)
-                            logger.info(f"✅ DQN training complete for step {self.metrics.total_auctions}")
-                            
-                            # ALSO train PPO for creative selection every 20 auctions
-                            if self.metrics.total_auctions % 20 == 0:
-                                logger.info(f"🎨 Training PPO for creative selection...")
-                                self.rl_agent.train_ppo_from_buffer(batch_size=32)
-                                logger.info(f"✅ PPO training complete - creatives will adapt!")
+                            try:
+                                logger.info(f"🧠 TRAINING DQN NOW! Buffer={buffer_size}, reward={reward:.2f}")
+                                self.rl_agent.train_dqn(batch_size=32)
+                                logger.info(f"✅ DQN training complete for step {self.metrics.total_auctions}")
+                                
+                                # ALSO train PPO for creative selection every 20 auctions
+                                if self.metrics.total_auctions % 20 == 0:
+                                    logger.info(f"🎨 Training PPO for creative selection...")
+                                    self.rl_agent.train_ppo_from_buffer(batch_size=32)
+                                    logger.info(f"✅ PPO training complete - creatives will adapt!")
+                                
+                                # Save checkpoint every 100 auctions
+                                if self.metrics.total_auctions % 100 == 0:
+                                    logger.info(f"💾 Saving checkpoint...")
+                                    self.rl_agent.save_checkpoint()
+                                
+                                # Check for performance drop
+                                if self.rl_agent.detect_performance_drop():
+                                    logger.warning("📉 Performance drop detected, adapting...")
+                                    self.rl_agent.adapt_to_environment_change()
+                                    
+                            except Exception as e:
+                                logger.error(f"❌ Training failed: {e}")
+                                import traceback
+                                logger.error(traceback.format_exc())
                     else:
                         logger.warning("❌ No replay_buffer attribute found!")
             
