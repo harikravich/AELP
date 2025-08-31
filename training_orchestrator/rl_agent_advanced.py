@@ -747,6 +747,30 @@ class AdvancedRLAgent:
         self.curiosity.load_state_dict(checkpoint['curiosity'])
         self.curiosity_optimizer.load_state_dict(checkpoint['curiosity_optimizer'])
         self.epsilon = checkpoint['epsilon']
+    
+    def get_bid_action(self, state, explore: bool = True):
+        """Get bid action - wrapper for compatibility with master integration."""
+        # Convert JourneyState to dict if needed
+        if hasattr(state, 'to_dict'):
+            state_dict = state.to_dict()
+        else:
+            state_dict = state if isinstance(state, dict) else {'budget_remaining': 1000}
+        
+        # Get action from main method
+        action_idx = self.select_action(state_dict, explore=explore)
+        
+        # Map action index to bid value (simple linear mapping)
+        min_bid = 0.5
+        max_bid = 10.0
+        bid_value = min_bid + (action_idx / self.action_dim) * (max_bid - min_bid)
+        
+        return action_idx, bid_value
+    
+    def get_creative_action(self, state, explore: bool = True):
+        """Get creative action - wrapper for compatibility."""
+        # For now, return a random creative ID
+        creative_idx = np.random.randint(0, 10)
+        return creative_idx, f"creative_{creative_idx}"
         self.steps = checkpoint['steps']
         self.episodes = checkpoint['episodes']
         self.thompson_arms = checkpoint['thompson_arms']

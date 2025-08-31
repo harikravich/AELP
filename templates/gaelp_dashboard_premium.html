@@ -700,6 +700,68 @@
             <canvas id="performanceChart"></canvas>
         </div>
         
+        <!-- DeepMind Features Section -->
+        <div class="deepmind-container" style="
+            margin-top: 2rem;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+        ">
+            <h3 style="color: white; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 1.5rem;">🧠</span> DeepMind-Style Training Progress
+            </h3>
+            
+            <!-- DeepMind Metrics Grid -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                <div class="metric-card" style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3);">
+                    <div class="metric-label">Self-Play Generation</div>
+                    <div class="metric-value" id="selfPlayGen">0</div>
+                    <div class="metric-change">Win Rate: <span id="selfPlayWinRate">0%</span></div>
+                </div>
+                <div class="metric-card" style="background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.3);">
+                    <div class="metric-label">MCTS Campaigns</div>
+                    <div class="metric-value" id="mctsPlanned">0</div>
+                    <div class="metric-change">Avg Depth: <span id="mctsDepth">0</span></div>
+                </div>
+                <div class="metric-card" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3);">
+                    <div class="metric-label">World Model Accuracy</div>
+                    <div class="metric-value" id="worldModelAcc">0%</div>
+                    <div class="metric-change">Predictions: <span id="worldModelPreds">0</span></div>
+                </div>
+                <div class="metric-card" style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3);">
+                    <div class="metric-label">Agent Skill Level</div>
+                    <div class="metric-value" id="agentSkillLevel">Novice</div>
+                    <div class="metric-change">Progress: <span id="skillProgress">0%</span></div>
+                </div>
+            </div>
+            
+            <!-- Agent Evolution Visualization -->
+            <div style="background: rgba(0, 0, 0, 0.3); border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                <h4 style="color: #94A3B8; font-size: 0.875rem; margin-bottom: 0.75rem;">Agent Evolution Stage</h4>
+                <div id="agentEvolutionStage" style="
+                    font-family: 'JetBrains Mono', monospace;
+                    font-size: 0.75rem;
+                    line-height: 1.2;
+                    color: #10B981;
+                    white-space: pre;
+                ">Initializing...</div>
+            </div>
+            
+            <!-- Marketing Battlefield -->
+            <div style="background: rgba(0, 0, 0, 0.3); border-radius: 8px; padding: 1rem;">
+                <h4 style="color: #94A3B8; font-size: 0.875rem; margin-bottom: 0.75rem;">Live Auction Competition</h4>
+                <div id="marketingBattlefield" style="
+                    font-family: 'JetBrains Mono', monospace;
+                    font-size: 0.75rem;
+                    line-height: 1.2;
+                    color: #F59E0B;
+                    white-space: pre;
+                ">Waiting for auction data...</div>
+            </div>
+        </div>
+        
         <!-- Event Log -->
         <div class="event-log-container" style="
             background: var(--glass);
@@ -1020,6 +1082,40 @@
                         `;
                         leaderboard.appendChild(card);
                     });
+                }
+                
+                // Update DeepMind Features
+                if (data.deepmind_features) {
+                    const dm = data.deepmind_features;
+                    
+                    // Self-Play metrics
+                    document.getElementById('selfPlayGen').textContent = dm.self_play_generation || 0;
+                    document.getElementById('selfPlayWinRate').textContent = 
+                        ((dm.self_play_win_rate || 0) * 100).toFixed(1) + '%';
+                    
+                    // MCTS metrics
+                    document.getElementById('mctsPlanned').textContent = dm.mcts_campaigns_planned || 0;
+                    document.getElementById('mctsDepth').textContent = dm.mcts_avg_depth || 0;
+                    
+                    // World Model metrics
+                    document.getElementById('worldModelAcc').textContent = 
+                        ((dm.world_model_accuracy || 0) * 100).toFixed(1) + '%';
+                    document.getElementById('worldModelPreds').textContent = dm.world_model_predictions || 0;
+                    
+                    // Agent Skill Level
+                    const skillLevel = dm.agent_skill_level || 0;
+                    const skillNames = ['Novice', 'Beginner', 'Intermediate', 'Advanced', 'Expert', 'Master'];
+                    const skillIndex = Math.min(Math.floor(skillLevel / 20), skillNames.length - 1);
+                    document.getElementById('agentSkillLevel').textContent = skillNames[skillIndex];
+                    document.getElementById('skillProgress').textContent = skillLevel + '%';
+                    
+                    // Update visualizations
+                    if (dm.agent_evolution_visual) {
+                        document.getElementById('agentEvolutionStage').textContent = dm.agent_evolution_visual;
+                    }
+                    if (dm.marketing_battlefield) {
+                        document.getElementById('marketingBattlefield').textContent = dm.marketing_battlefield;
+                    }
                 }
                 
                 // Update auction performance (REAL data - your win rate)

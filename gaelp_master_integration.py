@@ -151,7 +151,7 @@ class GAELPConfig:
         # Calculate max bid, ensuring it's never 0
         calculated_bid = max_cac * avg_cvr * 0.5  # 50% of max profitable bid
         self.max_bid_absolute: float = max(calculated_bid, 10.0)  # Increased minimum to $10 to win more auctions
-        self.min_roi_threshold: float = 1.0 / (max_cac / 100)  # Based on max CAC
+        self.min_roi_threshold: float = 0.3  # 30% ROI threshold - reasonable for early learning
         
         # Learning settings optimized for real data volume
         if self.pm.channel_performance.values():
@@ -537,6 +537,27 @@ class MasterOrchestrator:
         
         # Keep online_learner reference for compatibility but use RL agent
         self.online_learner = self.rl_agent
+        
+        # Initialize DeepMind features
+        if hasattr(self, 'init_callback') and self.init_callback:
+            self.init_callback("🧠 Initializing DeepMind Features (Self-Play, MCTS, World Model)...", "system")
+        
+        try:
+            from deepmind_features import DeepMindOrchestrator
+            self.deepmind = DeepMindOrchestrator(self.rl_agent)
+            logger.info("✅ DeepMind features initialized (Self-Play, MCTS, World Model)")
+        except Exception as e:
+            logger.warning(f"DeepMind features not available: {e}")
+            self.deepmind = None
+        
+        # Initialize visual progress tracker
+        try:
+            from visual_progress import ComprehensiveProgressTracker
+            self.visual_tracker = ComprehensiveProgressTracker()
+            logger.info("✅ Visual progress tracker initialized")
+        except Exception as e:
+            logger.warning(f"Visual tracker not available: {e}")
+            self.visual_tracker = None
         
         # 20. Safety System
         if hasattr(self, 'init_callback') and self.init_callback is not None:
@@ -1979,10 +2000,17 @@ class MasterOrchestrator:
             
             # Get creative action from RL agent with error handling
             try:
-                creative_action = self.rl_agent.get_creative_action(journey_state)
+                creative_result = self.rl_agent.get_creative_action(journey_state)
+                # Handle both tuple and single value returns
+                if isinstance(creative_result, tuple):
+                    creative_action, creative_id = creative_result
+                else:
+                    creative_action = creative_result
+                    creative_id = f"creative_{creative_action}"
             except Exception as e:
                 logger.error(f"RL creative action failed: {e}")
                 creative_action = 0  # Default creative
+                creative_id = "creative_0"
             
             # Use discovered patterns for segment selection
             segment_idx = creative_action % len(segment_list) if segment_list else 0
@@ -2138,7 +2166,11 @@ class MasterOrchestrator:
                 self.rl_agent.total_reward = 0.0
                 
             # Add action details to info for tracking
-            info['action'] = action
+            if isinstance(info, dict):
+                info['action'] = action
+            else:
+                # If info is not a dict, create a new dict with the action
+                info = {'action': action}
             info['channel'] = action.get('channel', 'google')
             
             # Extract click and conversion info from results
@@ -2194,13 +2226,21 @@ class MasterOrchestrator:
                 
                 # Store experience with user context
                 try:
-                    info = {
-                        'user_id': result.get('user_id', 'unknown'),
-                        'channel': action.get('channel'),
-                        'segment': journey_state.segment,
-                        'won': info.get('won', False)
+                    # Convert JourneyState to dict for storage
+                    state_dict = journey_state.to_dict() if hasattr(journey_state, 'to_dict') else {
+                        'budget_remaining': journey_state.budget_remaining if hasattr(journey_state, 'budget_remaining') else 1000
                     }
-                    self.rl_agent.store_experience(journey_state, action_idx, reward, next_journey_state, done, info)
+                    next_state_dict = next_journey_state.to_dict() if hasattr(next_journey_state, 'to_dict') else {
+                        'budget_remaining': next_journey_state.budget_remaining if hasattr(next_journey_state, 'budget_remaining') else 1000
+                    }
+                    
+                    experience_info = {
+                        'user_id': result.get('user_id', 'unknown') if isinstance(result, dict) else 'unknown',
+                        'channel': action.get('channel'),
+                        'segment': journey_state.segment if hasattr(journey_state, 'segment') else 'unknown',
+                        'won': info.get('auction', {}).get('won', False) if isinstance(info, dict) else False
+                    }
+                    self.rl_agent.store_experience(state_dict, action_idx, reward, next_state_dict, done, experience_info)
                     
                     # Track performance for adaptation
                     self.rl_agent.performance_history.append(reward)
@@ -2215,10 +2255,20 @@ class MasterOrchestrator:
                 
                 # Train every 10 steps for faster learning
                 if self.metrics.total_auctions % 10 == 0:
-                    logger.info(f"🎯 Training check: auctions={self.metrics.total_auctions}, has_buffer={hasattr(self.rl_agent, 'replay_buffer')}")
+                    # Check for both possible buffer attribute names
+                    has_replay_buffer = hasattr(self.rl_agent, 'replay_buffer')
+                    has_buffer = hasattr(self.rl_agent, 'buffer')
+                    
+                    logger.info(f"🎯 Training check: auctions={self.metrics.total_auctions}, has_replay_buffer={has_replay_buffer}, has_buffer={has_buffer}")
+                    
                     # Train DQN if we have enough experiences
-                    if hasattr(self.rl_agent, 'replay_buffer'):
+                    buffer_size = 0
+                    if has_replay_buffer:
                         buffer_size = len(self.rl_agent.replay_buffer)
+                    elif has_buffer:
+                        buffer_size = len(self.rl_agent.buffer)
+                    
+                    if buffer_size > 0:
                         logger.info(f"📊 Buffer size: {buffer_size}/32 needed")
                         if buffer_size >= 32:
                             try:
@@ -2247,7 +2297,10 @@ class MasterOrchestrator:
                                 import traceback
                                 logger.error(traceback.format_exc())
                     else:
-                        logger.warning("❌ No replay_buffer attribute found!")
+                        if not has_replay_buffer and not has_buffer:
+                            logger.warning("❌ No replay_buffer or buffer attribute found!")
+                        else:
+                            logger.info(f"⏳ Buffer too small: {buffer_size}/32")
             
             # CRITICAL FIX: Ensure 'won' flag is at top level of step_info for dashboard
             if 'auction' in info:
