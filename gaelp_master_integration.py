@@ -443,24 +443,98 @@ class MasterOrchestrator:
         )
         # NO MOCK AGENTS - Use proper RL implementation
         
-        # NO BANDITS - Use ROBUST RL with safety!
-        from training_orchestrator.rl_agent_robust import RobustRLAgent, JourneyState
-        from dynamic_discovery import DynamicDiscoverySystem
-        self.rl_agent = RobustRLAgent(
-            bid_actions=10,
-            creative_actions=5,
-            learning_rate=0.0001,
-            gamma=0.95,
-            epsilon=0.15,
-            epsilon_decay=0.995,
-            epsilon_min=0.01,
-            checkpoint_dir="checkpoints/rl_agent",
-            discovery_system=DynamicDiscoverySystem()
-        )
+        # Use ADVANCED RL Agent with all state-of-the-art features!
+        try:
+            from training_orchestrator.rl_agent_advanced import create_advanced_agent
+            from dynamic_discovery import DynamicDiscoverySystem
+            
+            # Configure advanced agent with production settings
+            advanced_config = {
+                # Core
+                'learning_rate': 0.0001,
+                'gamma': 0.95,
+                'tau': 0.001,
+                
+                # Advanced DQN features
+                'double_dqn': True,
+                'dueling_dqn': True,
+                'noisy_nets': True,
+                'categorical_dqn': False,  # Can enable for distributional RL
+                
+                # Exploration
+                'epsilon_start': 0.15,
+                'epsilon_end': 0.01,
+                'epsilon_decay': 0.995,
+                'ucb_c': 2.0,
+                'thompson_prior_alpha': 1.0,
+                'thompson_prior_beta': 1.0,
+                
+                # Prioritized Experience Replay
+                'per_alpha': 0.6,
+                'per_beta_start': 0.4,
+                'per_beta_end': 1.0,
+                
+                # Multi-objective (ROI, CTR, Budget, Safety)
+                'n_objectives': 4,
+                'objective_weights': [0.4, 0.3, 0.2, 0.1],
+                
+                # Advanced features
+                'use_action_masking': True,
+                'use_reward_shaping': True,
+                'curiosity_weight': 0.1,
+                'safe_exploration': True,
+                
+                # Memory and training
+                'buffer_size': 100000,
+                'batch_size': 64,
+                'update_frequency': 4,
+                'target_update_frequency': 1000,
+                
+                # Checkpointing
+                'checkpoint_frequency': 5000,
+                'checkpoint_dir': 'checkpoints/advanced'
+            }
+            
+            self.rl_agent = create_advanced_agent(
+                state_dim=20,  # Expanded state space
+                action_dim=10,  # 10 bid levels
+                config_dict=advanced_config
+            )
+            
+            # Add discovery system
+            self.rl_agent.discovery_system = DynamicDiscoverySystem()
+            
+            # Try to load existing checkpoint
+            import os
+            checkpoint_files = [f for f in os.listdir('checkpoints/advanced') 
+                              if f.startswith('checkpoint_')] if os.path.exists('checkpoints/advanced') else []
+            if checkpoint_files:
+                latest_checkpoint = sorted(checkpoint_files)[-1]
+                self.rl_agent.load_checkpoint(f'checkpoints/advanced/{latest_checkpoint}')
+                logger.info(f"✅ Loaded advanced agent checkpoint: {latest_checkpoint}")
+            
+            logger.info("✅ ADVANCED RL Agent initialized with all state-of-the-art features")
+            logger.info("   Features: Double DQN, Dueling, Noisy Nets, PER, Action Masking, Curiosity, Multi-Objective")
+            
+        except ImportError as e:
+            logger.warning(f"Advanced agent not available: {e}, falling back to robust agent")
+            # Fallback to robust agent
+            from training_orchestrator.rl_agent_robust import RobustRLAgent, JourneyState
+            from dynamic_discovery import DynamicDiscoverySystem
+            self.rl_agent = RobustRLAgent(
+                bid_actions=10,
+                creative_actions=5,
+                learning_rate=0.0001,
+                gamma=0.95,
+                epsilon=0.15,
+                epsilon_decay=0.995,
+                epsilon_min=0.01,
+                checkpoint_dir="checkpoints/rl_agent",
+                discovery_system=DynamicDiscoverySystem()
+            )
+            self.rl_agent.load_checkpoint()
+            self.journey_state_class = JourneyState
         
-        # Try to load existing checkpoint
-        self.rl_agent.load_checkpoint()
-        self.journey_state_class = JourneyState
         # Keep online_learner reference for compatibility but use RL agent
         self.online_learner = self.rl_agent
         
