@@ -1,0 +1,184 @@
+{
+  "checkpoint_id": "cp_gaelp_v20250902_2221_500_20250902_222115",
+  "report_generated_at": "2025-09-02T22:21:15.892263",
+  "checkpoint_metadata": {
+    "checkpoint_id": "cp_gaelp_v20250902_2221_500_20250902_222115",
+    "model_version": "gaelp_v20250902_2221",
+    "training_episode": 500,
+    "validation_status": "ValidationStatus.DEPLOYED",
+    "signature": {
+      "architecture_hash": "7ecdbdf9117133476dfcd523fba30452",
+      "state_dict_keys": [
+        "weight",
+        "bias"
+      ],
+      "parameter_counts": {
+        "weight": 40,
+        "bias": 4
+      },
+      "tensor_shapes": {
+        "weight": [
+          4,
+          10
+        ],
+        "bias": [
+          4
+        ]
+      },
+      "torch_version": "2.8.0+cpu",
+      "python_version": "3.10",
+      "dependency_versions": {
+        "numpy": "2.1.3",
+        "torch": "2.8.0+cpu"
+      },
+      "timestamp": "2025-09-02T22:21:15.754408"
+    },
+    "validation_metrics": {
+      "accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "roas": 4.0,
+      "conversion_rate": 0.15000000000000002,
+      "ctr": 0.1,
+      "inference_latency_ms": 0.017881393432617188,
+      "memory_usage_mb": 349.22265625,
+      "throughput_qps": 55924.05333333334,
+      "gradient_norm": 0.0,
+      "weight_stability": 1.0,
+      "output_variance": 0.1,
+      "revenue_impact": 0.0,
+      "cost_efficiency": 1.0,
+      "user_satisfaction": 0.8,
+      "timestamp": "2025-09-02T22:21:15.784725"
+    },
+    "training_config": {
+      "agent_type": "MockGAELPAgent",
+      "timestamp": "2025-09-02T22:21:15.752551",
+      "learning_rate": 0.001,
+      "epsilon": 0.1,
+      "gamma": 0.99,
+      "total_episodes": 500,
+      "model_parameters": 44,
+      "model_layers": 1
+    },
+    "data_signature": "c0351c1cdbd6469598069051f2146a43",
+    "parent_checkpoint": null,
+    "children_checkpoints": [],
+    "deployment_history": [
+      {
+        "deployed_at": "2025-09-02T22:21:15.792849",
+        "rollback_point": null,
+        "deployed_by": "production_checkpoint_manager"
+      }
+    ],
+    "rollback_points": [],
+    "validation_logs": [
+      {
+        "timestamp": "2025-09-02T22:21:15.770747",
+        "checkpoint_id": "cp_gaelp_v20250902_2221_500_20250902_222115",
+        "validation_steps": [
+          {
+            "step": "architecture_validation",
+            "result": true,
+            "issues": [],
+            "timestamp": "2025-09-02T22:21:15.773240"
+          },
+          {
+            "step": "holdout_validation",
+            "result": "True",
+            "metrics": {
+              "success_rate": 1.0,
+              "avg_inference_time_ms": 0.0010514259338378906,
+              "p95_inference_time_ms": 0.0016689300537109375,
+              "total_samples_tested": 100,
+              "valid_predictions": 100
+            },
+            "errors": [],
+            "timestamp": "2025-09-02T22:21:15.774053"
+          },
+          {
+            "step": "performance_benchmarking",
+            "result": "True",
+            "metrics": {
+              "passed": "True",
+              "avg_inference_time_ms": 0.014472007751464844,
+              "memory_usage_mb": 349.22265625,
+              "throughput_qps": 69098.91268533772,
+              "weight_stability": 1.0,
+              "output_variance": 0.1,
+              "cost_efficiency": 1.0
+            },
+            "timestamp": "2025-09-02T22:21:15.774675"
+          }
+        ],
+        "overall_result": true,
+        "validation_duration_seconds": 0.003955
+      },
+      {
+        "timestamp": "2025-09-02T22:21:15.779023",
+        "checkpoint_id": "cp_gaelp_v20250902_2221_500_20250902_222115",
+        "validation_steps": [
+          {
+            "step": "architecture_validation",
+            "result": true,
+            "issues": [],
+            "timestamp": "2025-09-02T22:21:15.782635"
+          },
+          {
+            "step": "holdout_validation",
+            "result": "True",
+            "metrics": {
+              "success_rate": 1.0,
+              "avg_inference_time_ms": 0.002040863037109375,
+              "p95_inference_time_ms": 0.002384185791015625,
+              "total_samples_tested": 100,
+              "valid_predictions": 100
+            },
+            "errors": [],
+            "timestamp": "2025-09-02T22:21:15.783813"
+          },
+          {
+            "step": "performance_benchmarking",
+            "result": "True",
+            "metrics": {
+              "passed": "True",
+              "avg_inference_time_ms": 0.017881393432617188,
+              "memory_usage_mb": 349.22265625,
+              "throughput_qps": 55924.05333333334,
+              "weight_stability": 1.0,
+              "output_variance": 0.1,
+              "cost_efficiency": 1.0
+            },
+            "timestamp": "2025-09-02T22:21:15.784702"
+          }
+        ],
+        "overall_result": true,
+        "validation_duration_seconds": 0.005715
+      }
+    ],
+    "created_at": "2025-09-02T22:21:15.754620",
+    "validated_at": "2025-09-02T22:21:15.784737",
+    "deployed_at": "2025-09-02T22:21:15.792843"
+  },
+  "validation_history": [],
+  "production_status": {
+    "current_production_checkpoint": "cp_gaelp_v20250902_2221_500_20250902_222115",
+    "production_deployed_at": "2025-09-02T22:21:15.792843",
+    "total_checkpoints": 5,
+    "validated_checkpoints": 4,
+    "failed_checkpoints": 0,
+    "pending_checkpoints": 0,
+    "deployed_checkpoints": 1,
+    "rollback_available": false,
+    "last_validation_time": "2025-09-02T22:21:15.784737"
+  },
+  "validation_summary": {
+    "overall_status": "deployed",
+    "validation_duration": 0.005715,
+    "validation_steps_passed": 3,
+    "validation_steps_total": 3,
+    "critical_issues": [],
+    "recommendations": []
+  }
+}

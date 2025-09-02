@@ -106,18 +106,17 @@ class IntegratedBehavioralSimulator:
         self.traffic_simulator = RealisticTrafficSimulator()
         self.trigger_system = TriggerEventSystem()
         
-        # Initialize auction system if available
-        if use_auctiongym and AUCTION_GYM_AVAILABLE:
-            auction_config = {
-                'auction_type': 'second_price',
-                'num_bidders': 10,
-                'num_slots': 5
-            }
-            self.auction_gym = AuctionGymWrapper(config=auction_config)
-            logger.info("Using AuctionGym for auction simulation")
-        else:
-            self.auction_gym = None
-            logger.info("AuctionGym not available, using simplified auctions")
+        # Initialize auction system - REQUIRED
+        if not (use_auctiongym and AUCTION_GYM_AVAILABLE):
+            raise RuntimeError("AuctionGym is REQUIRED for realistic auction simulation. No fallbacks allowed.")
+        
+        auction_config = {
+            'auction_type': 'second_price',
+            'num_bidders': 10,
+            'num_slots': 5
+        }
+        self.auction_gym = AuctionGymWrapper(config=auction_config)
+        logger.info("Using AuctionGym for auction simulation")
         
         # Initialize RecSim if available
         if use_recsim and RECSIM_AVAILABLE:

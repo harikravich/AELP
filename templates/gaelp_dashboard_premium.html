@@ -699,6 +699,23 @@
             <div class="chart-title">Real-Time Performance Metrics</div>
             <canvas id="performanceChart"></canvas>
         </div>
+
+        <!-- Auction Performance Charts -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+            <div class="chart-container">
+                <div class="chart-title">Win Rate & CPC Trends</div>
+                <canvas id="auctionWinChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <div class="chart-title">CTR & CVR Performance</div>
+                <canvas id="auctionCtrChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart-title">ROAS & Auction Volume</div>
+            <canvas id="auctionRoasChart"></canvas>
+        </div>
         
         <!-- DeepMind Features Section -->
         <div class="deepmind-container" style="
@@ -1081,6 +1098,152 @@
             }
         });
         
+        // Auction Win Rate & CPC Chart
+        const auctionWinCtx = document.getElementById('auctionWinChart').getContext('2d');
+        charts.auctionWin = new Chart(auctionWinCtx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Win Rate %',
+                    data: [],
+                    borderColor: '#10B981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.4,
+                    yAxisID: 'y'
+                }, {
+                    label: 'CPC ($)',
+                    data: [],
+                    borderColor: '#F59E0B',
+                    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                    tension: 0.4,
+                    yAxisID: 'y1'
+                }]
+            },
+            options: {
+                responsive: true,
+                interaction: { intersect: false },
+                plugins: {
+                    legend: { labels: { color: '#E5E7EB' } }
+                },
+                scales: {
+                    x: { 
+                        ticks: { color: '#94A3B8' },
+                        grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                    },
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        ticks: { color: '#94A3B8' },
+                        grid: { color: 'rgba(148, 163, 184, 0.1)' },
+                        title: { display: true, text: 'Win Rate %', color: '#10B981' }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        ticks: { color: '#94A3B8' },
+                        grid: { drawOnChartArea: false },
+                        title: { display: true, text: 'CPC ($)', color: '#F59E0B' }
+                    }
+                }
+            }
+        });
+        
+        // CTR & CVR Chart
+        const auctionCtrCtx = document.getElementById('auctionCtrChart').getContext('2d');
+        charts.auctionCtr = new Chart(auctionCtrCtx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'CTR %',
+                    data: [],
+                    borderColor: '#6366F1',
+                    backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                    tension: 0.4
+                }, {
+                    label: 'CVR %',
+                    data: [],
+                    borderColor: '#8B5CF6',
+                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                interaction: { intersect: false },
+                plugins: {
+                    legend: { labels: { color: '#E5E7EB' } }
+                },
+                scales: {
+                    x: { 
+                        ticks: { color: '#94A3B8' },
+                        grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                    },
+                    y: {
+                        ticks: { color: '#94A3B8' },
+                        grid: { color: 'rgba(148, 163, 184, 0.1)' },
+                        title: { display: true, text: 'Rate %', color: '#E5E7EB' }
+                    }
+                }
+            }
+        });
+        
+        // ROAS & Volume Chart  
+        const auctionRoasCtx = document.getElementById('auctionRoasChart').getContext('2d');
+        charts.auctionRoas = new Chart(auctionRoasCtx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'ROAS',
+                    data: [],
+                    borderColor: '#EC4899',
+                    backgroundColor: 'rgba(236, 72, 153, 0.1)',
+                    tension: 0.4,
+                    yAxisID: 'y'
+                }, {
+                    label: 'Total Auctions',
+                    data: [],
+                    borderColor: '#06B6D4',
+                    backgroundColor: 'rgba(6, 182, 212, 0.1)',
+                    tension: 0.4,
+                    yAxisID: 'y1'
+                }]
+            },
+            options: {
+                responsive: true,
+                interaction: { intersect: false },
+                plugins: {
+                    legend: { labels: { color: '#E5E7EB' } }
+                },
+                scales: {
+                    x: { 
+                        ticks: { color: '#94A3B8' },
+                        grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                    },
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        ticks: { color: '#94A3B8' },
+                        grid: { color: 'rgba(148, 163, 184, 0.1)' },
+                        title: { display: true, text: 'ROAS', color: '#EC4899' }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        ticks: { color: '#94A3B8' },
+                        grid: { drawOnChartArea: false },
+                        title: { display: true, text: 'Auctions', color: '#06B6D4' }
+                    }
+                }
+            }
+        });
+        
         // Control functions
         async function startSimulation() {
             const response = await fetch('/api/start', { method: 'POST' });
@@ -1115,6 +1278,87 @@
             document.getElementById(tabName + 'Tab').classList.add('active');
         }
         
+        // Update auction performance display with rich metrics - NO FALLBACKS
+        async function updateAuctionPerformanceDisplay(dashboardData) {
+            try {
+                // Get fresh auction performance data
+                const auctionResponse = await fetch('/api/auction_performance');
+                const auctionData = await auctionResponse.json();
+                const perf = auctionData.auction_performance;
+                
+                const auctionDiv = document.getElementById('auctionStats');
+                if (auctionDiv && perf) {
+                    // Determine market position color
+                    const winRateColor = perf.win_rate_percent > 30 ? '#00ff88' : 
+                                        perf.win_rate_percent > 15 ? '#ffa500' : '#ff6b6b';
+                    
+                    auctionDiv.innerHTML = `
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                            <div class="stat-card" style="background: rgba(0,0,0,0.3); padding: 1.2rem; border-radius: 12px;">
+                                <div class="stat-value" style="font-size: 1.8rem; font-weight: bold; color: #00ff88;">${perf.total_auctions || 0}</div>
+                                <div class="stat-label" style="color: #999; margin-top: 0.3rem;">Total Auctions</div>
+                            </div>
+                            <div class="stat-card" style="background: rgba(0,0,0,0.3); padding: 1.2rem; border-radius: 12px;">
+                                <div class="stat-value" style="font-size: 1.8rem; font-weight: bold; color: #00ff88;">${perf.won_auctions || 0}</div>
+                                <div class="stat-label" style="color: #999; margin-top: 0.3rem;">Won</div>
+                            </div>
+                            <div class="stat-card" style="background: rgba(0,0,0,0.3); padding: 1.2rem; border-radius: 12px;">
+                                <div class="stat-value" style="font-size: 1.8rem; font-weight: bold; color: ${winRateColor};">${(perf.win_rate_percent || 0).toFixed(1)}%</div>
+                                <div class="stat-label" style="color: #999; margin-top: 0.3rem;">Win Rate</div>
+                            </div>
+                            <div class="stat-card" style="background: rgba(0,0,0,0.3); padding: 1.2rem; border-radius: 12px;">
+                                <div class="stat-value" style="font-size: 1.8rem; font-weight: bold; color: #6366F1;">$${(perf.avg_cpc || 0).toFixed(2)}</div>
+                                <div class="stat-label" style="color: #999; margin-top: 0.3rem;">Avg CPC</div>
+                            </div>
+                            <div class="stat-card" style="background: rgba(0,0,0,0.3); padding: 1.2rem; border-radius: 12px;">
+                                <div class="stat-value" style="font-size: 1.8rem; font-weight: bold; color: #8B5CF6;">${(perf.ctr_percent || 0).toFixed(2)}%</div>
+                                <div class="stat-label" style="color: #999; margin-top: 0.3rem;">CTR</div>
+                            </div>
+                            <div class="stat-card" style="background: rgba(0,0,0,0.3); padding: 1.2rem; border-radius: 12px;">
+                                <div class="stat-value" style="font-size: 1.8rem; font-weight: bold; color: #EC4899;">${(perf.cvr_percent || 0).toFixed(2)}%</div>
+                                <div class="stat-label" style="color: #999; margin-top: 0.3rem;">CVR</div>
+                            </div>
+                            <div class="stat-card" style="background: rgba(0,0,0,0.3); padding: 1.2rem; border-radius: 12px;">
+                                <div class="stat-value" style="font-size: 1.8rem; font-weight: bold; color: #10B981;">${(perf.roas || 0).toFixed(1)}x</div>
+                                <div class="stat-label" style="color: #999; margin-top: 0.3rem;">ROAS</div>
+                            </div>
+                            <div class="stat-card" style="background: rgba(0,0,0,0.3); padding: 1.2rem; border-radius: 12px;">
+                                <div class="stat-value" style="font-size: 1.8rem; font-weight: bold; color: #F59E0B;">${(perf.avg_position || 0).toFixed(1)}</div>
+                                <div class="stat-label" style="color: #999; margin-top: 0.3rem;">Avg Position</div>
+                            </div>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 12px;">
+                            <h4 style="color: white; margin-bottom: 1rem;">Market Intelligence</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                                <div>
+                                    <div style="color: #999; margin-bottom: 0.5rem;">Competition Level</div>
+                                    <div style="color: ${perf.competitor_count <= 3 ? '#00ff88' : perf.competitor_count <= 6 ? '#ffa500' : '#ff6b6b'}; font-weight: bold;">
+                                        ${perf.competitor_count || 0} estimated competitors
+                                    </div>
+                                </div>
+                                <div>
+                                    <div style="color: #999; margin-bottom: 0.5rem;">Quality Score</div>
+                                    <div style="color: ${perf.quality_score >= 7 ? '#00ff88' : perf.quality_score >= 5 ? '#ffa500' : '#ff6b6b'}; font-weight: bold;">
+                                        ${(perf.quality_score || 0).toFixed(1)}/10
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 1rem;">
+                                <div style="color: #999; margin-bottom: 0.5rem;">Bid Landscape</div>
+                                <div style="color: #E5E7EB;">
+                                    Min: $${(perf.bid_landscape?.min || 0).toFixed(2)} | 
+                                    Avg: $${(perf.bid_landscape?.avg || 0).toFixed(2)} | 
+                                    Max: $${(perf.bid_landscape?.max || 0).toFixed(2)}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Failed to update auction performance:', error);
+            }
+        }
+
         // Update dashboard
         async function updateDashboard() {
             try {
@@ -1234,37 +1478,8 @@
                     }
                 }
                 
-                // Update auction performance (REAL data - your win rate)
-                const auctionDiv = document.getElementById('auctionStats');
-                if (auctionDiv && data.component_tracking) {
-                    const auction = data.component_tracking.auction || {};
-                    const winRate = data.component_tracking.win_rate || {};
-                    
-                    auctionDiv.innerHTML = `
-                        <div class="auction-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
-                            <div class="stat-card" style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 12px;">
-                                <div class="stat-value" style="font-size: 2rem; font-weight: bold; color: #00ff88;">${auction.total_auctions || 0}</div>
-                                <div class="stat-label" style="color: #999; margin-top: 0.5rem;">Total Auctions</div>
-                            </div>
-                            <div class="stat-card" style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 12px;">
-                                <div class="stat-value" style="font-size: 2rem; font-weight: bold; color: #00ff88;">${auction.won_auctions || 0}</div>
-                                <div class="stat-label" style="color: #999; margin-top: 0.5rem;">Auctions Won</div>
-                            </div>
-                            <div class="stat-card" style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 12px;">
-                                <div class="stat-value" style="font-size: 2rem; font-weight: bold; color: #ff6b6b;">${auction.lost_auctions || 0}</div>
-                                <div class="stat-label" style="color: #999; margin-top: 0.5rem;">Auctions Lost</div>
-                            </div>
-                            <div class="stat-card" style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 12px;">
-                                <div class="stat-value" style="font-size: 2rem; font-weight: bold; color: #ffa500;">${((winRate.win_rate || 0) * 100).toFixed(1)}%</div>
-                                <div class="stat-label" style="color: #999; margin-top: 0.5rem;">Win Rate</div>
-                            </div>
-                        </div>
-                        <div style="margin-top: 2rem;">
-                            <h4>Market Position</h4>
-                            <p style="color: #999;">Based on your win rate, you're competing effectively in the market. Adjust bids to optimize for profitability.</p>
-                        </div>
-                    `;
-                }
+                // Update auction performance with RICH REAL-TIME data - NO FALLBACKS
+                await updateAuctionPerformanceDisplay(data);
                 
                 // Update discovered clusters
                 if (data.discovered_clusters) {
@@ -1453,6 +1668,40 @@
                     charts.channel.data.datasets[0].data = spend;
                     charts.channel.data.datasets[1].data = revenue;
                     charts.channel.update();
+                }
+                
+                // Update auction performance charts with REAL data - NO FALLBACKS
+                if (data.auction_performance) {
+                    const auctionData = data.auction_performance;
+                    const timeLabels = data.time_series && data.time_series.timestamps ? 
+                        data.time_series.timestamps.slice(-20).map(t => new Date(t * 1000).toLocaleTimeString()) : [];
+                    
+                    // Win Rate & CPC Chart
+                    if (charts.auctionWin) {
+                        charts.auctionWin.data.labels = timeLabels;
+                        charts.auctionWin.data.datasets[0].data = data.time_series?.win_rate?.slice(-20) || [];
+                        charts.auctionWin.data.datasets[1].data = data.time_series?.cpc?.slice(-20) || [];
+                        charts.auctionWin.update();
+                    }
+                    
+                    // CTR & CVR Chart
+                    if (charts.auctionCtr) {
+                        charts.auctionCtr.data.labels = timeLabels;
+                        charts.auctionCtr.data.datasets[0].data = data.time_series?.ctr?.slice(-20) || [];
+                        charts.auctionCtr.data.datasets[1].data = data.time_series?.cvr?.slice(-20) || [];
+                        charts.auctionCtr.update();
+                    }
+                    
+                    // ROAS & Volume Chart
+                    if (charts.auctionRoas) {
+                        charts.auctionRoas.data.labels = timeLabels;
+                        charts.auctionRoas.data.datasets[0].data = data.time_series?.roas?.slice(-20) || [];
+                        // Use total auctions from auction tracking
+                        const auctionVolume = data.time_series?.timestamps?.slice(-20).map((_, i) => 
+                            auctionData.total_auctions || 0) || [];
+                        charts.auctionRoas.data.datasets[1].data = auctionVolume;
+                        charts.auctionRoas.update();
+                    }
                 }
                 
                 // Update Enterprise Sections

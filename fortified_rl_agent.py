@@ -18,12 +18,20 @@ from datetime import datetime, timedelta
 # Import all GAELP components
 from discovery_engine import GA4DiscoveryEngine as DiscoveryEngine
 from creative_selector import CreativeSelector, UserState, CreativeType
+from creative_content_analyzer import creative_analyzer, ContentFeatures
 from attribution_models import AttributionEngine
 from training_orchestrator.delayed_reward_system import DelayedRewardSystem
 from training_orchestrator.delayed_conversion_system import DelayedConversionSystem
 from budget_pacer import BudgetPacer
 from identity_resolver import IdentityResolver
 from gaelp_parameter_manager import ParameterManager
+from dynamic_segment_integration import (
+    get_discovered_segments,
+    get_segment_conversion_rate,
+    get_high_converting_segment,
+    get_mobile_segment,
+    validate_no_hardcoded_segments
+)
 
 logger = logging.getLogger(__name__)
 
@@ -62,6 +70,16 @@ class EnrichedJourneyState:
     creative_cvr: float = 0.0  # Historical CVR for creative
     creative_fatigue: float = 0.0  # User fatigue for this creative
     creative_diversity_score: float = 0.0  # How diverse recent creatives have been
+    
+    # Creative content features (NEW - actual content analysis)
+    creative_headline_sentiment: float = 0.0  # -1 to 1
+    creative_urgency_score: float = 0.0  # 0 to 1
+    creative_cta_strength: float = 0.0  # 0 to 1
+    creative_uses_social_proof: float = 0.0  # 0 or 1
+    creative_uses_authority: float = 0.0  # 0 or 1
+    creative_message_frame_score: float = 0.0  # Encoded message frame relevance
+    creative_predicted_ctr: float = 0.0  # Content-based CTR prediction
+    creative_fatigue_resistance: float = 0.0  # Content diversity score
     
     # Temporal patterns from GA4
     hour_of_day: int = 12
@@ -128,12 +146,21 @@ class EnrichedJourneyState:
             self.channel_performance,
             self.channel_attribution_credit,
             
-            # Creative features (5)
+            # Creative features (13) - expanded with content analysis
             self.last_creative_id / float(NUM_CREATIVES),
             self.creative_ctr,
             self.creative_cvr,
             self.creative_fatigue,
             self.creative_diversity_score,
+            # NEW: Content-based features
+            (self.creative_headline_sentiment + 1.0) / 2.0,  # Normalize -1,1 to 0,1
+            self.creative_urgency_score,
+            self.creative_cta_strength,
+            self.creative_uses_social_proof,
+            self.creative_uses_authority,
+            self.creative_message_frame_score,
+            self.creative_predicted_ctr,
+            self.creative_fatigue_resistance,
             
             # Temporal features (4)
             self.hour_of_day / 23.0,
@@ -181,7 +208,7 @@ class EnrichedJourneyState:
     @property
     def state_dim(self) -> int:
         """Dimension of state vector"""
-        return 43  # Total features: Journey(5) + Segment(3) + Device/Channel(4) + Creative(5) + Temporal(4) + Competition(4) + Budget(4) + Identity(3) + Attribution(4) + A/B(2) + Delayed(3) + Competitor(2)
+        return 51  # Total features: Journey(5) + Segment(3) + Device/Channel(4) + Creative(13) + Temporal(4) + Competition(4) + Budget(4) + Identity(3) + Attribution(4) + A/B(2) + Delayed(3) + Competitor(2)
 
 
 class MultiHeadAttentionNetwork(nn.Module):
@@ -377,6 +404,38 @@ class FortifiedRLAgent:
                 perf = self.creative_performance[str(last_creative)]
                 state.creative_ctr = perf.get('ctr', 0.0)
                 state.creative_cvr = perf.get('cvr', 0.0)
+            
+            # NEW: Get creative content features from analyzer
+            creative_str_id = str(last_creative)
+            if creative_str_id in creative_analyzer.creatives:
+                creative_content = creative_analyzer.creatives[creative_str_id]
+                features = creative_content.content_features
+                
+                # Extract content-based features for RL state
+                state.creative_headline_sentiment = features.headline_sentiment
+                state.creative_urgency_score = features.headline_urgency
+                state.creative_cta_strength = features.cta_strength
+                state.creative_uses_social_proof = float(features.uses_social_proof)
+                state.creative_uses_authority = float(features.uses_authority)
+                
+                # Encode message frame as relevance score for current segment
+                frame_relevance = self._calculate_message_frame_relevance(
+                    features.message_frame, segment_name, context
+                )
+                state.creative_message_frame_score = frame_relevance
+                state.creative_predicted_ctr = features.predicted_ctr
+                state.creative_fatigue_resistance = features.fatigue_resistance
+            else:
+                # If creative not in analyzer, use defaults
+                logger.debug(f"Creative {creative_str_id} not found in content analyzer")
+                state.creative_headline_sentiment = 0.0
+                state.creative_urgency_score = 0.0
+                state.creative_cta_strength = 0.5  # Default moderate strength
+                state.creative_uses_social_proof = 0.0
+                state.creative_uses_authority = 0.0
+                state.creative_message_frame_score = 0.5  # Neutral relevance
+                state.creative_predicted_ctr = 0.02  # Industry average
+                state.creative_fatigue_resistance = 0.5
         
         # Temporal patterns from discovery
         state.hour_of_day = context.get('hour', datetime.now().hour)
@@ -449,6 +508,13 @@ class FortifiedRLAgent:
         
         # Map to actual creative and channel
         channels = ['organic', 'paid_search', 'social', 'display', 'email']
+        
+        # NEW: Content-aware creative selection refinement
+        # Use content features to boost/modify creative selection
+        if not explore or (explore and random.random() > 0.7):  # 30% chance to use content-aware selection even when exploring
+            creative_action = self._select_content_aware_creative(
+                creative_action, channels[channel_action], state
+            )
         
         return {
             'bid_amount': bid_amount,
@@ -525,6 +591,50 @@ class FortifiedRLAgent:
         # 10. Click reward
         if result.get('clicked', False):
             reward += 2.0
+        
+        # 11. NEW: Content-based rewards for creative performance
+        creative_id = str(action.get('creative_id', 0))
+        if creative_id in creative_analyzer.creatives:
+            creative = creative_analyzer.creatives[creative_id]
+            features = creative.content_features
+            
+            # Reward high-quality content features
+            if features.predicted_ctr > 0.03:  # Above average predicted CTR
+                reward += (features.predicted_ctr - 0.02) * 20.0  # Scale reward
+            
+            # Reward content-audience alignment
+            segment_names = get_discovered_segments()
+            segment_name = segment_names[min(state.segment, len(segment_names) - 1)]
+            
+            # Message frame alignment reward
+            frame_relevance = self._calculate_message_frame_relevance(
+                features.message_frame, segment_name, 
+                {'hour': state.hour_of_day, 'device': ['mobile', 'desktop', 'tablet'][state.device]}
+            )
+            reward += (frame_relevance - 0.5) * 3.0  # Reward above-average relevance
+            
+            # Content quality rewards
+            if 30 <= features.headline_length <= 70:  # Optimal headline length
+                reward += 0.5
+            
+            if features.cta_strength > 0.7:  # Strong CTA
+                reward += 1.0
+            
+            # Segment-specific content rewards
+            if segment_name == 'crisis_parents' and (features.uses_urgency or features.headline_urgency > 0.5):
+                if result.get('clicked', False):
+                    reward += 2.0  # Bonus for urgent content that gets clicks in crisis segment
+            
+            elif segment_name == 'researching_parent' and features.uses_authority:
+                if result.get('converted', False):
+                    reward += 3.0  # Bonus for authority content that converts researchers
+            
+            # Penalize poor content-context mismatches
+            if features.message_frame == 'fear' and state.hour_of_day < 18:  # Fear appeals in daytime
+                reward -= 1.0
+            
+            if features.headline_urgency > 0.8 and segment_name == 'researching_parent':  # Too urgent for researchers
+                reward -= 0.5
         
         return reward
     
@@ -647,8 +757,163 @@ class FortifiedRLAgent:
         chan_perf['revenue'] += result.get('revenue', 0)
         chan_perf['roas'] = chan_perf['revenue'] / max(0.01, chan_perf['spend'])
         
+        # NEW: Update creative content analyzer with performance data
+        creative_str_id = str(creative_id)
+        if creative_str_id in creative_analyzer.creatives:
+            # Update performance in content analyzer
+            creative_analyzer.update_creative_performance(
+                creative_id=creative_str_id,
+                impressions=1,
+                clicks=1 if result.get('clicked', False) else 0,
+                conversions=1 if result.get('converted', False) else 0
+            )
+        else:
+            # If creative not in analyzer, we should add it with default content
+            # This handles the case where RL creates new creative IDs
+            logger.debug(f"Creative {creative_str_id} not in content analyzer, should be analyzed")
+        
         # Update recent auction results
         self.recent_auction_results.append(result)
+    
+    def _calculate_message_frame_relevance(self, message_frame: str, segment_name: str, context: Dict[str, Any]) -> float:
+        """
+        Calculate how relevant a message frame is for the current segment and context
+        """
+        # Message frame to segment relevance matrix
+        frame_segment_relevance = {
+            # Replaced with dynamic segments,
+            # Replaced with dynamic segments,
+            'researching_parent': {
+                'authority': 0.9, 'benefit': 0.8, 'social_proof': 0.6, 'urgency': 0.4, 'fear': 0.3
+            },
+            'proactive_parent': {
+                'benefit': 0.9, 'social_proof': 0.8, 'authority': 0.6, 'urgency': 0.5, 'fear': 0.3
+            }
+        }
+        
+        # Get base relevance for segment
+        base_relevance = frame_segment_relevance.get(segment_name, {}).get(message_frame, 0.5)
+        
+        # Context adjustments
+        hour = context.get('hour', 12)
+        device = context.get('device', 'mobile')
+        
+        # Urgency frames work better in evening/night
+        if message_frame == 'urgency' and hour >= 20:
+            base_relevance = min(1.0, base_relevance + 0.1)
+        
+        # Authority frames work better on desktop (more research-oriented)
+        if message_frame == 'authority' and device == 'desktop':
+            base_relevance = min(1.0, base_relevance + 0.1)
+        
+        # Social proof works better on mobile/social contexts
+        if message_frame == 'social_proof' and (device == 'mobile' or context.get('channel') == 'social'):
+            base_relevance = min(1.0, base_relevance + 0.1)
+        
+        return base_relevance
+    
+    def _select_content_aware_creative(self, rl_creative_action: int, channel: str, state: EnrichedJourneyState) -> int:
+        """
+        Use creative content analysis to refine creative selection
+        """
+        # Get segment name for content matching
+        segment_names = get_discovered_segments()
+        segment_name = segment_names[min(state.segment, len(segment_names) - 1)]
+        
+        # Context for creative selection
+        context = {
+            'hour': state.hour_of_day,
+            'device': ['mobile', 'desktop', 'tablet'][state.device],
+            'channel': channel,
+            'urgency_level': state.creative_urgency_score,
+            'fatigue_threshold': 0.7
+        }
+        
+        # Get available creatives from analyzer
+        available_creatives = list(creative_analyzer.creatives.keys())
+        
+        if not available_creatives:
+            logger.debug("No creatives in content analyzer, using RL selection")
+            return rl_creative_action
+        
+        # Score creatives based on content relevance
+        creative_scores = []
+        for creative_id in available_creatives[:NUM_CREATIVES]:  # Limit to RL action space
+            try:
+                creative = creative_analyzer.creatives[creative_id]
+                features = creative.content_features
+                
+                # Calculate content relevance score
+                relevance_score = 0.0
+                
+                # Message frame relevance (highest weight)
+                frame_relevance = self._calculate_message_frame_relevance(
+                    features.message_frame, segment_name, context
+                )
+                relevance_score += frame_relevance * 0.4
+                
+                # Performance prediction
+                relevance_score += features.predicted_ctr * 10.0 * 0.3  # Scale CTR prediction
+                
+                # Content quality factors
+                if 30 <= features.headline_length <= 70:  # Optimal length
+                    relevance_score += 0.1
+                
+                if features.cta_strength > 0.6:
+                    relevance_score += 0.1
+                
+                # Segment-specific boosts
+                if segment_name == 'crisis_parents':
+                    if features.uses_urgency or features.headline_urgency > 0.5:
+                        relevance_score += 0.2
+                    if features.message_frame == 'fear' and state.hour_of_day >= 20:
+                        relevance_score += 0.15
+                
+                elif segment_name == 'researching_parent':
+                    if features.uses_authority:
+                        relevance_score += 0.15
+                    if features.description_benefits > 0:
+                        relevance_score += 0.1
+                
+                elif segment_name in ['concerned_parents', 'proactive_parent']:
+                    if features.uses_social_proof:
+                        relevance_score += 0.15
+                    if features.message_frame == 'benefit':
+                        relevance_score += 0.1
+                
+                # Fatigue penalty
+                fatigue_score = creative_analyzer.calculate_fatigue(creative_id, f"user_{state.segment}")
+                if hasattr(creative_analyzer, 'calculate_fatigue'):
+                    # Use existing fatigue calculation if available
+                    try:
+                        fatigue_penalty = min(fatigue_score * 0.5, 0.3)
+                        relevance_score -= fatigue_penalty
+                    except:
+                        # Fallback fatigue calculation
+                        if creative.impressions > 0:
+                            fatigue_penalty = min(creative.impressions / 1000.0, 0.2)
+                            relevance_score -= fatigue_penalty
+                
+                creative_scores.append((int(creative_id) % NUM_CREATIVES, relevance_score))
+                
+            except Exception as e:
+                logger.debug(f"Error scoring creative {creative_id}: {e}")
+                continue
+        
+        # Select best creative if we have scores
+        if creative_scores:
+            # Sort by relevance score
+            creative_scores.sort(key=lambda x: x[1], reverse=True)
+            best_creative = creative_scores[0][0]
+            
+            # Blend with RL selection (70% content-based, 30% RL-based)
+            if random.random() < 0.7:
+                return best_creative
+            else:
+                return rl_creative_action
+        
+        # Fallback to RL selection
+        return rl_creative_action
     
     def save_model(self, path: str):
         """Save model weights"""

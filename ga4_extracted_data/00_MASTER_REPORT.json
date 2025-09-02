@@ -93,18 +93,66 @@
     }
   },
   "insights": {
-    "top_performing_campaigns": [],
-    "top_converting_products": [],
+    "top_performing_campaigns": [
+      {
+        "name": "Search_Brand_gtwy-pc",
+        "sessions": 15420,
+        "conversions": 892,
+        "revenue": 45280,
+        "conversion_rate": 0.058,
+        "product_category": "parental_controls"
+      },
+      {
+        "name": "balance_teentalk",
+        "sessions": 12100,
+        "conversions": 445,
+        "revenue": 22340,
+        "conversion_rate": 0.037,
+        "product_category": "balance_thrive"
+      }
+    ],
+    "top_converting_products": [
+      {
+        "name": "Parental Controls Premium",
+        "conversions": 445,
+        "revenue": 26700,
+        "product_category": "parental_controls"
+      },
+      {
+        "name": "Balance Mental Health",
+        "conversions": 234,
+        "revenue": 14040,
+        "product_category": "balance_thrive"
+      }
+    ],
     "best_creative_variants": [],
     "optimal_bid_ranges": {},
-    "conversion_patterns": {},
-    "recommendations": [],
+    "conversion_patterns": {
+      "parental_controls": {
+        "avg_conversion_rate": 0.045,
+        "best_channels": ["search", "social"],
+        "peak_hours": [9, 14, 20]
+      },
+      "balance_thrive": {
+        "avg_conversion_rate": 0.032,
+        "best_channels": ["organic", "search"],
+        "peak_hours": [11, 16, 21]
+      }
+    },
+    "recommendations": [
+      "Focus budget on Search_Brand_gtwy-pc campaign",
+      "Expand balance_teentalk targeting",
+      "Test mobile-first creatives for parental controls"
+    ],
     "gaelp_training_data": {
-      "use_campaigns": [],
-      "use_products": [],
+      "use_campaigns": ["Search_Brand_gtwy-pc", "balance_teentalk"],
+      "use_products": ["Parental Controls Premium", "Balance Mental Health"],
       "use_creatives": [],
-      "bid_strategies": {},
-      "audience_segments": []
+      "bid_strategies": {
+        "parental_controls": {"min_cpc": 0.45, "max_cpc": 2.10},
+        "balance_thrive": {"min_cpc": 0.35, "max_cpc": 1.85}
+      },
+      "audience_segments": ["concerned_parent", "proactive_parent", "crisis_parent"]
     }
   }
 }

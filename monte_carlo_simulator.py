@@ -45,6 +45,13 @@ from enhanced_simulator_fixed import FixedGAELPEnvironment
 
 # Import strict mode enforcement
 from NO_FALLBACKS import StrictModeEnforcer, NoFallbackError, enforce_no_fallbacks
+from dynamic_segment_integration import (
+    get_discovered_segments,
+    get_segment_conversion_rate,
+    get_high_converting_segment,
+    get_mobile_segment,
+    validate_no_hardcoded_segments
+)
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

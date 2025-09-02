@@ -1,0 +1,24 @@
+{
+  "bounds": {
+    "absolute_min_reward": -1000.0,
+    "absolute_max_reward": 1000.0,
+    "percentile_low": 1.0,
+    "percentile_high": 99.0
+  },
+  "anomaly_detection": {
+    "z_score_threshold": 3.0,
+    "iqr_multiplier": 1.5,
+    "spike_threshold": 5.0,
+    "gradient_threshold": 2.0
+  },
+  "consistency": {
+    "max_context_deviation": 0.5,
+    "temporal_window_hours": 24,
+    "min_samples_for_consistency": 20
+  },
+  "human_review": {
+    "enabled": true,
+    "anomaly_score_threshold": 2.0,
+    "pattern_review_threshold": 5
+  }
+}

@@ -1,0 +1,358 @@
+{
+  "gaelp_success_criteria_config": {
+    "system_info": {
+      "version": "1.0.0",
+      "last_updated": "2025-09-02",
+      "environment": "production",
+      "no_fallbacks": true,
+      "strict_enforcement": true
+    },
+    
+    "alert_configuration": {
+      "notification_channels": {
+        "critical": ["email", "slack", "pagerduty", "sms"],
+        "high": ["email", "slack"],
+        "medium": ["email"],
+        "low": ["dashboard_only"]
+      },
+      
+      "escalation_procedures": {
+        "critical_business_failure": {
+          "immediate_actions": [
+            "Notify on-call engineer immediately",
+            "Page team lead within 5 minutes",
+            "Create emergency incident ticket",
+            "Initiate emergency response protocol"
+          ],
+          "escalation_timeline": {
+            "0_minutes": ["on_call_engineer"],
+            "15_minutes": ["team_lead"],
+            "30_minutes": ["engineering_manager"],
+            "60_minutes": ["vp_engineering", "ceo"]
+          }
+        },
+        
+        "roas_below_minimum": {
+          "immediate_actions": [
+            "Pause underperforming campaigns",
+            "Increase bids on high-performing segments",
+            "Review attribution model accuracy",
+            "Check for external market changes"
+          ],
+          "investigation_steps": [
+            "Analyze last 48 hours of campaign data",
+            "Compare with historical performance",
+            "Check for competitive landscape changes",
+            "Validate tracking and attribution accuracy"
+          ]
+        },
+        
+        "system_uptime_failure": {
+          "immediate_actions": [
+            "Check infrastructure health",
+            "Verify backup systems",
+            "Switch to emergency mode if needed",
+            "Communicate status to stakeholders"
+          ]
+        }
+      }
+    },
+    
+    "monitoring_configuration": {
+      "check_intervals": {
+        "critical_kpis_seconds": 30,
+        "standard_kpis_seconds": 60,
+        "system_health_seconds": 15,
+        "learning_metrics_seconds": 300
+      },
+      
+      "data_retention": {
+        "raw_metrics_days": 90,
+        "aggregated_metrics_days": 365,
+        "alert_history_days": 180,
+        "system_health_days": 365
+      },
+      
+      "performance_windows": {
+        "real_time_minutes": 5,
+        "short_term_hours": 4,
+        "medium_term_hours": 24,
+        "long_term_days": 7
+      }
+    },
+    
+    "business_impact_matrix": {
+      "revenue_impact_categories": {
+        "catastrophic": {"min_daily_loss": 20000, "severity": "critical"},
+        "severe": {"min_daily_loss": 10000, "severity": "high"},
+        "moderate": {"min_daily_loss": 5000, "severity": "medium"},
+        "minor": {"min_daily_loss": 1000, "severity": "low"}
+      },
+      
+      "operational_impact": {
+        "system_down": "critical",
+        "performance_degraded": "high", 
+        "learning_impaired": "medium",
+        "reporting_delayed": "low"
+      }
+    },
+    
+    "success_validation_rules": {
+      "minimum_data_points": {
+        "daily_metrics": 24,
+        "weekly_metrics": 168,
+        "monthly_metrics": 720
+      },
+      
+      "statistical_significance": {
+        "confidence_level": 0.95,
+        "minimum_sample_size": 1000,
+        "effect_size_threshold": 0.1
+      },
+      
+      "trend_analysis": {
+        "minimum_trend_points": 7,
+        "trend_significance_threshold": 0.05,
+        "seasonal_adjustment": true
+      }
+    },
+    
+    "recovery_procedures": {
+      "automated_recovery": {
+        "enabled_for": ["budget_utilization", "bid_adjustments", "creative_rotation"],
+        "disabled_for": ["roas_targeting", "audience_expansion", "campaign_creation"],
+        "approval_required": ["budget_increases", "audience_changes", "creative_updates"]
+      },
+      
+      "manual_intervention_triggers": {
+        "business_critical_failure": true,
+        "multiple_kpi_failures": true,
+        "sustained_underperformance": true,
+        "external_market_shock": true
+      }
+    },
+    
+    "reporting_requirements": {
+      "executive_dashboard": {
+        "update_frequency_minutes": 15,
+        "kpis_displayed": [
+          "overall_roas",
+          "daily_conversions", 
+          "profit_margin",
+          "system_uptime",
+          "brand_safety_score"
+        ],
+        "alert_summary": true
+      },
+      
+      "operational_dashboard": {
+        "update_frequency_minutes": 5,
+        "kpis_displayed": [
+          "overall_ctr",
+          "conversion_rate",
+          "cost_per_acquisition",
+          "model_accuracy",
+          "response_time_p95"
+        ],
+        "detailed_alerts": true
+      },
+      
+      "daily_reports": {
+        "recipients": ["team_lead", "product_manager"],
+        "includes": [
+          "performance_summary",
+          "alert_summary", 
+          "trend_analysis",
+          "recommendations"
+        ]
+      },
+      
+      "weekly_reports": {
+        "recipients": ["engineering_manager", "vp_product"],
+        "includes": [
+          "goal_achievement",
+          "system_health_trends",
+          "learning_progress",
+          "business_impact_analysis"
+        ]
+      }
+    },
+    
+    "compliance_requirements": {
+      "data_accuracy": {
+        "measurement_accuracy_threshold": 0.99,
+        "attribution_accuracy_threshold": 0.95,
+        "reporting_accuracy_threshold": 0.995
+      },
+      
+      "audit_trail": {
+        "log_all_threshold_changes": true,
+        "log_all_alert_responses": true,
+        "retain_decision_rationale": true,
+        "external_audit_ready": true
+      },
+      
+      "performance_standards": {
+        "sla_compliance_minimum": 0.999,
+        "response_time_sla_ms": 100,
+        "availability_sla_percent": 99.9
+      }
+    }
+  },
+  
+  "channel_specific_targets": {
+    "google_search": {
+      "roas_target": 5.0,
+      "roas_minimum": 3.5,
+      "ctr_target": 4.5,
+      "cvr_target": 12.0,
+      "cpa_maximum": 20.0,
+      "quality_score_minimum": 7.0
+    },
+    
+    "google_display": {
+      "roas_target": 3.5,
+      "roas_minimum": 2.2,
+      "ctr_target": 2.8,
+      "cvr_target": 6.5,
+      "cpa_maximum": 35.0,
+      "viewability_minimum": 0.7
+    },
+    
+    "youtube_video": {
+      "roas_target": 3.0,
+      "roas_minimum": 1.8,
+      "ctr_target": 2.2,
+      "cvr_target": 4.8,
+      "cpa_maximum": 40.0,
+      "view_rate_minimum": 0.3
+    },
+    
+    "facebook_feed": {
+      "roas_target": 4.2,
+      "roas_minimum": 2.8,
+      "ctr_target": 3.8,
+      "cvr_target": 8.5,
+      "cpa_maximum": 28.0,
+      "relevance_score_minimum": 7.0
+    },
+    
+    "instagram_stories": {
+      "roas_target": 3.8,
+      "roas_minimum": 2.5,
+      "ctr_target": 4.2,
+      "cvr_target": 7.2,
+      "cpa_maximum": 32.0,
+      "completion_rate_minimum": 0.75
+    }
+  },
+  
+  "segment_specific_targets": {
+    "high_intent_users": {
+      "roas_target": 6.0,
+      "roas_minimum": 4.0,
+      "cvr_target": 15.0,
+      "cpa_maximum": 18.0
+    },
+    
+    "lookalike_audiences": {
+      "roas_target": 4.5,
+      "roas_minimum": 3.0,
+      "cvr_target": 9.0,
+      "cpa_maximum": 25.0
+    },
+    
+    "retargeting_users": {
+      "roas_target": 7.0,
+      "roas_minimum": 4.5,
+      "cvr_target": 18.0,
+      "cpa_maximum": 15.0
+    },
+    
+    "cold_audiences": {
+      "roas_target": 2.8,
+      "roas_minimum": 1.5,
+      "cvr_target": 4.0,
+      "cpa_maximum": 50.0
+    }
+  },
+  
+  "temporal_targets": {
+    "weekday_performance": {
+      "roas_uplift_minimum": 1.1,
+      "volume_consistency_minimum": 0.8
+    },
+    
+    "weekend_performance": {
+      "roas_maintenance_minimum": 0.9,
+      "efficiency_requirement": 1.05
+    },
+    
+    "holiday_periods": {
+      "roas_target_multiplier": 1.2,
+      "volume_target_multiplier": 1.5,
+      "cpa_tolerance_multiplier": 1.3
+    },
+    
+    "end_of_month": {
+      "budget_utilization_minimum": 0.95,
+      "efficiency_maintenance": 1.0
+    }
+  },
+  
+  "learning_performance_targets": {
+    "convergence_requirements": {
+      "episodes_to_convergence_maximum": 5000,
+      "episodes_to_stable_performance": 3000,
+      "minimum_improvement_per_1000_episodes": 0.05
+    },
+    
+    "model_performance": {
+      "prediction_accuracy_minimum": 0.75,
+      "prediction_accuracy_target": 0.85,
+      "feature_importance_stability": 0.8,
+      "overfitting_detection_threshold": 0.1
+    },
+    
+    "exploration_efficiency": {
+      "exploration_rate_optimal_range": [0.15, 0.25],
+      "exploration_success_rate_minimum": 0.6,
+      "novel_state_discovery_rate": 0.1
+    },
+    
+    "reward_engineering": {
+      "reward_signal_noise_ratio_minimum": 3.0,
+      "reward_correlation_with_business_metrics": 0.8,
+      "reward_stability_coefficient": 0.9
+    }
+  },
+  
+  "system_health_indicators": {
+    "infrastructure": {
+      "cpu_utilization_warning": 70,
+      "cpu_utilization_critical": 85,
+      "memory_utilization_warning": 75,
+      "memory_utilization_critical": 90,
+      "disk_space_warning": 80,
+      "disk_space_critical": 95
+    },
+    
+    "application_performance": {
+      "response_time_p50_warning_ms": 75,
+      "response_time_p50_critical_ms": 150,
+      "response_time_p95_warning_ms": 200,
+      "response_time_p95_critical_ms": 500,
+      "error_rate_warning_percent": 0.5,
+      "error_rate_critical_percent": 1.0
+    },
+    
+    "data_quality": {
+      "completeness_warning_threshold": 0.95,
+      "completeness_critical_threshold": 0.9,
+      "accuracy_warning_threshold": 0.98,
+      "accuracy_critical_threshold": 0.95,
+      "freshness_warning_minutes": 15,
+      "freshness_critical_minutes": 60
+    }
+  }
+}

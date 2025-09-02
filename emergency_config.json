@@ -1,0 +1,10 @@
+{
+  "budget_overrun_threshold": 1.2,
+  "max_cpc_threshold": 50.0,
+  "loss_explosion_threshold": 10.0,
+  "error_rate_threshold": 5.0,
+  "memory_threshold": 0.9,
+  "cpu_threshold": 0.95,
+  "measurement_window": 5,
+  "consecutive_violations": 2
+}

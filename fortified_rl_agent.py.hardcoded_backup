@@ -1,0 +1,940 @@
+#!/usr/bin/env python3
+"""
+FORTIFIED RL AGENT FOR GAELP
+Complete integration of all components for sophisticated marketing optimization
+"""
+
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import numpy as np
+import random
+import logging
+from typing import Dict, Tuple, List, Optional, Any
+from dataclasses import dataclass, field
+from collections import deque
+from datetime import datetime, timedelta
+
+# Import all GAELP components
+from discovery_engine import GA4DiscoveryEngine as DiscoveryEngine
+from creative_selector import CreativeSelector, UserState, CreativeType
+from creative_content_analyzer import creative_analyzer, ContentFeatures
+from attribution_models import AttributionEngine
+from training_orchestrator.delayed_reward_system import DelayedRewardSystem
+from training_orchestrator.delayed_conversion_system import DelayedConversionSystem
+from budget_pacer import BudgetPacer
+from identity_resolver import IdentityResolver
+from gaelp_parameter_manager import ParameterManager
+
+logger = logging.getLogger(__name__)
+
+# Constants
+MIN_BID = 0.50
+MAX_BID = 10.00
+NUM_BID_LEVELS = 20
+NUM_CREATIVES = 50
+NUM_CHANNELS = 5  # organic, paid_search, social, display, email
+NUM_SEGMENTS = 4  # researching, concerned, crisis, proactive
+
+@dataclass
+class EnrichedJourneyState:
+    """
+    Enriched state representation with ALL component signals
+    """
+    # Core journey state
+    stage: int = 0  # 0=unaware, 1=aware, 2=considering, 3=intent, 4=converted
+    touchpoints_seen: int = 0
+    days_since_first_touch: float = 0.0
+    
+    # User segment (discovered, not hardcoded)
+    segment: int = 0  # Index into discovered segments
+    segment_cvr: float = 0.0  # Segment conversion rate from GA4
+    segment_engagement: float = 0.0  # Segment engagement level
+    
+    # Device and channel context
+    device: int = 0  # 0=mobile, 1=desktop, 2=tablet
+    channel: int = 0  # Current channel index
+    channel_performance: float = 0.5  # Historical channel ROI
+    channel_attribution_credit: float = 0.0  # Multi-touch attribution credit
+    
+    # Creative performance
+    last_creative_id: int = 0
+    creative_ctr: float = 0.0  # Historical CTR for creative
+    creative_cvr: float = 0.0  # Historical CVR for creative
+    creative_fatigue: float = 0.0  # User fatigue for this creative
+    creative_diversity_score: float = 0.0  # How diverse recent creatives have been
+    
+    # Creative content features (NEW - actual content analysis)
+    creative_headline_sentiment: float = 0.0  # -1 to 1
+    creative_urgency_score: float = 0.0  # 0 to 1
+    creative_cta_strength: float = 0.0  # 0 to 1
+    creative_uses_social_proof: float = 0.0  # 0 or 1
+    creative_uses_authority: float = 0.0  # 0 or 1
+    creative_message_frame_score: float = 0.0  # Encoded message frame relevance
+    creative_predicted_ctr: float = 0.0  # Content-based CTR prediction
+    creative_fatigue_resistance: float = 0.0  # Content diversity score
+    
+    # Temporal patterns from GA4
+    hour_of_day: int = 12
+    day_of_week: int = 0
+    is_peak_hour: bool = False  # From discovered patterns
+    seasonality_factor: float = 1.0
+    
+    # Competition and auction context
+    competition_level: float = 0.5
+    avg_competitor_bid: float = 0.0
+    win_rate_last_10: float = 0.0
+    avg_position_last_10: float = 5.0
+    
+    # Budget and pacing
+    budget_spent_ratio: float = 0.0  # Spent/total budget
+    time_in_day_ratio: float = 0.5  # Time passed in day
+    pacing_factor: float = 1.0  # From budget pacer
+    remaining_budget: float = 1000.0
+    
+    # Identity resolution
+    cross_device_confidence: float = 0.0
+    num_devices_seen: int = 1
+    is_returning_user: bool = False
+    is_logged_in: bool = False  # Added for identity features
+    
+    # Attribution signals
+    first_touch_channel: int = 0
+    last_touch_channel: int = 0
+    touchpoint_credits: List[float] = field(default_factory=list)
+    expected_conversion_value: float = 0.0
+    
+    # A/B test tracking
+    ab_test_variant: int = 0  # Which variant user is in
+    variant_performance: float = 0.0  # Historical performance of variant
+    
+    # Delayed conversion signals
+    conversion_probability: float = 0.02
+    days_to_conversion_estimate: float = 7.0
+    has_scheduled_conversion: bool = False
+    segment_avg_ltv: float = 100.0  # Added for delayed conversion features
+    
+    # Competitor exposure
+    competitor_impressions_seen: int = 0
+    competitor_fatigue_level: float = 0.0
+    
+    def to_vector(self) -> np.ndarray:
+        """Convert to neural network input vector"""
+        return np.array([
+            # Journey features (5)
+            self.stage / 4.0,
+            min(self.touchpoints_seen / 20.0, 1.0),
+            min(self.days_since_first_touch / 14.0, 1.0),
+            float(self.is_returning_user),
+            self.conversion_probability,
+            
+            # Segment features (3)
+            self.segment / float(NUM_SEGMENTS),
+            self.segment_cvr,
+            self.segment_engagement,
+            
+            # Device/channel features (4)
+            self.device / 2.0,
+            self.channel / float(NUM_CHANNELS),
+            self.channel_performance,
+            self.channel_attribution_credit,
+            
+            # Creative features (13) - expanded with content analysis
+            self.last_creative_id / float(NUM_CREATIVES),
+            self.creative_ctr,
+            self.creative_cvr,
+            self.creative_fatigue,
+            self.creative_diversity_score,
+            # NEW: Content-based features
+            (self.creative_headline_sentiment + 1.0) / 2.0,  # Normalize -1,1 to 0,1
+            self.creative_urgency_score,
+            self.creative_cta_strength,
+            self.creative_uses_social_proof,
+            self.creative_uses_authority,
+            self.creative_message_frame_score,
+            self.creative_predicted_ctr,
+            self.creative_fatigue_resistance,
+            
+            # Temporal features (4)
+            self.hour_of_day / 23.0,
+            self.day_of_week / 6.0,
+            float(self.is_peak_hour),
+            self.seasonality_factor,
+            
+            # Competition features (4)
+            self.competition_level,
+            min(self.avg_competitor_bid / MAX_BID, 1.0),
+            self.win_rate_last_10,
+            self.avg_position_last_10 / 10.0,
+            
+            # Budget features (4)
+            self.budget_spent_ratio,
+            self.time_in_day_ratio,
+            self.pacing_factor,
+            min(self.remaining_budget / 1000.0, 1.0),
+            
+            # Identity features (3)
+            self.cross_device_confidence,
+            min(self.num_devices_seen / 5.0, 1.0),
+            float(self.is_logged_in),
+            
+            # Attribution features (4)
+            self.first_touch_channel / float(NUM_CHANNELS),
+            self.last_touch_channel / float(NUM_CHANNELS),
+            len(self.touchpoint_credits) / 10.0,
+            self.expected_conversion_value / 200.0,
+            
+            # A/B test features (2)
+            self.ab_test_variant / 10.0,
+            self.variant_performance,
+            
+            # Delayed conversion features (3)
+            self.segment_avg_ltv / 200.0,  # Use segment LTV instead of duplicate conversion_probability
+            min(self.days_to_conversion_estimate / 14.0, 1.0),
+            float(self.has_scheduled_conversion),
+            
+            # Competitor features (2)
+            min(self.competitor_impressions_seen / 10.0, 1.0),
+            self.competitor_fatigue_level
+        ])
+    
+    @property
+    def state_dim(self) -> int:
+        """Dimension of state vector"""
+        return 51  # Total features: Journey(5) + Segment(3) + Device/Channel(4) + Creative(13) + Temporal(4) + Competition(4) + Budget(4) + Identity(3) + Attribution(4) + A/B(2) + Delayed(3) + Competitor(2)
+
+
+class MultiHeadAttentionNetwork(nn.Module):
+    """
+    Advanced neural network with multi-head attention for complex state processing
+    """
+    def __init__(self, state_dim: int, hidden_dim: int = 256, num_heads: int = 8):
+        super().__init__()
+        
+        # Feature extraction
+        self.feature_extractor = nn.Sequential(
+            nn.Linear(state_dim, hidden_dim),
+            nn.LayerNorm(hidden_dim),
+            nn.ReLU(),
+            nn.Dropout(0.1)
+        )
+        
+        # Multi-head attention
+        self.attention = nn.MultiheadAttention(
+            hidden_dim, 
+            num_heads,
+            dropout=0.1,
+            batch_first=True
+        )
+        
+        # Processing layers
+        self.processor = nn.Sequential(
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.LayerNorm(hidden_dim),
+            nn.ReLU(),
+            nn.Dropout(0.1),
+            nn.Linear(hidden_dim, hidden_dim // 2),
+            nn.ReLU()
+        )
+        
+    def forward(self, x):
+        # Extract features
+        features = self.feature_extractor(x)
+        
+        # Self-attention
+        if len(features.shape) == 2:
+            features = features.unsqueeze(1)  # Add sequence dimension
+        
+        attended, _ = self.attention(features, features, features)
+        attended = attended.squeeze(1) if attended.shape[1] == 1 else attended.mean(dim=1)
+        
+        # Process
+        return self.processor(attended)
+
+
+class FortifiedRLAgent:
+    """
+    Fortified RL Agent with complete integration of all GAELP components
+    """
+    
+    def __init__(self,
+                 discovery_engine: DiscoveryEngine,
+                 creative_selector: CreativeSelector,
+                 attribution_engine: AttributionEngine,
+                 budget_pacer: BudgetPacer,
+                 identity_resolver: IdentityResolver,
+                 parameter_manager: ParameterManager,
+                 learning_rate: float = 1e-4,
+                 epsilon: float = 0.1,
+                 gamma: float = 0.99,
+                 buffer_size: int = 50000):
+        
+        # Component integration
+        self.discovery = discovery_engine
+        self.creative_selector = creative_selector
+        self.attribution = attribution_engine
+        self.budget_pacer = budget_pacer
+        self.identity_resolver = identity_resolver
+        self.pm = parameter_manager
+        
+        # RL parameters
+        self.learning_rate = learning_rate
+        self.epsilon = epsilon
+        self.epsilon_decay = 0.995
+        self.epsilon_min = 0.01
+        self.gamma = gamma
+        
+        # State tracking
+        self.state_dim = EnrichedJourneyState().state_dim  # Get actual dimension from state class
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        
+        # Action spaces
+        self.bid_actions = NUM_BID_LEVELS
+        self.creative_actions = NUM_CREATIVES
+        self.channel_actions = NUM_CHANNELS
+        
+        # Neural networks with attention (with correct output dimensions)
+        self.q_network_bid = self._build_q_network(output_dim=self.bid_actions)
+        self.q_network_creative = self._build_q_network(output_dim=self.creative_actions)
+        self.q_network_channel = self._build_q_network(output_dim=self.channel_actions)
+        self.target_network = self._build_q_network(output_dim=self.bid_actions)  # Target for bid network
+        
+        # Optimizers
+        self.optimizer_bid = optim.Adam(self.q_network_bid.parameters(), lr=learning_rate)
+        self.optimizer_creative = optim.Adam(self.q_network_creative.parameters(), lr=learning_rate)
+        self.optimizer_channel = optim.Adam(self.q_network_channel.parameters(), lr=learning_rate)
+        
+        # Experience replay
+        self.replay_buffer = deque(maxlen=buffer_size)
+        
+        # Performance tracking
+        self.training_metrics = {
+            'episodes': 0,
+            'total_reward': 0,
+            'avg_position': 5.0,
+            'win_rate': 0.0,
+            'conversion_rate': 0.0,
+            'roas': 0.0,
+            'creative_diversity': 0.0,
+            'channel_efficiency': {}
+        }
+        
+        # Historical data for state enrichment
+        self.creative_performance = {}
+        self.channel_performance = {}
+        self.user_creative_history = {}
+        self.recent_auction_results = deque(maxlen=10)
+        
+        logger.info("FortifiedRLAgent initialized with all components integrated")
+    
+    def _build_q_network(self, output_dim: int = 20) -> nn.Module:
+        """Build Q-network with attention mechanism"""
+        class QNetwork(nn.Module):
+            def __init__(self, state_dim, hidden_dim=256, out_dim=20):
+                super().__init__()
+                self.attention_net = MultiHeadAttentionNetwork(state_dim, hidden_dim)
+                self.q_head = nn.Sequential(
+                    nn.Linear(hidden_dim // 2, hidden_dim // 2),
+                    nn.ReLU(),
+                    nn.Linear(hidden_dim // 2, out_dim)
+                )
+                
+            def forward(self, x):
+                features = self.attention_net(x)
+                return self.q_head(features)
+        
+        return QNetwork(self.state_dim, out_dim=output_dim).to(self.device)
+    
+    def get_enriched_state(self, 
+                          user_id: str,
+                          journey_state: Any,
+                          context: Dict[str, Any]) -> EnrichedJourneyState:
+        """
+        Create enriched state with all component signals
+        """
+        state = EnrichedJourneyState()
+        
+        # Core journey state
+        state.stage = journey_state.stage if hasattr(journey_state, 'stage') else 0
+        state.touchpoints_seen = journey_state.touchpoints_seen if hasattr(journey_state, 'touchpoints_seen') else 0
+        state.days_since_first_touch = journey_state.days_since_first_touch if hasattr(journey_state, 'days_since_first_touch') else 0
+        
+        # Get discovered segment (not hardcoded!)
+        patterns = self.discovery.discover_all_patterns()
+        segment_name = context.get('segment', 'researching_parent')
+        if segment_name in patterns.user_patterns.get('segments', {}):
+            segment_data = patterns.user_patterns['segments'][segment_name]
+            state.segment_cvr = segment_data.get('conversion_rate', 0.02)
+            state.segment_engagement = segment_data.get('engagement_score', 0.5)
+        
+        # Device and channel from context
+        state.device = {'mobile': 0, 'desktop': 1, 'tablet': 2}.get(context.get('device', 'mobile'), 0)
+        state.channel = {'organic': 0, 'paid_search': 1, 'social': 2, 'display': 3, 'email': 4}.get(
+            context.get('channel', 'organic'), 0)
+        
+        # Get channel performance from attribution engine
+        if self.attribution:
+            channel_credits = self.attribution.calculate_attribution(
+                touchpoints=[{'channel': context.get('channel', 'organic')}],
+                conversion_value=100.0,
+                model='linear'
+            )
+            state.channel_attribution_credit = channel_credits.get(context.get('channel', 'organic'), 0.0)
+        
+        # Get creative performance from selector
+        if self.creative_selector and user_id in self.user_creative_history:
+            last_creative = self.user_creative_history[user_id][-1] if self.user_creative_history[user_id] else 0
+            state.last_creative_id = last_creative
+            
+            # Get fatigue score
+            state.creative_fatigue = self.creative_selector.calculate_fatigue(
+                creative_id=str(last_creative),
+                user_id=user_id
+            )
+            
+            # Get performance metrics
+            if str(last_creative) in self.creative_performance:
+                perf = self.creative_performance[str(last_creative)]
+                state.creative_ctr = perf.get('ctr', 0.0)
+                state.creative_cvr = perf.get('cvr', 0.0)
+            
+            # NEW: Get creative content features from analyzer
+            creative_str_id = str(last_creative)
+            if creative_str_id in creative_analyzer.creatives:
+                creative_content = creative_analyzer.creatives[creative_str_id]
+                features = creative_content.content_features
+                
+                # Extract content-based features for RL state
+                state.creative_headline_sentiment = features.headline_sentiment
+                state.creative_urgency_score = features.headline_urgency
+                state.creative_cta_strength = features.cta_strength
+                state.creative_uses_social_proof = float(features.uses_social_proof)
+                state.creative_uses_authority = float(features.uses_authority)
+                
+                # Encode message frame as relevance score for current segment
+                frame_relevance = self._calculate_message_frame_relevance(
+                    features.message_frame, segment_name, context
+                )
+                state.creative_message_frame_score = frame_relevance
+                state.creative_predicted_ctr = features.predicted_ctr
+                state.creative_fatigue_resistance = features.fatigue_resistance
+            else:
+                # If creative not in analyzer, use defaults
+                logger.debug(f"Creative {creative_str_id} not found in content analyzer")
+                state.creative_headline_sentiment = 0.0
+                state.creative_urgency_score = 0.0
+                state.creative_cta_strength = 0.5  # Default moderate strength
+                state.creative_uses_social_proof = 0.0
+                state.creative_uses_authority = 0.0
+                state.creative_message_frame_score = 0.5  # Neutral relevance
+                state.creative_predicted_ctr = 0.02  # Industry average
+                state.creative_fatigue_resistance = 0.5
+        
+        # Temporal patterns from discovery
+        state.hour_of_day = context.get('hour', datetime.now().hour)
+        state.day_of_week = context.get('day_of_week', datetime.now().weekday())
+        peak_hours = patterns.temporal_patterns.get('peak_hours', [19, 20, 21])
+        state.is_peak_hour = state.hour_of_day in peak_hours
+        
+        # Competition context
+        if self.recent_auction_results:
+            wins = sum(1 for r in self.recent_auction_results if r.get('won', False))
+            state.win_rate_last_10 = wins / len(self.recent_auction_results)
+            positions = [r.get('position', 10) for r in self.recent_auction_results if r.get('won', False)]
+            state.avg_position_last_10 = np.mean(positions) if positions else 10.0
+        
+        # Budget pacing
+        if self.budget_pacer:
+            pacing_info = self.budget_pacer.get_pacing_multiplier(
+                spent=context.get('budget_spent', 0),
+                budget=context.get('daily_budget', 1000),
+                time_remaining=context.get('time_remaining', 12)
+            )
+            state.pacing_factor = pacing_info
+            state.budget_spent_ratio = context.get('budget_spent', 0) / max(1, context.get('daily_budget', 1000))
+        
+        # Identity resolution signals
+        if self.identity_resolver:
+            identity_cluster = self.identity_resolver.get_identity_cluster(user_id)
+            if identity_cluster:
+                state.cross_device_confidence = identity_cluster.confidence_scores.get(user_id, 0.0)
+                state.num_devices_seen = len(identity_cluster.device_signatures)
+        
+        # A/B test variant
+        state.ab_test_variant = context.get('ab_variant', 0)
+        
+        # Conversion probability from segment
+        state.conversion_probability = state.segment_cvr
+        
+        return state
+    
+    def select_action(self, 
+                     state: EnrichedJourneyState,
+                     explore: bool = True) -> Dict[str, Any]:
+        """
+        Select multi-dimensional action (bid, creative, channel)
+        """
+        state_vector = torch.FloatTensor(state.to_vector()).unsqueeze(0).to(self.device)
+        
+        # Epsilon-greedy exploration
+        if explore and random.random() < self.epsilon:
+            bid_action = random.randint(0, self.bid_actions - 1)
+            creative_action = random.randint(0, self.creative_actions - 1)
+            channel_action = random.randint(0, self.channel_actions - 1)
+        else:
+            with torch.no_grad():
+                # Get Q-values from each network
+                q_bid = self.q_network_bid(state_vector)
+                q_creative = self.q_network_creative(state_vector)
+                q_channel = self.q_network_channel(state_vector)
+                
+                bid_action = q_bid.argmax().item()
+                creative_action = q_creative.argmax().item()
+                channel_action = q_channel.argmax().item()
+        
+        # Convert to actual values
+        bid_levels = np.linspace(MIN_BID, MAX_BID, self.bid_actions)
+        bid_amount = float(bid_levels[bid_action])
+        
+        # Apply budget pacing constraint
+        bid_amount *= state.pacing_factor
+        
+        # Map to actual creative and channel
+        channels = ['organic', 'paid_search', 'social', 'display', 'email']
+        
+        # NEW: Content-aware creative selection refinement
+        # Use content features to boost/modify creative selection
+        if not explore or (explore and random.random() > 0.7):  # 30% chance to use content-aware selection even when exploring
+            creative_action = self._select_content_aware_creative(
+                creative_action, channels[channel_action], state
+            )
+        
+        return {
+            'bid_amount': bid_amount,
+            'bid_action': bid_action,
+            'creative_id': creative_action,
+            'channel': channels[channel_action],
+            'channel_action': channel_action
+        }
+    
+    def calculate_enriched_reward(self,
+                                 state: EnrichedJourneyState,
+                                 action: Dict[str, Any],
+                                 next_state: EnrichedJourneyState,
+                                 result: Dict[str, Any]) -> float:
+        """
+        Calculate sophisticated multi-component reward
+        """
+        reward = 0.0
+        
+        # 1. Immediate auction reward
+        if result.get('won', False):
+            position = result.get('position', 10)
+            price = result.get('price_paid', 0)
+            
+            # Position value (better positions = higher reward)
+            position_reward = (11 - position) / 10.0
+            
+            # Cost efficiency
+            efficiency = (action['bid_amount'] - price) / max(0.01, action['bid_amount'])
+            
+            reward += position_reward * 2.0 + efficiency * 1.0
+        else:
+            reward -= 0.5  # Penalty for losing
+        
+        # 2. Journey progression reward
+        if next_state.stage > state.stage:
+            stage_progression = (next_state.stage - state.stage) * 5.0
+            reward += stage_progression
+        
+        # 3. Creative diversity reward
+        diversity_bonus = next_state.creative_diversity_score * 2.0
+        reward += diversity_bonus
+        
+        # 4. Channel efficiency reward
+        channel_roi = next_state.channel_performance * 3.0
+        reward += channel_roi
+        
+        # 5. Attribution-based reward
+        attribution_credit = next_state.channel_attribution_credit * 4.0
+        reward += attribution_credit
+        
+        # 6. Delayed conversion expectation
+        if next_state.has_scheduled_conversion:
+            expected_value = next_state.expected_conversion_value
+            days_to_wait = next_state.days_to_conversion_estimate
+            discounted_value = expected_value * (self.gamma ** days_to_wait)
+            reward += discounted_value * 0.1
+        
+        # 7. Budget pacing reward
+        if state.budget_spent_ratio < state.time_in_day_ratio:
+            # Under-pacing penalty
+            pacing_penalty = (state.time_in_day_ratio - state.budget_spent_ratio) * 2.0
+            reward -= pacing_penalty
+        
+        # 8. Fatigue penalty
+        if next_state.creative_fatigue > 0.7:
+            reward -= (next_state.creative_fatigue - 0.7) * 5.0
+        
+        # 9. Conversion reward (biggest component)
+        if result.get('converted', False):
+            conversion_value = result.get('revenue', 100.0)
+            reward += conversion_value * 0.5
+        
+        # 10. Click reward
+        if result.get('clicked', False):
+            reward += 2.0
+        
+        # 11. NEW: Content-based rewards for creative performance
+        creative_id = str(action.get('creative_id', 0))
+        if creative_id in creative_analyzer.creatives:
+            creative = creative_analyzer.creatives[creative_id]
+            features = creative.content_features
+            
+            # Reward high-quality content features
+            if features.predicted_ctr > 0.03:  # Above average predicted CTR
+                reward += (features.predicted_ctr - 0.02) * 20.0  # Scale reward
+            
+            # Reward content-audience alignment
+            segment_names = ['researching_parent', 'concerned_parents', 'crisis_parents', 'proactive_parent']
+            segment_name = segment_names[min(state.segment, len(segment_names) - 1)]
+            
+            # Message frame alignment reward
+            frame_relevance = self._calculate_message_frame_relevance(
+                features.message_frame, segment_name, 
+                {'hour': state.hour_of_day, 'device': ['mobile', 'desktop', 'tablet'][state.device]}
+            )
+            reward += (frame_relevance - 0.5) * 3.0  # Reward above-average relevance
+            
+            # Content quality rewards
+            if 30 <= features.headline_length <= 70:  # Optimal headline length
+                reward += 0.5
+            
+            if features.cta_strength > 0.7:  # Strong CTA
+                reward += 1.0
+            
+            # Segment-specific content rewards
+            if segment_name == 'crisis_parents' and (features.uses_urgency or features.headline_urgency > 0.5):
+                if result.get('clicked', False):
+                    reward += 2.0  # Bonus for urgent content that gets clicks in crisis segment
+            
+            elif segment_name == 'researching_parent' and features.uses_authority:
+                if result.get('converted', False):
+                    reward += 3.0  # Bonus for authority content that converts researchers
+            
+            # Penalize poor content-context mismatches
+            if features.message_frame == 'fear' and state.hour_of_day < 18:  # Fear appeals in daytime
+                reward -= 1.0
+            
+            if features.headline_urgency > 0.8 and segment_name == 'researching_parent':  # Too urgent for researchers
+                reward -= 0.5
+        
+        return reward
+    
+    def store_experience(self,
+                        state: EnrichedJourneyState,
+                        action: Dict[str, Any],
+                        reward: float,
+                        next_state: EnrichedJourneyState,
+                        done: bool):
+        """Store experience in replay buffer"""
+        experience = {
+            'state': state.to_vector(),
+            'bid_action': action['bid_action'],
+            'creative_action': action['creative_id'],
+            'channel_action': action['channel_action'],
+            'reward': reward,
+            'next_state': next_state.to_vector(),
+            'done': done
+        }
+        self.replay_buffer.append(experience)
+    
+    def train(self, batch_size: int = 256):
+        """Train the agent on batch of experiences"""
+        if len(self.replay_buffer) < batch_size:
+            return
+        
+        # Sample batch
+        batch = random.sample(self.replay_buffer, batch_size)
+        
+        # Prepare tensors
+        states = torch.FloatTensor([e['state'] for e in batch]).to(self.device)
+        next_states = torch.FloatTensor([e['next_state'] for e in batch]).to(self.device)
+        rewards = torch.FloatTensor([e['reward'] for e in batch]).to(self.device)
+        dones = torch.FloatTensor([e['done'] for e in batch]).to(self.device)
+        
+        bid_actions = torch.LongTensor([e['bid_action'] for e in batch]).to(self.device)
+        creative_actions = torch.LongTensor([e['creative_action'] for e in batch]).to(self.device)
+        channel_actions = torch.LongTensor([e['channel_action'] for e in batch]).to(self.device)
+        
+        # Train bid network
+        current_q_bid = self.q_network_bid(states).gather(1, bid_actions.unsqueeze(1))
+        next_q_bid = self.target_network(next_states).max(1)[0].detach()
+        target_q_bid = rewards + (self.gamma * next_q_bid * (1 - dones))
+        
+        loss_bid = nn.MSELoss()(current_q_bid.squeeze(), target_q_bid)
+        self.optimizer_bid.zero_grad()
+        loss_bid.backward()
+        self.optimizer_bid.step()
+        
+        # Train creative network
+        current_q_creative = self.q_network_creative(states).gather(1, creative_actions.unsqueeze(1))
+        target_q_creative = rewards + (self.gamma * next_q_bid * (1 - dones))
+        
+        loss_creative = nn.MSELoss()(current_q_creative.squeeze(), target_q_creative)
+        self.optimizer_creative.zero_grad()
+        loss_creative.backward()
+        self.optimizer_creative.step()
+        
+        # Train channel network
+        current_q_channel = self.q_network_channel(states).gather(1, channel_actions.unsqueeze(1))
+        target_q_channel = rewards + (self.gamma * next_q_bid * (1 - dones))
+        
+        loss_channel = nn.MSELoss()(current_q_channel.squeeze(), target_q_channel)
+        self.optimizer_channel.zero_grad()
+        loss_channel.backward()
+        self.optimizer_channel.step()
+        
+        # Update metrics
+        self.training_metrics['episodes'] += 1
+        
+        # Decay epsilon
+        self.epsilon = max(self.epsilon_min, self.epsilon * self.epsilon_decay)
+        
+        # Update target network periodically
+        if self.training_metrics['episodes'] % 100 == 0:
+            self.target_network.load_state_dict(self.q_network_bid.state_dict())
+        
+        return {
+            'loss_bid': loss_bid.item(),
+            'loss_creative': loss_creative.item(),
+            'loss_channel': loss_channel.item(),
+            'epsilon': self.epsilon
+        }
+    
+    def update_performance_history(self,
+                                  creative_id: int,
+                                  channel: str,
+                                  result: Dict[str, Any]):
+        """Update performance tracking for state enrichment"""
+        # Update creative performance
+        if str(creative_id) not in self.creative_performance:
+            self.creative_performance[str(creative_id)] = {
+                'impressions': 0,
+                'clicks': 0,
+                'conversions': 0,
+                'ctr': 0.0,
+                'cvr': 0.0
+            }
+        
+        perf = self.creative_performance[str(creative_id)]
+        perf['impressions'] += 1
+        if result.get('clicked', False):
+            perf['clicks'] += 1
+        if result.get('converted', False):
+            perf['conversions'] += 1
+        
+        perf['ctr'] = perf['clicks'] / max(1, perf['impressions'])
+        perf['cvr'] = perf['conversions'] / max(1, perf['impressions'])
+        
+        # Update channel performance
+        if channel not in self.channel_performance:
+            self.channel_performance[channel] = {
+                'spend': 0.0,
+                'revenue': 0.0,
+                'roas': 0.0
+            }
+        
+        chan_perf = self.channel_performance[channel]
+        chan_perf['spend'] += result.get('price_paid', 0)
+        chan_perf['revenue'] += result.get('revenue', 0)
+        chan_perf['roas'] = chan_perf['revenue'] / max(0.01, chan_perf['spend'])
+        
+        # NEW: Update creative content analyzer with performance data
+        creative_str_id = str(creative_id)
+        if creative_str_id in creative_analyzer.creatives:
+            # Update performance in content analyzer
+            creative_analyzer.update_creative_performance(
+                creative_id=creative_str_id,
+                impressions=1,
+                clicks=1 if result.get('clicked', False) else 0,
+                conversions=1 if result.get('converted', False) else 0
+            )
+        else:
+            # If creative not in analyzer, we should add it with default content
+            # This handles the case where RL creates new creative IDs
+            logger.debug(f"Creative {creative_str_id} not in content analyzer, should be analyzed")
+        
+        # Update recent auction results
+        self.recent_auction_results.append(result)
+    
+    def _calculate_message_frame_relevance(self, message_frame: str, segment_name: str, context: Dict[str, Any]) -> float:
+        """
+        Calculate how relevant a message frame is for the current segment and context
+        """
+        # Message frame to segment relevance matrix
+        frame_segment_relevance = {
+            'crisis_parents': {
+                'urgency': 0.9, 'fear': 0.8, 'authority': 0.7, 'benefit': 0.6, 'social_proof': 0.5
+            },
+            'concerned_parents': {
+                'benefit': 0.9, 'social_proof': 0.8, 'authority': 0.7, 'urgency': 0.6, 'fear': 0.4
+            },
+            'researching_parent': {
+                'authority': 0.9, 'benefit': 0.8, 'social_proof': 0.6, 'urgency': 0.4, 'fear': 0.3
+            },
+            'proactive_parent': {
+                'benefit': 0.9, 'social_proof': 0.8, 'authority': 0.6, 'urgency': 0.5, 'fear': 0.3
+            }
+        }
+        
+        # Get base relevance for segment
+        base_relevance = frame_segment_relevance.get(segment_name, {}).get(message_frame, 0.5)
+        
+        # Context adjustments
+        hour = context.get('hour', 12)
+        device = context.get('device', 'mobile')
+        
+        # Urgency frames work better in evening/night
+        if message_frame == 'urgency' and hour >= 20:
+            base_relevance = min(1.0, base_relevance + 0.1)
+        
+        # Authority frames work better on desktop (more research-oriented)
+        if message_frame == 'authority' and device == 'desktop':
+            base_relevance = min(1.0, base_relevance + 0.1)
+        
+        # Social proof works better on mobile/social contexts
+        if message_frame == 'social_proof' and (device == 'mobile' or context.get('channel') == 'social'):
+            base_relevance = min(1.0, base_relevance + 0.1)
+        
+        return base_relevance
+    
+    def _select_content_aware_creative(self, rl_creative_action: int, channel: str, state: EnrichedJourneyState) -> int:
+        """
+        Use creative content analysis to refine creative selection
+        """
+        # Get segment name for content matching
+        segment_names = ['researching_parent', 'concerned_parents', 'crisis_parents', 'proactive_parent']
+        segment_name = segment_names[min(state.segment, len(segment_names) - 1)]
+        
+        # Context for creative selection
+        context = {
+            'hour': state.hour_of_day,
+            'device': ['mobile', 'desktop', 'tablet'][state.device],
+            'channel': channel,
+            'urgency_level': state.creative_urgency_score,
+            'fatigue_threshold': 0.7
+        }
+        
+        # Get available creatives from analyzer
+        available_creatives = list(creative_analyzer.creatives.keys())
+        
+        if not available_creatives:
+            logger.debug("No creatives in content analyzer, using RL selection")
+            return rl_creative_action
+        
+        # Score creatives based on content relevance
+        creative_scores = []
+        for creative_id in available_creatives[:NUM_CREATIVES]:  # Limit to RL action space
+            try:
+                creative = creative_analyzer.creatives[creative_id]
+                features = creative.content_features
+                
+                # Calculate content relevance score
+                relevance_score = 0.0
+                
+                # Message frame relevance (highest weight)
+                frame_relevance = self._calculate_message_frame_relevance(
+                    features.message_frame, segment_name, context
+                )
+                relevance_score += frame_relevance * 0.4
+                
+                # Performance prediction
+                relevance_score += features.predicted_ctr * 10.0 * 0.3  # Scale CTR prediction
+                
+                # Content quality factors
+                if 30 <= features.headline_length <= 70:  # Optimal length
+                    relevance_score += 0.1
+                
+                if features.cta_strength > 0.6:
+                    relevance_score += 0.1
+                
+                # Segment-specific boosts
+                if segment_name == 'crisis_parents':
+                    if features.uses_urgency or features.headline_urgency > 0.5:
+                        relevance_score += 0.2
+                    if features.message_frame == 'fear' and state.hour_of_day >= 20:
+                        relevance_score += 0.15
+                
+                elif segment_name == 'researching_parent':
+                    if features.uses_authority:
+                        relevance_score += 0.15
+                    if features.description_benefits > 0:
+                        relevance_score += 0.1
+                
+                elif segment_name in ['concerned_parents', 'proactive_parent']:
+                    if features.uses_social_proof:
+                        relevance_score += 0.15
+                    if features.message_frame == 'benefit':
+                        relevance_score += 0.1
+                
+                # Fatigue penalty
+                fatigue_score = creative_analyzer.calculate_fatigue(creative_id, f"user_{state.segment}")
+                if hasattr(creative_analyzer, 'calculate_fatigue'):
+                    # Use existing fatigue calculation if available
+                    try:
+                        fatigue_penalty = min(fatigue_score * 0.5, 0.3)
+                        relevance_score -= fatigue_penalty
+                    except:
+                        # Fallback fatigue calculation
+                        if creative.impressions > 0:
+                            fatigue_penalty = min(creative.impressions / 1000.0, 0.2)
+                            relevance_score -= fatigue_penalty
+                
+                creative_scores.append((int(creative_id) % NUM_CREATIVES, relevance_score))
+                
+            except Exception as e:
+                logger.debug(f"Error scoring creative {creative_id}: {e}")
+                continue
+        
+        # Select best creative if we have scores
+        if creative_scores:
+            # Sort by relevance score
+            creative_scores.sort(key=lambda x: x[1], reverse=True)
+            best_creative = creative_scores[0][0]
+            
+            # Blend with RL selection (70% content-based, 30% RL-based)
+            if random.random() < 0.7:
+                return best_creative
+            else:
+                return rl_creative_action
+        
+        # Fallback to RL selection
+        return rl_creative_action
+    
+    def save_model(self, path: str):
+        """Save model weights"""
+        torch.save({
+            'q_network_bid': self.q_network_bid.state_dict(),
+            'q_network_creative': self.q_network_creative.state_dict(),
+            'q_network_channel': self.q_network_channel.state_dict(),
+            'target_network': self.target_network.state_dict(),
+            'epsilon': self.epsilon,
+            'training_metrics': self.training_metrics,
+            'creative_performance': self.creative_performance,
+            'channel_performance': self.channel_performance
+        }, path)
+        logger.info(f"Model saved to {path}")
+    
+    def load_model(self, path: str):
+        """Load model weights"""
+        checkpoint = torch.load(path)
+        self.q_network_bid.load_state_dict(checkpoint['q_network_bid'])
+        self.q_network_creative.load_state_dict(checkpoint['q_network_creative'])
+        self.q_network_channel.load_state_dict(checkpoint['q_network_channel'])
+        self.target_network.load_state_dict(checkpoint['target_network'])
+        self.epsilon = checkpoint['epsilon']
+        self.training_metrics = checkpoint['training_metrics']
+        self.creative_performance = checkpoint['creative_performance']
+        self.channel_performance = checkpoint['channel_performance']
+        logger.info(f"Model loaded from {path}")

@@ -1,0 +1,51 @@
+{
+  "summary": {
+    "all_passed": false,
+    "total_tests": 8,
+    "passed_count": 3,
+    "failed_count": 5,
+    "total_duration": 0.522716
+  },
+  "detailed_results": {
+    "State Management": {
+      "passed": true,
+      "duration": 0.015173673629760742,
+      "error": null
+    },
+    "Environment Simulation": {
+      "passed": false,
+      "duration": 0.0005004405975341797,
+      "error": "GA4RealTimeDataPipeline.__init__() got an unexpected keyword argument 'cache_only'"
+    },
+    "Shadow Testing Engine": {
+      "passed": false,
+      "duration": 0.0004775524139404297,
+      "error": "GA4RealTimeDataPipeline.__init__() got an unexpected keyword argument 'cache_only'"
+    },
+    "Manager Integration": {
+      "passed": false,
+      "duration": 0.0003554821014404297,
+      "error": "GA4RealTimeDataPipeline.__init__() got an unexpected keyword argument 'cache_only'"
+    },
+    "Dashboard Functionality": {
+      "passed": false,
+      "duration": 0.15934085845947266,
+      "error": ""
+    },
+    "End-to-End Integration": {
+      "passed": false,
+      "duration": 0.00040411949157714844,
+      "error": "GA4RealTimeDataPipeline.__init__() got an unexpected keyword argument 'cache_only'"
+    },
+    "Performance Stress Test": {
+      "passed": true,
+      "duration": 0.297487735748291,
+      "error": null
+    },
+    "Error Handling": {
+      "passed": true,
+      "duration": 0.047884225845336914,
+      "error": null
+    }
+  }
+}

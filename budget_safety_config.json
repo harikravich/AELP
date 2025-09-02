@@ -1,0 +1,85 @@
+{
+  "default_limits": {
+    "daily_limit": 1000.0,
+    "weekly_limit": 5000.0,
+    "monthly_limit": 20000.0,
+    "max_hourly_spend": 150.0,
+    "max_hourly_velocity_increase": 0.50,
+    "warning_threshold": 0.80,
+    "critical_threshold": 0.95,
+    "emergency_threshold": 1.00,
+    "max_bid_multiplier": 3.0,
+    "max_spend_acceleration": 2.0,
+    "prediction_window_hours": 2,
+    "overspend_prevention_buffer": 0.10
+  },
+  "monitoring_intervals": {
+    "spending_check_seconds": 30,
+    "velocity_check_seconds": 60,
+    "anomaly_check_seconds": 120,
+    "prediction_check_seconds": 300
+  },
+  "emergency_actions": {
+    "auto_pause_campaigns": true,
+    "emergency_stop_threshold": 1.05,
+    "notification_webhook": null
+  },
+  "campaign_specific_limits": {
+    "high_value_campaign": {
+      "daily_limit": 5000.0,
+      "weekly_limit": 25000.0,
+      "monthly_limit": 100000.0,
+      "max_hourly_spend": 500.0,
+      "max_hourly_velocity_increase": 0.30,
+      "warning_threshold": 0.85,
+      "critical_threshold": 0.97,
+      "emergency_threshold": 1.00,
+      "max_bid_multiplier": 2.5,
+      "max_spend_acceleration": 1.8,
+      "prediction_window_hours": 3,
+      "overspend_prevention_buffer": 0.05
+    },
+    "test_campaign": {
+      "daily_limit": 100.0,
+      "weekly_limit": 500.0,
+      "monthly_limit": 2000.0,
+      "max_hourly_spend": 20.0,
+      "max_hourly_velocity_increase": 0.25,
+      "warning_threshold": 0.75,
+      "critical_threshold": 0.90,
+      "emergency_threshold": 0.95,
+      "max_bid_multiplier": 2.0,
+      "max_spend_acceleration": 1.5,
+      "prediction_window_hours": 1,
+      "overspend_prevention_buffer": 0.15
+    }
+  },
+  "channel_specific_limits": {
+    "google_ads": {
+      "max_bid_multiplier": 3.5,
+      "max_hourly_velocity_increase": 0.60
+    },
+    "facebook_ads": {
+      "max_bid_multiplier": 2.5,
+      "max_hourly_velocity_increase": 0.40
+    },
+    "display_network": {
+      "max_bid_multiplier": 2.0,
+      "max_hourly_velocity_increase": 0.30
+    }
+  },
+  "anomaly_detection": {
+    "statistical_threshold": 3.0,
+    "minimum_data_points": 10,
+    "lookback_hours": 24,
+    "pattern_detection_enabled": true,
+    "fraud_detection_enabled": true
+  },
+  "reporting": {
+    "violation_retention_days": 90,
+    "spending_record_retention_days": 365,
+    "real_time_alerts_enabled": true,
+    "daily_summary_enabled": true,
+    "weekly_summary_enabled": true
+  }
+}

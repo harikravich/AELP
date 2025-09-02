@@ -1,44 +1,59 @@
 {
   "exclude": [
     {
-      "url": "suspicious-ads-network.com",
+      "url": "fraudulent-network-1.com",
       "reason": "Bot score: 0.90",
-      "sessions_saved": 45000
+      "sessions_saved": 669
     },
     {
-      "url": "fake-traffic-source.tk",
+      "url": "bot-traffic-source.tk",
       "reason": "Bot score: 0.90",
-      "sessions_saved": 30000
+      "sessions_saved": 478
     },
     {
-      "url": "bot-generated-content.ml",
+      "url": "fake-content-network.ml",
       "reason": "Bot score: 0.90",
-      "sessions_saved": 25000
+      "sessions_saved": 382
+    },
+    {
+      "url": "suspicious-ads-platform.ga",
+      "reason": "Bot score: 0.90",
+      "sessions_saved": 382
     }
   ],
   "monitor": [],
   "keep": [
     {
-      "url": "parenting-blog-network.com",
-      "quality_score": 1.2,
-      "sessions": 15000
+      "url": "general-parenting-blog.com",
+      "quality_score": 1.06,
+      "sessions": 60
     },
     {
-      "url": "mental-health-resources.org",
-      "quality_score": 1.2,
-      "sessions": 12000
+      "url": "family-lifestyle-network.org",
+      "quality_score": 1.04,
+      "sessions": 40
     },
     {
-      "url": "family-wellness-magazine.com",
-      "quality_score": 1.2,
-      "sessions": 8000
+      "url": "teen-mental-health-resources.org",
+      "quality_score": 1.094,
+      "sessions": 94
+    },
+    {
+      "url": "behavioral-health-parents.com",
+      "quality_score": 1.082,
+      "sessions": 82
+    },
+    {
+      "url": "crisis-intervention-guide.net",
+      "quality_score": 1.059,
+      "sessions": 59
     }
   ],
   "summary": {
-    "total_analyzed": 6,
-    "to_exclude": 3,
+    "total_analyzed": 9,
+    "to_exclude": 4,
     "to_monitor": 0,
-    "to_keep": 3,
-    "sessions_filtered": 100000
+    "to_keep": 5,
+    "sessions_filtered": 1911
   }
 }

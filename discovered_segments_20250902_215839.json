@@ -1,0 +1,316 @@
+{
+  "discovery_metadata": {
+    "timestamp": "2025-09-02T21:58:39.923484",
+    "total_segments": 4,
+    "methods_used": [
+      "kmeans",
+      "dbscan",
+      "hierarchical",
+      "gaussian_mixture"
+    ],
+    "min_cluster_size": 20
+  },
+  "segments": {
+    "segment_1_gaussian_mixture": {
+      "segment_id": "segment_1_gaussian_mixture",
+      "name": "Light Scanners (Mobile) [Evening]",
+      "size": 105,
+      "characteristics": {
+        "engagement_level": "low",
+        "session_style": "quick_visitor",
+        "primary_device": "mobile",
+        "channel_behavior": "omnichannel",
+        "activity_pattern": "evening"
+      },
+      "behavioral_profile": {
+        "avg_session_duration": 86.40857827154957,
+        "avg_pages_per_session": 3.0047392290249437,
+        "avg_bounce_rate": 0.4071428571428572,
+        "avg_engagement_depth": 0.25546432730883517,
+        "session_duration_std": 53.896077637142554,
+        "pages_per_session_std": 1.052180211676935
+      },
+      "conversion_rate": 0.0,
+      "engagement_metrics": {
+        "high_engagement_rate": 0.0,
+        "low_bounce_rate": 0.3904761904761905,
+        "multi_session_rate": 0.8761904761904762
+      },
+      "temporal_patterns": {
+        "peak_hours": [
+          21
+        ],
+        "hour_distribution": {
+          "21": 105
+        },
+        "avg_session_frequency": 1.0
+      },
+      "channel_preferences": {
+        "email": 0.2578616352201258,
+        "social": 0.20125786163522014,
+        "organic": 0.3081761006289308,
+        "paid": 0.23270440251572327
+      },
+      "device_preferences": {
+        "tablet": 0.49523809523809526,
+        "mobile": 0.5047619047619047
+      },
+      "content_preferences": {
+        "support": 0.3096446700507614,
+        "blog": 0.25380710659898476,
+        "about": 0.24873096446700507,
+        "product": 0.18781725888324874
+      },
+      "confidence_score": 0.532871310877522,
+      "last_updated": "2025-09-02T21:58:39.921933",
+      "sample_users": [
+        "user_0",
+        "user_1",
+        "user_2",
+        "user_4",
+        "user_5"
+      ]
+    },
+    "segment_0_hierarchical": {
+      "segment_id": "segment_0_hierarchical",
+      "name": "Light Scanners (Desktop) [Evening]",
+      "size": 93,
+      "characteristics": {
+        "engagement_level": "low",
+        "session_style": "quick_visitor",
+        "primary_device": "desktop",
+        "channel_behavior": "omnichannel",
+        "activity_pattern": "evening"
+      },
+      "behavioral_profile": {
+        "avg_session_duration": 84.38177053463619,
+        "avg_pages_per_session": 3.3357910906298,
+        "avg_bounce_rate": 0.4310035842293906,
+        "avg_engagement_depth": 0.26129760421407083,
+        "session_duration_std": 48.245574972646175,
+        "pages_per_session_std": 1.1279077757091098
+      },
+      "conversion_rate": 0.1935483870967742,
+      "engagement_metrics": {
+        "high_engagement_rate": 0.0,
+        "low_bounce_rate": 0.41935483870967744,
+        "multi_session_rate": 0.967741935483871
+      },
+      "temporal_patterns": {
+        "peak_hours": [
+          21
+        ],
+        "hour_distribution": {
+          "21": 93
+        },
+        "avg_session_frequency": 1.0
+      },
+      "channel_preferences": {
+        "organic": 0.28368794326241137,
+        "social": 0.2695035460992908,
+        "paid": 0.2198581560283688,
+        "email": 0.22695035460992907
+      },
+      "device_preferences": {
+        "desktop": 0.8279569892473119,
+        "mobile": 0.10752688172043011,
+        "tablet": 0.06451612903225806
+      },
+      "content_preferences": {
+        "support": 0.27461139896373055,
+        "product": 0.25906735751295334,
+        "about": 0.23834196891191708,
+        "blog": 0.22797927461139897
+      },
+      "confidence_score": 0.5136348639364062,
+      "last_updated": "2025-09-02T21:58:38.609275",
+      "sample_users": [
+        "user_3",
+        "user_4",
+        "user_6",
+        "user_11",
+        "user_18"
+      ]
+    },
+    "segment_0_kmeans": {
+      "segment_id": "segment_0_kmeans",
+      "name": "Light Scanners (Desktop) [Evening]",
+      "size": 85,
+      "characteristics": {
+        "engagement_level": "low",
+        "session_style": "quick_visitor",
+        "primary_device": "desktop",
+        "channel_behavior": "omnichannel",
+        "activity_pattern": "evening"
+      },
+      "behavioral_profile": {
+        "avg_session_duration": 91.86088210044181,
+        "avg_pages_per_session": 3.2287675070028006,
+        "avg_bounce_rate": 0.39705882352941174,
+        "avg_engagement_depth": 0.2614045049951101,
+        "session_duration_std": 76.08908621165017,
+        "pages_per_session_std": 1.0872959026198445
+      },
+      "conversion_rate": 0.09411764705882353,
+      "engagement_metrics": {
+        "high_engagement_rate": 0.0,
+        "low_bounce_rate": 0.4470588235294118,
+        "multi_session_rate": 0.9176470588235294
+      },
+      "temporal_patterns": {
+        "peak_hours": [
+          21
+        ],
+        "hour_distribution": {
+          "21": 85
+        },
+        "avg_session_frequency": 1.0
+      },
+      "channel_preferences": {
+        "organic": 0.328125,
+        "social": 0.2421875,
+        "paid": 0.21875,
+        "email": 0.2109375
+      },
+      "device_preferences": {
+        "desktop": 1.0
+      },
+      "content_preferences": {
+        "product": 0.29508196721311475,
+        "support": 0.25136612021857924,
+        "about": 0.23497267759562843,
+        "blog": 0.2185792349726776
+      },
+      "confidence_score": 0.45749758530584206,
+      "last_updated": "2025-09-02T21:58:37.429645",
+      "sample_users": [
+        "user_3",
+        "user_6",
+        "user_11",
+        "user_18",
+        "user_20"
+      ]
+    },
+    "segment_2_kmeans": {
+      "segment_id": "segment_2_kmeans",
+      "name": "Light Scanners (Tablet) [Evening]",
+      "size": 56,
+      "characteristics": {
+        "engagement_level": "low",
+        "session_style": "quick_visitor",
+        "primary_device": "tablet",
+        "channel_behavior": "omnichannel",
+        "activity_pattern": "evening"
+      },
+      "behavioral_profile": {
+        "avg_session_duration": 84.73136431957651,
+        "avg_pages_per_session": 3.0404761904761903,
+        "avg_bounce_rate": 0.37648809523809523,
+        "avg_engagement_depth": 0.2519936150981774,
+        "session_duration_std": 41.46258726587351,
+        "pages_per_session_std": 0.9362512739685722
+      },
+      "conversion_rate": 0.07142857142857142,
+      "engagement_metrics": {
+        "high_engagement_rate": 0.0,
+        "low_bounce_rate": 0.39285714285714285,
+        "multi_session_rate": 0.9464285714285714
+      },
+      "temporal_patterns": {
+        "peak_hours": [
+          21
+        ],
+        "hour_distribution": {
+          "21": 56
+        },
+        "avg_session_frequency": 1.0
+      },
+      "channel_preferences": {
+        "email": 0.30120481927710846,
+        "paid": 0.18072289156626506,
+        "organic": 0.2891566265060241,
+        "social": 0.2289156626506024
+      },
+      "device_preferences": {
+        "tablet": 1.0
+      },
+      "content_preferences": {
+        "support": 0.3157894736842105,
+        "blog": 0.28421052631578947,
+        "product": 0.24210526315789474,
+        "about": 0.15789473684210525
+      },
+      "confidence_score": 0.43829081372028855,
+      "last_updated": "2025-09-02T21:58:37.430907",
+      "sample_users": [
+        "user_0",
+        "user_5",
+        "user_10",
+        "user_12",
+        "user_14"
+      ]
+    }
+  },
+  "evolution_tracking": {
+    "segment_1_gaussian_mixture": [
+      {
+        "timestamp": "2025-09-02T21:58:39.923032",
+        "size": 105,
+        "conversion_rate": 0.0,
+        "confidence_score": 0.532871310877522,
+        "characteristics": {
+          "engagement_level": "low",
+          "session_style": "quick_visitor",
+          "primary_device": "mobile",
+          "channel_behavior": "omnichannel",
+          "activity_pattern": "evening"
+        }
+      }
+    ],
+    "segment_0_hierarchical": [
+      {
+        "timestamp": "2025-09-02T21:58:39.923032",
+        "size": 93,
+        "conversion_rate": 0.1935483870967742,
+        "confidence_score": 0.5136348639364062,
+        "characteristics": {
+          "engagement_level": "low",
+          "session_style": "quick_visitor",
+          "primary_device": "desktop",
+          "channel_behavior": "omnichannel",
+          "activity_pattern": "evening"
+        }
+      }
+    ],
+    "segment_0_kmeans": [
+      {
+        "timestamp": "2025-09-02T21:58:39.923032",
+        "size": 85,
+        "conversion_rate": 0.09411764705882353,
+        "confidence_score": 0.45749758530584206,
+        "characteristics": {
+          "engagement_level": "low",
+          "session_style": "quick_visitor",
+          "primary_device": "desktop",
+          "channel_behavior": "omnichannel",
+          "activity_pattern": "evening"
+        }
+      }
+    ],
+    "segment_2_kmeans": [
+      {
+        "timestamp": "2025-09-02T21:58:39.923032",
+        "size": 56,
+        "conversion_rate": 0.07142857142857142,
+        "confidence_score": 0.43829081372028855,
+        "characteristics": {
+          "engagement_level": "low",
+          "session_style": "quick_visitor",
+          "primary_device": "tablet",
+          "channel_behavior": "omnichannel",
+          "activity_pattern": "evening"
+        }
+      }
+    ]
+  }
+}
