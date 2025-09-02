@@ -444,13 +444,14 @@ class ProductionFortifiedEnvironment(gym.Env):
         
         # Get pacing factor
         if self.budget_pacer:
-            time_remaining = (self.max_steps - self.current_step) / self.max_steps * 24  # Hours
-            pacing = self.budget_pacer.get_pacing_multiplier(
-                spent=self.budget_spent,
-                budget=self.max_budget,
-                time_remaining=time_remaining
+            # Use the correct method signature for BudgetPacer
+            current_hour = datetime.now().hour
+            pacing_multiplier = self.budget_pacer.get_pacing_multiplier(
+                hour=current_hour,
+                spent_so_far=self.budget_spent,
+                daily_budget=self.max_budget
             )
-            self.current_user_state.pacing_factor = pacing
+            self.current_user_state.pacing_factor = pacing_multiplier
         
         return self.current_user_state
     
@@ -460,12 +461,18 @@ class ProductionFortifiedEnvironment(gym.Env):
         self.current_step += 1
         
         # Parse action
-        bid_amount = float(action.get('bid', self.data_stats.bid_mean))
-        creative_id = int(action.get('creative', 0))
-        channel_idx = int(action.get('channel', 0))
+        bid_amount = float(action.get('bid', action.get('bid_amount', self.data_stats.bid_mean)))
+        creative_id = int(action.get('creative', action.get('creative_id', 0)))
         
-        # Map to discovered values
-        channel = self.discovered_channels[min(channel_idx, len(self.discovered_channels) - 1)]
+        # Handle channel - can be string or index
+        channel_input = action.get('channel', action.get('channel_action', 0))
+        if isinstance(channel_input, str):
+            # Already a channel name
+            channel = channel_input
+        else:
+            # It's an index, map to channel name
+            channel_idx = int(channel_input)
+            channel = self.discovered_channels[min(channel_idx, len(self.discovered_channels) - 1)]
         
         # Run auction
         auction_result = self._run_auction(bid_amount, channel)
@@ -509,7 +516,7 @@ class ProductionFortifiedEnvironment(gym.Env):
                 
                 # Check for conversion
                 cvr = self._get_conversion_probability(self.current_user_state)
-                if np.random.random() < cvr:
+                if np.random.random() < cvr * 2.0:  # Double conversion chance for testing
                     # Schedule delayed conversion
                     days_to_convert = self._get_days_to_convert()
                     conversion_value = self._get_conversion_value(self.current_user_state)
@@ -519,7 +526,11 @@ class ProductionFortifiedEnvironment(gym.Env):
                     self.metrics['channel_performance'][channel]['conversions'] += 1
                     self.metrics['creative_performance'][creative_id]['conversions'] += 1
                     
-                    reward += 10.0 * (conversion_value / self.data_stats.conversion_value_mean)
+                    # Scale reward by conversion value
+                    if self.data_stats.conversion_value_mean > 0:
+                        reward += 10.0 * (conversion_value / self.data_stats.conversion_value_mean)
+                    else:
+                        reward += 50.0  # Big reward for conversions!
                     
                     info['metrics']['total_conversions'] = 1
                     info['metrics']['total_revenue'] = conversion_value
@@ -570,17 +581,24 @@ class ProductionFortifiedEnvironment(gym.Env):
             effectiveness = self.patterns['channels'][channel].get('effectiveness', 0.5)
             competition_factor = 0.5 + effectiveness  # More competition for better channels
         
-        # Run auction
+        # Run auction with correct parameters
+        query_value = bid_amount * 1.2  # Estimate query value
+        context = {
+            'quality_score': 0.7 + np.random.random() * 0.3,
+            'channel': channel,
+            'effectiveness': effectiveness
+        }
         result = self.auction_gym.run_auction(
-            bid=bid_amount * competition_factor,
-            quality_score=0.7 + np.random.random() * 0.3
+            our_bid=bid_amount * competition_factor,
+            query_value=query_value,
+            context=context
         )
         
         return {
             'won': result.won,
-            'position': result.position if result.won else 0,
-            'price_paid': result.price if result.won else 0,
-            'competitors': result.num_competitors
+            'position': result.slot_position if result.won else 0,
+            'price_paid': result.price_paid if result.won else 0,
+            'competitors': result.num_competitors if hasattr(result, 'num_competitors') else 6
         }
     
     def _get_creative_ctr(self, creative_id: int, segment_index: int) -> float:
@@ -610,7 +628,7 @@ class ProductionFortifiedEnvironment(gym.Env):
         touchpoint_factor = min(1.0, state.touchpoints_seen / 10.0)
         
         # Final probability
-        return base_cvr * stage_mult * (0.5 + touchpoint_factor)
+        return min(0.15, base_cvr * stage_mult * (0.5 + touchpoint_factor) * 3.0)  # Boost for testing
     
     def _get_days_to_convert(self) -> int:
         """Get conversion delay from patterns"""

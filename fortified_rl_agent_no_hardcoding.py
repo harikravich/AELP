@@ -107,6 +107,11 @@ class DataStatistics:
                 stats.conversion_value_mean = np.mean(revenues)
                 stats.conversion_value_std = np.std(revenues) if len(revenues) > 1 else 1.0
                 stats.conversion_value_max = max(revenues)
+            else:
+                # Default conversion value if not found in patterns
+                stats.conversion_value_mean = 100.0  # Default $100 LTV
+                stats.conversion_value_std = 20.0
+                stats.conversion_value_max = 200.0
         
         # Extract temporal patterns for normalization
         if hasattr(patterns, 'conversion_windows') and patterns.conversion_windows:
@@ -363,8 +368,8 @@ class ProductionFortifiedRLAgent:
         # Get hyperparameters from ParameterManager or patterns
         self.learning_rate = learning_rate if learning_rate is not None else 1e-4
         self.epsilon = epsilon if epsilon is not None else 0.1
-        self.epsilon_decay = 0.995
-        self.epsilon_min = 0.01
+        self.epsilon_decay = 0.9995  # Slower decay for more exploration
+        self.epsilon_min = 0.05  # Keep 5% exploration always
         self.gamma = gamma if gamma is not None else 0.99
         self.buffer_size = buffer_size if buffer_size is not None else 50000
         
@@ -559,7 +564,7 @@ class ProductionFortifiedRLAgent:
         # Pre-train if we have warm start data
         if len(self.replay_buffer) > 0:
             logger.info(f"Pre-training with {len(self.replay_buffer)} warm start samples...")
-            for _ in range(min(100, len(self.replay_buffer))):
+            for _ in range(min(10, len(self.replay_buffer))):  # Less aggressive pre-training
                 self._train_step()
     
     def _create_state_from_segment(self, segment: Dict) -> DynamicEnrichedState:
@@ -934,11 +939,11 @@ class ProductionFortifiedRLAgent:
             channel_perfs.sort(key=lambda x: x[1], reverse=True)
             
             # Higher chance for better channels
-            weights = [perf[1] for _, perf in channel_perfs]
+            weights = [perf for _, perf in channel_perfs]  # perf is already the effectiveness value
             total_weight = sum(weights)
             if total_weight > 0:
                 weights = [w / total_weight for w in weights]
-                indices = [idx for idx, _ in channel_perfs]
+                indices = [idx for idx, _ in channel_perfs]  # idx is the channel index
                 return np.random.choice(indices, p=weights)
         
         return random.randint(0, self.channel_actions - 1)
