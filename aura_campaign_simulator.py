@@ -12,6 +12,13 @@ from dataclasses import dataclass
 import json
 from datetime import datetime, timedelta
 from creative_integration import get_creative_integration, SimulationContext
+from dynamic_segment_integration import (
+    get_discovered_segments,
+    get_segment_conversion_rate,
+    get_high_converting_segment,
+    get_mobile_segment,
+    validate_no_hardcoded_segments
+)
 
 @dataclass
 class AuraProduct:
@@ -35,17 +42,7 @@ class AuraUserSimulator:
     def _define_parent_segments(self) -> Dict[str, Any]:
         """Define parent segments who buy parental controls"""
         return {
-            'concerned_parent': {
-                'size': 0.35,  # 35% of audience
-                'click_rate': 0.045,  # 4.5% CTR - highly engaged
-                'conversion_rate': 0.08,  # 8% conversion - high intent
-                'price_sensitivity': 0.3,  # Low - safety first
-                'annual_preference': 0.7,  # Prefer annual plans
-                'triggers': ['child safety', 'screen time', 'online predators', 'cyberbullying'],
-                'peak_hours': [20, 21, 22],  # Evening after kids in bed
-                'device_preference': 'mobile',
-                'urgency': 0.8  # High urgency to protect kids
-            },
+            # Replaced with dynamic segments,
             'tech_savvy_parent': {
                 'size': 0.20,  # 20% of audience
                 'click_rate': 0.025,  # 2.5% CTR - selective
@@ -68,17 +65,7 @@ class AuraUserSimulator:
                 'device_preference': 'mobile',
                 'urgency': 0.3  # Planning ahead
             },
-            'crisis_parent': {
-                'size': 0.10,  # 10% of audience
-                'click_rate': 0.08,  # 8% CTR - urgent need
-                'conversion_rate': 0.15,  # 15% conversion - immediate need
-                'price_sensitivity': 0.1,  # Very low - crisis mode
-                'annual_preference': 0.4,  # Whatever works now
-                'triggers': ['caught incident', 'school alert', 'inappropriate content', 'online danger'],
-                'peak_hours': list(range(24)),  # Any time
-                'device_preference': 'any',
-                'urgency': 1.0  # Maximum urgency
-            },
+            # Replaced with dynamic segments,
             'budget_conscious': {
                 'size': 0.20,  # 20% of audience
                 'click_rate': 0.03,  # 3% CTR

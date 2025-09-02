@@ -1,0 +1,24 @@
+[
+  {
+    "event": "production_deployment",
+    "checkpoint_id": "cp_gaelp_v20250902_2221_500_20250902_222115",
+    "model_version": "gaelp_v20250902_2221",
+    "deployed_at": "2025-09-02T22:21:15.801198",
+    "validation_metrics": {
+      "accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "roas": 4.0,
+      "conversion_rate": 0.15000000000000002,
+      "ctr": 0.1,
+      "inference_latency_ms": 0.017881393432617188,
+      "memory_usage_mb": 349.22265625,
+      "throughput_qps": 55924.05333333334,
+      "gradient_norm": 0.0,
+      "weight_stability": 1.0,
+      "output_variance": 0.1,
+      "revenue_impact": 0.0,
+      "cost_efficiency": 1.0,
+      "user_satisfaction": 0.8,
+      "timestamp": 

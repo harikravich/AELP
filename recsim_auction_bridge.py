@@ -12,114 +12,21 @@ from enum import Enum
 import logging
 import json
 
-# Import local modules with fallbacks
-try:
-    from recsim_user_model import RecSimUserModel, UserSegment, UserProfile
-    RECSIM_AVAILABLE = True
-except ImportError:
-    logging.warning("RecSim user model not available. Using fallback implementations.")
-    RECSIM_AVAILABLE = False
-    
-    # Fallback UserSegment enum
-    class UserSegment(Enum):
-        IMPULSE_BUYER = "impulse_buyer"
-        RESEARCHER = "researcher"
-        LOYAL_CUSTOMER = "loyal_customer"
-        WINDOW_SHOPPER = "window_shopper"
-        PRICE_CONSCIOUS = "price_conscious"
-        BRAND_LOYALIST = "brand_loyalist"
-    
-    # Fallback UserProfile class
-    @dataclass
-    class UserProfile:
-        segment: UserSegment
-        click_propensity: float = 0.05
-        conversion_propensity: float = 0.02
-        price_sensitivity: float = 0.5
-        brand_affinity: float = 0.5
-        time_preference: Dict[str, float] = None
-        device_preference: Dict[str, float] = None
-        attention_span: float = 3.0
-        budget: float = 200.0
-        current_interest: float = 0.5
-        fatigue_level: float = 0.0
-        recent_purchases: List[str] = None
-        
-        def __post_init__(self):
-            if self.time_preference is None:
-                self.time_preference = {'morning': 1.0, 'afternoon': 1.0, 'evening': 1.0, 'night': 1.0}
-            if self.device_preference is None:
-                self.device_preference = {'mobile': 1.0, 'desktop': 1.0, 'tablet': 1.0}
-            if self.recent_purchases is None:
-                self.recent_purchases = []
-    
-    # Fallback RecSimUserModel
-    class RecSimUserModel:
-        def __init__(self, config=None):
-            self.current_users = {}
-            
-        def generate_user(self, user_id: str, segment: UserSegment = None) -> UserProfile:
-            if segment is None:
-                segment = np.random.choice(list(UserSegment))
-            
-            profile = UserProfile(segment=segment)
-            self.current_users[user_id] = profile
-            return profile
-        
-        def simulate_ad_response(self, user_id: str, ad_content: Dict, context: Dict) -> Dict:
-            return {
-                'clicked': np.random.random() < 0.05,
-                'converted': np.random.random() < 0.01,
-                'time_spent': np.random.exponential(2.0),
-                'revenue': np.random.gamma(2, 30) if np.random.random() < 0.01 else 0,
-                'click_probability': 0.05,
-                'user_segment': 'unknown',
-                'fatigue_level': 0.0,
-                'interest_level': 0.5
-            }
+# Import RecSim components - NO FALLBACKS ALLOWED
+from recsim_user_model import RecSimUserModel, UserSegment, UserProfile
+from NO_FALLBACKS import StrictModeEnforcer
 
+# Verify RecSim user model is working
+if not hasattr(RecSimUserModel, 'simulate_ad_response'):
+    StrictModeEnforcer.enforce('RECSIM_USER_MODEL', fallback_attempted=True)
+    raise ImportError("RecSim user model MUST be properly implemented. NO FALLBACKS!")
+
+# Import AuctionGym components - NO FALLBACKS ALLOWED
 try:
     from auction_gym_integration import AuctionGymWrapper, AuctionResult
-    AUCTION_GYM_AVAILABLE = True
 except ImportError:
-    logging.warning("AuctionGym integration not available. Using fallback implementations.")
-    AUCTION_GYM_AVAILABLE = False
-    
-    # Fallback AuctionResult
-    @dataclass
-    class AuctionResult:
-        won: bool = False
-        price_paid: float = 0.0
-        slot_position: int = 5
-        total_slots: int = 5
-        competitors: int = 3
-        estimated_ctr: float = 0.01
-        true_ctr: float = 0.01
-        outcome: bool = False
-        revenue: float = 0.0
-    
-    # Fallback AuctionGymWrapper
-    class AuctionGymWrapper:
-        def __init__(self, **kwargs):
-            pass
-            
-        def run_auction(self, your_bid: float, your_quality_score: float = 0.7, 
-                       context: Dict[str, Any] = None) -> AuctionResult:
-            # Simple simulation
-            win_prob = min(0.8, your_bid / 2.0 * your_quality_score)
-            won = np.random.random() < win_prob
-            
-            return AuctionResult(
-                won=won,
-                price_paid=your_bid * np.random.uniform(0.5, 0.9) if won else 0,
-                slot_position=np.random.randint(1, 4) if won else np.random.randint(4, 8),
-                total_slots=5,
-                competitors=np.random.randint(2, 8),
-                estimated_ctr=your_quality_score * 0.1,
-                true_ctr=your_quality_score * 0.1 * np.random.uniform(0.8, 1.2),
-                outcome=np.random.random() < (your_quality_score * 0.1) if won else False,
-                revenue=np.random.gamma(2, 30) if won and np.random.random() < 0.02 else 0
-            )
+    StrictModeEnforcer.enforce('AUCTION_GYM', fallback_attempted=True)
+    raise ImportError("AuctionGym integration MUST be available. NO FALLBACKS!")
 
 logger = logging.getLogger(__name__)
 
@@ -151,11 +58,20 @@ class RecSimAuctionBridge:
     """
     
     def __init__(self, 
-                 recsim_model: Optional[RecSimUserModel] = None,
-                 auction_wrapper: Optional[AuctionGymWrapper] = None):
+                 recsim_model: RecSimUserModel,
+                 auction_wrapper: AuctionGymWrapper):
         
-        self.recsim_model = recsim_model or RecSimUserModel()
-        self.auction_wrapper = auction_wrapper or AuctionGymWrapper()
+        # NO fallbacks - components MUST be provided
+        if recsim_model is None:
+            StrictModeEnforcer.enforce('RECSIM_MODEL', fallback_attempted=True)
+            raise ValueError("RecSim model MUST be provided. NO fallbacks!")
+        
+        if auction_wrapper is None:
+            StrictModeEnforcer.enforce('AUCTION_WRAPPER', fallback_attempted=True)
+            raise ValueError("Auction wrapper MUST be provided. NO fallbacks!")
+        
+        self.recsim_model = recsim_model
+        self.auction_wrapper = auction_wrapper
         
         # Initialize segment-to-bidding mappings
         self.segment_bid_profiles = self._init_segment_bid_profiles()
@@ -777,8 +693,15 @@ def test_recsim_auction_bridge():
     print("Testing RecSim-AuctionGym Bridge")
     print("=" * 50)
     
-    # Initialize bridge
-    bridge = RecSimAuctionBridge()
+    # Initialize required components - NO fallbacks
+    recsim_model = RecSimUserModel()
+    auction_wrapper = AuctionGymWrapper()
+    
+    # Initialize bridge with required components
+    bridge = RecSimAuctionBridge(
+        recsim_model=recsim_model,
+        auction_wrapper=auction_wrapper
+    )
     
     # Test user-to-auction signals mapping
     print("\n1. Testing user-to-auction signals mapping:")

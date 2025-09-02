@@ -1,0 +1,83 @@
+{
+  "timestamp": "2025-09-02T23:09:33.961839",
+  "validation_passed": false,
+  "total_kpis": 21,
+  "business_critical_kpis": 11,
+  "category_distribution": {
+    "profitability": 5,
+    "efficiency": 4,
+    "scale": 3,
+    "quality": 3,
+    "learning": 3,
+    "operational": 3
+  },
+  "validation_results": {
+    "Mathematical Validity": {
+      "passed": false,
+      "errors": [
+        "cost_per_acquisition: minimum_acceptable (45.0) >= target_value (25.0)",
+        "cost_per_acquisition: target_value (25.0) >= excellence_threshold (15.0)",
+        "cost_per_click: minimum_acceptable (1.5) >= target_value (0.75)",
+        "cost_per_click: target_value (0.75) >= excellence_threshold (0.5)",
+        "response_time_p95: minimum_acceptable (250.0) >= target_value (100.0)",
+        "response_time_p95: target_value (100.0) >= excellence_threshold (50.0)"
+      ],
+      "warnings": []
+    },
+    "Business Logic": {
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    "Coverage Analysis": {
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    "Alert Configuration": {
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    "Monitoring System": {
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    "Database Schema": {
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    "Performance Tests": {
+      "passed": true,
+      "errors": [],
+      "warnings": [
+        "daily_conversions: High conversion target (280.0%) may be challenging"
+      ]
+    },
+    "Integration Tests": {
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    "Production Readiness": {
+      "passed": false,
+      "errors": [
+        "System not ready for production deployment"
+      ],
+      "warnings": []
+    }
+  },
+  "critical_failures": [
+    "Mathematical Validity: cost_per_acquisition: minimum_acceptable (45.0) >= target_value (25.0)",
+    "Mathematical Validity: cost_per_acquisition: target_value (25.0) >= excellence_threshold (15.0)",
+    "Mathematical Validity: cost_per_click: minimum_acceptable (1.5) >= target_value (0.75)",
+    "Mathematical Validity: cost_per_click: target_value (0.75) >= excellence_threshold (0.5)",
+    "Mathematical Validity: response_time_p95: minimum_acceptable (250.0) >= target_value (100.0)",
+    "Mathematical Validity: response_time_p95: target_value (100.0) >= excellence_threshold (50.0)",
+    "Production Readiness: System not ready for production deployment"
+  ],
+  "tests_passed": "7/9",
+  "production_ready": false
+}

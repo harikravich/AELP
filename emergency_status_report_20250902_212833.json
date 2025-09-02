@@ -1,0 +1,160 @@
+{
+  "timestamp": "2025-09-02T21:28:33.717905",
+  "system_status": {
+    "active": true,
+    "emergency_stop_triggered": false,
+    "emergency_level": "green",
+    "recent_events": [],
+    "circuit_breakers": {
+      "discovery_engine": "closed",
+      "creative_selector": "closed",
+      "attribution_engine": "closed",
+      "budget_pacer": "closed",
+      "identity_resolver": "closed",
+      "parameter_manager": "closed",
+      "training_orchestrator": "closed",
+      "environment": "closed",
+      "rl_agent": "closed",
+      "ga4_integration": "closed",
+      "bidding_system": "closed"
+    },
+    "metrics": {
+      "error_rate": 0,
+      "budget_utilization": 0,
+      "avg_bid": 0,
+      "training_loss": 0
+    }
+  },
+  "system_metrics": {
+    "error_rate": 0,
+    "budget_utilization": 0,
+    "avg_bid": 0,
+    "training_loss": 0,
+    "budget_utilization_rate": 0,
+    "max_bid": 0,
+    "min_bid": 0,
+    "bid_volatility": 0,
+    "recent_avg_loss": 0,
+    "loss_trend": 0
+  },
+  "trigger_status": {
+    "budget_overrun": {
+      "current_value": 0,
+      "threshold_value": 1.2,
+      "threshold_percentage": 0.0,
+      "status": "NORMAL",
+      "enabled": true
+    },
+    "anomalous_bidding": {
+      "current_value": 0,
+      "threshold_value": 50.0,
+      "threshold_percentage": 0.0,
+      "status": "NORMAL",
+      "enabled": true
+    },
+    "training_instability": {
+      "current_value": 1.0,
+      "threshold_value": 10.0,
+      "threshold_percentage": 10.0,
+      "status": "NORMAL",
+      "enabled": true
+    },
+    "system_error_rate": {
+      "current_value": 0,
+      "threshold_value": 5.0,
+      "threshold_percentage": 0.0,
+      "status": "NORMAL",
+      "enabled": true
+    },
+    "memory_exhaustion": {
+      "current_value": 0,
+      "threshold_value": 0.9,
+      "threshold_percentage": 0.0,
+      "status": "NORMAL",
+      "enabled": true
+    },
+    "cpu_overload": {
+      "current_value": 0,
+      "threshold_value": 0.95,
+      "threshold_percentage": 0.0,
+      "status": "NORMAL",
+      "enabled": true
+    },
+    "manual_stop": {
+      "current_value": 0,
+      "threshold_value": 0.0,
+      "threshold_percentage": 0,
+      "status": "NORMAL",
+      "enabled": true
+    }
+  },
+  "recent_events": [],
+  "circuit_breaker_status": {
+    "discovery_engine": {
+      "state": "closed",
+      "failure_count": 0,
+      "failure_threshold": 3,
+      "last_failure_time": null
+    },
+    "creative_selector": {
+      "state": "closed",
+      "failure_count": 0,
+      "failure_threshold": 3,
+      "last_failure_time": null
+    },
+    "attribution_engine": {
+      "state": "closed",
+      "failure_count": 0,
+      "failure_threshold": 3,
+      "last_failure_time": null
+    },
+    "budget_pacer": {
+      "state": "closed",
+      "failure_count": 0,
+      "failure_threshold": 3,
+      "last_failure_time": null
+    },
+    "identity_resolver": {
+      "state": "closed",
+      "failure_count": 0,
+      "failure_threshold": 3,
+      "last_failure_time": null
+    },
+    "parameter_manager": {
+      "state": "closed",
+      "failure_count": 0,
+      "failure_threshold": 3,
+      "last_failure_time": null
+    },
+    "training_orchestrator": {
+      "state": "closed",
+      "failure_count": 0,
+      "failure_threshold": 3,
+      "last_failure_time": null
+    },
+    "environment": {
+      "state": "closed",
+      "failure_count": 0,
+      "failure_threshold": 3,
+      "last_failure_time": null
+    },
+    "rl_agent": {
+      "state": "closed",
+      "failure_count": 0,
+      "failure_threshold": 3,
+      "last_failure_time": null
+    },
+    "ga4_integration": {
+      "state": "closed",
+      "failure_count": 0,
+      "failure_threshold": 3,
+      "last_failure_time": null
+    },
+    "bidding_system": {
+      "state": "closed",
+      "failure_count": 0,
+      "failure_threshold": 3,
+      "last_failure_time": null
+    }
+  }
+}

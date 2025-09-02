@@ -1,0 +1,51 @@
+{
+  "models": {
+    "production": {
+      "model_id": "production_gaelp_v1",
+      "model_path": "models/production_fortified_rl.pt",
+      "learning_rate": 0.0001,
+      "epsilon": 0.05,
+      "max_bid_limit": 15.0,
+      "max_daily_spend": 3000.0,
+      "description": "Current production model with conservative bidding"
+    },
+    "shadow": {
+      "model_id": "experimental_gaelp_v2",
+      "model_path": "models/experimental_model.pt",
+      "learning_rate": 0.0002,
+      "epsilon": 0.12,
+      "max_bid_limit": 20.0,
+      "max_daily_spend": 4000.0,
+      "description": "Experimental model with enhanced creative selection"
+    },
+    "control": {
+      "model_id": "baseline_random",
+      "learning_rate": 0.0001,
+      "epsilon": 0.3,
+      "max_bid_limit": 10.0,
+      "max_daily_spend": 2000.0,
+      "description": "Random baseline for comparison"
+    }
+  },
+  "comparison_settings": {
+    "significant_divergence_threshold": 0.25,
+    "performance_comparison_window": 2000,
+    "risk_monitoring_enabled": true,
+    "statistical_significance_threshold": 0.05,
+    "minimum_sample_size": 10
+  },
+  "output_settings": {
+    "log_level": "INFO",
+    "save_decisions": true,
+    "comparison_log_file": "shadow_comparisons.jsonl",
+    "metrics_update_frequency": 50,
+    "generate_reports": true,
+    "report_frequency_minutes": 15
+  },
+  "safety_settings": {
+    "max_total_theoretical_spend": 10000.0,
+    "emergency_stop_on_anomalies": true,
+    "bid_spike_threshold": 5.0,
+    "performance_degradation_threshold": 0.5
+  }
+}

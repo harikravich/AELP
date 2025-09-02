@@ -46,135 +46,39 @@ class AdAuction:
         raise RuntimeError("Fallback competitors not allowed. Use proper AuctionGym integration.")
     
     def run_auction(self, your_bid: float, quality_score: float, context: Dict[str, Any] = None, user_id: str = None) -> Dict[str, Any]:
-        """Run auction with realistic dynamics"""
+        """Run auction using AuctionGym - NO FALLBACKS"""
         
-        if self.use_auction_gym:
-            # Use AuctionGym for sophisticated auction simulation
-            # Convert quality_score to query_value for AuctionGym
-            query_value = quality_score * 10.0  # Scale quality score to value
-            auction_context = context or {}
-            auction_context['quality_score'] = quality_score
-            
-            result = self.auction_gym.run_auction(
-                our_bid=your_bid,
-                query_value=query_value,
-                context=auction_context
-            )
-            
-            return {
-                'won': result.won,
-                'price_paid': result.price_paid,
-                'impression_share': 1.0 if result.won else 0.0,
-                'position': result.slot_position,
-                'competitors': result.competitors,
-                'estimated_ctr': result.estimated_ctr,
-                'true_ctr': result.true_ctr,
-                'outcome': result.outcome,
-                'revenue': result.revenue,
-                'total_slots': result.total_slots
-            }
-        else:
-            # Fallback to simple auction simulation
-            return self._run_simple_auction(your_bid, quality_score)
+        if not self.use_auction_gym:
+            raise RuntimeError("AuctionGym integration is REQUIRED. No fallback auction allowed. Fix dependencies.")
+        
+        # Use AuctionGym for sophisticated auction simulation
+        # Convert quality_score to query_value for AuctionGym
+        query_value = quality_score * 10.0  # Scale quality score to value
+        auction_context = context or {}
+        auction_context['quality_score'] = quality_score
+        
+        result = self.auction_gym.run_auction(
+            our_bid=your_bid,
+            query_value=query_value,
+            context=auction_context
+        )
+        
+        return {
+            'won': result.won,
+            'price_paid': result.price_paid,
+            'impression_share': 1.0 if result.won else 0.0,
+            'position': result.slot_position,
+            'competitors': result.competitors,
+            'estimated_ctr': result.estimated_ctr,
+            'true_ctr': result.true_ctr,
+            'outcome': result.outcome,
+            'revenue': result.revenue,
+            'total_slots': result.total_slots
+        }
     
-    def _run_simple_auction(self, your_bid: float, quality_score: float) -> Dict[str, Any]:
-        """REALISTIC auction simulation with proper competitor bidding and balanced competition"""
-        
-        # Generate BALANCED competitor bids - now more realistic
-        num_active_competitors = np.random.randint(6, 10)  # More competition
-        competitor_bids = []
-        
-        # BALANCED: Competitors now bid in realistic ranges that create competition
-        for i in range(num_active_competitors):
-            comp = self.competitor_strategies[i % len(self.competitor_strategies)]
-            
-            if comp['type'] == 'aggressive':
-                # Aggressive bidders - competitive and strong
-                base_bid = np.random.uniform(1.50, 4.50)  # Higher competitive range
-                bid = np.random.normal(base_bid, base_bid * 0.25)
-            elif comp['type'] == 'conservative':
-                # Conservative bidders - still competitive in market
-                base_bid = np.random.uniform(1.00, 3.00)  # Higher base
-                bid = np.random.normal(base_bid, base_bid * 0.20)
-            else:  # adaptive
-                # Adaptive bidders - strong middle ground
-                base_bid = np.random.uniform(1.25, 3.75)  # Higher range
-                bid = np.random.normal(base_bid, base_bid * 0.35)
-            
-            competitor_bids.append(max(0.10, bid))  # Minimum bid
-        
-        # Calculate effective bids (bid * quality_score)  
-        your_effective_bid = your_bid * quality_score
-        
-        # BALANCED: Competitors have realistic quality scores with high variance
-        competitor_effective_bids = []
-        competitor_quality_scores = []
-        for bid in competitor_bids:
-            # Quality scores distributed realistically - many competitors have good scores
-            comp_quality = np.random.normal(7.5, 1.8)  # Higher average with more variance
-            comp_quality = np.clip(comp_quality, 4.0, 10.0)
-            competitor_quality_scores.append(comp_quality)
-            competitor_effective_bids.append(bid * comp_quality)
-        
-        # Create comprehensive bidder information for ad rank calculation
-        all_bidders = [('us', your_effective_bid, your_bid, quality_score)]
-        for i, (bid, quality, effective_bid) in enumerate(zip(competitor_bids, competitor_quality_scores, competitor_effective_bids)):
-            all_bidders.append((f'comp_{i}', effective_bid, bid, quality))
-        
-        # Sort by ad rank (effective bid = bid * quality_score)
-        all_bidders.sort(key=lambda x: x[1], reverse=True)
-        
-        # Find our position
-        our_position = None
-        for rank, (bidder_name, effective_bid, bid, quality) in enumerate(all_bidders):
-            if bidder_name == 'us':
-                our_position = rank + 1
-                break
-        
-        won = our_position == 1
-        
-        if won:
-            # Google Ads style second-price auction
-            if len(all_bidders) > 1:
-                # Pay (next_highest_ad_rank / our_quality_score) + $0.01
-                next_highest_ad_rank = all_bidders[1][1]  # Second highest ad rank
-                second_price = (next_highest_ad_rank / quality_score) + 0.01
-                second_price = min(second_price, your_bid)  # Never pay more than bid
-            else:
-                second_price = your_bid * 0.8  # Reserve price when no competition
-            
-            # CTR based on position and quality
-            position_ctr = {1: 0.08, 2: 0.05, 3: 0.03}.get(our_position, 0.01)
-            estimated_ctr = position_ctr * (quality_score / 10.0)  # Normalize quality score
-            clicked = np.random.random() < estimated_ctr
-            revenue = np.random.gamma(2, 30) if clicked else 0
-            
-            return {
-                'won': True,
-                'price_paid': second_price,
-                'impression_share': 1.0,
-                'position': our_position,
-                'competitors': len(competitor_bids),
-                'estimated_ctr': estimated_ctr,
-                'true_ctr': estimated_ctr,
-                'outcome': clicked,
-                'revenue': revenue,
-                'total_slots': min(4, len(all_bidders))
-            }
-        else:
-            # We lost - zero impression share (realistic auction outcome)
-            return {
-                'won': False,
-                'price_paid': 0,
-                'impression_share': 0.0,
-                'position': our_position,
-                'competitors': len(competitor_bids),
-                'estimated_ctr': 0,
-                'true_ctr': 0,
-                'outcome': False,
-                'revenue': 0,
-                'total_slots': min(4, len(all_bidders))
-            }
+    def _removed_fallback_auction(self):
+        """REMOVED - No fallback auction allowed"""
+        raise RuntimeError("Fallback auction not allowed. Use proper AuctionGym integration.")
     
     def reset_episode(self):
         """Reset auction state for new episode"""
@@ -182,15 +86,10 @@ class AdAuction:
             self.auction_gym.reset_competitors()
             
     def get_market_stats(self) -> Dict[str, Any]:
-        """Get market statistics"""
-        if self.use_auction_gym:
-            return self.auction_gym.get_market_stats()
-        else:
-            return {
-                'total_auctions': 0,
-                'total_revenue': 0,
-                'competitors': len(self.competitor_strategies)
-            }
+        """Get market statistics - AuctionGym REQUIRED"""
+        if not self.use_auction_gym:
+            raise RuntimeError("AuctionGym required for market statistics")
+        return self.auction_gym.get_market_stats()
 
 
 @dataclass 

@@ -13,6 +13,13 @@ import random
 import hashlib
 from datetime import datetime, timedelta
 from collections import defaultdict
+from dynamic_segment_integration import (
+    get_discovered_segments,
+    get_segment_conversion_rate,
+    get_high_converting_segment,
+    get_mobile_segment,
+    validate_no_hardcoded_segments
+)
 
 
 class UserSegment(Enum):

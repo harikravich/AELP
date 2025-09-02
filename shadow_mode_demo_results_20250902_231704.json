@@ -1,0 +1,93 @@
+{
+  "model_metrics": {
+    "production": {
+      "decisions": 2000,
+      "impressions": 920,
+      "clicks": 22,
+      "conversions": 2,
+      "spend": 2315.9399733996497,
+      "revenue": 234.46832824596163,
+      "win_rate": 0.46,
+      "ctr": 0.02391304347826087,
+      "cvr": 0.09090909090909091,
+      "roas": 0.10124110768802756,
+      "cost_per_click": 105.26999879089317,
+      "cost_per_conversion": 1157.9699866998249
+    },
+    "shadow_aggressive": {
+      "decisions": 2000,
+      "impressions": 1629,
+      "clicks": 41,
+      "conversions": 0,
+      "spend": 4494.640740969712,
+      "revenue": 0.0,
+      "win_rate": 0.8145,
+      "ctr": 0.025168815224063844,
+      "cvr": 0.0,
+      "roas": 0.0,
+      "cost_per_click": 109.62538392609054,
+      "cost_per_conversion": 4494.640740969712
+    },
+    "shadow_conservative": {
+      "decisions": 2000,
+      "impressions": 439,
+      "clicks": 15,
+      "conversions": 0,
+      "spend": 1012.592430232036,
+      "revenue": 0.0,
+      "win_rate": 0.2195,
+      "ctr": 0.03416856492027335,
+      "cvr": 0.0,
+      "roas": 0.0,
+      "cost_per_click": 67.50616201546907,
+      "cost_per_conversion": 1012.592430232036
+    },
+    "baseline": {
+      "decisions": 2000,
+      "impressions": 385,
+      "clicks": 7,
+      "conversions": 0,
+      "spend": 886.1249069832771,
+      "revenue": 0.0,
+      "win_rate": 0.1925,
+      "ctr": 0.01818181818181818,
+      "cvr": 0.0,
+      "roas": 0.0,
+      "cost_per_click": 126.58927242618245,
+      "cost_per_conversion": 886.1249069832771
+    }
+  },
+  "comparison_summary": {
+    "total_comparisons": 2000,
+    "significant_divergences": 2000,
+    "avg_bid_divergence": 0.34825575291971667,
+    "shadow_win_rate": 0.18,
+    "value_lift": -1.1593571795391135
+  },
+  "segment_breakdown": {
+    "concerned_parent": {
+      "count": 470,
+      "shadow_wins": 94,
+      "avg_bid_divergence": 0,
+      "total_bid_divergence": 162.69374241288443
+    },
+    "proactive_parent": {
+      "count": 512,
+      "shadow_wins": 36,
+      "avg_bid_divergence": 0,
+      "total_bid_divergence": 179.1239296550025
+    },
+    "researching_parent": {
+      "count": 525,
+      "shadow_wins": 62,
+      "avg_bid_divergence": 0,
+      "total_bid_divergence": 179.32370398323766
+    },
+    "crisis_parent": {
+      "count": 493,
+      "shadow_wins": 168,
+      "avg_bid_divergence": 0,
+      "total_bid_divergence": 175.37012978830882
+    }
+  }
+}

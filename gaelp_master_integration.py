@@ -98,6 +98,13 @@ from temporal_effects import TemporalEffects
 from model_versioning import ModelVersioningSystem
 from training_orchestrator.online_learner import OnlineLearner, OnlineLearnerConfig
 from safety_system import SafetySystem, SafetyConfig, BidRecord, SafetyViolationType
+from dynamic_segment_integration import (
+    get_discovered_segments,
+    get_segment_conversion_rate,
+    get_high_converting_segment,
+    get_mobile_segment,
+    validate_no_hardcoded_segments
+)
 
 # Configure logging
 logging.basicConfig(
@@ -1940,17 +1947,9 @@ class MasterOrchestrator:
             channel_ctr = self.fixed_environment.metrics.get('total_clicks', 0) / max(1, self.fixed_environment.metrics.get('total_impressions', 1))
             channel_performance = min(1.0, channel_ctr * 20)  # Normalize to 0-1
             
-<<<<<<< Updated upstream
-            # Create a journey state with proper parameters from environment - ensure no None values
-            journey_state = JourneyState(
-                stage=user_data.get('stage', 1),  # Use actual user stage or default
-                touchpoints_seen=user_data.get('touchpoints_seen', self.fixed_environment.metrics.get('total_impressions', 0) % 10),
-                days_since_first_touch=float(user_data.get('days_since_first_touch', 0.0)),
-                ad_fatigue_level=float(user_data.get('ad_fatigue_level', 0.3)),
-=======
             # Create journey state with ONLY platform-observable metrics
             logger.info("Creating journey_state for storing experience...")
-            journey_state = JourneyStateData(
+            journey_state = JourneyState(
                 # Infer stage from campaign performance (early/mid/late)
                 stage=min(3, 1 + platform_data.get('campaign_days_active', 0) // 7),
                 # Use frequency cap estimate instead of perfect tracking
@@ -1960,25 +1959,18 @@ class MasterOrchestrator:
                 # Use CTR decline as fatigue proxy (realistic)
                 ad_fatigue_level=max(0.0, 1.0 - platform_data.get('recent_ctr', 0.05) * 20),
                 # Segment from campaign targeting (not individual tracking)
->>>>>>> Stashed changes
                 segment=segment_list[0] if segment_list else 'concerned_parents',
                 # Device from bid context (would come from auction request)
                 device='desktop',  # In production, comes from bid request
                 # Real time metrics
                 hour_of_day=datetime.now().hour,
                 day_of_week=datetime.now().weekday(),
-<<<<<<< Updated upstream
-                previous_clicks=int(user_data.get('previous_clicks', self.fixed_environment.metrics.get('total_clicks', 0) or 0)),
-                previous_impressions=int(user_data.get('previous_impressions', max(1, self.fixed_environment.metrics.get('total_impressions', 1)))),
-                estimated_ltv=float(user_data.get('estimated_ltv', 100.0)),
-=======
                 # Real campaign metrics
                 previous_clicks=int(platform_data.get('campaign_clicks', 0)),
                 previous_impressions=int(platform_data.get('campaign_impressions', 1)),
                 # Use CPA as value proxy (not perfect LTV prediction)
                 estimated_ltv=min(500.0, max(50.0, 100.0 / max(0.2, platform_data.get('recent_ctr', 0.02)))),
                 # Real competition metrics
->>>>>>> Stashed changes
                 competition_level=float(competition_level),
                 channel_performance=float(channel_performance)
             )
@@ -2059,7 +2051,7 @@ class MasterOrchestrator:
                     best_channel = list(channels.keys())[0] if channels else 'google'
             
             # Select segment with highest conversion potential
-            best_segment = 'concerned_parents'  # Default
+            best_segment = get_mobile_segment() or 'dynamic_segment_2'  # Default
             if segments:
                 best_potential = 0
                 for seg_name, seg_data in segments.items():

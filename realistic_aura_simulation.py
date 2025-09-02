@@ -18,6 +18,13 @@ from enhanced_journey_tracking import EnhancedMultiTouchUser, Channel, UserState
 from multi_channel_orchestrator import MultiChannelOrchestrator
 from auction_gym_integration import AuctionGymWrapper, AuctionResult
 from aura_campaign_simulator import AuraProduct, AuraUserSimulator
+from dynamic_segment_integration import (
+    get_discovered_segments,
+    get_segment_conversion_rate,
+    get_high_converting_segment,
+    get_mobile_segment,
+    validate_no_hardcoded_segments
+)
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

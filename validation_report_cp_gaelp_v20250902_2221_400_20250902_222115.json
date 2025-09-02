@@ -1,0 +1,141 @@
+{
+  "checkpoint_id": "cp_gaelp_v20250902_2221_400_20250902_222115",
+  "report_generated_at": "2025-09-02T22:21:15.894562",
+  "checkpoint_metadata": {
+    "checkpoint_id": "cp_gaelp_v20250902_2221_400_20250902_222115",
+    "model_version": "gaelp_v20250902_2221",
+    "training_episode": 400,
+    "validation_status": "ValidationStatus.PASSED",
+    "signature": {
+      "architecture_hash": "bff3c652207be7355db06550ad7b90f1",
+      "state_dict_keys": [
+        "weight",
+        "bias"
+      ],
+      "parameter_counts": {
+        "weight": 40,
+        "bias": 4
+      },
+      "tensor_shapes": {
+        "weight": [
+          4,
+          10
+        ],
+        "bias": [
+          4
+        ]
+      },
+      "torch_version": "2.8.0+cpu",
+      "python_version": "3.10",
+      "dependency_versions": {
+        "numpy": "2.1.3",
+        "torch": "2.8.0+cpu"
+      },
+      "timestamp": "2025-09-02T22:21:15.711842"
+    },
+    "validation_metrics": {
+      "accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "roas": 3.6,
+      "conversion_rate": 0.136,
+      "ctr": 0.09000000000000001,
+      "inference_latency_ms": 0.07483959197998047,
+      "memory_usage_mb": 349.22265625,
+      "throughput_qps": 13361.911436763301,
+      "gradient_norm": 0.0,
+      "weight_stability": 1.0,
+      "output_variance": 0.1,
+      "revenue_impact": 0.0,
+      "cost_efficiency": 1.0,
+      "user_satisfaction": 0.8,
+      "timestamp": "2025-09-02T22:21:15.740415"
+    },
+    "training_config": {
+      "agent_type": "MockGAELPAgent",
+      "timestamp": "2025-09-02T22:21:15.709916",
+      "learning_rate": 0.001,
+      "epsilon": 0.1,
+      "gamma": 0.99,
+      "total_episodes": 400,
+      "model_parameters": 44,
+      "model_layers": 1
+    },
+    "data_signature": "d0e01a857b43c67d3b69c8a27adbfa13",
+    "parent_checkpoint": null,
+    "children_checkpoints": [],
+    "deployment_history": [],
+    "rollback_points": [],
+    "validation_logs": [
+      {
+        "timestamp": "2025-09-02T22:21:15.725712",
+        "checkpoint_id": "cp_gaelp_v20250902_2221_400_20250902_222115",
+        "validation_steps": [
+          {
+            "step": "architecture_validation",
+            "result": true,
+            "issues": [],
+            "timestamp": "2025-09-02T22:21:15.737379"
+          },
+          {
+            "step": "holdout_validation",
+            "result": "True",
+            "metrics": {
+              "success_rate": 1.0,
+              "avg_inference_time_ms": 0.0016832351684570312,
+              "p95_inference_time_ms": 0.0021457672119140625,
+              "total_samples_tested": 100,
+              "valid_predictions": 100
+            },
+            "errors": [],
+            "timestamp": "2025-09-02T22:21:15.738440"
+          },
+          {
+            "step": "performance_benchmarking",
+            "result": "True",
+            "metrics": {
+              "passed": "True",
+              "avg_inference_time_ms": 0.07483959197998047,
+              "memory_usage_mb": 349.22265625,
+              "throughput_qps": 13361.911436763301,
+              "weight_stability": 1.0,
+              "output_variance": 0.1,
+              "cost_efficiency": 1.0
+            },
+            "timestamp": "2025-09-02T22:21:15.740380"
+          }
+        ],
+        "overall_result": true,
+        "validation_duration_seconds": 0.014719
+      }
+    ],
+    "created_at": "2025-09-02T22:21:15.712094",
+    "validated_at": "2025-09-02T22:21:15.740429",
+    "deployed_at": null
+  },
+  "validation_history": [],
+  "production_status": {
+    "current_production_checkpoint": "cp_gaelp_v20250902_2221_500_20250902_222115",
+    "production_deployed_at": "2025-09-02T22:21:15.792843",
+    "total_checkpoints": 5,
+    "validated_checkpoints": 4,
+    "failed_checkpoints": 0,
+    "pending_checkpoints": 0,
+    "deployed_checkpoints": 1,
+    "rollback_available": false,
+    "last_validation_time": "2025-09-02T22:21:15.784737"
+  },
+  "validation_summary": {
+    "overall_status": "passed",
+    "validation_duration": 0.014719,
+    "validation_steps_passed": 3,
+    "validation_steps_total": 3,
+    "critical_issues": [],
+    "recommendations": [
+      "Checkpoint is ready for deployment",
+      "Consider A/B testing before full rollout",
+      "Monitor performance metrics after deployment"
+    ]
+  }
+}

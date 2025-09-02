@@ -1,0 +1,23 @@
+{
+  "test_results": {
+    "core_checkpoint_creation": true,
+    "core_holdout_validation": true,
+    "core_regression_detection": true,
+    "core_architecture_validation": true,
+    "core_validation_flow": false,
+    "core_deployment_rollback": true,
+    "core_metadata_persistence": true,
+    "core_checkpoint_cleanup": true,
+    "core_report_export": true,
+    "integration_rl_agent_integration": true,
+    "integration_training_orchestrator_integration": true,
+    "integration_production_safety_integration": true
+  },
+  "summary": {
+    "total_tests": 12,
+    "passed_tests": 11,
+    "failed_tests": 1,
+    "overall_success": false
+  },
+  "timestamp": "2025-09-02T22:19:18.632723"
+}

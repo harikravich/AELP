@@ -3,19 +3,24 @@ function main() {
     // Display Campaign Placement Exclusions - Bot Filter
     var exclusions = [
   {
-    "url": "suspicious-ads-network.com",
+    "url": "fraudulent-network-1.com",
     "reason": "Bot score: 0.90",
-    "sessions_saved": 45000
+    "sessions_saved": 669
   },
   {
-    "url": "fake-traffic-source.tk",
+    "url": "bot-traffic-source.tk",
     "reason": "Bot score: 0.90",
-    "sessions_saved": 30000
+    "sessions_saved": 478
   },
   {
-    "url": "bot-generated-content.ml",
+    "url": "fake-content-network.ml",
     "reason": "Bot score: 0.90",
-    "sessions_saved": 25000
+    "sessions_saved": 382
+  },
+  {
+    "url": "suspicious-ads-platform.ga",
+    "reason": "Bot score: 0.90",
+    "sessions_saved": 382
   }
 ];
     

@@ -1,0 +1,421 @@
+{
+  "discovery_metadata": {
+    "timestamp": "2025-09-02T21:50:53.714251",
+    "total_segments": 5,
+    "methods_used": [
+      "kmeans",
+      "dbscan",
+      "hierarchical"
+    ],
+    "min_cluster_size": 50
+  },
+  "segments": {
+    "segment_1_kmeans": {
+      "segment_id": "segment_1_kmeans",
+      "name": "Regular Explorers (Desktop) [Business Hours]",
+      "size": 195,
+      "characteristics": {
+        "engagement_level": "medium",
+        "session_style": "deep_explorer",
+        "primary_device": "desktop",
+        "channel_behavior": "omnichannel",
+        "activity_pattern": "business_hours"
+      },
+      "behavioral_profile": {
+        "avg_session_duration": 756.3299864697499,
+        "avg_pages_per_session": 9.848079513079513,
+        "avg_bounce_rate": 0.09753117253117252,
+        "avg_engagement_depth": 0.6782880085498267,
+        "session_duration_std": 379.43799367842024,
+        "pages_per_session_std": 4.939602805804288
+      },
+      "conversion_rate": 0.5692307692307692,
+      "engagement_metrics": {
+        "high_engagement_rate": 0.5384615384615384,
+        "low_bounce_rate": 0.882051282051282,
+        "multi_session_rate": 1.0
+      },
+      "temporal_patterns": {
+        "peak_hours": [
+          12,
+          13,
+          11
+        ],
+        "hour_distribution": {
+          "18": 22,
+          "20": 23,
+          "12": 95,
+          "13": 80,
+          "10": 51,
+          "8": 35,
+          "14": 46,
+          "15": 3,
+          "5": 2,
+          "7": 34,
+          "11": 73,
+          "6": 28,
+          "19": 19,
+          "17": 16,
+          "16": 18,
+          "9": 2
+        },
+        "avg_session_frequency": 2.805128205128205
+      },
+      "channel_preferences": {
+        "organic": 0.4303030303030303,
+        "social": 0.08917748917748917,
+        "direct": 0.34285714285714286,
+        "email": 0.1316017316017316,
+        "paid": 0.006060606060606061
+      },
+      "device_preferences": {
+        "tablet": 0.3282051282051282,
+        "desktop": 0.558974358974359,
+        "mobile": 0.11282051282051282
+      },
+      "content_preferences": {
+        "comparison": 0.2468354430379747,
+        "product": 0.24261603375527427,
+        "support": 0.22784810126582278,
+        "reviews": 0.16033755274261605,
+        "about": 0.06751054852320675,
+        "blog": 0.05485232067510549
+      },
+      "confidence_score": 0.5807863627254367,
+      "last_updated": "2025-09-02T21:50:37.710404",
+      "sample_users": [
+        "user_1",
+        "user_2",
+        "user_5",
+        "user_9",
+        "user_13"
+      ]
+    },
+    "segment_1_hierarchical": {
+      "segment_id": "segment_1_hierarchical",
+      "name": "Regular Explorers (Desktop) [Business Hours]",
+      "size": 147,
+      "characteristics": {
+        "engagement_level": "medium",
+        "session_style": "deep_explorer",
+        "primary_device": "desktop",
+        "channel_behavior": "omnichannel",
+        "activity_pattern": "business_hours"
+      },
+      "behavioral_profile": {
+        "avg_session_duration": 793.7344343071214,
+        "avg_pages_per_session": 10.347962619391192,
+        "avg_bounce_rate": 0.1017217853952548,
+        "avg_engagement_depth": 0.6853421341101839,
+        "session_duration_std": 398.29317000442245,
+        "pages_per_session_std": 5.087793231264644
+      },
+      "conversion_rate": 0.5782312925170068,
+      "engagement_metrics": {
+        "high_engagement_rate": 0.5578231292517006,
+        "low_bounce_rate": 0.891156462585034,
+        "multi_session_rate": 1.0
+      },
+      "temporal_patterns": {
+        "peak_hours": [
+          12,
+          13,
+          11
+        ],
+        "hour_distribution": {
+          "12": 78,
+          "13": 63,
+          "10": 46,
+          "14": 39,
+          "11": 60,
+          "6": 17,
+          "8": 26,
+          "7": 22,
+          "19": 15,
+          "17": 12,
+          "20": 20,
+          "18": 20,
+          "16": 14,
+          "15": 1,
+          "9": 1
+        },
+        "avg_session_frequency": 2.9523809523809526
+      },
+      "channel_preferences": {
+        "organic": 0.45502092050209203,
+        "direct": 0.3514644351464435,
+        "email": 0.10564853556485355,
+        "social": 0.08682008368200837,
+        "paid": 0.0010460251046025104
+      },
+      "device_preferences": {
+        "tablet": 0.40816326530612246,
+        "desktop": 0.5782312925170068,
+        "mobile": 0.013605442176870748
+      },
+      "content_preferences": {
+        "comparison": 0.2514124293785311,
+        "product": 0.2401129943502825,
+        "support": 0.23728813559322035,
+        "reviews": 0.16666666666666666,
+        "blog": 0.05367231638418079,
+        "about": 0.05084745762711865
+      },
+      "confidence_score": 0.5702692638730595,
+      "last_updated": "2025-09-02T21:50:39.633510",
+      "sample_users": [
+        "user_2",
+        "user_9",
+        "user_13",
+        "user_26",
+        "user_27"
+      ]
+    },
+    "segment_0_kmeans": {
+      "segment_id": "segment_0_kmeans",
+      "name": "Casual Visitors (Mobile) [Business Hours]",
+      "size": 205,
+      "characteristics": {
+        "engagement_level": "low",
+        "session_style": "moderate_browser",
+        "primary_device": "mobile",
+        "channel_behavior": "omnichannel",
+        "activity_pattern": "business_hours"
+      },
+      "behavioral_profile": {
+        "avg_session_duration": 215.8398998039439,
+        "avg_pages_per_session": 3.6545389434413824,
+        "avg_bounce_rate": 0.4322554816457255,
+        "avg_engagement_depth": 0.3595577657490149,
+        "session_duration_std": 158.65808580761185,
+        "pages_per_session_std": 1.9935185041876033
+      },
+      "conversion_rate": 0.8439024390243902,
+      "engagement_metrics": {
+        "high_engagement_rate": 0.00975609756097561,
+        "low_bounce_rate": 0.32195121951219513,
+        "multi_session_rate": 0.9902439024390244
+      },
+      "temporal_patterns": {
+        "peak_hours": [
+          15,
+          19,
+          17
+        ],
+        "hour_distribution": {
+          "6": 53,
+          "14": 51,
+          "15": 82,
+          "9": 48,
+          "5": 43,
+          "16": 61,
+          "19": 73,
+          "17": 70,
+          "18": 65,
+          "20": 21,
+          "7": 3,
+          "13": 3,
+          "8": 5,
+          "12": 1,
+          "11": 2
+        },
+        "avg_session_frequency": 2.8341463414634145
+      },
+      "channel_preferences": {
+        "email": 0.2028262676641729,
+        "paid": 0.39650872817955113,
+        "social": 0.29177057356608477,
+        "organic": 0.09891936824605153,
+        "direct": 0.00997506234413965
+      },
+      "device_preferences": {
+        "desktop": 0.2146341463414634,
+        "mobile": 0.7463414634146341,
+        "tablet": 0.03902439024390244
+      },
+      "content_preferences": {
+        "blog": 0.38764044943820225,
+        "product": 0.25280898876404495,
+        "about": 0.19101123595505617,
+        "social": 0.14887640449438203,
+        "reviews": 0.008426966292134831,
+        "support": 0.008426966292134831,
+        "comparison": 0.0028089887640449437
+      },
+      "confidence_score": 0.5341083854871344,
+      "last_updated": "2025-09-02T21:50:37.700642",
+      "sample_users": [
+        "user_0",
+        "user_3",
+        "user_4",
+        "user_6",
+        "user_7"
+      ]
+    },
+    "segment_0_hierarchical": {
+      "segment_id": "segment_0_hierarchical",
+      "name": "Regular Visitors (Mobile) [Business Hours]",
+      "size": 253,
+      "characteristics": {
+        "engagement_level": "medium",
+        "session_style": "moderate_browser",
+        "primary_device": "mobile",
+        "channel_behavior": "omnichannel",
+        "activity_pattern": "business_hours"
+      },
+      "behavioral_profile": {
+        "avg_session_duration": 296.65045445953695,
+        "avg_pages_per_session": 4.53915210832207,
+        "avg_bounce_rate": 0.36631561236304316,
+        "avg_engagement_depth": 0.4159296835239811,
+        "session_duration_std": 252.5448399345918,
+        "pages_per_session_std": 3.120609606620348
+      },
+      "conversion_rate": 0.7865612648221344,
+      "engagement_metrics": {
+        "high_engagement_rate": 0.09881422924901186,
+        "low_bounce_rate": 0.42292490118577075,
+        "multi_session_rate": 0.9920948616600791
+      },
+      "temporal_patterns": {
+        "peak_hours": [
+          15,
+          19,
+          17
+        ],
+        "hour_distribution": {
+          "6": 64,
+          "14": 58,
+          "15": 84,
+          "18": 67,
+          "20": 24,
+          "9": 49,
+          "5": 45,
+          "12": 18,
+          "8": 14,
+          "13": 20,
+          "16": 65,
+          "19": 77,
+          "17": 74,
+          "7": 15,
+          "11": 15,
+          "10": 5
+        },
+        "avg_session_frequency": 2.7430830039525693
+      },
+      "channel_preferences": {
+        "email": 0.21041369472182597,
+        "organic": 0.1291012838801712,
+        "social": 0.26462196861626247,
+        "paid": 0.34450784593437944,
+        "direct": 0.05135520684736091
+      },
+      "device_preferences": {
+        "desktop": 0.26877470355731226,
+        "tablet": 0.04743083003952569,
+        "mobile": 0.6837944664031621
+      },
+      "content_preferences": {
+        "blog": 0.30462184873949577,
+        "product": 0.25210084033613445,
+        "about": 0.1722689075630252,
+        "social": 0.11134453781512606,
+        "comparison": 0.06092436974789916,
+        "support": 0.05672268907563025,
+        "reviews": 0.04201680672268908
+      },
+      "confidence_score": 0.5003643132730725,
+      "last_updated": "2025-09-02T21:50:39.632610",
+      "sample_users": [
+        "user_0",
+        "user_1",
+        "user_3",
+        "user_4",
+        "user_5"
+      ]
+    },
+    "segment_0_dbscan": {
+      "segment_id": "segment_0_dbscan",
+      "name": "Regular Explorers (Mobile) [Business Hours]",
+      "size": 400,
+      "characteristics": {
+        "engagement_level": "medium",
+        "session_style": "deep_explorer",
+        "primary_device": "mobile",
+        "channel_behavior": "omnichannel",
+        "activity_pattern": "business_hours"
+      },
+      "behavioral_profile": {
+        "avg_session_duration": 479.32881705352423,
+        "avg_pages_per_session": 6.673889971139971,
+        "avg_bounce_rate": 0.26907738095238093,
+        "avg_engagement_depth": 0.5149387591144107,
+        "session_duration_std": 395.0626757744737,
+        "pages_per_session_std": 4.849285402018746
+      },
+      "conversion_rate": 0.71,
+      "engagement_metrics": {
+        "high_engagement_rate": 0.2675,
+        "low_bounce_rate": 0.595,
+        "multi_session_rate": 0.995
+      },
+      "temporal_patterns": {
+        "peak_hours": [
+          14,
+          12,
+          19
+        ],
+        "hour_distribution": {
+          "6": 81,
+          "14": 97,
+          "15": 85,
+          "18": 87,
+          "20": 44,
+          "12": 96,
+          "13": 83,
+          "10": 51,
+          "9": 50,
+          "5": 45,
+          "8": 40,
+          "16": 79,
+          "19": 92,
+          "17": 86,
+          "7": 37,
+          "11": 75
+        },
+        "avg_session_frequency": 2.82
+      },
+      "channel_preferences": {
+        "email": 0.16793893129770993,
+        "organic": 0.26123833757421544,
+        "social": 0.19253604749787956,
+        "direct": 0.17302798982188294,
+        "paid": 0.20525869380831213
+      },
+      "device_preferences": {
+        "desktop": 0.3825,
+        "tablet": 0.18,
+        "mobile": 0.4375
+      },
+      "content_preferences": {
+        "product": 0.2469879518072289,
+        "blog": 0.19759036144578312,
+        "comparison": 0.14216867469879518,
+        "support": 0.13373493975903614,
+        "about": 0.12048192771084337,
+        "reviews": 0.09518072289156626,
+        "social": 0.06385542168674699
+      },
+      "confidence_score": 0.43516005642933875,
+      "last_updated": "2025-09-02T21:50:37.783815",
+      "sample_users": [
+        "user_0",
+        "user_1",
+        "user_2",
+        "user_3",
+        "user_4"
+      ]
+    }
+  },
+  "evolution_tracking": {}
+}

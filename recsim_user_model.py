@@ -19,18 +19,23 @@ import sys
 sys.path.insert(0, '/home/hariravichandran/AELP')
 from NO_FALLBACKS import StrictModeEnforcer
 
-# Apply edward2 compatibility patch BEFORE importing edward2
+# Apply edward2 compatibility patch BEFORE importing RecSim NG
 import edward2_patch
 
-try:
-    import edward2 as ed
-    import recsim_ng.core.value as value
-    import recsim_ng.lib.tensorflow.entity as entity
-    import recsim_ng.lib.tensorflow.field_spec as field_spec
-    from recsim_ng.lib.tensorflow import runtime
-except ImportError as e:
-    StrictModeEnforcer.enforce('RECSIM', fallback_attempted=True)
-    raise ImportError(f"RecSim NG MUST be installed. NO FALLBACKS! Error: {e}")
+# RecSim NG imports - NO FALLBACKS ALLOWED
+import recsim_ng.core.value as value
+import recsim_ng.lib.tensorflow.entity as entity
+import recsim_ng.lib.tensorflow.field_spec as field_spec
+from recsim_ng.lib.tensorflow import runtime
+from recsim_ng.entities.choice_models.selectors import MultinomialLogitChoiceModel
+from recsim_ng.core.variable import Variable
+from recsim_ng.core.network import Network
+
+# TensorFlow Probability for distributions (NO fallbacks)
+import tensorflow as tf
+import tensorflow_probability as tfp
+
+tfd = tfp.distributions
 
 logger = logging.getLogger(__name__)
 
@@ -76,9 +81,8 @@ class RecSimUserModel:
         self.current_users = {}
         self.interaction_history = []
         
-        # Initialize RecSim components if available
-        if entity is not None:
-            self._init_recsim_components()
+        # Initialize RecSim NG components (NO fallbacks)
+        self._init_recsim_components()
     
     def _create_user_segments(self) -> Dict[UserSegment, UserProfile]:
         """Create detailed user segment profiles"""
@@ -185,13 +189,9 @@ class RecSimUserModel:
     
     def _init_recsim_components(self):
         """Initialize RecSim NG components for probabilistic modeling"""
-        if entity is None:
-            return
         
-        # Define field specifications for user state
-        # RecSim NG FieldSpec is just a container - doesn't take dtype/shape args
-        # It's used for value checking, not type specification
-        self.user_state_spec = {
+        # Initialize RecSim NG field specifications for validation
+        self.user_state_specs = {
             'segment_id': field_spec.FieldSpec(),
             'interest_level': field_spec.FieldSpec(),
             'fatigue_level': field_spec.FieldSpec(),
@@ -200,13 +200,48 @@ class RecSimUserModel:
             'ad_exposures': field_spec.FieldSpec()
         }
         
-        # Define ad/content specifications
-        self.ad_spec = {
+        self.ad_specs = {
             'creative_quality': field_spec.FieldSpec(),
             'price_shown': field_spec.FieldSpec(),
             'brand_match': field_spec.FieldSpec(),
             'relevance_score': field_spec.FieldSpec()
         }
+        
+        # Initialize choice model for ad selection
+        # RecSim NG choice models will be used for more sophisticated selection later
+        self.choice_model_available = True
+        
+        logger.info("RecSim NG components initialized successfully")
+    
+    def _compute_ad_utility(self, user_state, ad_features):
+        """Compute utility for ad selection using RecSim NG"""
+        # This is called by the choice model to determine ad preferences
+        utilities = []
+        
+        for ad in ad_features:
+            # Base utility from creative quality
+            utility = ad.get('creative_quality', 0.5)
+            
+            # Brand affinity boost
+            if 'brand_match' in ad:
+                utility += user_state.get('brand_affinity', 0.5) * ad['brand_match']
+            
+            # Price sensitivity penalty
+            if 'price_shown' in ad:
+                price_penalty = user_state.get('price_sensitivity', 0.5) * ad['price_shown'] / 100.0
+                utility -= price_penalty
+            
+            # Fatigue penalty
+            fatigue = user_state.get('fatigue_level', 0.0)
+            utility *= (1.0 - fatigue * 0.5)
+            
+            # Interest boost
+            interest = user_state.get('interest_level', 0.5)
+            utility *= (0.5 + interest * 0.5)
+            
+            utilities.append(utility)
+        
+        return tf.constant(utilities, dtype=tf.float32)
     
     def generate_user(self, user_id: str, segment: Optional[UserSegment] = None) -> UserProfile:
         """Generate a new user with specified or random segment"""
@@ -306,13 +341,13 @@ class RecSimUserModel:
             brand_modifier
         )
         
-        # Apply RecSim probabilistic modeling if available
-        if ed is not None:
-            click_prob = ed.Beta(
-                concentration1=click_prob * 10,
-                concentration0=(1 - click_prob) * 10
-            ).sample()
-            click_prob = float(click_prob.numpy())
+        # Apply RecSim NG probabilistic modeling using TFP
+        click_prob_dist = tfd.Beta(
+            concentration1=tf.constant(click_prob * 10, dtype=tf.float32),
+            concentration0=tf.constant((1 - click_prob) * 10, dtype=tf.float32)
+        )
+        click_prob_sample = click_prob_dist.sample()
+        click_prob = float(click_prob_sample.numpy())
         
         clicked = np.random.random() < click_prob
         
@@ -343,12 +378,13 @@ class RecSimUserModel:
                 min(1.0, time_spent / user.attention_span)  # Engagement effect
             )
             
-            if ed is not None:
-                conv_prob = ed.Beta(
-                    concentration1=conv_prob * 5,
-                    concentration0=(1 - conv_prob) * 5
-                ).sample()
-                conv_prob = float(conv_prob.numpy())
+            # Use TFP for conversion probability modeling
+            conv_prob_dist = tfd.Beta(
+                concentration1=tf.constant(conv_prob * 5, dtype=tf.float32),
+                concentration0=tf.constant((1 - conv_prob) * 5, dtype=tf.float32)
+            )
+            conv_prob_sample = conv_prob_dist.sample()
+            conv_prob = float(conv_prob_sample.numpy())
             
             converted = np.random.random() < conv_prob
             

@@ -180,7 +180,7 @@ def test_auction_gym_integration():
     print("=" * 40)
     
     try:
-        from auction_gym_integration import AuctionGymWrapper
+        from auction_gym_integration_fixed import AuctionGymWrapper
         
         # Create AuctionGym wrapper
         auction_gym = AuctionGymWrapper({

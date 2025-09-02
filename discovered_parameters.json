@@ -1,0 +1,33 @@
+{
+  "daily_budget_ranges": {},
+  "bid_ranges": {},
+  "roi_thresholds": {},
+  "conversion_probabilities": {},
+  "session_durations": {},
+  "bounce_rates": {},
+  "competitor_bid_ranges": {},
+  "quality_score_ranges": {},
+  "ctr_by_position": {
+    "1": 0.035,
+    "2": 0.025,
+    "3": 0.015,
+    "4": 0.008,
+    "5": 0.005
+  },
+  "creative_effectiveness": {},
+  "messaging_performance": {},
+  "hourly_multipliers": {},
+  "seasonal_factors": {},
+  "channel_costs": {},
+  "channel_conversion_rates": {},
+  "journey_stage_probabilities": {},
+  "transition_probabilities": {},
+  "last_discovery_time": "2025-09-02T21:50:12.649675",
+  "discovery_source": "GA4",
+  "confidence_scores": {
+    "budget": 0.5,
+    "conversion": 0.4,
+    "competitive": 0.4,
+    "creative": 0.4
+  }
+}

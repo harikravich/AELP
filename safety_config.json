@@ -1,0 +1,30 @@
+{
+  "reward_validation": {
+    "enabled": true,
+    "min_reward": -100.0,
+    "max_reward": 100.0,
+    "anomaly_threshold": 3.0
+  },
+  "spending_limits": {
+    "daily_total_limit": 10000.0,
+    "daily_campaign_limit": 1000.0,
+    "warning_threshold": 0.8
+  },
+  "bid_safety": {
+    "min_bid": 0.01,
+    "max_bid": 50.0,
+    "anomaly_threshold": 3.0
+  },
+  "ethical_constraints": {
+    "content_safety_enabled": true,
+    "demographic_protection_enabled": true
+  },
+  "bias_detection": {
+    "enabled": true,
+    "statistical_parity_threshold": 0.1
+  },
+  "privacy_protection": {
+    "enabled": true,
+    "differential_privacy_epsilon": 1.0
+  }
+}

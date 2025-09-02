@@ -49,10 +49,21 @@ def main():
     print("   - Maximum performance")
     print("   - Ray-based parallelization")
     print()
+    print("5. 🔄 Run Online Learning System")
+    print("   - Continuous learning from production data")
+    print("   - Thompson Sampling exploration/exploitation")
+    print("   - A/B testing with statistical significance")
+    print("   - Safety guardrails and circuit breakers")
+    print()
+    print("6. 📊 Monitor Online Learning")
+    print("   - Real-time performance dashboard")
+    print("   - Strategy performance tracking")
+    print("   - A/B test results analysis")
+    print()
     print("0. Exit")
     print()
     
-    choice = input("Enter choice (1/2/3/4/0): ").strip()
+    choice = input("Enter choice (1/2/3/4/5/6/0): ").strip()
     
     if choice == "1":
         print("\n" + "=" * 70)
@@ -71,7 +82,7 @@ def main():
         
         # Create production training script on the fly
         training_code = '''#!/usr/bin/env python3
-"""Production Training with NO hardcoding"""
+"""Production Training with NO hardcoding + EMERGENCY CONTROLS"""
 import sys
 sys.path.insert(0, '/home/hariravichandran/AELP')
 
@@ -88,6 +99,7 @@ from attribution_models import AttributionEngine
 from budget_pacer import BudgetPacer
 from identity_resolver import IdentityResolver
 from gaelp_parameter_manager import ParameterManager
+from emergency_controls import get_emergency_controller, emergency_stop_decorator
 
 # Configure logging
 logging.basicConfig(
@@ -102,35 +114,76 @@ logger = logging.getLogger(__name__)
 
 def main():
     logger.info("="*70)
-    logger.info("STARTING PRODUCTION TRAINING - NO HARDCODING")
+    logger.info("STARTING PRODUCTION TRAINING - NO HARDCODING + EMERGENCY CONTROLS")
     logger.info("="*70)
     
-    # Initialize components
-    discovery = DiscoveryEngine(write_enabled=True, cache_only=False)
-    creative_selector = CreativeSelector()
-    attribution = AttributionEngine()
-    budget_pacer = BudgetPacer()
-    identity_resolver = IdentityResolver()
-    pm = ParameterManager()
+    # Initialize emergency controls FIRST
+    emergency_controller = get_emergency_controller()
+    logger.info("Emergency control system initialized")
     
-    # Create production environment
+    # Check system health before starting
+    if not emergency_controller.is_system_healthy():
+        logger.error("System not healthy - cannot start training")
+        return
+    
+    # Initialize components with emergency decorators
+    @emergency_stop_decorator("discovery_engine")
+    def create_discovery():
+        return DiscoveryEngine(write_enabled=True, cache_only=False)
+    
+    @emergency_stop_decorator("creative_selector")
+    def create_creative_selector():
+        return CreativeSelector()
+    
+    @emergency_stop_decorator("attribution_engine")
+    def create_attribution():
+        return AttributionEngine()
+    
+    @emergency_stop_decorator("budget_pacer")
+    def create_budget_pacer():
+        return BudgetPacer()
+    
+    @emergency_stop_decorator("identity_resolver")
+    def create_identity_resolver():
+        return IdentityResolver()
+    
+    @emergency_stop_decorator("parameter_manager")
+    def create_parameter_manager():
+        return ParameterManager()
+    
+    discovery = create_discovery()
+    creative_selector = create_creative_selector()
+    attribution = create_attribution()
+    budget_pacer = create_budget_pacer()
+    identity_resolver = create_identity_resolver()
+    pm = create_parameter_manager()
+    
+    # Create production environment with emergency controls
     logger.info("Creating production environment...")
-    env = ProductionFortifiedEnvironment(
-        parameter_manager=pm,
-        use_real_ga4_data=False,
-        is_parallel=False
-    )
+    @emergency_stop_decorator("environment")
+    def create_environment():
+        return ProductionFortifiedEnvironment(
+            parameter_manager=pm,
+            use_real_ga4_data=False,
+            is_parallel=False
+        )
     
-    # Create production agent
+    env = create_environment()
+    
+    # Create production agent with emergency controls
     logger.info("Creating production agent with discovered parameters...")
-    agent = ProductionFortifiedRLAgent(
-        discovery_engine=discovery,
-        creative_selector=creative_selector,
-        attribution_engine=attribution,
-        budget_pacer=budget_pacer,
-        identity_resolver=identity_resolver,
-        parameter_manager=pm
-    )
+    @emergency_stop_decorator("rl_agent")
+    def create_agent():
+        return ProductionFortifiedRLAgent(
+            discovery_engine=discovery,
+            creative_selector=creative_selector,
+            attribution_engine=attribution,
+            budget_pacer=budget_pacer,
+            identity_resolver=identity_resolver,
+            parameter_manager=pm
+        )
+    
+    agent = create_agent()
     
     logger.info(f"Agent initialized with:")
     logger.info(f"  - {len(agent.discovered_channels)} discovered channels")
@@ -138,50 +191,101 @@ def main():
     logger.info(f"  - {len(agent.discovered_creatives)} discovered creatives")
     logger.info(f"  - Warm start enabled: {len(agent.replay_buffer)} samples")
     
-    # Training loop
+    # Training loop with emergency monitoring
     num_episodes = 1000
     for episode in range(num_episodes):
-        obs, info = env.reset()
-        episode_reward = 0
-        done = False
-        step = 0
+        # Check system health before each episode
+        if not emergency_controller.is_system_healthy():
+            logger.error("System unhealthy - stopping training")
+            break
         
-        while not done:
-            # Get current state
-            state = env.current_user_state
+        try:
+            obs, info = env.reset()
+            episode_reward = 0
+            done = False
+            step = 0
+            episode_spend = 0
+            episode_bids = []
             
-            # Select action
-            action = agent.select_action(state, explore=True)
+            while not done:
+                # Get current state
+                state = env.current_user_state
+                
+                # Select action with emergency monitoring
+                @emergency_stop_decorator("action_selection")
+                def select_action_safe():
+                    return agent.select_action(state, explore=True)
+                
+                action = select_action_safe()
+                
+                # Monitor bid amount for anomalies
+                if hasattr(action, 'bid_amount'):
+                    bid_amount = float(action.bid_amount)
+                    episode_bids.append(bid_amount)
+                    emergency_controller.record_bid(bid_amount)
+                
+                # Step environment with emergency monitoring
+                @emergency_stop_decorator("environment_step")
+                def step_environment_safe():
+                    return env.step(action)
+                
+                next_obs, reward, terminated, truncated, info = step_environment_safe()
+                done = terminated or truncated
+                
+                # Track spending
+                if 'spend' in info:
+                    episode_spend += info['spend']
+                
+                # Get next state
+                next_state = env.current_user_state
+                
+                # Train agent with emergency monitoring
+                @emergency_stop_decorator("training_step")
+                def train_safe():
+                    loss = agent.train(state, action, reward, next_state, done)
+                    if loss is not None:
+                        emergency_controller.record_training_loss(float(loss))
+                    return loss
+                
+                train_safe()
+                
+                episode_reward += reward
+                step += 1
+                
+                if step % 100 == 0:
+                    logger.info(f"Episode {episode}, Step {step}: Reward={reward:.2f}, Epsilon={agent.epsilon:.3f}")
+                    # Check emergency status
+                    if emergency_controller.current_emergency_level.value != "green":
+                        logger.warning(f"Emergency level: {emergency_controller.current_emergency_level.value}")
             
-            # Step environment
-            next_obs, reward, terminated, truncated, info = env.step(action)
-            done = terminated or truncated
+            # Update budget tracking
+            emergency_controller.update_budget_tracking("main_campaign", episode_spend, 1000.0)  # $1000 daily limit
             
-            # Get next state
-            next_state = env.current_user_state
+            # Log episode results
+            metrics = info.get('metrics', {})
+            logger.info(f"Episode {episode} complete:")
+            logger.info(f"  Total Reward: {episode_reward:.2f}")
+            logger.info(f"  Total Spend: ${episode_spend:.2f}")
+            logger.info(f"  Max Bid: ${max(episode_bids):.2f}" if episode_bids else "  Max Bid: $0.00")
+            logger.info(f"  Conversions: {metrics.get('conversions', 0)}")
+            logger.info(f"  Revenue: ${metrics.get('revenue', 0):.2f}")
+            logger.info(f"  ROAS: {metrics.get('roas', 0):.2f}x")
+            logger.info(f"  Epsilon: {agent.epsilon:.3f}")
+            logger.info(f"  Emergency Level: {emergency_controller.current_emergency_level.value}")
             
-            # Train agent
-            agent.train(state, action, reward, next_state, done)
+            # Save model periodically
+            if episode % 100 == 0 and episode > 0:
+                logger.info(f"Saving model at episode {episode}...")
+                # agent.save_model(f"production_model_ep{episode}.pt")
+                
+        except Exception as e:
+            logger.error(f"Error in episode {episode}: {e}")
+            emergency_controller.register_error("training_loop", str(e))
             
-            episode_reward += reward
-            step += 1
-            
-            if step % 100 == 0:
-                logger.info(f"Episode {episode}, Step {step}: Reward={reward:.2f}, Epsilon={agent.epsilon:.3f}")
-        
-        # Log episode results
-        metrics = info.get('metrics', {})
-        logger.info(f"Episode {episode} complete:")
-        logger.info(f"  Total Reward: {episode_reward:.2f}")
-        logger.info(f"  Conversions: {metrics.get('conversions', 0)}")
-        logger.info(f"  Revenue: ${metrics.get('revenue', 0):.2f}")
-        logger.info(f"  ROAS: {metrics.get('roas', 0):.2f}x")
-        logger.info(f"  Epsilon: {agent.epsilon:.3f}")
-        
-        # Save model periodically
-        if episode % 100 == 0 and episode > 0:
-            logger.info(f"Saving model at episode {episode}...")
-            # agent.save_model(f"production_model_ep{episode}.pt")
+            # If too many errors, stop training
+            if not emergency_controller.is_system_healthy():
+                logger.error("Too many errors - stopping training")
+                break
     
     logger.info("="*70)
     logger.info("PRODUCTION TRAINING COMPLETE")
@@ -241,6 +345,41 @@ if __name__ == "__main__":
         
         # Run parallel training
         subprocess.run(["python3", "launch_parallel_training.py", "--production"])
+        
+    elif choice == "5":
+        print("\n" + "=" * 70)
+        print("Starting ONLINE LEARNING SYSTEM...")
+        print("=" * 70)
+        print("\nThis will:")
+        print("- Use Thompson Sampling for safe exploration")
+        print("- Run A/B tests with statistical significance")
+        print("- Apply safety guardrails and circuit breakers")
+        print("- Update models from production data")
+        print("- Create continuous feedback loop")
+        print("\nPress Ctrl+C to stop at any time")
+        print("=" * 70)
+        
+        input("\nPress Enter to start online learning...")
+        
+        # Run online learning system
+        subprocess.run(["python3", "standalone_online_learning_demo.py"])
+        
+    elif choice == "6":
+        print("\n" + "=" * 70)
+        print("Starting ONLINE LEARNING MONITOR...")
+        print("=" * 70)
+        print("\nThis will:")
+        print("- Show real-time strategy performance")
+        print("- Track A/B test results")
+        print("- Monitor safety system status")
+        print("- Display model update activity")
+        print("\nPress Ctrl+C to stop")
+        print("=" * 70)
+        
+        time.sleep(2)
+        
+        # Run online learning monitor
+        subprocess.run(["python3", "monitor_online_learning.py"])
         
     elif choice == "0":
         print("\nExiting...")

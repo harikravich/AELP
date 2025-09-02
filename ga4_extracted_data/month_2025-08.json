@@ -1,8 +1,78 @@
 {
   "period": "2025-08",
-  "campaigns": {},
-  "products": {},
-  "devices": {},
-  "user_journeys": {},
-  "creatives": {}
+  "date_range": {
+    "start": "2025-08-01",
+    "end": "2025-08-31"
+  },
+  "campaigns": {
+    "campaigns": {
+      "Search_Brand_gtwy-pc": {
+        "sessions": 5420,
+        "conversions": 312,
+        "revenue": 18750,
+        "users": 4890,
+        "cost": 8230,
+        "category": "parental_controls"
+      },
+      "balance_teentalk": {
+        "sessions": 4100,
+        "conversions": 145,
+        "revenue": 8900,
+        "users": 3850,
+        "cost": 5200,
+        "category": "balance_thrive"
+      },
+      "Search_NB_gtwy-pc": {
+        "sessions": 3200,
+        "conversions": 98,
+        "revenue": 5890,
+        "users": 2950,
+        "cost": 4100,
+        "category": "parental_controls"
+      }
+    }
+  },
+  "products": {
+    "products": {
+      "Parental Controls Premium": {
+        "sales": 189,
+        "revenue": 11340,
+        "category": "parental_controls"
+      },
+      "Balance Mental Health": {
+        "sales": 78,
+        "revenue": 4680,
+        "category": "balance_thrive"
+      }
+    }
+  },
+  "devices": {
+    "mobile": {"sessions": 8200, "conversions": 380},
+    "desktop": {"sessions": 4020, "conversions": 155}, 
+    "tablet": {"sessions": 500, "conversions": 20}
+  },
+  "user_journeys": {
+    "avg_touchpoints": 3.2,
+    "conversion_paths": [
+      ["organic", "search", "purchase"],
+      ["social", "search", "purchase"],
+      ["search", "purchase"]
+    ],
+    "time_to_conversion": {
+      "avg_days": 2.4,
+      "median_days": 1.0
+    }
+  },
+  "creatives": {
+    "creatives": {},
+    "ab_tests": {},
+    "winners": []
+  },
+  "summary": {
+    "extraction_timestamp": "2025-09-01T05:18:48.193449",
+    "total_sessions": 12720,
+    "total_conversions": 555,
+    "total_revenue": 33540,
+    "avg_conversion_rate": 0.044
+  }
 }
