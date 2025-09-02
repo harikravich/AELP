@@ -1,0 +1,72 @@
+{
+  "description": "Campaign and Product categorization rules",
+  "rules": {
+    "parental_controls": {
+      "campaign_patterns": [
+        "gtwy-pc",
+        "gtwy_pc",
+        "Search_Brand_gtwy-pc",
+        "Search_NB_gtwy-pc",
+        "PerformanceMax_NB_gtwy-pc",
+        "Search_Competitors_gtwy-pc",
+        "life360_pc",
+        "life360-pc"
+      ],
+      "product_patterns": [
+        "with PC",
+        "Parental",
+        "NonCR-Parental"
+      ]
+    },
+    "antivirus": {
+      "campaign_patterns": [
+        "av-intro",
+        "gtwy-av",
+        "gtwy_av",
+        "Search_Brand_gtwy-av",
+        "Search_NB_gtwy-av",
+        "ShoppingAds_gtwy-av",
+        "Search_Competitors_gtwy-av"
+      ],
+      "product_patterns": [
+        "Antivirus",
+        "AV Intro",
+        "AV Exit",
+        "AV Non-Credit"
+      ]
+    },
+    "identity": {
+      "campaign_patterns": [
+        "gtwy-idt",
+        "gtwy-credit",
+        "Search_NB_ID_gtwy-idt",
+        "Search_NB_Credit_gtwy-credit"
+      ],
+      "product_patterns": [
+        "Identity Protection",
+        "Privacy",
+        "Credit"
+      ]
+    },
+    "balance_thrive": {
+      "campaign_patterns": [
+        "balance",
+        "thrive",
+        "life360-balance",
+        "life360-thrive",
+        "balance_teentalk",
+        "balance_parentingpressure",
+        "balance_bluebox",
+        "thrive_mentalhealth",
+        "thrive_productivity"
+      ],
+      "product_patterns": [
+        "Thrive",
+        "Balance"
+      ]
+    }
+  },
+  "discovered_campaigns": [],
+  "discovered_products": [],
+  "unmapped": []
+}

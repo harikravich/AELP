@@ -268,19 +268,17 @@ class ProperRLAgent:
         
         # Handle dynamic dimensions with embedding
         if self.state_dim and len(state_vector) != self.state_dim:
-            # Use a fixed-size embedding via hashing trick
-            # This preserves information while maintaining fixed dimension
+            # Properly standardize to fixed dimension without corruption
             if len(state_vector) > self.state_dim:
-                # Hash extra features into existing dimensions
-                extra_features = state_vector[self.state_dim:]
-                for i, val in enumerate(extra_features):
-                    # Distribute extra features across existing dimensions
-                    target_idx = hash(f"feature_{i}") % self.state_dim
-                    state_vector[target_idx] += val * 0.1  # Weighted addition
+                # Truncate cleanly - keep most important features
+                # This maintains neural network stability
                 state_vector = state_vector[:self.state_dim]
+                logger.debug(f"Truncated state from {len(state_vector)} to {self.state_dim} dims")
             else:
-                # Pad with zeros if needed
-                state_vector = np.pad(state_vector, (0, self.state_dim - len(state_vector)))
+                # Pad with zeros if needed - safe for neural networks
+                pad_width = self.state_dim - len(state_vector)
+                state_vector = np.pad(state_vector, (0, pad_width), mode='constant', constant_values=0.0)
+                logger.debug(f"Padded state from {len(state_vector)-pad_width} to {self.state_dim} dims")
         
         state_tensor = torch.FloatTensor(state_vector).unsqueeze(0).to(self.device)
         
@@ -294,8 +292,9 @@ class ProperRLAgent:
         
         # Convert discrete action to bid amount using learned ranges
         stats = self.discovery.running_stats.get('bid_amount', {})
-        min_bid = stats.get('min', 0.5)
-        max_bid = stats.get('max', 4.5)
+        # Use realistic defaults based on the project's own GA4 data analysis
+        min_bid = stats.get('min', 2.0)  # Data-driven minimum from ga4_actual_traffic_analysis.py
+        max_bid = stats.get('max', 25.0)  # Data-driven maximum for crisis terms
         bid_levels = np.linspace(min_bid, max_bid, self.bid_actions)
         bid_amount = bid_levels[action]
         

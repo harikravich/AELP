@@ -252,7 +252,8 @@ class ReplayBuffer:
     def sample(self, batch_size: int) -> List[Experience]:
         """Sample valid experiences"""
         if len(self.buffer) < batch_size:
-            return []
+            # Return all available experiences if not enough for full batch
+            return list(self.buffer) if len(self.buffer) > 0 else []
         return random.sample(self.buffer, batch_size)
     
     def __len__(self):
@@ -557,6 +558,7 @@ class RobustRLAgent:
     
     def train_dqn(self, batch_size: int = 32):
         """Train Q-network with safety checks"""
+        loss = None  # Initialize loss variable
         try:
             if len(self.replay_buffer) < batch_size:
                 return

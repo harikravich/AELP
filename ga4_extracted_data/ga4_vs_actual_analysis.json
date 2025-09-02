@@ -1,0 +1,35 @@
+{
+  "actual_metrics": {
+    "web_trial_starts": 298,
+    "app_trial_starts": 236,
+    "total_trial_starts": 534,
+    "d2p_purchases": 861,
+    "post_trial_conversions": 160,
+    "mobile_subscribers": 112,
+    "total_paying_subs": 1134
+  },
+  "ga4_metrics": {
+    "total_conversions": 29745,
+    "mobile_conversions": 18054,
+    "desktop_conversions": 10769,
+    "tablet_conversions": 922,
+    "revenue": 2919271
+  },
+  "ga4_daily": {
+    "total_conversions": 959.516129032258,
+    "mobile_conversions": 582.3870967741935,
+    "desktop_conversions": 347.38709677419354,
+    "daily_revenue": 94170.03225806452
+  },
+  "gaps": {
+    "missing_app_trials": 236,
+    "missing_mobile_subs": 112,
+    "total_missing_daily": 348
+  },
+  "insights": {
+    "real_trial_conversion_rate": 0.299625468164794,
+    "revenue_per_conversion": 98.143250966549,
+    "mobile_percentage": 0.6069591527987898,
+    "true_trial_cac": 200.0
+  }
+}

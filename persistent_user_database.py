@@ -25,6 +25,13 @@ from dataclasses import dataclass, asdict
 from google.cloud import bigquery
 import numpy as np
 
+# Import batch writer for efficient BigQuery operations
+try:
+    from bigquery_batch_writer import BigQueryBatchWriter
+    BATCH_WRITER_AVAILABLE = True
+except ImportError:
+    BATCH_WRITER_AVAILABLE = False
+    
 logger = logging.getLogger(__name__)
 
 @dataclass

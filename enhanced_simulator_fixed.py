@@ -18,7 +18,8 @@ sys.path.insert(0, '/home/hariravichandran/AELP')
 from NO_FALLBACKS import StrictModeEnforcer
 
 # Import persistent user database - CRITICAL
-from persistent_user_database import PersistentUserDatabase, PersistentUser
+from persistent_user_database_batched import BatchedPersistentUserDatabase as PersistentUserDatabase
+from persistent_user_database import PersistentUser
 
 # Import delayed conversion system - CRITICAL  
 from training_orchestrator.delayed_conversion_system import (
@@ -138,6 +139,11 @@ class FixedGAELPEnvironment:
         # Initialize GA4 discovery for pattern learning
         self.discovery = GA4DiscoveryEngine()
         
+        # Pre-cache patterns at initialization to avoid repeated GA4 calls during training
+        logger.info("Pre-caching discovered patterns for fast access...")
+        self._cached_patterns = self.discovery.discover_all_patterns()
+        logger.info("Patterns cached successfully")
+        
         # Initialize creative integration
         self.creative_integration = get_creative_integration()
         
@@ -145,6 +151,7 @@ class FixedGAELPEnvironment:
         self.max_budget = max_budget
         self.max_steps = max_steps
         self.current_step = 0
+        self.step_count = 0  # Add step_count attribute
         self.episode_id = None
         self.budget_spent = 0.0
         
@@ -186,6 +193,7 @@ class FixedGAELPEnvironment:
         Execute one step with persistent users and delayed conversions
         """
         self.current_step += 1
+        self.step_count += 1  # Increment step_count
         
         # Get or create persistent user
         user = self._get_persistent_user()
@@ -195,7 +203,7 @@ class FixedGAELPEnvironment:
         
         # Run auction with fixed mechanics
         bid_amount = action.get('bid', 1.0)
-        quality_score = action.get('quality_score', 0.7)
+        quality_score = action.get('quality_score', 7.5)  # Use 1-10 scale like competitors!
         
         # Debug logging
         if self.current_step % 10 == 0:

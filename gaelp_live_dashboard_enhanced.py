@@ -958,7 +958,15 @@ class GAELPLiveSystemEnhanced:
                     
                     # Calculate average reward from recent experiences
                     if hasattr(rl_agent, 'replay_buffer') and len(rl_agent.replay_buffer) > 0:
-                        recent_rewards = [exp.reward for exp in list(rl_agent.replay_buffer.buffer)[-100:]]
+                        # Handle both tuple and object formats
+                        recent_experiences = list(rl_agent.replay_buffer.buffer)[-100:]
+                        recent_rewards = []
+                        for exp in recent_experiences:
+                            if isinstance(exp, tuple) and len(exp) >= 3:
+                                # Format: (state, action, reward, next_state, done)
+                                recent_rewards.append(exp[2])
+                            elif hasattr(exp, 'reward'):
+                                recent_rewards.append(exp.reward)
                         self.learning_metrics['avg_reward'] = np.mean(recent_rewards) if recent_rewards else 0.0
                         self.rl_stats['average_reward'] = self.learning_metrics['avg_reward']
                 

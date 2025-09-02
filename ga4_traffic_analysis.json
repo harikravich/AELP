@@ -1,0 +1,179 @@
+{
+  "analysis": {
+    "traffic_sources": {
+      "organic_search": {
+        "sessions": 150000,
+        "conversion_rate": 0.042,
+        "implied_value": 7.0,
+        "competition": "Very High",
+        "top_competitors": [
+          "Qustodio",
+          "Bark",
+          "Norton"
+        ]
+      },
+      "direct": {
+        "sessions": 50000,
+        "conversion_rate": 0.08,
+        "implied_value": 15.0,
+        "competition": "High",
+        "top_competitors": [
+          "Bark",
+          "Qustodio"
+        ]
+      },
+      "referral": {
+        "sessions": 30000,
+        "conversion_rate": 0.035,
+        "implied_value": 5.0,
+        "competition": "Medium",
+        "top_competitors": [
+          "Circle",
+          "Net Nanny"
+        ]
+      },
+      "social": {
+        "sessions": 20000,
+        "conversion_rate": 0.025,
+        "implied_value": 3.5,
+        "competition": "Low-Medium",
+        "top_competitors": [
+          "Google Family Link",
+          "Apple"
+        ]
+      }
+    },
+    "peak_patterns": {
+      "crisis_hours": {
+        "times": [
+          "10pm-2am"
+        ],
+        "multiplier": 2.0,
+        "avg_cpc": 14.0,
+        "intent": "urgent/emergency"
+      },
+      "research_hours": {
+        "times": [
+          "9am-11am",
+          "1pm-3pm"
+        ],
+        "multiplier": 1.3,
+        "avg_cpc": 9.0,
+        "intent": "comparison/research"
+      },
+      "family_time": {
+        "times": [
+          "7pm-9pm"
+        ],
+        "multiplier": 1.5,
+        "avg_cpc": 10.5,
+        "intent": "immediate need"
+      }
+    },
+    "keyword_categories": {
+      "crisis_terms": {
+        "examples": [
+          "child emergency",
+          "urgent help",
+          "crisis"
+        ],
+        "avg_cpc": 15.0,
+        "competition": 8,
+        "conversion_rate": 0.12
+      },
+      "brand_terms": {
+        "examples": [
+          "bark app",
+          "qustodio",
+          "circle home"
+        ],
+        "avg_cpc": 12.0,
+        "competition": 6,
+        "conversion_rate": 0.15
+      },
+      "generic_terms": {
+        "examples": [
+          "parental controls",
+          "screen time"
+        ],
+        "avg_cpc": 7.0,
+        "competition": 10,
+        "conversion_rate": 0.04
+      },
+      "long_tail": {
+        "examples": [
+          "how to limit youtube on iphone"
+        ],
+        "avg_cpc": 4.0,
+        "competition": 4,
+        "conversion_rate": 0.06
+      }
+    },
+    "device_performance": {
+      "mobile": {
+        "traffic_share": 0.45,
+        "conversion_rate": 0.038,
+        "avg_cpc": 6.5,
+        "notes": "Lower intent, research phase"
+      },
+      "desktop": {
+        "traffic_share": 0.35,
+        "conversion_rate": 0.052,
+        "avg_cpc": 8.5,
+        "notes": "Higher intent, purchase ready"
+      },
+      "tablet": {
+        "traffic_share": 0.2,
+        "conversion_rate": 0.045,
+        "avg_cpc": 7.0,
+        "notes": "Family device, shared decisions"
+      }
+    }
+  },
+  "bid_config": {
+    "base_ranges": {
+      "min": 2.0,
+      "max": 25.0,
+      "typical": [
+        5.0,
+        12.0
+      ],
+      "crisis": [
+        12.0,
+        25.0
+      ]
+    },
+    "competitor_config": {
+      "num_competitors": "6-10",
+      "bid_distribution": "log-normal",
+      "variance": 0.25,
+      "correlation": 0.6
+    },
+    "multipliers": {
+      "quality_score": {
+        "excellent": 0.7,
+        "good": 0.85,
+        "average": 1.0,
+        "poor": 1.3
+      },
+      "time_of_day": {
+        "overnight": 1.8,
+        "evening": 1.5,
+        "business": 1.2,
+        "standard": 1.0
+      },
+      "device": {
+        "desktop": 1.15,
+        "tablet": 1.05,
+        "mobile": 1.0
+      },
+      "intent": {
+        "crisis": 2.0,
+        "purchase": 1.5,
+        "research": 1.2,
+        "awareness": 1.0
+      }
+    }
+  },
+  "timestamp": "2025-09-01T14:22:04.386221"
+}

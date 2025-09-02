@@ -1,0 +1,142 @@
+{
+  "campaigns": {
+    "startDate": "2025-08-01",
+    "endDate": "2025-08-31",
+    "dimensions": [
+      {
+        "name": "campaignName"
+      },
+      {
+        "name": "source"
+      },
+      {
+        "name": "medium"
+      },
+      {
+        "name": "date"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "sessions"
+      },
+      {
+        "name": "totalUsers"
+      },
+      {
+        "name": "conversions"
+      },
+      {
+        "name": "purchaseRevenue"
+      },
+      {
+        "name": "totalAdCost"
+      },
+      {
+        "name": "averageSessionDuration"
+      },
+      {
+        "name": "bounceRate"
+      }
+    ]
+  },
+  "products": {
+    "startDate": "2025-08-01",
+    "endDate": "2025-08-31",
+    "dimensions": [
+      {
+        "name": "itemName"
+      },
+      {
+        "name": "itemCategory"
+      },
+      {
+        "name": "date"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "itemsPurchased"
+      },
+      {
+        "name": "itemRevenue"
+      },
+      {
+        "name": "itemsViewed"
+      },
+      {
+        "name": "cartToViewRate"
+      },
+      {
+        "name": "purchaseToViewRate"
+      }
+    ]
+  },
+  "events": {
+    "startDate": "2025-08-01",
+    "endDate": "2025-08-31",
+    "eventName": null
+  },
+  "behavior": {
+    "startDate": "2025-08-01",
+    "endDate": "2025-08-31"
+  },
+  "landing_pages": {
+    "startDate": "2025-08-01",
+    "endDate": "2025-08-31",
+    "dimensions": [
+      {
+        "name": "landingPagePlusQueryString"
+      },
+      {
+        "name": "source"
+      },
+      {
+        "name": "medium"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "sessions"
+      },
+      {
+        "name": "bounceRate"
+      },
+      {
+        "name": "conversions"
+      },
+      {
+        "name": "averageSessionDuration"
+      }
+    ]
+  },
+  "devices": {
+    "startDate": "2025-08-01",
+    "endDate": "2025-08-31",
+    "dimensions": [
+      {
+        "name": "deviceCategory"
+      },
+      {
+        "name": "operatingSystem"
+      },
+      {
+        "name": "platform"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "sessions"
+      },
+      {
+        "name": "totalUsers"
+      },
+      {
+        "name": "conversions"
+      },
+      {
+        "name": "purchaseRevenue"
+      }
+    ]
+  }
+}

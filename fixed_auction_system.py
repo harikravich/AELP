@@ -39,22 +39,24 @@ class FixedAuctionSystem:
         self.num_slots = config.get('num_slots', 4)
         self.reserve_price = config.get('reserve_price', 0.50)
         
-        # Define realistic competitor profiles based on actual market research
+        # REALISTIC competitor profiles based on GA4 winning data
+        # We're winning 66k+ sessions/week, so competition is beatable
+        # Actual CPCs: Brand ~$2-3, General ~$5-7, Competitors ~$8-10
         self.competitor_profiles = [
-            # Major competitors with substantial budgets
-            {'name': 'Qustodio', 'base_bid': 2.85, 'variance': 0.35, 'budget_factor': 1.2, 'aggression': 0.8},
-            {'name': 'Bark', 'base_bid': 3.15, 'variance': 0.25, 'budget_factor': 1.4, 'aggression': 0.9},
-            {'name': 'Circle', 'base_bid': 2.65, 'variance': 0.45, 'budget_factor': 1.3, 'aggression': 0.75},
-            {'name': 'Norton', 'base_bid': 2.25, 'variance': 0.30, 'budget_factor': 1.1, 'aggression': 0.7},
-            {'name': 'Life360', 'base_bid': 3.35, 'variance': 0.40, 'budget_factor': 1.5, 'aggression': 0.85},
+            # Major competitors (but not impossibly high bids)
+            {'name': 'Bark', 'base_bid': 6.50, 'variance': 0.25, 'budget_factor': 1.3, 'aggression': 1.2},
+            {'name': 'Qustodio', 'base_bid': 5.50, 'variance': 0.20, 'budget_factor': 1.2, 'aggression': 1.1},
+            {'name': 'Circle', 'base_bid': 4.50, 'variance': 0.15, 'budget_factor': 1.1, 'aggression': 1.0},
+            {'name': 'Norton', 'base_bid': 4.00, 'variance': 0.20, 'budget_factor': 1.0, 'aggression': 0.95},
             
             # Mid-tier competitors
-            {'name': 'FamilyTime', 'base_bid': 2.10, 'variance': 0.50, 'budget_factor': 0.9, 'aggression': 0.65},
-            {'name': 'Screen Time', 'base_bid': 1.95, 'variance': 0.40, 'budget_factor': 0.8, 'aggression': 0.6},
+            {'name': 'GoogleFamily', 'base_bid': 3.50, 'variance': 0.25, 'budget_factor': 1.5, 'aggression': 0.9},
+            {'name': 'NetNanny', 'base_bid': 3.25, 'variance': 0.30, 'budget_factor': 0.9, 'aggression': 0.85},
             
-            # Smaller players - more aggressive to compete
-            {'name': 'SmallComp1', 'base_bid': 1.75, 'variance': 0.65, 'budget_factor': 0.7, 'aggression': 0.9},
-            {'name': 'SmallComp2', 'base_bid': 1.60, 'variance': 0.60, 'budget_factor': 0.6, 'aggression': 0.95},
+            # Smaller players with limited budgets
+            {'name': 'FamilyTime', 'base_bid': 2.50, 'variance': 0.35, 'budget_factor': 0.8, 'aggression': 0.8},
+            {'name': 'SmallComp1', 'base_bid': 2.00, 'variance': 0.40, 'budget_factor': 0.7, 'aggression': 0.75},
+            {'name': 'SmallComp2', 'base_bid': 1.75, 'variance': 0.45, 'budget_factor': 0.6, 'aggression': 0.7},
         ]
         
         # Track performance
@@ -76,25 +78,25 @@ class FixedAuctionSystem:
         for profile in self.competitor_profiles:
             base_bid = profile['base_bid']
             
-            # Apply time-based multipliers (peak hours get more competitive)
+            # Apply time-based multipliers (more reasonable)
             if hour in [9, 10, 11, 14, 15, 16, 17]:  # Business hours
-                base_bid *= 1.20
+                base_bid *= 1.10
             elif hour in [19, 20, 21]:  # Evening family time
-                base_bid *= 1.35
-            elif hour in [22, 23, 0, 1, 2, 3, 4, 5, 6]:  # Crisis hours (parents up late)
-                base_bid *= 1.45
+                base_bid *= 1.20
+            elif hour in [22, 23, 0, 1, 2, 3, 4, 5, 6]:  # Late night/crisis
+                base_bid *= 1.40  # Higher but not extreme
             
             # Device type multipliers
             if device == 'desktop':
-                base_bid *= 1.15  # Desktop users more valuable
+                base_bid *= 1.10  # Slight premium for desktop
             
-            # Query intent multipliers
+            # Query intent multipliers (realistic based on actual wins)
             if query_intent == 'crisis':
-                base_bid *= profile['aggression'] * 1.8  # Crisis queries very valuable
+                base_bid *= profile['aggression'] * 1.5  # Crisis gets 50% premium
             elif query_intent == 'purchase':
-                base_bid *= profile['aggression'] * 1.5
+                base_bid *= profile['aggression'] * 1.3  # Purchase intent
             elif query_intent == 'research':
-                base_bid *= profile['aggression'] * 1.2
+                base_bid *= profile['aggression'] * 1.1  # Research phase
             
             # Add variance for realistic bidding
             variance_factor = np.random.normal(1.0, profile['variance'])

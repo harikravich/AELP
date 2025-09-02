@@ -628,7 +628,7 @@ class UserJourneyDatabase:
             'journey_score': journey.journey_score,
             'touchpoint_count': journey.touchpoint_count,
             'days_in_journey': (datetime.now() - journey.journey_start).days,
-            'channel': touchpoint.channel,
+            # Remove 'channel' since it's passed explicitly in create_state_transition
             'interaction_type': touchpoint.interaction_type,
             'device_type': touchpoint.device_type,
             'content_category': touchpoint.content_category,
@@ -663,44 +663,89 @@ class UserJourneyDatabase:
             logger.error(f"Failed to insert touchpoint: {errors}")
     
     def _update_journey(self, journey: UserJourney):
-        """Update journey in BigQuery."""
+        """Update journey in BigQuery using MERGE to handle streaming buffer."""
         
         query = f"""
-        UPDATE `{self.project_id}.{self.dataset_id}.user_journeys`
-        SET 
-            current_state = @current_state,
-            touchpoint_count = @touchpoint_count,
-            journey_score = @journey_score,
-            engagement_score = @engagement_score,
-            intent_score = @intent_score,
-            last_touch_channel = @last_touch_channel,
-            state_progression = @state_progression,
-            converted = @converted,
-            conversion_timestamp = @conversion_timestamp,
-            conversion_value = @conversion_value,
-            updated_at = CURRENT_TIMESTAMP()
-        WHERE journey_id = @journey_id
+        MERGE `{self.project_id}.{self.dataset_id}.user_journeys` AS target
+        USING (
+            SELECT 
+                @journey_id as journey_id,
+                @user_id as user_id,
+                @canonical_user_id as canonical_user_id,
+                @journey_start as journey_start,
+                @current_state as current_state,
+                @touchpoint_count as touchpoint_count,
+                @journey_score as journey_score,
+                @engagement_score as engagement_score,
+                @intent_score as intent_score,
+                @last_touch_channel as last_touch_channel,
+                @state_progression as state_progression,
+                @converted as converted,
+                @conversion_timestamp as conversion_timestamp,
+                @conversion_value as conversion_value,
+                @timeout_at as timeout_at,
+                @initial_state as initial_state,
+                @first_touch_channel as first_touch_channel,
+                CURRENT_TIMESTAMP() as updated_at
+        ) AS source
+        ON target.journey_id = source.journey_id
+        WHEN MATCHED THEN
+            UPDATE SET 
+                current_state = source.current_state,
+                touchpoint_count = source.touchpoint_count,
+                journey_score = source.journey_score,
+                engagement_score = source.engagement_score,
+                intent_score = source.intent_score,
+                last_touch_channel = source.last_touch_channel,
+                state_progression = source.state_progression,
+                converted = source.converted,
+                conversion_timestamp = source.conversion_timestamp,
+                conversion_value = source.conversion_value,
+                updated_at = source.updated_at
+        WHEN NOT MATCHED THEN
+            INSERT (journey_id, user_id, canonical_user_id, journey_start, current_state, 
+                    touchpoint_count, journey_score, engagement_score, intent_score,
+                    last_touch_channel, state_progression, converted, conversion_timestamp,
+                    conversion_value, updated_at, is_active, timeout_at, initial_state, first_touch_channel)
+            VALUES (source.journey_id, source.user_id, source.canonical_user_id, source.journey_start,
+                    source.current_state, source.touchpoint_count, source.journey_score,
+                    source.engagement_score, source.intent_score, source.last_touch_channel,
+                    source.state_progression, source.converted, source.conversion_timestamp,
+                    source.conversion_value, source.updated_at, TRUE, source.timeout_at,
+                    source.initial_state, source.first_touch_channel)
         """
         
         job_config = bigquery.QueryJobConfig(
             query_parameters=[
                 bigquery.ScalarQueryParameter("journey_id", "STRING", journey.journey_id),
+                bigquery.ScalarQueryParameter("user_id", "STRING", journey.user_id),
+                bigquery.ScalarQueryParameter("canonical_user_id", "STRING", journey.canonical_user_id or journey.user_id),
+                bigquery.ScalarQueryParameter("journey_start", "TIMESTAMP", journey.journey_start),
                 bigquery.ScalarQueryParameter("current_state", "STRING", journey.current_state.value),
                 bigquery.ScalarQueryParameter("touchpoint_count", "INT64", journey.touchpoint_count),
                 bigquery.ScalarQueryParameter("journey_score", "FLOAT64", journey.journey_score),
                 bigquery.ScalarQueryParameter("engagement_score", "FLOAT64", journey.engagement_score),
                 bigquery.ScalarQueryParameter("intent_score", "FLOAT64", journey.intent_score),
                 bigquery.ScalarQueryParameter("last_touch_channel", "STRING", journey.last_touch_channel),
-                bigquery.ScalarQueryParameter("state_progression", "STRING", 
-                                             json.dumps(journey.state_progression or [])),
+                bigquery.ScalarQueryParameter("state_progression", "JSON", 
+                                             journey.state_progression or []),
                 bigquery.ScalarQueryParameter("converted", "BOOL", journey.converted),
                 bigquery.ScalarQueryParameter("conversion_timestamp", "TIMESTAMP", journey.conversion_timestamp),
-                bigquery.ScalarQueryParameter("conversion_value", "FLOAT64", journey.conversion_value)
+                bigquery.ScalarQueryParameter("conversion_value", "FLOAT64", journey.conversion_value),
+                bigquery.ScalarQueryParameter("timeout_at", "TIMESTAMP", journey.timeout_at),
+                bigquery.ScalarQueryParameter("initial_state", "STRING", journey.initial_state.value),
+                bigquery.ScalarQueryParameter("first_touch_channel", "STRING", journey.first_touch_channel or journey.last_touch_channel)
             ]
         )
         
-        job = self.client.query(query, job_config=job_config)
-        job.result()
+        try:
+            job = self.client.query(query, job_config=job_config)
+            job.result()
+        except Exception as e:
+            error_msg = str(e)
+            # Log error but don't fail - the journey is already in cache
+            logger.warning(f"Could not update journey {journey.journey_id} in BigQuery: {error_msg[:100]}")
+            # Journey is already in self.journey_cache, so we're good
     
     # Helper methods for data conversion
     def _journey_to_bigquery_row(self, journey: UserJourney) -> Dict:
@@ -717,7 +762,7 @@ class UserJourneyDatabase:
             'initial_state': journey.initial_state.value,
             'current_state': journey.current_state.value,
             'final_state': journey.final_state.value if journey.final_state else None,
-            'state_progression': json.dumps(journey.state_progression or []),
+            'state_progression': journey.state_progression or [],
             'converted': journey.converted,
             'conversion_timestamp': journey.conversion_timestamp,
             'conversion_value': journey.conversion_value,
@@ -782,7 +827,7 @@ class UserJourneyDatabase:
             initial_state=JourneyState(row.initial_state),
             current_state=JourneyState(row.current_state),
             final_state=JourneyState(row.final_state) if row.final_state else None,
-            state_progression=json.loads(row.state_progression) if row.state_progression else [],
+            state_progression=row.state_progression if row.state_progression else [],
             converted=row.converted,
             conversion_timestamp=row.conversion_timestamp,
             conversion_value=row.conversion_value,

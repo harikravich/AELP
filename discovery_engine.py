@@ -43,11 +43,17 @@ class GA4DiscoveryEngine:
     NO FALLBACKS, NO SIMPLIFICATIONS, NO HARDCODING
     """
     
-    def __init__(self):
+    def __init__(self, write_enabled=True, cache_only=False):
         # GA4 connection via MCP functions
         self.GA_PROPERTY_ID = "308028264"
         self.patterns = DiscoveredPatterns()
-        print("✅ GA4DiscoveryEngine initialized with MCP GA4 functions")
+        self.write_enabled = write_enabled  # Disable writes for parallel envs
+        self.cache_only = cache_only  # Use cached patterns only
+        self._cached_patterns = None
+        self._last_discovery = None
+        
+        if not cache_only:
+            print("✅ GA4DiscoveryEngine initialized with MCP GA4 functions")
     
     def _get_page_views(self, start_date: str, end_date: str) -> Dict[str, Any]:
         """Get page views data from simulation"""
@@ -100,6 +106,16 @@ class GA4DiscoveryEngine:
         Main discovery method - learns everything from GA4 via MCP
         NO ASSUMPTIONS, only data-driven discovery
         """
+        # If cache_only mode, just load from file without discovery
+        if self.cache_only:
+            if self._cached_patterns is None:
+                self._load_cached_patterns()
+            return self._cached_patterns or self.patterns
+        
+        # Rate limit discoveries to prevent parallel corruption
+        if self._last_discovery and (datetime.now() - self._last_discovery).seconds < 5:
+            return self.patterns  # Return existing patterns if called too frequently
+        
         print("\n" + "="*80)
         print("🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP")
         print("="*80)
@@ -146,7 +162,9 @@ class GA4DiscoveryEngine:
                     self.patterns.devices[device] = {'views': 0, 'sessions': 0, 'users': 0, 'pages': []}
                 self.patterns.devices[device]['views'] += views
                 self.patterns.devices[device]['sessions'] += sessions
-                self.patterns.devices[device]['pages'].append(page_path)
+                # Limit pages array to prevent memory explosion
+                if len(self.patterns.devices[device]['pages']) < 100:
+                    self.patterns.devices[device]['pages'].append(page_path)
                 
                 # DYNAMICALLY discover channels from page patterns
                 # Analyze page paths to infer traffic sources
@@ -185,7 +203,11 @@ class GA4DiscoveryEngine:
                     self.patterns.channels[channel] = {'views': 0, 'sessions': 0, 'conversions': 0, 'pages': []}
                 self.patterns.channels[channel]['views'] += views
                 self.patterns.channels[channel]['sessions'] += sessions
-                self.patterns.channels[channel]['pages'].append(page_path)
+                # Limit pages array to prevent memory explosion
+                if 'pages' not in self.patterns.channels[channel]:
+                    self.patterns.channels[channel]['pages'] = []
+                if len(self.patterns.channels[channel]['pages']) < 100:
+                    self.patterns.channels[channel]['pages'].append(page_path)
         
         # Process event data for conversions and user patterns
         if event_data and 'rows' in event_data:
@@ -343,36 +365,118 @@ class GA4DiscoveryEngine:
             
         return segments
     
+    def _load_cached_patterns(self):
+        """Load patterns from cache file without writing"""
+        try:
+            with open('discovered_patterns.json', 'r') as f:
+                data = json.load(f)
+                self._cached_patterns = DiscoveredPatterns()
+                self._cached_patterns.segments = data.get('segments', {})
+                self._cached_patterns.channels = data.get('channels', {})
+                self._cached_patterns.devices = data.get('devices', {})
+                self._cached_patterns.temporal = data.get('temporal', {})
+                self._cached_patterns.user_patterns = {'segments': data.get('segments', {})}
+                self._cached_patterns.channel_patterns = {'channels': list(data.get('channels', {}).keys())}
+        except Exception as e:
+            print(f"Warning: Could not load cached patterns: {e}")
+            self._cached_patterns = self.patterns
+    
     def _save_patterns_to_cache(self):
         """Save discovered patterns to cache file"""
-        # Preserve paid channels that were manually added
-        existing_channels = {}
+        # Don't write if disabled (for parallel environments)
+        if not self.write_enabled:
+            return
+        
+        # Use file locking to prevent concurrent writes
+        import fcntl
+        
+        # Preserve existing data structure
+        existing_data = {}
         try:
             with open('discovered_patterns.json', 'r') as f:
                 existing_data = json.load(f)
-                existing_channels = existing_data.get('channels', {})
-        except:
-            pass
+        except Exception as e:
+            print(f"Warning: Could not read existing patterns: {e}")
         
-        # Merge channels - keep paid channels
-        merged_channels = {}
-        # First add paid channels
-        for channel, data in existing_channels.items():
-            if channel in ['google', 'facebook', 'bing', 'tiktok']:
-                merged_channels[channel] = data
-        # Then add discovered channels (like organic)
-        merged_channels.update(self.patterns.channels)
+        # Merge discovered patterns with existing, preserving structure
+        cache_data = existing_data.copy()
         
-        cache_data = {
-            'segments': self.patterns.segments,
-            'channels': merged_channels,
-            'devices': self.patterns.devices,
-            'temporal': self.patterns.temporal,
-            'last_updated': datetime.now().isoformat()
-        }
+        # Update segments with discovered data
+        if self.patterns.segments:
+            if 'segments' not in cache_data:
+                cache_data['segments'] = {}
+            cache_data['segments'].update(self.patterns.segments)
         
-        with open('discovered_patterns.json', 'w') as f:
-            json.dump(cache_data, f, indent=2)
+        # Update channels with discovered data (limit pages arrays)
+        if self.patterns.channels:
+            if 'channels' not in cache_data:
+                cache_data['channels'] = {}
+            for channel, data in self.patterns.channels.items():
+                if channel not in cache_data['channels']:
+                    cache_data['channels'][channel] = data
+                else:
+                    # Merge metrics but limit pages array
+                    cache_data['channels'][channel]['views'] = data.get('views', 0)
+                    cache_data['channels'][channel]['sessions'] = data.get('sessions', 0)
+                    cache_data['channels'][channel]['conversions'] = data.get('conversions', 0)
+                    # Keep only unique pages, limited to 100
+                    if 'pages' in data:
+                        existing_pages = cache_data['channels'][channel].get('pages', [])
+                        all_pages = list(set(existing_pages + data['pages']))[:100]
+                        cache_data['channels'][channel]['pages'] = all_pages
+        
+        # Update other discovered patterns (preserve metrics, limit arrays)
+        if self.patterns.devices:
+            if 'devices' not in cache_data:
+                cache_data['devices'] = {}
+            for device, data in self.patterns.devices.items():
+                if device not in cache_data['devices']:
+                    cache_data['devices'][device] = data
+                else:
+                    # Accumulate metrics
+                    cache_data['devices'][device]['views'] += data.get('views', 0)
+                    cache_data['devices'][device]['sessions'] += data.get('sessions', 0) 
+                    # Keep unique pages, limited
+                    if 'pages' in data:
+                        existing_pages = cache_data['devices'][device].get('pages', [])
+                        all_pages = list(set(existing_pages + data['pages']))[:100]
+                        cache_data['devices'][device]['pages'] = all_pages
+        if self.patterns.temporal:
+            cache_data['temporal'] = self.patterns.temporal
+        
+        cache_data['last_updated'] = datetime.now().isoformat()
+        
+        # Write atomically with file locking to prevent corruption
+        temp_file = 'discovered_patterns.tmp'
+        lock_file = 'discovered_patterns.lock'
+        
+        try:
+            # Acquire exclusive lock
+            with open(lock_file, 'w') as lock:
+                fcntl.flock(lock.fileno(), fcntl.LOCK_EX)
+                
+                # Write to temp file
+                with open(temp_file, 'w') as f:
+                    json.dump(cache_data, f, indent=2)
+                
+                # Check file size to prevent runaway growth
+                import os
+                file_size = os.path.getsize(temp_file)
+                if file_size > 100000:  # 100KB limit
+                    print(f"⚠️ WARNING: Patterns file too large ({file_size} bytes), keeping existing")
+                    os.remove(temp_file)
+                    return
+                
+                # Atomic rename
+                os.replace(temp_file, 'discovered_patterns.json')
+                
+                # Update last discovery time
+                self._last_discovery = datetime.now()
+                
+        except Exception as e:
+            print(f"Warning: Could not save patterns: {e}")
+            if os.path.exists(temp_file):
+                os.remove(temp_file)
         
         print(f"💾 Saved {len(self.patterns.segments)} segments, {len(self.patterns.channels)} channels to cache")
         

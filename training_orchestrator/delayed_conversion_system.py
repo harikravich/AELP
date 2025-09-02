@@ -619,6 +619,92 @@ class DelayedConversionSystem:
         
         return delayed_conversion
 
+    def schedule_conversion(self, user_id: str, days_to_convert: float, conversion_value: float):
+        """
+        Simple synchronous wrapper for scheduling a conversion.
+        
+        Args:
+            user_id: User ID
+            days_to_convert: Days until conversion
+            conversion_value: Value of the conversion
+        """
+        # Create a simple delayed conversion
+        conversion_id = str(uuid.uuid4())
+        scheduled_time = datetime.now() + timedelta(days=days_to_convert)
+        
+        # Determine segment based on conversion timing
+        if days_to_convert < 3:
+            segment = ConversionSegment.CRISIS_PARENT
+        elif days_to_convert < 7:
+            segment = ConversionSegment.CONCERNED_PARENT
+        elif days_to_convert < 14:
+            segment = ConversionSegment.RESEARCHER
+        else:
+            segment = ConversionSegment.PRICE_SENSITIVE
+        
+        # Create delayed conversion
+        delayed_conversion = DelayedConversion(
+            conversion_id=conversion_id,
+            user_id=user_id,
+            canonical_user_id=user_id,
+            journey_id=f"journey_{user_id}",
+            segment=segment,
+            trigger_timestamp=datetime.now(),
+            scheduled_conversion_time=scheduled_time,
+            conversion_value=conversion_value,
+            conversion_probability=0.5,
+            touchpoint_sequence=[],
+            attribution_weights={},
+            triggering_touchpoint_id="",
+            conversion_factors={"days_to_convert": days_to_convert}
+        )
+        
+        # Store it
+        self.scheduled_conversions[conversion_id] = delayed_conversion
+        self.conversion_triggers[user_id].append(conversion_id)
+        
+        return conversion_id
+    
+    def get_due_conversions(self, current_time: Optional[datetime] = None) -> List[Dict[str, Any]]:
+        """
+        Get conversions that are due to be executed.
+        
+        Args:
+            current_time: Current time to check against (defaults to now)
+            
+        Returns:
+            List of due conversions with their data
+        """
+        if current_time is None:
+            current_time = datetime.now()
+            
+        due_conversions = []
+        
+        for conversion_id, delayed_conversion in self.scheduled_conversions.items():
+            if (delayed_conversion.scheduled_conversion_time <= current_time and
+                delayed_conversion.is_scheduled and 
+                not delayed_conversion.is_executed):
+                
+                # Convert to dictionary format expected by fortified_environment
+                conversion_data = {
+                    'conversion_id': delayed_conversion.conversion_id,
+                    'user_id': delayed_conversion.user_id,
+                    'canonical_user_id': delayed_conversion.canonical_user_id,
+                    'journey_id': delayed_conversion.journey_id,
+                    'segment': delayed_conversion.segment.value,
+                    'conversion_value': delayed_conversion.conversion_value,
+                    'conversion_probability': delayed_conversion.conversion_probability,
+                    'attribution_weights': delayed_conversion.attribution_weights,
+                    'triggering_touchpoint_id': delayed_conversion.triggering_touchpoint_id,
+                    'scheduled_time': delayed_conversion.scheduled_conversion_time,
+                    'trigger_timestamp': delayed_conversion.trigger_timestamp,
+                    'delay_hours': (delayed_conversion.scheduled_conversion_time - 
+                                  delayed_conversion.trigger_timestamp).total_seconds() / 3600
+                }
+                due_conversions.append(conversion_data)
+                
+        return due_conversions
+
     async def execute_pending_conversions(self) -> List[DelayedConversion]:
         """
         Execute conversions that are due to trigger.

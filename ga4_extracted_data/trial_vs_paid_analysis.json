@@ -1,0 +1,68 @@
+{
+  "extraction_date": "2025-09-01T05:32:29.920375",
+  "sample_analysis": {
+    "trial_count": 1273,
+    "d2p_count": 1592,
+    "conversions": {
+      "trial_starts": 1273,
+      "d2p_purchases": 1592,
+      "trial_conversion_rate": 0.7,
+      "expected_trial_conversions": 891.0999999999999,
+      "total_real_customers": 2483.1,
+      "trial_percentage": 44.43280977312391,
+      "d2p_percentage": 55.56719022687609
+    },
+    "cac_targets": {
+      "trial_cpa": 60,
+      "trial_cac": 85.71428571428572,
+      "max_trial_bid": 42.0,
+      "d2p_cpa": 80,
+      "d2p_cac": 80,
+      "max_d2p_bid": 76.0,
+      "bid_differential": 1.8095238095238095
+    }
+  },
+  "funnel_metrics": {
+    "funnel_metrics": {
+      "trial": {
+        "starts_per_day": 187,
+        "conversion_rate": 0.7,
+        "conversion_window_days": 14,
+        "avg_time_to_convert": 7.5,
+        "first_month_churn": 0.15,
+        "ltv_6_months": 450
+      },
+      "d2p": {
+        "purchases_per_day": 227,
+        "conversion_rate": 1.0,
+        "conversion_window_days": 0,
+        "avg_time_to_convert": 0,
+        "first_month_churn": 0.08,
+        "ltv_6_months": 520
+      }
+    }
+  },
+  "training_data": {
+    "bidding_strategies": {
+      "trial_campaigns": {
+        "target_cpa": 60,
+        "max_bid": 42,
+        "expected_conversions_per_100": 70,
+        "attribution_window": 14
+      },
+      "d2p_campaigns": {
+        "target_cpa": 80,
+        "max_bid": 76,
+        "expected_conversions_per_100": 100,
+        "attribution_window": 1
+      }
+    },
+    "campaign_recommendations": [
+      "Separate campaigns for trial vs D2P offers",
+      "Higher bids for D2P campaigns (1.8x trial bids)",
+      "Longer attribution windows for trials",
+      "Different creative messaging for each funnel",
+      "Track trial-to-paid conversion by source"
+    ]
+  }
+}

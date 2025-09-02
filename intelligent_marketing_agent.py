@@ -131,7 +131,7 @@ class IntelligentMarketingAgent:
                 'message_angle': np.random.choice(self.action_space['message_angle']),
                 'creative_type': np.random.choice(self.action_space['creative_type']),
                 'landing_page': np.random.choice(self.action_space['landing_page']),
-                'bid': np.random.uniform(2, 8),  # $2-8 CPC
+                'bid': np.random.uniform(4, 12),  # $4-12 CPC (matches real GA4 data: Search $7, Shopping $11)
                 'daily_budget': np.random.uniform(500, 2000)  # $500-2000 daily
             }
         else:
@@ -151,7 +151,7 @@ class IntelligentMarketingAgent:
                 'message_angle': 'mental_health',  # Strong value prop
                 'creative_type': 'video',  # High engagement
                 'landing_page': 'ai_insights',  # Differentiation
-                'bid': 4.0,
+                'bid': 7.0,  # Real avg CPC from GA4
                 'daily_budget': 1000
             }
         
@@ -261,7 +261,7 @@ class IntelligentMarketingAgent:
             'message_angle': parts[2],
             'creative_type': parts[3],
             'landing_page': parts[4],
-            'bid': 4.0,  # Default bid
+            'bid': 7.0,  # Default bid (real avg CPC from GA4)
             'daily_budget': 1000  # Default budget
         }
     

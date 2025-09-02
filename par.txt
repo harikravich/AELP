@@ -1,0 +1,763 @@
+🎯 Ready to start training? (y/n): y
+INFO:__main__:🚀 Launching parallel training...
+INFO:__main__:   Check progress in: logs/parallel_training_20250901_134158.log
+INFO:parallel_training_accelerator:🎯 Initializing Parallel Training Orchestrator...
+2025-09-01 13:42:01,949	INFO worker.py:1942 -- Started a local Ray instance. View the dashboard at 127.0.0.1:8266 
+INFO:parallel_training_accelerator:✅ Ray initialized with 16 workers
+INFO:gaelp_parameter_manager:Loaded GA4 patterns from discovered_patterns.json
+INFO:gaelp_parameter_manager:Processed 1 channel performance records
+INFO:gaelp_parameter_manager:Processed 4 user segments
+INFO:gaelp_parameter_manager:Processed 3 device performance records
+INFO:gaelp_parameter_manager:Processed temporal patterns with 0 hourly patterns
+INFO:gaelp_parameter_manager:✅ ParameterManager initialized with 1 channels, 4 segments, 3 device types
+INFO:parallel_training_accelerator:🚀 Initializing 16 parallel environments...
+INFO:persistent_user_database:BigQuery connection established successfully
+INFO:persistent_user_database:Dataset aura-thrive-platform.gaelp_users already exists
+INFO:persistent_user_database:Table persistent_users already exists
+INFO:persistent_user_database:Table journey_sessions already exists
+INFO:persistent_user_database:Table persistent_touchpoints already exists
+INFO:persistent_user_database:Table competitor_exposures already exists
+INFO:persistent_user_database:All persistent user database tables ensured
+INFO:persistent_user_database:PersistentUserDatabase initialized with dataset: gaelp_users
+INFO:user_journey_database:BigQuery connection established
+INFO:training_orchestrator.delayed_conversion_system:Initialized realistic conversion patterns for 4 segments
+INFO:training_orchestrator.delayed_conversion_system:DelayedConversionSystem initialized with segment-based conversion tracking
+INFO:auction_gym_integration:Initialized empirical bidder: Qustodio with $199.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Bark with $244.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Circle with $229.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Norton with $180.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Competitor5 with $150.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Competitor6 with $200.0 budget
+INFO:auction_gym_integration:AuctionGym initialized with second_price auction, 4 slots
+INFO:fixed_auction_system:Fixed auction system initialized with 9 competitors
+✅ GA4DiscoveryEngine initialized with MCP GA4 functions
+INFO:persistent_user_database:BigQuery connection established successfully
+INFO:persistent_user_database:Dataset aura-thrive-platform.gaelp_users already exists
+INFO:persistent_user_database:Table persistent_users already exists
+INFO:persistent_user_database:Table journey_sessions already exists
+INFO:persistent_user_database:Table persistent_touchpoints already exists
+INFO:persistent_user_database:Table competitor_exposures already exists
+INFO:persistent_user_database:All persistent user database tables ensured
+INFO:persistent_user_database:PersistentUserDatabase initialized with dataset: gaelp_users
+INFO:user_journey_database:BigQuery connection established
+INFO:training_orchestrator.delayed_conversion_system:Initialized realistic conversion patterns for 4 segments
+INFO:training_orchestrator.delayed_conversion_system:DelayedConversionSystem initialized with segment-based conversion tracking
+INFO:auction_gym_integration:Initialized empirical bidder: Qustodio with $199.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Bark with $244.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Circle with $229.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Norton with $180.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Competitor5 with $150.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Competitor6 with $200.0 budget
+INFO:auction_gym_integration:AuctionGym initialized with second_price auction, 4 slots
+INFO:fixed_auction_system:Fixed auction system initialized with 9 competitors
+✅ GA4DiscoveryEngine initialized with MCP GA4 functions
+INFO:persistent_user_database:BigQuery connection established successfully
+INFO:persistent_user_database:Dataset aura-thrive-platform.gaelp_users already exists
+INFO:persistent_user_database:Table persistent_users already exists
+INFO:persistent_user_database:Table journey_sessions already exists
+INFO:persistent_user_database:Table persistent_touchpoints already exists
+INFO:persistent_user_database:Table competitor_exposures already exists
+INFO:persistent_user_database:All persistent user database tables ensured
+INFO:persistent_user_database:PersistentUserDatabase initialized with dataset: gaelp_users
+INFO:user_journey_database:BigQuery connection established
+INFO:training_orchestrator.delayed_conversion_system:Initialized realistic conversion patterns for 4 segments
+INFO:training_orchestrator.delayed_conversion_system:DelayedConversionSystem initialized with segment-based conversion tracking
+INFO:auction_gym_integration:Initialized empirical bidder: Qustodio with $199.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Bark with $244.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Circle with $229.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Norton with $180.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Competitor5 with $150.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Competitor6 with $200.0 budget
+INFO:auction_gym_integration:AuctionGym initialized with second_price auction, 4 slots
+INFO:fixed_auction_system:Fixed auction system initialized with 9 competitors
+✅ GA4DiscoveryEngine initialized with MCP GA4 functions
+INFO:persistent_user_database:BigQuery connection established successfully
+INFO:persistent_user_database:Dataset aura-thrive-platform.gaelp_users already exists
+INFO:persistent_user_database:Table persistent_users already exists
+INFO:persistent_user_database:Table journey_sessions already exists
+INFO:persistent_user_database:Table persistent_touchpoints already exists
+INFO:persistent_user_database:Table competitor_exposures already exists
+INFO:persistent_user_database:All persistent user database tables ensured
+INFO:persistent_user_database:PersistentUserDatabase initialized with dataset: gaelp_users
+INFO:user_journey_database:BigQuery connection established
+INFO:training_orchestrator.delayed_conversion_system:Initialized realistic conversion patterns for 4 segments
+INFO:training_orchestrator.delayed_conversion_system:DelayedConversionSystem initialized with segment-based conversion tracking
+INFO:auction_gym_integration:Initialized empirical bidder: Qustodio with $199.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Bark with $244.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Circle with $229.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Norton with $180.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Competitor5 with $150.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Competitor6 with $200.0 budget
+INFO:auction_gym_integration:AuctionGym initialized with second_price auction, 4 slots
+INFO:fixed_auction_system:Fixed auction system initialized with 9 competitors
+✅ GA4DiscoveryEngine initialized with MCP GA4 functions
+INFO:persistent_user_database:BigQuery connection established successfully
+INFO:persistent_user_database:Dataset aura-thrive-platform.gaelp_users already exists
+INFO:persistent_user_database:Table persistent_users already exists
+INFO:persistent_user_database:Table journey_sessions already exists
+INFO:persistent_user_database:Table persistent_touchpoints already exists
+INFO:persistent_user_database:Table competitor_exposures already exists
+INFO:persistent_user_database:All persistent user database tables ensured
+INFO:persistent_user_database:PersistentUserDatabase initialized with dataset: gaelp_users
+INFO:user_journey_database:BigQuery connection established
+INFO:training_orchestrator.delayed_conversion_system:Initialized realistic conversion patterns for 4 segments
+INFO:training_orchestrator.delayed_conversion_system:DelayedConversionSystem initialized with segment-based conversion tracking
+INFO:auction_gym_integration:Initialized empirical bidder: Qustodio with $199.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Bark with $244.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Circle with $229.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Norton with $180.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Competitor5 with $150.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Competitor6 with $200.0 budget
+INFO:auction_gym_integration:AuctionGym initialized with second_price auction, 4 slots
+INFO:fixed_auction_system:Fixed auction system initialized with 9 competitors
+✅ GA4DiscoveryEngine initialized with MCP GA4 functions
+INFO:persistent_user_database:BigQuery connection established successfully
+INFO:persistent_user_database:Dataset aura-thrive-platform.gaelp_users already exists
+INFO:persistent_user_database:Table persistent_users already exists
+INFO:persistent_user_database:Table journey_sessions already exists
+INFO:persistent_user_database:Table persistent_touchpoints already exists
+INFO:persistent_user_database:Table competitor_exposures already exists
+INFO:persistent_user_database:All persistent user database tables ensured
+INFO:persistent_user_database:PersistentUserDatabase initialized with dataset: gaelp_users
+INFO:user_journey_database:BigQuery connection established
+INFO:training_orchestrator.delayed_conversion_system:Initialized realistic conversion patterns for 4 segments
+INFO:training_orchestrator.delayed_conversion_system:DelayedConversionSystem initialized with segment-based conversion tracking
+INFO:auction_gym_integration:Initialized empirical bidder: Qustodio with $199.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Bark with $244.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Circle with $229.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Norton with $180.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Competitor5 with $150.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Competitor6 with $200.0 budget
+INFO:auction_gym_integration:AuctionGym initialized with second_price auction, 4 slots
+INFO:fixed_auction_system:Fixed auction system initialized with 9 competitors
+✅ GA4DiscoveryEngine initialized with MCP GA4 functions
+INFO:persistent_user_database:BigQuery connection established successfully
+INFO:persistent_user_database:Dataset aura-thrive-platform.gaelp_users already exists
+INFO:persistent_user_database:Table persistent_users already exists
+INFO:persistent_user_database:Table journey_sessions already exists
+INFO:persistent_user_database:Table persistent_touchpoints already exists
+INFO:persistent_user_database:Table competitor_exposures already exists
+INFO:persistent_user_database:All persistent user database tables ensured
+INFO:persistent_user_database:PersistentUserDatabase initialized with dataset: gaelp_users
+INFO:user_journey_database:BigQuery connection established
+INFO:training_orchestrator.delayed_conversion_system:Initialized realistic conversion patterns for 4 segments
+INFO:training_orchestrator.delayed_conversion_system:DelayedConversionSystem initialized with segment-based conversion tracking
+INFO:auction_gym_integration:Initialized empirical bidder: Qustodio with $199.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Bark with $244.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Circle with $229.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Norton with $180.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Competitor5 with $150.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Competitor6 with $200.0 budget
+INFO:auction_gym_integration:AuctionGym initialized with second_price auction, 4 slots
+INFO:fixed_auction_system:Fixed auction system initialized with 9 competitors
+✅ GA4DiscoveryEngine initialized with MCP GA4 functions
+INFO:persistent_user_database:BigQuery connection established successfully
+INFO:persistent_user_database:Dataset aura-thrive-platform.gaelp_users already exists
+INFO:persistent_user_database:Table persistent_users already exists
+INFO:persistent_user_database:Table journey_sessions already exists
+INFO:persistent_user_database:Table persistent_touchpoints already exists
+INFO:persistent_user_database:Table competitor_exposures already exists
+INFO:persistent_user_database:All persistent user database tables ensured
+INFO:persistent_user_database:PersistentUserDatabase initialized with dataset: gaelp_users
+INFO:user_journey_database:BigQuery connection established
+INFO:training_orchestrator.delayed_conversion_system:Initialized realistic conversion patterns for 4 segments
+INFO:training_orchestrator.delayed_conversion_system:DelayedConversionSystem initialized with segment-based conversion tracking
+INFO:auction_gym_integration:Initialized empirical bidder: Qustodio with $199.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Bark with $244.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Circle with $229.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Norton with $180.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Competitor5 with $150.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Competitor6 with $200.0 budget
+INFO:auction_gym_integration:AuctionGym initialized with second_price auction, 4 slots
+INFO:fixed_auction_system:Fixed auction system initialized with 9 competitors
+✅ GA4DiscoveryEngine initialized with MCP GA4 functions
+INFO:persistent_user_database:BigQuery connection established successfully
+INFO:persistent_user_database:Dataset aura-thrive-platform.gaelp_users already exists
+INFO:persistent_user_database:Table persistent_users already exists
+INFO:persistent_user_database:Table journey_sessions already exists
+INFO:persistent_user_database:Table persistent_touchpoints already exists
+INFO:persistent_user_database:Table competitor_exposures already exists
+INFO:persistent_user_database:All persistent user database tables ensured
+INFO:persistent_user_database:PersistentUserDatabase initialized with dataset: gaelp_users
+INFO:user_journey_database:BigQuery connection established
+INFO:training_orchestrator.delayed_conversion_system:Initialized realistic conversion patterns for 4 segments
+INFO:training_orchestrator.delayed_conversion_system:DelayedConversionSystem initialized with segment-based conversion tracking
+INFO:auction_gym_integration:Initialized empirical bidder: Qustodio with $199.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Bark with $244.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Circle with $229.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Norton with $180.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Competitor5 with $150.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Competitor6 with $200.0 budget
+INFO:auction_gym_integration:AuctionGym initialized with second_price auction, 4 slots
+INFO:fixed_auction_system:Fixed auction system initialized with 9 competitors
+✅ GA4DiscoveryEngine initialized with MCP GA4 functions
+INFO:persistent_user_database:BigQuery connection established successfully
+INFO:persistent_user_database:Dataset aura-thrive-platform.gaelp_users already exists
+INFO:persistent_user_database:Table persistent_users already exists
+INFO:persistent_user_database:Table journey_sessions already exists
+INFO:persistent_user_database:Table persistent_touchpoints already exists
+INFO:persistent_user_database:Table competitor_exposures already exists
+INFO:persistent_user_database:All persistent user database tables ensured
+INFO:persistent_user_database:PersistentUserDatabase initialized with dataset: gaelp_users
+INFO:user_journey_database:BigQuery connection established
+INFO:training_orchestrator.delayed_conversion_system:Initialized realistic conversion patterns for 4 segments
+INFO:training_orchestrator.delayed_conversion_system:DelayedConversionSystem initialized with segment-based conversion tracking
+INFO:auction_gym_integration:Initialized empirical bidder: Qustodio with $199.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Bark with $244.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Circle with $229.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Norton with $180.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Competitor5 with $150.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Competitor6 with $200.0 budget
+INFO:auction_gym_integration:AuctionGym initialized with second_price auction, 4 slots
+INFO:fixed_auction_system:Fixed auction system initialized with 9 competitors
+✅ GA4DiscoveryEngine initialized with MCP GA4 functions
+INFO:persistent_user_database:BigQuery connection established successfully
+INFO:persistent_user_database:Dataset aura-thrive-platform.gaelp_users already exists
+INFO:persistent_user_database:Table persistent_users already exists
+INFO:persistent_user_database:Table journey_sessions already exists
+INFO:persistent_user_database:Table persistent_touchpoints already exists
+INFO:persistent_user_database:Table competitor_exposures already exists
+INFO:persistent_user_database:All persistent user database tables ensured
+INFO:persistent_user_database:PersistentUserDatabase initialized with dataset: gaelp_users
+INFO:user_journey_database:BigQuery connection established
+INFO:training_orchestrator.delayed_conversion_system:Initialized realistic conversion patterns for 4 segments
+INFO:training_orchestrator.delayed_conversion_system:DelayedConversionSystem initialized with segment-based conversion tracking
+INFO:auction_gym_integration:Initialized empirical bidder: Qustodio with $199.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Bark with $244.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Circle with $229.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Norton with $180.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Competitor5 with $150.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Competitor6 with $200.0 budget
+INFO:auction_gym_integration:AuctionGym initialized with second_price auction, 4 slots
+INFO:fixed_auction_system:Fixed auction system initialized with 9 competitors
+✅ GA4DiscoveryEngine initialized with MCP GA4 functions
+INFO:persistent_user_database:BigQuery connection established successfully
+INFO:persistent_user_database:Dataset aura-thrive-platform.gaelp_users already exists
+INFO:persistent_user_database:Table persistent_users already exists
+INFO:persistent_user_database:Table journey_sessions already exists
+INFO:persistent_user_database:Table persistent_touchpoints already exists
+INFO:persistent_user_database:Table competitor_exposures already exists
+INFO:persistent_user_database:All persistent user database tables ensured
+INFO:persistent_user_database:PersistentUserDatabase initialized with dataset: gaelp_users
+INFO:user_journey_database:BigQuery connection established
+INFO:training_orchestrator.delayed_conversion_system:Initialized realistic conversion patterns for 4 segments
+INFO:training_orchestrator.delayed_conversion_system:DelayedConversionSystem initialized with segment-based conversion tracking
+INFO:auction_gym_integration:Initialized empirical bidder: Qustodio with $199.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Bark with $244.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Circle with $229.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Norton with $180.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Competitor5 with $150.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Competitor6 with $200.0 budget
+INFO:auction_gym_integration:AuctionGym initialized with second_price auction, 4 slots
+INFO:fixed_auction_system:Fixed auction system initialized with 9 competitors
+✅ GA4DiscoveryEngine initialized with MCP GA4 functions
+INFO:persistent_user_database:BigQuery connection established successfully
+INFO:persistent_user_database:Dataset aura-thrive-platform.gaelp_users already exists
+INFO:persistent_user_database:Table persistent_users already exists
+INFO:persistent_user_database:Table journey_sessions already exists
+INFO:persistent_user_database:Table persistent_touchpoints already exists
+INFO:persistent_user_database:Table competitor_exposures already exists
+INFO:persistent_user_database:All persistent user database tables ensured
+INFO:persistent_user_database:PersistentUserDatabase initialized with dataset: gaelp_users
+INFO:user_journey_database:BigQuery connection established
+INFO:training_orchestrator.delayed_conversion_system:Initialized realistic conversion patterns for 4 segments
+INFO:training_orchestrator.delayed_conversion_system:DelayedConversionSystem initialized with segment-based conversion tracking
+INFO:auction_gym_integration:Initialized empirical bidder: Qustodio with $199.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Bark with $244.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Circle with $229.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Norton with $180.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Competitor5 with $150.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Competitor6 with $200.0 budget
+INFO:auction_gym_integration:AuctionGym initialized with second_price auction, 4 slots
+INFO:fixed_auction_system:Fixed auction system initialized with 9 competitors
+✅ GA4DiscoveryEngine initialized with MCP GA4 functions
+INFO:persistent_user_database:BigQuery connection established successfully
+INFO:persistent_user_database:Dataset aura-thrive-platform.gaelp_users already exists
+INFO:persistent_user_database:Table persistent_users already exists
+INFO:persistent_user_database:Table journey_sessions already exists
+INFO:persistent_user_database:Table persistent_touchpoints already exists
+INFO:persistent_user_database:Table competitor_exposures already exists
+INFO:persistent_user_database:All persistent user database tables ensured
+INFO:persistent_user_database:PersistentUserDatabase initialized with dataset: gaelp_users
+INFO:user_journey_database:BigQuery connection established
+INFO:training_orchestrator.delayed_conversion_system:Initialized realistic conversion patterns for 4 segments
+INFO:training_orchestrator.delayed_conversion_system:DelayedConversionSystem initialized with segment-based conversion tracking
+INFO:auction_gym_integration:Initialized empirical bidder: Qustodio with $199.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Bark with $244.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Circle with $229.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Norton with $180.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Competitor5 with $150.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Competitor6 with $200.0 budget
+INFO:auction_gym_integration:AuctionGym initialized with second_price auction, 4 slots
+INFO:fixed_auction_system:Fixed auction system initialized with 9 competitors
+✅ GA4DiscoveryEngine initialized with MCP GA4 functions
+INFO:persistent_user_database:BigQuery connection established successfully
+INFO:persistent_user_database:Dataset aura-thrive-platform.gaelp_users already exists
+INFO:persistent_user_database:Table persistent_users already exists
+INFO:persistent_user_database:Table journey_sessions already exists
+INFO:persistent_user_database:Table persistent_touchpoints already exists
+INFO:persistent_user_database:Table competitor_exposures already exists
+INFO:persistent_user_database:All persistent user database tables ensured
+INFO:persistent_user_database:PersistentUserDatabase initialized with dataset: gaelp_users
+INFO:user_journey_database:BigQuery connection established
+INFO:training_orchestrator.delayed_conversion_system:Initialized realistic conversion patterns for 4 segments
+INFO:training_orchestrator.delayed_conversion_system:DelayedConversionSystem initialized with segment-based conversion tracking
+INFO:auction_gym_integration:Initialized empirical bidder: Qustodio with $199.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Bark with $244.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Circle with $229.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Norton with $180.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Competitor5 with $150.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Competitor6 with $200.0 budget
+INFO:auction_gym_integration:AuctionGym initialized with second_price auction, 4 slots
+INFO:fixed_auction_system:Fixed auction system initialized with 9 competitors
+✅ GA4DiscoveryEngine initialized with MCP GA4 functions
+INFO:persistent_user_database:BigQuery connection established successfully
+INFO:persistent_user_database:Dataset aura-thrive-platform.gaelp_users already exists
+INFO:persistent_user_database:Table persistent_users already exists
+INFO:persistent_user_database:Table journey_sessions already exists
+INFO:persistent_user_database:Table persistent_touchpoints already exists
+INFO:persistent_user_database:Table competitor_exposures already exists
+INFO:persistent_user_database:All persistent user database tables ensured
+INFO:persistent_user_database:PersistentUserDatabase initialized with dataset: gaelp_users
+INFO:user_journey_database:BigQuery connection established
+INFO:training_orchestrator.delayed_conversion_system:Initialized realistic conversion patterns for 4 segments
+INFO:training_orchestrator.delayed_conversion_system:DelayedConversionSystem initialized with segment-based conversion tracking
+INFO:auction_gym_integration:Initialized empirical bidder: Qustodio with $199.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Bark with $244.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Circle with $229.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Norton with $180.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Competitor5 with $150.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Competitor6 with $200.0 budget
+INFO:auction_gym_integration:AuctionGym initialized with second_price auction, 4 slots
+INFO:fixed_auction_system:Fixed auction system initialized with 9 competitors
+✅ GA4DiscoveryEngine initialized with MCP GA4 functions
+INFO:parallel_training_accelerator:✅ Vectorized environment ready with 16 parallel worlds
+INFO:gaelp_master_integration:🚀 Initializing GAELP components...
+🚀 Initializing GAELP components...
+INFO:user_journey_database:BigQuery connection established
+INFO:persistent_user_database:BigQuery connection established successfully
+INFO:persistent_user_database:Dataset aura-thrive-platform.gaelp_users already exists
+INFO:persistent_user_database:Table persistent_users already exists
+INFO:persistent_user_database:Table journey_sessions already exists
+INFO:persistent_user_database:Table persistent_touchpoints already exists
+INFO:persistent_user_database:Table competitor_exposures already exists
+INFO:persistent_user_database:All persistent user database tables ensured
+INFO:persistent_user_database:PersistentUserDatabase initialized with dataset: gaelp_users
+INFO:user_journey_database:BigQuery connection established
+INFO:training_orchestrator.delayed_conversion_system:Initialized realistic conversion patterns for 4 segments
+INFO:training_orchestrator.delayed_conversion_system:DelayedConversionSystem initialized with segment-based conversion tracking
+INFO:auction_gym_integration:Initialized empirical bidder: Qustodio with $199.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Bark with $244.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Circle with $229.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Norton with $180.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Competitor5 with $150.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Competitor6 with $200.0 budget
+INFO:auction_gym_integration:AuctionGym initialized with second_price auction, 4 slots
+INFO:fixed_auction_system:Fixed auction system initialized with 9 competitors
+✅ GA4DiscoveryEngine initialized with MCP GA4 functions
+INFO:NO_FALLBACKS:✅ MONTE_CARLO_SIMULATOR - strict mode active
+INFO:monte_carlo_simulator:🎲 MonteCarloSimulator initialized for 4 parallel worlds
+INFO:competitor_agents:Initialized Qustodio agent with $99.0 annual budget
+INFO:competitor_agents:Initialized Q-Learning agent Qustodio with aggressive profile
+INFO:competitor_agents:Initialized Bark agent with $144.0 annual budget
+INFO:competitor_agents:Initialized Policy Gradient agent Bark with premium profile
+INFO:competitor_agents:Initialized Circle agent with $129.0 annual budget
+INFO:competitor_agents:Initialized Rule-Based agent Circle with defensive profile
+INFO:competitor_agents:Initialized Norton agent with $100.0 annual budget
+INFO:competitor_agents:Initialized Random agent Norton as baseline
+INFO:competitor_agents:Initialized CompetitorAgentManager with 4 agents
+INFO:auction_gym_integration:Initialized empirical bidder: Qustodio with $199.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Bark with $244.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Circle with $229.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Norton with $180.0 budget
+INFO:auction_gym_integration:Initialized empirical bidder: Competitor5 with $150.0 budget
+INFO:auction_gym_integration:Initialized truthful bidder: Competitor6 with $200.0 budget
+INFO:auction_gym_integration:AuctionGym initialized with second_price auction, 4 slots
+INFO:training_orchestrator.delayed_reward_system:Initialized conversion lag model: weibull
+INFO:training_orchestrator.delayed_reward_system:Redis connection established
+INFO:training_orchestrator.delayed_reward_system:Database connection established
+INFO:gaelp_master_integration:Initialized 5 A/B test variants for creative optimization
+INFO:budget_pacer:Budget pacer initialized with advanced pacing algorithms
+INFO:importance_sampler:Updated importance weights: {'crisis_parent': np.float64(1.0143400781422596), 'researching_parent': np.float64(0.8954180851159889), 'concerned_parent': np.float64(0.991799187516876), 'proactive_parent': np.float64(1.1311424508425778)}
+Loading GA4-trained Criteo model from /home/hariravichandran/AELP/models/criteo_ga4_trained.pkl
+INFO:criteo_response_model:Loaded GA4-trained model with AUC: 0.8274
+INFO:criteo_response_model:Training CTR: 7.44%
+INFO:gaelp_master_integration:CriteoUserResponseModel initialized with trained CTR data
+INFO:training_orchestrator.journey_timeout:JourneyTimeoutManager initialized with 2-day timeout
+INFO:model_versioning:Connected to existing git repository
+INFO:model_versioning:Loaded metadata: 1 models, 1 experiments
+INFO:model_versioning:Initialized ModelVersioningSystem with models_dir: models
+INFO:dynamic_discovery:Loaded discoveries from cache: 4384 segments, 2 devices, 0 channels
+INFO:training_orchestrator.rl_agent_advanced:Using device: cpu
+INFO:training_orchestrator.rl_agent_advanced:Advanced RL Agent initialized with all features
+INFO:dynamic_discovery:Loaded discoveries from cache: 4384 segments, 2 devices, 0 channels
+INFO:gaelp_master_integration:✅ Loaded advanced agent checkpoint: checkpoint_0.pt
+INFO:gaelp_master_integration:✅ ADVANCED RL Agent initialized with all state-of-the-art features
+INFO:gaelp_master_integration:   Features: Double DQN, Dueling, Noisy Nets, PER, Action Masking, Curiosity, Multi-Objective
+INFO:gaelp_master_integration:✅ RL Agent enhanced with LLM strategic reasoning
+INFO:gaelp_master_integration:   - Natural language strategy generation
+INFO:gaelp_master_integration:   - Infinite creative headline generation
+INFO:gaelp_master_integration:   - Context-aware decision making
+INFO:deepmind_features:🎮 Self-Play Trainer initialized
+INFO:deepmind_features:🌳 MCTS Campaign Planner initialized (simulations: 500)
+INFO:deepmind_features:🧠 World Model initialized for mental simulation
+INFO:deepmind_features:🚀 DeepMind Orchestrator initialized with all components
+INFO:gaelp_master_integration:✅ DeepMind features initialized (Self-Play, MCTS, World Model)
+INFO:transformer_world_model_full:✅ FULL TransformerWorldModel initialized
+INFO:transformer_world_model_full:   - Model: 512d, 8h, 6L
+INFO:transformer_world_model_full:   - Mamba SSM: d_state=16, d_conv=4
+INFO:transformer_world_model_full:   - Diffusion: 1000 steps
+INFO:transformer_world_model_full:   - Horizon: 100 steps
+INFO:transformer_world_model_full:   - Device: cpu
+INFO:gaelp_master_integration:✅ FULL TransformerWorldModel initialized - NO SIMPLIFICATIONS
+INFO:gaelp_master_integration:   - 512d model with 8 heads, 6 layers
+INFO:gaelp_master_integration:   - Mamba state-space model integrated
+INFO:gaelp_master_integration:   - Full diffusion trajectory prediction
+INFO:gaelp_master_integration:   - 100-step horizon planning
+INFO:gaelp_master_integration:✅ Visual progress tracker initialized
+2025-09-01 13:42:39,121 - safety_system - INFO - Safety system initialized with configuration: SafetyConfig(max_bid_absolute=10.0, daily_loss_threshold=500.0, hourly_loss_threshold=25.0, consecutive_loss_limit=5, minimum_roi_threshold=0.3, roi_lookback_hours=24, max_competitor_spend_ratio=1.5, anomaly_z_score_threshold=3.0, anomaly_lookback_hours=168, emergency_loss_threshold=500.0, emergency_bid_spike_multiplier=10.0, max_concurrent_campaigns=100, max_daily_budget_total=1000.0)
+INFO:safety_system:Safety system initialized with configuration: SafetyConfig(max_bid_absolute=10.0, daily_loss_threshold=500.0, hourly_loss_threshold=25.0, consecutive_loss_limit=5, minimum_roi_threshold=0.3, roi_lookback_hours=24, max_competitor_spend_ratio=1.5, anomaly_z_score_threshold=3.0, anomaly_lookback_hours=168, emergency_loss_threshold=500.0, emergency_bid_spike_multiplier=10.0, max_concurrent_campaigns=100, max_daily_budget_total=1000.0)
+INFO:gaelp_master_integration:All components initialized successfully
+INFO:gaelp_master_integration:GAELP Master Orchestrator initialized with 19 components
+INFO:parallel_training_accelerator:✅ Parallel training orchestrator ready
+INFO:parallel_training_accelerator:🚀 Starting parallel training for 100000 total episodes...
+INFO:parallel_training_accelerator:   16 environments = 6250 episodes each
+INFO:parallel_training_accelerator:📊 Collecting 1600 total experiences...
+INFO:enhanced_simulator_fixed:Starting episode episode_1756734159.12265
+INFO:enhanced_simulator_fixed:Active persistent users: 0
+INFO:enhanced_simulator_fixed:Pending conversions: 0
+INFO:enhanced_simulator_fixed:Starting episode episode_1756734159.123152
+INFO:enhanced_simulator_fixed:Active persistent users: 0
+INFO:enhanced_simulator_fixed:Pending conversions: 0
+INFO:enhanced_simulator_fixed:Starting episode episode_1756734159.123552
+INFO:enhanced_simulator_fixed:Active persistent users: 0
+INFO:enhanced_simulator_fixed:Pending conversions: 0
+INFO:enhanced_simulator_fixed:Starting episode episode_1756734159.123866
+INFO:enhanced_simulator_fixed:Active persistent users: 0
+INFO:enhanced_simulator_fixed:Pending conversions: 0
+INFO:enhanced_simulator_fixed:Starting episode episode_1756734159.124147
+INFO:enhanced_simulator_fixed:Active persistent users: 0
+INFO:enhanced_simulator_fixed:Pending conversions: 0
+INFO:enhanced_simulator_fixed:Starting episode episode_1756734159.12443
+INFO:enhanced_simulator_fixed:Active persistent users: 0
+INFO:enhanced_simulator_fixed:Pending conversions: 0
+INFO:enhanced_simulator_fixed:Starting episode episode_1756734159.124802
+INFO:enhanced_simulator_fixed:Active persistent users: 0
+INFO:enhanced_simulator_fixed:Pending conversions: 0
+INFO:enhanced_simulator_fixed:Starting episode episode_1756734159.125114
+INFO:enhanced_simulator_fixed:Active persistent users: 0
+INFO:enhanced_simulator_fixed:Pending conversions: 0
+INFO:enhanced_simulator_fixed:Starting episode episode_1756734159.125416
+INFO:enhanced_simulator_fixed:Active persistent users: 0
+INFO:enhanced_simulator_fixed:Pending conversions: 0
+INFO:enhanced_simulator_fixed:Starting episode episode_1756734159.126147
+INFO:enhanced_simulator_fixed:Active persistent users: 0
+INFO:enhanced_simulator_fixed:Pending conversions: 0
+INFO:enhanced_simulator_fixed:Starting episode episode_1756734159.126467
+INFO:enhanced_simulator_fixed:Active persistent users: 0
+INFO:enhanced_simulator_fixed:Pending conversions: 0
+INFO:enhanced_simulator_fixed:Starting episode episode_1756734159.126763
+INFO:enhanced_simulator_fixed:Active persistent users: 0
+INFO:enhanced_simulator_fixed:Pending conversions: 0
+INFO:enhanced_simulator_fixed:Starting episode episode_1756734159.127046
+INFO:enhanced_simulator_fixed:Active persistent users: 0
+INFO:enhanced_simulator_fixed:Pending conversions: 0
+INFO:enhanced_simulator_fixed:Starting episode episode_1756734159.127317
+INFO:enhanced_simulator_fixed:Active persistent users: 0
+INFO:enhanced_simulator_fixed:Pending conversions: 0
+INFO:enhanced_simulator_fixed:Starting episode episode_1756734159.127566
+INFO:enhanced_simulator_fixed:Active persistent users: 0
+INFO:enhanced_simulator_fixed:Pending conversions: 0
+INFO:enhanced_simulator_fixed:Starting episode episode_1756734159.127796
+INFO:enhanced_simulator_fixed:Active persistent users: 0
+INFO:enhanced_simulator_fixed:Pending conversions: 0
+✅ PROPER RL Agent initialized - NO BANDITS!
+INFO:persistent_user_database:Inserted persistent user user_1756734159.163714_9702
+INFO:persistent_user_database:Created new persistent user user_1756734159.163714_9702 for episode episode_1756734159.12443
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+💾 Saved 4 segments, 1 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+INFO:persistent_user_database:Inserted persistent user user_1756734159.157972_5744
+INFO:persistent_user_database:Created new persistent user user_1756734159.157972_5744 for episode episode_1756734159.123866
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+💾 Saved 4 segments, 1 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+INFO:persistent_user_database:Inserted persistent user user_1756734159.152371_722
+INFO:persistent_user_database:Created new persistent user user_1756734159.152371_722 for episode episode_1756734159.123152
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+💾 Saved 4 segments, 1 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+INFO:persistent_user_database:Inserted persistent user user_1756734159.169049_8276
+INFO:persistent_user_database:Created new persistent user user_1756734159.169049_8276 for episode episode_1756734159.125416
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+💾 Saved 4 segments, 1 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+ERROR:parallel_training_accelerator:Env 0 step failed: 
+INFO:persistent_user_database:Inserted persistent user user_1756734159.155744_4166
+INFO:persistent_user_database:Created new persistent user user_1756734159.155744_4166 for episode episode_1756734159.123552
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+💾 Saved 4 segments, 1 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+INFO:persistent_user_database:Inserted persistent user user_1756734159.159901_3723
+INFO:persistent_user_database:Created new persistent user user_1756734159.159901_3723 for episode episode_1756734159.124147
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+💾 Saved 4 segments, 1 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+INFO:persistent_user_database:Inserted persistent user user_1756734159.165425_8596
+INFO:persistent_user_database:Created new persistent user user_1756734159.165425_8596 for episode episode_1756734159.124802
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+💾 Saved 4 segments, 1 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+INFO:persistent_user_database:Inserted persistent user user_1756734159.167263_1208
+INFO:persistent_user_database:Created new persistent user user_1756734159.167263_1208 for episode episode_1756734159.125114
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+💾 Saved 4 segments, 1 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+INFO:persistent_user_database:Inserted persistent user user_1756734159.170797_1115
+INFO:persistent_user_database:Created new persistent user user_1756734159.170797_1115 for episode episode_1756734159.126147
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+💾 Saved 4 segments, 1 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+INFO:persistent_user_database:Inserted persistent user user_1756734159.150644_9633
+INFO:persistent_user_database:Created new persistent user user_1756734159.150644_9633 for episode episode_1756734159.12265
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+💾 Saved 4 segments, 1 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+INFO:persistent_user_database:Inserted persistent user user_1756734160.13853_555
+INFO:persistent_user_database:Created new persistent user user_1756734160.13853_555 for episode episode_1756734159.126763
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+💾 Saved 4 segments, 1 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+INFO:persistent_user_database:Inserted persistent user user_1756734160.218443_9154
+INFO:persistent_user_database:Created new persistent user user_1756734160.218443_9154 for episode episode_1756734159.127796
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+💾 Saved 4 segments, 1 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+INFO:persistent_user_database:Inserted persistent user user_1756734160.160565_8372
+INFO:persistent_user_database:Created new persistent user user_1756734160.160565_8372 for episode episode_1756734159.127317
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+💾 Saved 4 segments, 1 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+INFO:persistent_user_database:Inserted persistent user user_1756734160.145856_8998
+INFO:persistent_user_database:Created new persistent user user_1756734160.145856_8998 for episode episode_1756734159.127046
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+💾 Saved 4 segments, 1 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+INFO:persistent_user_database:Inserted persistent user user_1756734160.192019_3548
+INFO:persistent_user_database:Created new persistent user user_1756734160.192019_3548 for episode episode_1756734159.127566
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+💾 Saved 4 segments, 1 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+INFO:persistent_user_database:Inserted persistent user user_1756734160.060757_3322
+INFO:persistent_user_database:Created new persistent user user_1756734160.060757_3322 for episode episode_1756734159.126467
+
+================================================================================
+🔬 DISCOVERY ENGINE - Learning from GA4 Data via MCP
+================================================================================
+🎯 Discovering behavioral health triggers...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+📈 Processing page view data...
+🎯 Processing conversion event data...
+⏰ Processing temporal behavior patterns...
+👥 Discovering user conversion segments...
+📊 Discovering user behavior patterns...
+💾 Saved 4 segments, 1 channels to cache
+✅ Basic patterns discovered from MCP GA4 data
+INFO:parallel_training_accelerator:  Step 0/100: 0 experiences collected
+INFO:persistent_user_database:Inserted persistent user user_1756734161.258243_166
+INFO:persistent_user_database:Created new persistent user user_1756734161.258243_166 for episode episode_1756734159.12265
+INFO:persistent_user_database:Inserted persistent user user_1756734161.275993_4790
+INFO:persistent_user_database:Created new persistent user user_1756734161.275993_4790 for episode episode_1756734159.125114
+INFO:persistent_user_database:Inserted persistent user user_1756734161.280635_8027
+INFO:persistent_user_database:Created new persistent user user_1756734161.280635_8027 for episode episode_1756734159.126147
+INFO:persistent_user_database:Inserted persistent user user_1756734161.274363_7588
+INFO:persistent_user_database:Created new persistent user user_1756734161.274363_7588 for episode episode_1756734159.124802
+ERROR:parallel_training_accelerator:Env 1 step failed: 
+ERROR:parallel_training_accelerator:Env 2 step failed: 
+ERROR:parallel_training_accelerator:Env 3 step failed: 
+ERROR:parallel_training_accelerator:Env 4 step failed: 
+ERROR:parallel_training_accelerator:Env 8 step failed: 
+INFO:persistent_user_database:Inserted persistent user user_1756734166.423274_3920
+INFO:persistent_user_database:Created new persistent user user_1756734166.423274_3920 for episode episode_1756734159.127796
+ERROR:parallel_training_accelerator:Env 10 step failed: 
+ERROR:parallel_training_accelerator:Env 11 step failed: 
+ERROR:parallel_training_accelerator:Env 12 step failed: 
+ERROR:parallel_training_accelerator:Env 13 step failed: 
+ERROR:parallel_training_accelerator:Env 14 step failed: 
+INFO:persistent_user_database:Inserted persistent user user_1756734179.300129_4102
+INFO:persistent_user_database:Created new persistent user user_1756734179.300129_4102 for episode episode_1756734159.125416
+INFO:persistent_user_database:Inserted persistent user user_1756734179.298144_3381
+INFO:persistent_user_database:Created new persistent user user_1756734179.298144_3381 for episode episode_1756734159.125114
+INFO:persistent_user_database:Inserted persistent user user_1756734179.282713_489
+INFO:persistent_user_database:Created new persistent user user_1756734179.282713_489 for episode episode_1756734159.123152
+ERROR:parallel_training_accelerator:Env 0 step failed: 
+ERROR:parallel_training_accelerator:Env 2 step failed: 
+ERROR:parallel_training_accelerator:Env 3 step failed: 
+ERROR:parallel_training_accelerator:Env 4 step failed: 
+E

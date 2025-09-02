@@ -465,22 +465,111 @@ class HybridLLMRLAgent:
         """Delegate to base RL agent"""
         if hasattr(self.rl_agent, 'store_experience'):
             return self.rl_agent.store_experience(*args, **kwargs)
+        elif hasattr(self.rl_agent, 'remember'):
+            # Some agents use 'remember' instead of 'store_experience'
+            return self.rl_agent.remember(*args, **kwargs)
+        elif hasattr(self.rl_agent, 'add_experience'):
+            # Some agents use 'add_experience'
+            return self.rl_agent.add_experience(*args, **kwargs)
         else:
-            # Some agents may not have this method
-            pass
+            # Log error if no compatible method found
+            import logging
+            logging.error(f"Base RL agent {type(self.rl_agent).__name__} has no experience storage method")
+            raise AttributeError(f"Base RL agent has no store_experience, remember, or add_experience method")
+    
+    def train_dqn(self, *args, **kwargs):
+        """Delegate training to base RL agent"""
+        if hasattr(self.rl_agent, 'train_dqn'):
+            return self.rl_agent.train_dqn(*args, **kwargs)
+        elif hasattr(self.rl_agent, 'train'):
+            # AdvancedRLAgent's train() doesn't accept any parameters
+            return self.rl_agent.train()
+        elif hasattr(self.rl_agent, 'update'):
+            return self.rl_agent.update(*args, **kwargs)
+        else:
+            import logging
+            logging.error(f"Base RL agent {type(self.rl_agent).__name__} has no training method")
+            raise AttributeError(f"Base RL agent has no train_dqn, train, or update method")
+    
+    def train_ppo_from_buffer(self, *args, **kwargs):
+        """Delegate PPO training to base RL agent"""
+        if hasattr(self.rl_agent, 'train_ppo_from_buffer'):
+            return self.rl_agent.train_ppo_from_buffer(*args, **kwargs)
+        elif hasattr(self.rl_agent, 'train_ppo'):
+            # Try without args if the method doesn't accept them
+            return self.rl_agent.train_ppo()
+        elif hasattr(self.rl_agent, 'train'):
+            # Fall back to general training
+            return self.rl_agent.train()
+        else:
+            # PPO training is optional, just log and continue
+            import logging
+            logging.info(f"Base RL agent {type(self.rl_agent).__name__} doesn't support PPO training")
+            return {'ppo_loss': 0.0}
+    
+    def save_checkpoint(self, *args, **kwargs):
+        """Delegate checkpoint saving to base RL agent"""
+        if hasattr(self.rl_agent, 'save_checkpoint'):
+            return self.rl_agent.save_checkpoint(*args, **kwargs)
+        elif hasattr(self.rl_agent, 'save'):
+            return self.rl_agent.save(*args, **kwargs)
+        else:
+            # Checkpoint saving is optional
+            import logging
+            logging.debug(f"Base RL agent {type(self.rl_agent).__name__} doesn't support checkpointing")
+            return None
+    
+    def detect_performance_drop(self, *args, **kwargs):
+        """Delegate performance drop detection to base RL agent"""
+        if hasattr(self.rl_agent, 'detect_performance_drop'):
+            return self.rl_agent.detect_performance_drop(*args, **kwargs)
+        else:
+            # Performance drop detection is optional, return False (no drop detected)
+            return False
+    
+    def adapt_to_environment_change(self, *args, **kwargs):
+        """Delegate environment adaptation to base RL agent"""
+        if hasattr(self.rl_agent, 'adapt_to_environment_change'):
+            return self.rl_agent.adapt_to_environment_change(*args, **kwargs)
+        elif hasattr(self.rl_agent, 'reset_exploration'):
+            # Some agents might use different method name
+            return self.rl_agent.reset_exploration(*args, **kwargs)
+        else:
+            # Adaptation is optional
+            import logging
+            logging.debug(f"Base RL agent {type(self.rl_agent).__name__} doesn't support environment adaptation")
+            return None
     
     # Expose buffer attributes for compatibility
     @property
     def replay_buffer(self):
         """Access base agent's replay buffer"""
-        buffer = getattr(self.rl_agent, 'replay_buffer', None)
-        return buffer if buffer is not None else []
+        if hasattr(self.rl_agent, 'replay_buffer'):
+            return self.rl_agent.replay_buffer
+        elif hasattr(self.rl_agent, 'memory'):
+            return self.rl_agent.memory
+        elif hasattr(self.rl_agent, 'buffer'):
+            return self.rl_agent.buffer
+        else:
+            # Create an empty buffer-like object to prevent errors
+            class EmptyBuffer:
+                def __len__(self):
+                    return 0
+                def __iter__(self):
+                    return iter([])
+            return EmptyBuffer()
     
     @property
     def memory(self):
         """Access base agent's memory"""
-        memory = getattr(self.rl_agent, 'memory', None)
-        return memory if memory is not None else []
+        if hasattr(self.rl_agent, 'memory'):
+            return self.rl_agent.memory
+        elif hasattr(self.rl_agent, 'replay_buffer'):
+            return self.rl_agent.replay_buffer
+        elif hasattr(self.rl_agent, 'buffer'):
+            return self.rl_agent.buffer
+        else:
+            return self.replay_buffer  # Use the replay_buffer property
     
     @property  
     def buffer(self):

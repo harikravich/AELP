@@ -1,0 +1,20 @@
+{
+  "period": "2025-08-01 to 2025-08-07",
+  "pc_products": {
+    "total_sales": 413,
+    "daily_average": 59.0,
+    "revenue": 63759.70999999999
+  },
+  "campaign_categories": {
+    "pc": 5,
+    "av": 3,
+    "balance_thrive": 5,
+    "general": 2
+  },
+  "insights": [
+    "PC sales averaging 59 per day",
+    "AV campaigns driving most volume",
+    "Balance/Thrive campaigns active but small scale",
+    "Multiple A/B tests running"
+  ]
+}

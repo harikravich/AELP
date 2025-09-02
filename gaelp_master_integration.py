@@ -49,7 +49,7 @@ import random
 # Import all GAELP components
 from user_journey_database import (
     UserJourneyDatabase, UserProfile, UserJourney, JourneyTouchpoint,
-    CompetitorExposure, JourneyState, TransitionTrigger
+    CompetitorExposure, JourneyState as JourneyStateEnum, TransitionTrigger
 )
 from gaelp_parameter_manager import get_parameter_manager, ParameterManager
 # Import our FIXED simulator with all improvements
@@ -522,7 +522,7 @@ class MasterOrchestrator:
         except ImportError as e:
             logger.warning(f"Advanced agent not available: {e}, falling back to robust agent")
             # Fallback to robust agent
-            from training_orchestrator.rl_agent_robust import RobustRLAgent, JourneyState
+            from training_orchestrator.rl_agent_robust import RobustRLAgent, JourneyState as JourneyStateData
             from dynamic_discovery import DynamicDiscoverySystem
             self.rl_agent = RobustRLAgent(
                 bid_actions=10,
@@ -536,7 +536,7 @@ class MasterOrchestrator:
                 discovery_system=DynamicDiscoverySystem()
             )
             self.rl_agent.load_checkpoint()
-            self.journey_state_class = JourneyState
+            self.journey_state_class = JourneyStateEnum
         
         # Keep online_learner reference for compatibility but use RL agent
         self.online_learner = self.rl_agent
@@ -818,7 +818,7 @@ class MasterOrchestrator:
             user_id=user_id,
             canonical_user_id=user_id,  # Will be resolved by identity system
             device_ids=[f"device_{uuid.uuid4().hex[:8]}"],
-            current_journey_state=JourneyState.UNAWARE,
+            current_journey_state=JourneyStateEnum.UNAWARE,
             conversion_probability=selected_segment.cvr / 100.0,  # Real CVR from data
             first_seen=datetime.now(),
             last_seen=datetime.now()
@@ -1112,14 +1112,14 @@ class MasterOrchestrator:
             'journey_stage': creative_user_state.journey_stage.value
         }
     
-    def _map_journey_stage(self, journey_state: JourneyState) -> CreativeJourneyStage:
+    def _map_journey_stage(self, journey_state: JourneyStateEnum) -> CreativeJourneyStage:
         """Map journey state to creative selector format"""
         mapping = {
-            JourneyState.UNAWARE: CreativeJourneyStage.AWARENESS,
-            JourneyState.AWARE: CreativeJourneyStage.AWARENESS,
-            JourneyState.CONSIDERING: CreativeJourneyStage.CONSIDERATION,
-            JourneyState.INTENT: CreativeJourneyStage.DECISION,
-            JourneyState.CONVERTED: CreativeJourneyStage.RETENTION
+            JourneyStateEnum.UNAWARE: CreativeJourneyStage.AWARENESS,
+            JourneyStateEnum.AWARE: CreativeJourneyStage.AWARENESS,
+            JourneyStateEnum.CONSIDERING: CreativeJourneyStage.CONSIDERATION,
+            JourneyStateEnum.INTENT: CreativeJourneyStage.DECISION,
+            JourneyStateEnum.CONVERTED: CreativeJourneyStage.RETENTION
         }
         return mapping.get(journey_state, CreativeJourneyStage.AWARENESS)
     
@@ -1320,135 +1320,26 @@ class MasterOrchestrator:
     
     async def _calculate_bid(self, journey_state: Dict[str, Any], query_data: Dict,
                            creative_selection: Dict) -> float:
-        """Calculate optimal bid using ML models and heuristics"""
+        """Calculate optimal bid using the RL agent."""
         
-        # Base bid from real channel performance data
-        channel_group = query_data.get('channel_group', 'Paid Search')
-        base_bid = self.config.pm.get_base_bid_by_channel(channel_group)
-        
-        # Adjust based on query intent using real data patterns
-        intent_multiplier = query_data.get('intent_strength', 0.5)
-        bid_amount = base_bid * (0.3 + intent_multiplier * 1.4)  # Scale based on real performance
-        
-        # Creative quality adjustment
-        if creative_selection.get('creative_type') == 'video':
-            bid_amount *= 1.2
-        
-        # Journey state adjustment using the structured journey data
-        # Adjust based on conversion probability
-        conversion_prob = journey_state.get('conversion_probability', 0.05)
-        bid_amount *= (0.5 + conversion_prob * 2.0)
-        
-        # Adjust based on journey stage
-        journey_stage = journey_state.get('journey_stage', 0)
-        stage_multipliers = {0: 0.8, 1: 0.9, 2: 1.1, 3: 1.3, 4: 0.5}  # Less for converted users
-        bid_amount *= stage_multipliers.get(journey_stage, 1.0)
-        
-        # Adjust based on user fatigue
-        fatigue_level = journey_state.get('user_fatigue_level', 0.0)
-        bid_amount *= (1.0 - fatigue_level * 0.3)  # Reduce bid for fatigued users
-        
-        # Apply conversion lag model adjustments
-        if hasattr(self, 'conversion_lag_model'):
-            try:
-                from conversion_lag_model import ConversionJourney
-                
-                # Create a mock journey for prediction
-                mock_journey = ConversionJourney(
-                    user_id=journey_state.get('user_id', 'unknown'),
-                    start_time=datetime.now(),
-                    touchpoints=[{
-                        'channel': 'search',
-                        'timestamp': datetime.now(),
-                        'bid': bid_amount
-                    }],
-                    features={
-                        'conversion_probability': journey_state.get('conversion_probability', 0.5),
-                        'journey_stage': journey_state.get('journey_stage', 1),
-                        'intent_strength': query_data.get('intent_strength', 0.5),
-                        'user_fatigue_level': journey_state.get('user_fatigue_level', 0.3)
-                    }
-                )
-                
-                # Predict expected conversion time (in days)
-                time_points = [1, 3, 7, 14, 30]
-                predictions = self.conversion_lag_model.predict_conversion_time(
-                    journeys=[mock_journey],
-                    time_points=time_points
-                )
-                
-                # Adjust bid based on expected conversion timing
-                if predictions and 'survival_probabilities' in predictions:
-                    survival_probs = predictions['survival_probabilities'][0]  # First journey
-                    # Convert survival to conversion probability
-                    conv_probs = 1 - survival_probs
-                    
-                    # Higher bid for likely quick conversions (within 3 days)
-                    quick_conversion_prob = conv_probs[1] if len(conv_probs) > 1 else 0.5  # Day 3 probability
-                    
-                    if quick_conversion_prob > 0.7:
-                        bid_amount *= 1.15  # Boost bid for likely quick converters
-                    elif quick_conversion_prob < 0.3:
-                        bid_amount *= 0.85  # Reduce bid for slow converters
-                    logger.debug(f"Conversion lag adjustment: 3-day conversion prob={quick_conversion_prob:.2f}")
-            except Exception as e:
-                # Fallback to simple heuristic based on conversion probability
-                conv_prob = journey_state.get('conversion_probability', 0.5)
-                if conv_prob > 0.7:
-                    bid_amount *= 1.1  # Slight boost for high converters
-                elif conv_prob < 0.3:
-                    bid_amount *= 0.9  # Slight reduction for low converters
-                logger.debug(f"Conversion lag model fallback: {e}")
-        
-        # Apply temporal effects (seasonality, hour of day, events, etc.)
-        if self.config.enable_temporal_effects and hasattr(self, 'temporal_effects'):
-            current_time = datetime.now()
-            # Use temporal effects for sophisticated time-based adjustments
-            temporal_result = self.temporal_effects.adjust_bidding(
-                base_bid=bid_amount,
-                date=current_time
-            )
-            bid_amount = temporal_result['adjusted_bid']
-            temporal_reason = temporal_result.get('reason', 'Temporal adjustment applied')
-            logger.debug(f"Temporal adjustment: {temporal_reason}")
-        else:
-            # Use discovered hourly patterns for time adjustments
-            hour = journey_state.get('hour_of_day', 12)
-            hourly_multiplier = get_parameter_manager().get_hourly_multiplier(hour)
-            bid_amount *= hourly_multiplier
-        
-        # Apply competitive intelligence adjustments
-        if self.config.enable_competitive_intelligence and hasattr(self, 'competitive_intel'):
-            # Create a mock auction outcome to estimate competitor bids
-            from competitive_intel import AuctionOutcome
-            
-            # Create a recent auction outcome for this keyword to get competitor estimates
-            mock_outcome = AuctionOutcome(
-                keyword=query_data.get('query', ''),
-                timestamp=datetime.now(),
-                our_bid=bid_amount,  # Use our current bid as reference
-                position=2,  # Assume second position to estimate top bid
-                cost=bid_amount * 0.9,  # Assume we paid 90% of our bid
-                competitor_count=3,  # Typical competition level
-                quality_score=0.8,  # Average quality score
-                daypart=datetime.now().hour,
-                day_of_week=datetime.now().weekday(),
-                device_type=query_data.get('device_type', 'mobile'),
-                location=query_data.get('location', 'US')
-            )
-            
-            # Get estimated competitor bid for top position
-            estimated_bid, confidence = self.competitive_intel.estimate_competitor_bid(
-                outcome=mock_outcome,
-                position=1  # Estimate for top position
-            )
-            
-            # Adjust our bid based on competitor intelligence
-            if confidence > 0.5 and estimated_bid > 0:
-                # Bid slightly above estimated competitor bid to win
-                competitive_multiplier = 1.1 if bid_amount < estimated_bid else 0.95
-                bid_amount = bid_amount * 0.7 + estimated_bid * competitive_multiplier * 0.3
-                logger.debug(f"Competitive adjustment: estimated competitor bid ${estimated_bid:.2f}, confidence {confidence:.2f}")
+        # Convert the dictionary-based journey_state to the JourneyState object
+        # that the rl_agent expects.
+        state_obj = self.journey_state_class(
+            stage=journey_state.get('journey_stage', 0),
+            touchpoints_seen=journey_state.get('total_touches', 0),
+            days_since_first_touch=journey_state.get('days_in_journey', 0),
+            ad_fatigue_level=journey_state.get('user_fatigue_level', 0),
+            segment=query_data.get('user_segment', 'unknown'),
+            device=query_data.get('device_type', 'desktop'),
+            hour_of_day=journey_state.get('hour_of_day', 12),
+            day_of_week=journey_state.get('day_of_week', 3),
+            previous_clicks=0, # This info is not readily available in this context
+            previous_impressions=0, # This info is not readily available in this context
+            estimated_ltv=0 # This info is not readily available in this context
+        )
+
+        # Get bid from the RL agent
+        action, bid_amount = self.rl_agent.get_bid_action(state_obj)
         
         # Clamp to range derived from real data
         min_bid = min(perf.effective_cpc for perf in self.config.pm.channel_performance.values()) * 0.1
@@ -1565,10 +1456,14 @@ class MasterOrchestrator:
         self.metrics.total_auctions += 1
         if won:
             self.metrics.total_spend += Decimal(str(winning_price))
+            # PRINT TO STDOUT FOR MONITORING
+            print(f"[AUCTION] Won! Position {our_position}, bid=${bid_amount:.2f}, paid=${winning_price:.2f}")
             logger.debug(f"Won auction at position {our_position}, paid ${winning_price:.2f}")
         else:
             self.metrics.competitor_wins += 1
             winner = all_bids[0]['bidder']
+            # PRINT TO STDOUT FOR MONITORING
+            print(f"[AUCTION] Lost to {winner}. Position {our_position}, bid=${bid_amount:.2f}")
             logger.debug(f"Lost auction to {winner}, our position: {our_position}")
         
         # Record outcome for competitive intelligence learning
@@ -1582,7 +1477,7 @@ class MasterOrchestrator:
                 position=our_position if won else None,  # None if we didn't win
                 cost=winning_price if won else None,  # None if we didn't win  
                 competitor_count=len(all_bids) - 1,
-                quality_score=0.8,  # Default quality score
+                quality_score=7.5,  # Good quality score (1-10 scale like competitors)
                 daypart=datetime.now().hour,
                 day_of_week=datetime.now().weekday(),
                 device_type=query_data.get('device_type', 'mobile'),
@@ -2010,24 +1905,30 @@ class MasterOrchestrator:
         # Get action from RL agent or use intelligent defaults based on discovered patterns
         if hasattr(self, 'rl_agent') and self.rl_agent is not None:
             # Get current observation from environment to create journey state
-            from training_orchestrator.rl_agent_robust import JourneyState
+            from training_orchestrator.rl_agent_robust import JourneyState as JourneyStateData
             from datetime import datetime
             
             pm = get_parameter_manager()
             segments = pm.user_segments
             segment_list = list(segments.keys()) if segments else ['concerned_parents']
             
-            # Get actual user data from environment if available
-            user_data = {}
+            # Get REALISTIC platform-observable metrics only
+            # These are metrics actually available from Google Ads, Facebook, etc.
+            platform_data = {}
             if hasattr(self.fixed_environment, 'current_user') and self.fixed_environment.current_user:
-                user = self.fixed_environment.current_user
-                user_data = {
-                    'touchpoints_seen': user.touchpoints,
-                    'days_since_first_touch': user.days_since_first_touch,
-                    'ad_fatigue_level': user.fatigue_level,
-                    'previous_clicks': user.clicks,
-                    'previous_impressions': user.impressions,
-                    'estimated_ltv': user.lifetime_value
+                # Instead of perfect user tracking, use campaign-level metrics
+                platform_data = {
+                    # Frequency capping gives us approximate exposure count
+                    'frequency_cap_estimate': min(10, self.fixed_environment.metrics.get('total_impressions', 0) // 100),
+                    # Campaign duration from first impression
+                    'campaign_days_active': min(30, self.fixed_environment.step_count // 100),
+                    # CTR as proxy for engagement (not perfect fatigue measurement)
+                    'recent_ctr': self.fixed_environment.metrics.get('total_clicks', 0) / max(1, self.fixed_environment.metrics.get('total_impressions', 1)),
+                    # Actual platform metrics
+                    'campaign_clicks': self.fixed_environment.metrics.get('total_clicks', 0),
+                    'campaign_impressions': self.fixed_environment.metrics.get('total_impressions', 0),
+                    # CPA as proxy for value (not perfect LTV)
+                    'current_cpa': self.fixed_environment.metrics.get('total_spend', 0) / max(1, self.fixed_environment.metrics.get('conversions', 1))
                 }
             
             # Calculate competition level from recent win rate
@@ -2039,19 +1940,45 @@ class MasterOrchestrator:
             channel_ctr = self.fixed_environment.metrics.get('total_clicks', 0) / max(1, self.fixed_environment.metrics.get('total_impressions', 1))
             channel_performance = min(1.0, channel_ctr * 20)  # Normalize to 0-1
             
+<<<<<<< Updated upstream
             # Create a journey state with proper parameters from environment - ensure no None values
             journey_state = JourneyState(
                 stage=user_data.get('stage', 1),  # Use actual user stage or default
                 touchpoints_seen=user_data.get('touchpoints_seen', self.fixed_environment.metrics.get('total_impressions', 0) % 10),
                 days_since_first_touch=float(user_data.get('days_since_first_touch', 0.0)),
                 ad_fatigue_level=float(user_data.get('ad_fatigue_level', 0.3)),
+=======
+            # Create journey state with ONLY platform-observable metrics
+            logger.info("Creating journey_state for storing experience...")
+            journey_state = JourneyStateData(
+                # Infer stage from campaign performance (early/mid/late)
+                stage=min(3, 1 + platform_data.get('campaign_days_active', 0) // 7),
+                # Use frequency cap estimate instead of perfect tracking
+                touchpoints_seen=platform_data.get('frequency_cap_estimate', 0),
+                # Real campaign duration
+                days_since_first_touch=float(platform_data.get('campaign_days_active', 0)),
+                # Use CTR decline as fatigue proxy (realistic)
+                ad_fatigue_level=max(0.0, 1.0 - platform_data.get('recent_ctr', 0.05) * 20),
+                # Segment from campaign targeting (not individual tracking)
+>>>>>>> Stashed changes
                 segment=segment_list[0] if segment_list else 'concerned_parents',
-                device='desktop',  # TODO: Get from actual context
+                # Device from bid context (would come from auction request)
+                device='desktop',  # In production, comes from bid request
+                # Real time metrics
                 hour_of_day=datetime.now().hour,
                 day_of_week=datetime.now().weekday(),
+<<<<<<< Updated upstream
                 previous_clicks=int(user_data.get('previous_clicks', self.fixed_environment.metrics.get('total_clicks', 0) or 0)),
                 previous_impressions=int(user_data.get('previous_impressions', max(1, self.fixed_environment.metrics.get('total_impressions', 1)))),
                 estimated_ltv=float(user_data.get('estimated_ltv', 100.0)),
+=======
+                # Real campaign metrics
+                previous_clicks=int(platform_data.get('campaign_clicks', 0)),
+                previous_impressions=int(platform_data.get('campaign_impressions', 1)),
+                # Use CPA as value proxy (not perfect LTV prediction)
+                estimated_ltv=min(500.0, max(50.0, 100.0 / max(0.2, platform_data.get('recent_ctr', 0.02)))),
+                # Real competition metrics
+>>>>>>> Stashed changes
                 competition_level=float(competition_level),
                 channel_performance=float(channel_performance)
             )
@@ -2207,6 +2134,35 @@ class MasterOrchestrator:
             
             reward = float(reward)
             
+            # ADD DENSE REWARDS for faster learning (not just sparse conversion rewards)
+            dense_reward = 0.0
+            
+            # 1. Reward for winning auctions (small positive)
+            if info.get('auction', {}).get('won', False):
+                dense_reward += 0.01
+                
+            # 2. Reward for clicks (medium positive)  
+            if info.get('clicked', False):
+                dense_reward += 0.1
+                
+            # 3. Penalty for overspending (negative)
+            spend_rate = self.fixed_environment.metrics.get('total_spend', 0) / max(1, self.fixed_environment.step_count)
+            budget_rate = float(self.config.daily_budget_total) / 1000  # Expected spend rate (convert to float)
+            if spend_rate > budget_rate * 1.5:  # Spending too fast
+                dense_reward -= 0.05
+                
+            # 4. Reward for good CTR (positive)
+            current_ctr = self.fixed_environment.metrics.get('total_clicks', 0) / max(1, self.fixed_environment.metrics.get('total_impressions', 1))
+            if current_ctr > 0.02:  # Above 2% CTR is good
+                dense_reward += 0.02
+                
+            # 5. Small reward for exploration early, exploitation later
+            if self.fixed_environment.step_count < 100:
+                dense_reward += 0.001  # Encourage exploration early
+            
+            # Combine sparse and dense rewards
+            reward = reward + dense_reward
+            
             if done:
                 # Episode ended - handle properly
                 self.rl_agent.episodes += 1
@@ -2245,8 +2201,9 @@ class MasterOrchestrator:
                 info['converted'] = info['metrics'].get('total_conversions', 0) > prev_conversions if 'prev_conversions' in locals() else False
             
             # TRAIN THE RL AGENT with this experience
+            logger.info(f"Before training check - journey_state is None: {journey_state is None}")
             if hasattr(self, 'rl_agent') and self.rl_agent is not None and journey_state is not None:
-                from training_orchestrator.rl_agent_robust import JourneyState
+                from training_orchestrator.rl_agent_robust import JourneyState as JourneyStateData
                 from datetime import datetime
                 
                 # Create next journey state from environment state
@@ -2262,7 +2219,7 @@ class MasterOrchestrator:
                 next_ctr = self.fixed_environment.metrics.get('total_clicks', 0) / max(1, self.fixed_environment.metrics.get('total_impressions', 1))
                 next_channel_perf = min(1.0, next_ctr * 20)
                 
-                next_journey_state = JourneyState(
+                next_journey_state = JourneyStateData(
                     stage=2 if info.get('clicked', False) else 1,  # Progress stage on click
                     touchpoints_seen=int(self.fixed_environment.metrics.get('total_impressions', 0) % 10),
                     days_since_first_touch=1.0,
@@ -2399,7 +2356,8 @@ class MasterOrchestrator:
                         if buffer_size >= 32:
                             try:
                                 logger.info(f"🧠 TRAINING DQN NOW! Buffer={buffer_size}, reward={reward:.2f}")
-                                self.rl_agent.train_dqn(batch_size=32)
+                                # Call train_dqn without batch_size - the agent manages this internally
+                                self.rl_agent.train_dqn()
                                 logger.info(f"✅ DQN training complete for step {self.metrics.total_auctions}")
                                 
                                 # ALSO train PPO for creative selection every 20 auctions

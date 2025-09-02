@@ -248,11 +248,27 @@ class PrioritizedReplayBuffer:
         weights /= weights.max()
         
         batch = list(zip(*samples))
-        states = np.array(batch[0])
-        actions = np.array(batch[1])
-        rewards = np.array(batch[2])
-        next_states = np.array(batch[3])
-        dones = np.array(batch[4])
+        
+        # Handle states that might be stored as different types
+        states_list = batch[0]
+        if len(states_list) > 0 and isinstance(states_list[0], np.ndarray):
+            # States are already arrays, stack them
+            states = np.stack(states_list)
+        else:
+            # Convert to array safely
+            states = np.array(states_list, dtype=np.float32)
+        
+        actions = np.array(batch[1], dtype=np.int64)
+        rewards = np.array(batch[2], dtype=np.float32)
+        
+        # Handle next_states similarly
+        next_states_list = batch[3]
+        if len(next_states_list) > 0 and isinstance(next_states_list[0], np.ndarray):
+            next_states = np.stack(next_states_list)
+        else:
+            next_states = np.array(next_states_list, dtype=np.float32)
+        
+        dones = np.array(batch[4], dtype=np.float32)
         
         return states, actions, rewards, next_states, dones, indices, weights
     
@@ -312,10 +328,38 @@ class RewardShaper:
         self.gamma = gamma
         self.potential_cache = {}
     
+    def _make_serializable(self, obj: Any) -> Any:
+        """Convert object to JSON-serializable format."""
+        if isinstance(obj, dict):
+            return {k: self._make_serializable(v) for k, v in obj.items()}
+        elif isinstance(obj, (list, tuple)):
+            return [self._make_serializable(item) for item in obj]
+        elif hasattr(obj, '__dict__'):
+            # Handle dataclasses and other objects with __dict__
+            return self._make_serializable(obj.__dict__)
+        elif hasattr(obj, 'value'):
+            # Handle Enums
+            return obj.value
+        elif isinstance(obj, (str, int, float, bool, type(None))):
+            return obj
+        else:
+            # Convert to string as fallback
+            return str(obj)
+    
     def compute_potential(self, state: Dict[str, Any]) -> float:
         """Compute potential function for state."""
+        # Handle both dict and dataclass states
+        if hasattr(state, '__dict__'):
+            # Convert dataclass to dict
+            state_dict = state.__dict__
+        else:
+            state_dict = state
+            
+        # Convert state to serializable format
+        serializable_state = self._make_serializable(state_dict)
+        
         # Hash state for caching
-        state_hash = hashlib.md5(json.dumps(state, sort_keys=True).encode()).hexdigest()
+        state_hash = hashlib.md5(json.dumps(serializable_state, sort_keys=True).encode()).hexdigest()
         
         if state_hash in self.potential_cache:
             return self.potential_cache[state_hash]
@@ -324,17 +368,17 @@ class RewardShaper:
         potential = 0.0
         
         # Progress towards conversion
-        if 'conversion_probability' in state:
-            potential += state['conversion_probability'] * 10.0
+        if isinstance(state_dict, dict) and 'conversion_probability' in state_dict:
+            potential += state_dict['conversion_probability'] * 10.0
         
         # Budget efficiency
-        if 'budget_spent' in state and 'budget_total' in state:
-            efficiency = 1.0 - (state['budget_spent'] / max(state['budget_total'], 1))
+        if isinstance(state_dict, dict) and 'budget_spent' in state_dict and 'budget_total' in state_dict:
+            efficiency = 1.0 - (state_dict['budget_spent'] / max(state_dict['budget_total'], 1))
             potential += efficiency * 5.0
         
         # CTR/CVR improvements
-        if 'ctr' in state:
-            potential += state['ctr'] * 20.0
+        if isinstance(state_dict, dict) and 'ctr' in state_dict:
+            potential += state_dict['ctr'] * 20.0
         
         self.potential_cache[state_hash] = potential
         return potential
@@ -695,21 +739,28 @@ class AdvancedRLAgent:
     
     def _dict_to_array(self, state: Dict) -> np.ndarray:
         """Convert state dict to numpy array."""
+        # Handle both dict and dataclass states
+        if hasattr(state, '__dict__'):
+            # Convert dataclass to dict
+            state_dict = state.__dict__
+        else:
+            state_dict = state
+            
         # Extract relevant features
         features = []
         
         # Numeric features
         for key in ['hour', 'day_of_week', 'budget_remaining', 'ctr', 'cvr',
                    'competition_level', 'channel_performance']:
-            if key in state:
-                features.append(float(state[key]))
+            if isinstance(state_dict, dict) and key in state_dict:
+                features.append(float(state_dict[key]))
             else:
                 features.append(0.0)
         
         # Categorical features (one-hot encode)
-        if 'channel' in state:
+        if isinstance(state_dict, dict) and 'channel' in state_dict:
             channels = ['google', 'facebook', 'instagram', 'tiktok']
-            channel_vec = [1.0 if state['channel'] == c else 0.0 for c in channels]
+            channel_vec = [1.0 if state_dict['channel'] == c else 0.0 for c in channels]
             features.extend(channel_vec)
         
         # Pad to expected dimension
@@ -739,7 +790,8 @@ class AdvancedRLAgent:
     
     def load_checkpoint(self, path: str):
         """Load model checkpoint."""
-        checkpoint = torch.load(path, map_location=self.device)
+        # PyTorch 2.6+ requires weights_only=False for custom classes
+        checkpoint = torch.load(path, map_location=self.device, weights_only=False)
         
         self.q_network.load_state_dict(checkpoint['q_network'])
         self.target_network.load_state_dict(checkpoint['target_network'])

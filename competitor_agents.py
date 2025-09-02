@@ -590,49 +590,60 @@ class RuleBasedAgent(BaseCompetitorAgent):
         logger.info(f"Initialized Rule-Based agent {self.name} with defensive profile")
     
     def calculate_bid(self, context: AuctionContext) -> float:
-        """Calculate bid using rule-based logic"""
+        """Calculate bid using data-driven rules from GA4 analysis."""
         if not self.should_participate(context):
             return 0.0
+
+        # Start with the typical bid range from GA4 analysis
+        base_bid = random.uniform(5.0, 12.0)
+
+        # Apply data-driven multipliers from ga4_actual_traffic_analysis.py
         
-        # Rule 1: Budget protection
-        budget_utilization = self.daily_spend / self.daily_budget
-        if budget_utilization > self.rules['budget_protection_threshold']:
-            # Only bid on premium users when budget is tight
-            if context.user_value_tier != UserValueTier.PREMIUM:
-                return 0.0
-        
-        # Rule 2: Avoid highly competitive auctions
-        if context.market_competition > self.rules['competition_threshold']:
-            return 0.0
-        
-        # Rule 3: Time-based bidding
-        time_multiplier = 1.2 if context.time_of_day in self.rules['peak_hours'] else 0.8
-        
-        # Rule 4: User tier preferences
-        if context.user_value_tier not in self.rules['preferred_tiers'] and context.user_value_tier != UserValueTier.PREMIUM:
-            return 0.0
-        
-        # Base bid calculation
-        base_bid = self._calculate_base_bid(context)
-        
-        # Apply rule-based multipliers
-        bid_multiplier = self.rules['min_bid_multiplier']
-        
-        # Adjust based on current performance vs targets
-        if self.metrics.win_rate < self.rules['win_rate_target']:
-            bid_multiplier *= 1.1  # Increase bids if win rate is low
-        
-        if self.metrics.avg_position > self.rules['position_target']:
-            bid_multiplier *= 1.05  # Increase bids if position is poor
-        
-        # Apply time multiplier
-        bid_multiplier *= time_multiplier
-        
-        # Conservative cap
-        bid_multiplier = min(bid_multiplier, self.rules['max_bid_multiplier'])
-        
-        final_bid = base_bid * bid_multiplier
-        
+        # 1. Intent Multiplier
+        intent_multipliers = {
+            "crisis": 2.0,
+            "purchase": 1.5,
+            "research": 1.2,
+            "awareness": 1.0
+        }
+        # Simple mapping from tier to intent
+        tier_to_intent = {
+            UserValueTier.PREMIUM: "crisis",
+            UserValueTier.HIGH: "purchase",
+            UserValueTier.MEDIUM: "research",
+            UserValueTier.LOW: "awareness"
+        }
+        intent = tier_to_intent.get(context.user_value_tier, "awareness")
+        base_bid *= intent_multipliers.get(intent, 1.0)
+
+        # 2. Time of Day Multiplier
+        time_multipliers = {
+            "overnight": 1.8, # 10pm-2am
+            "evening": 1.5,   # 7pm-9pm
+            "business": 1.2,  # 9am-11am, 1pm-3pm
+            "standard": 1.0
+        }
+        hour = context.time_of_day
+        time_category = "standard"
+        if 22 <= hour or hour <= 2:
+            time_category = "overnight"
+        elif 19 <= hour <= 21:
+            time_category = "evening"
+        elif (9 <= hour <= 11) or (13 <= hour <= 15):
+            time_category = "business"
+        base_bid *= time_multipliers.get(time_category, 1.0)
+
+        # 3. Device Multiplier
+        device_multipliers = {
+            "desktop": 1.15,
+            "tablet": 1.05,
+            "mobile": 1.00
+        }
+        base_bid *= device_multipliers.get(context.device_type, 1.0)
+
+        # Final bid is capped at the safety limit from the analysis
+        final_bid = min(base_bid, 25.0)
+
         return max(0.1, final_bid)
     
     def _calculate_base_bid(self, context: AuctionContext) -> float:

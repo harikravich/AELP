@@ -1,0 +1,102 @@
+{
+  "timestamp": "2025-09-01T14:48:09.913261",
+  "benchmarks": {
+    "Search": {
+      "avg_cpc": 7.0,
+      "range": [
+        3.5,
+        15.0
+      ],
+      "high_intent_multiplier": 2.0,
+      "notes": "Crisis/urgent searches bid 2x higher"
+    },
+    "Shopping": {
+      "avg_cpc": 10.97,
+      "range": [
+        5.0,
+        20.0
+      ],
+      "high_intent_multiplier": 1.5,
+      "notes": "Product comparison searches"
+    },
+    "Display": {
+      "avg_cpc": 2.0,
+      "range": [
+        0.5,
+        5.0
+      ],
+      "high_intent_multiplier": 1.2,
+      "notes": "Remarketing bids higher"
+    },
+    "Video": {
+      "avg_cpc": 3.5,
+      "range": [
+        1.0,
+        8.0
+      ],
+      "high_intent_multiplier": 1.3,
+      "notes": "YouTube parenting content"
+    }
+  },
+  "competitors": {
+    "Qustodio (Market Leader)": {
+      "base_bid": 8.0,
+      "aggression": 1.3,
+      "budget": "High",
+      "strategy": "Aggressive on brand terms, defensive on generic"
+    },
+    "Bark (Premium)": {
+      "base_bid": 10.0,
+      "aggression": 1.5,
+      "budget": "Very High",
+      "strategy": "Premium positioning, targets high-value segments"
+    },
+    "Circle (Mid-Market)": {
+      "base_bid": 6.5,
+      "aggression": 1.1,
+      "budget": "Medium",
+      "strategy": "Value positioning, targets price-conscious"
+    },
+    "Norton Family": {
+      "base_bid": 7.0,
+      "aggression": 1.2,
+      "budget": "High",
+      "strategy": "Leverages brand trust, security angle"
+    },
+    "Google Family Link": {
+      "base_bid": 5.0,
+      "aggression": 1.0,
+      "budget": "Unlimited",
+      "strategy": "Free product, bids for ecosystem lock-in"
+    },
+    "Net Nanny": {
+      "base_bid": 5.5,
+      "aggression": 1.1,
+      "budget": "Medium",
+      "strategy": "Long-tail keywords, specific features"
+    }
+  },
+  "recommendations": {
+    "Bid Ranges": {
+      "minimum": 3.0,
+      "maximum": 25.0,
+      "sweet_spot": [
+        7.0,
+        12.0
+      ],
+      "notes": "Must handle $20+ for crisis intent"
+    },
+    "Competition Levels": {
+      "low": "3-5 competitors bidding $3-5",
+      "medium": "4-6 competitors bidding $5-10",
+      "high": "5-7 competitors bidding $8-15",
+      "crisis": "6-8 competitors bidding $10-25"
+    },
+    "Quality Score Impact": {
+      "excellent": 0.7,
+      "good": 0.85,
+      "average": 1.0,
+      "poor": 1.3
+    }
+  }
+}

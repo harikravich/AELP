@@ -176,9 +176,13 @@ class JourneyStateManager:
     ) -> Dict[JourneyState, float]:
         """Calculate probabilities for all possible state transitions."""
         
-        base_probs = self.config.transition_probabilities.get(
-            (current_state, trigger), {}
-        )
+        # Get transition probabilities safely
+        if hasattr(self, 'config') and self.config and hasattr(self.config, 'transition_probabilities'):
+            base_probs = self.config.transition_probabilities.get(
+                (current_state, trigger), {}
+            )
+        else:
+            base_probs = {}
         
         if not base_probs:
             # No transition defined, stay in current state
@@ -243,9 +247,13 @@ class JourneyStateManager:
     ) -> bool:
         """Determine if a state transition should occur based on confidence."""
         
-        threshold = self.config.confidence_thresholds.get(
-            (from_state, to_state), 0.5
-        )
+        # Get confidence threshold safely
+        if hasattr(self, 'config') and self.config and hasattr(self.config, 'confidence_thresholds'):
+            threshold = self.config.confidence_thresholds.get(
+                (from_state, to_state), 0.5
+            )
+        else:
+            threshold = 0.5
         
         return confidence >= threshold
     
@@ -254,28 +262,45 @@ class JourneyStateManager:
         
         score = 0.0
         
+        # Default weights if config is missing or None
+        default_weights = {
+            'dwell_time': 0.3,
+            'scroll_depth': 0.2,
+            'click_depth': 0.2,
+            'interaction_count': 0.15,
+            'content_completion': 0.15
+        }
+        
+        # Get weights safely
+        if not hasattr(self, 'config') or self.config is None:
+            weights = default_weights
+        elif not hasattr(self.config, 'engagement_weights') or self.config.engagement_weights is None:
+            weights = default_weights
+        else:
+            weights = self.config.engagement_weights
+        
         # Dwell time (normalized to 0-1)
         dwell_time = touchpoint_data.get('dwell_time_seconds', 0)
-        dwell_score = min(1.0, dwell_time / 300.0)  # 5 minutes = 1.0
-        score += dwell_score * self.config.engagement_weights['dwell_time']
+        dwell_score = min(1.0, dwell_time / 300.0) if dwell_time else 0.0  # 5 minutes = 1.0
+        score += dwell_score * weights.get('dwell_time', 0.3)
         
         # Scroll depth
-        scroll_depth = touchpoint_data.get('scroll_depth', 0.0)
-        score += scroll_depth * self.config.engagement_weights['scroll_depth']
+        scroll_depth = touchpoint_data.get('scroll_depth', 0.0) or 0.0
+        score += scroll_depth * weights.get('scroll_depth', 0.2)
         
         # Click depth
-        click_depth = touchpoint_data.get('click_depth', 0)
-        click_score = min(1.0, click_depth / 5.0)  # 5+ clicks = 1.0
-        score += click_score * self.config.engagement_weights['click_depth']
+        click_depth = touchpoint_data.get('click_depth', 0) or 0
+        click_score = min(1.0, click_depth / 5.0) if click_depth else 0.0  # 5+ clicks = 1.0
+        score += click_score * weights.get('click_depth', 0.2)
         
         # Interaction count (pages viewed, etc.)
-        interaction_count = touchpoint_data.get('interaction_count', 0)
-        interaction_score = min(1.0, interaction_count / 10.0)
-        score += interaction_score * self.config.engagement_weights['interaction_count']
+        interaction_count = touchpoint_data.get('interaction_count', 0) or 0
+        interaction_score = min(1.0, interaction_count / 10.0) if interaction_count else 0.0
+        score += interaction_score * weights.get('interaction_count', 0.15)
         
         # Content completion (for video/article content)
-        completion_rate = touchpoint_data.get('content_completion_rate', 0.0)
-        score += completion_rate * self.config.engagement_weights['content_completion']
+        completion_rate = touchpoint_data.get('content_completion_rate', 0.0) or 0.0
+        score += completion_rate * weights.get('content_completion', 0.15)
         
         return min(1.0, score)
     
@@ -285,9 +310,29 @@ class JourneyStateManager:
         score = 0.0
         intent_signals = context.get('intent_signals', [])
         
+        # Default intent signals if config is missing
+        default_signals = {
+            'product_view': 0.3,
+            'price_check': 0.4,
+            'comparison_view': 0.35,
+            'add_to_cart': 0.8,
+            'checkout_start': 0.9,
+            'support_contact': 0.6,
+            'review_read': 0.25,
+            'specification_view': 0.5
+        }
+        
+        # Get signals safely
+        if not hasattr(self, 'config') or self.config is None:
+            signals_config = default_signals
+        elif not hasattr(self.config, 'intent_signals') or self.config.intent_signals is None:
+            signals_config = default_signals
+        else:
+            signals_config = self.config.intent_signals
+        
         for signal in intent_signals:
-            if signal in self.config.intent_signals:
-                score += self.config.intent_signals[signal]
+            if signal in signals_config:
+                score += signals_config[signal]
         
         return min(1.0, score)
     
@@ -323,10 +368,11 @@ class JourneyStateManager:
             
             # Apply time decay (more recent touchpoints weighted higher)
             age_days = (datetime.now() - touchpoint.get('timestamp', datetime.now())).days
-            time_weight = max(0.1, 1.0 - (age_days * self.config.time_decay_rate))
+            decay_rate = getattr(self.config, 'time_decay_rate', 0.05) if hasattr(self, 'config') and self.config else 0.05
+            time_weight = max(0.1, 1.0 - (age_days * decay_rate))
             
             # Apply position weight (later touchpoints weighted higher)
-            position_weight = (i + 1) / len(touchpoints)
+            position_weight = (i + 1) / max(1, len(touchpoints))
             
             # Combine weights
             final_weight = time_weight * position_weight

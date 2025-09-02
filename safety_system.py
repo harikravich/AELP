@@ -46,7 +46,7 @@ class SafetyViolationType(Enum):
 class SafetyConfig:
     """Safety system configuration"""
     # Absolute maximum bid cap - CANNOT be exceeded under any circumstances
-    max_bid_absolute: float = 10.0
+    max_bid_absolute: float = 25.0  # Based on real data: Bark bids up to $27 in crisis
     
     # Budget circuit breaker thresholds
     daily_loss_threshold: float = 100.0  # Stop if daily loss exceeds this
