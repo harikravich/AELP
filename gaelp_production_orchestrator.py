@@ -32,37 +32,116 @@ from fortified_rl_agent_no_hardcoding import ProductionFortifiedRLAgent
 from fortified_environment_no_hardcoding import ProductionFortifiedEnvironment
 
 # Data & Discovery
-from discovery_engine import RealTimeGA4Pipeline
-from segment_discovery import SegmentDiscoveryEngine
-from pipeline_integration import GAELPModelUpdater
+from discovery_engine import GA4RealTimeDataPipeline, GA4DiscoveryEngine
+try:
+    from segment_discovery import SegmentDiscoveryEngine
+except ImportError:
+    logger.warning("SegmentDiscoveryEngine not available")
+    SegmentDiscoveryEngine = None
+
+try:
+    from pipeline_integration import GAELPModelUpdater
+except ImportError:
+    logger.warning("GAELPModelUpdater not available")
+    GAELPModelUpdater = None
 
 # Attribution & Budget
-from attribution_system import MultiTouchAttributionEngine
-from budget_optimizer import DynamicBudgetOptimizer
-from budget_safety_controller import BudgetSafetyController
+try:
+    from attribution_system import MultiTouchAttributionEngine
+except ImportError:
+    logger.warning("MultiTouchAttributionEngine not available")
+    MultiTouchAttributionEngine = None
+
+try:
+    from budget_optimizer import DynamicBudgetOptimizer
+except ImportError:
+    logger.warning("DynamicBudgetOptimizer not available")
+    DynamicBudgetOptimizer = None
+
+try:
+    from budget_safety_controller import BudgetSafetyController
+except ImportError:
+    logger.warning("BudgetSafetyController not available")
+    BudgetSafetyController = None
 
 # Safety & Monitoring  
 from emergency_controls import EmergencyController
-from convergence_monitor import ConvergenceMonitor
-from regression_detector import RegressionDetector
-from production_checkpoint_manager import ProductionCheckpointManager
+
+try:
+    from convergence_monitoring_integration_demo import ConvergenceMonitor
+except ImportError:
+    logger.warning("ConvergenceMonitor not available")
+    ConvergenceMonitor = None
+
+try:
+    from regression_detector import RegressionDetector
+except ImportError:
+    logger.warning("RegressionDetector not available")
+    RegressionDetector = None
+
+try:
+    from production_checkpoint_manager import ProductionCheckpointManager
+except ImportError:
+    logger.warning("ProductionCheckpointManager not available")
+    ProductionCheckpointManager = None
 
 # Production Features
-from production_online_learner import ProductionOnlineLearner
-from shadow_mode_manager import ShadowModeManager
-from statistical_ab_testing_framework import StatisticalABTestingFramework
-from bid_explainability_system import BidExplainabilitySystem
+try:
+    from production_online_learner import ProductionOnlineLearner
+except ImportError:
+    logger.warning("ProductionOnlineLearner not available")
+    ProductionOnlineLearner = None
+
+try:
+    from shadow_mode_manager import ShadowModeManager
+except ImportError:
+    logger.warning("ShadowModeManager not available")
+    ShadowModeManager = None
+
+try:
+    from statistical_ab_testing_framework import StatisticalABTestingFramework
+except ImportError:
+    logger.warning("StatisticalABTestingFramework not available")
+    StatisticalABTestingFramework = None
+
+try:
+    from bid_explainability_system import BidExplainabilitySystem
+except ImportError:
+    logger.warning("BidExplainabilitySystem not available")
+    BidExplainabilitySystem = None
 
 # Google Ads Integration
-from google_ads_production_manager import GoogleAdsProductionManager
-from google_ads_gaelp_integration import GoogleAdsGAELPIntegration
+try:
+    from google_ads_production_manager import GoogleAdsProductionManager
+except ImportError:
+    logger.warning("GoogleAdsProductionManager not available")
+    GoogleAdsProductionManager = None
+
+try:
+    from google_ads_gaelp_integration import GoogleAdsGAELPIntegration
+except ImportError:
+    logger.warning("GoogleAdsGAELPIntegration not available")
+    GoogleAdsGAELPIntegration = None
 
 # Success Criteria & Monitoring
-from gaelp_success_criteria_monitor import SuccessCriteriaMonitor
+try:
+    from gaelp_success_criteria_monitor import SuccessCriteriaMonitor
+except ImportError:
+    logger.warning("SuccessCriteriaMonitor not available")
+    SuccessCriteriaMonitor = None
 
 # Creative & Auction
-from creative_content_analyzer import CreativeContentAnalyzer
-from auction_gym_integration_fixed import FixedAuctionGymIntegration
+try:
+    from creative_content_analyzer import CreativeContentAnalyzer
+except ImportError:
+    logger.warning("CreativeContentAnalyzer not available")
+    CreativeContentAnalyzer = None
+
+try:
+    from auction_gym_integration_fixed import FixedAuctionGymIntegration
+except ImportError:
+    logger.warning("FixedAuctionGymIntegration not available")
+    FixedAuctionGymIntegration = None
 
 # ==================== ORCHESTRATOR ====================
 
@@ -200,19 +279,20 @@ class GAELPProductionOrchestrator:
         logger.info("📊 Initializing data pipeline...")
         
         # GA4 real-time pipeline
-        self.components['ga4_pipeline'] = RealTimeGA4Pipeline(
-            property_id=self.config.ga4_property_id,
-            streaming_interval=5
+        self.components['ga4_pipeline'] = GA4RealTimeDataPipeline(
+            property_id=self.config.ga4_property_id
         )
         self.component_status['ga4_pipeline'] = ComponentStatus.RUNNING
         
         # Segment discovery
-        self.components['segment_discovery'] = SegmentDiscoveryEngine()
-        self.component_status['segment_discovery'] = ComponentStatus.RUNNING
+        if SegmentDiscoveryEngine:
+            self.components['segment_discovery'] = SegmentDiscoveryEngine()
+            self.component_status['segment_discovery'] = ComponentStatus.RUNNING
         
         # Model updater
-        self.components['model_updater'] = GAELPModelUpdater()
-        self.component_status['model_updater'] = ComponentStatus.RUNNING
+        if GAELPModelUpdater:
+            self.components['model_updater'] = GAELPModelUpdater()
+            self.component_status['model_updater'] = ComponentStatus.RUNNING
         
         logger.info("✅ Data pipeline ready")
     
@@ -251,14 +331,16 @@ class GAELPProductionOrchestrator:
         logger.info("💰 Initializing attribution & budget...")
         
         # Multi-touch attribution
-        self.components['attribution'] = MultiTouchAttributionEngine(
-            database_path="attribution_system.db"
-        )
-        self.component_status['attribution'] = ComponentStatus.RUNNING
+        if MultiTouchAttributionEngine:
+            self.components['attribution'] = MultiTouchAttributionEngine(
+                database_path="attribution_system.db"
+            )
+            self.component_status['attribution'] = ComponentStatus.RUNNING
         
         # Dynamic budget optimizer
-        self.components['budget_optimizer'] = DynamicBudgetOptimizer()
-        self.component_status['budget_optimizer'] = ComponentStatus.RUNNING
+        if DynamicBudgetOptimizer:
+            self.components['budget_optimizer'] = DynamicBudgetOptimizer()
+            self.component_status['budget_optimizer'] = ComponentStatus.RUNNING
         
         logger.info("✅ Attribution & budget ready")
     
