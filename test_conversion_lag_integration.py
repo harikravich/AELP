@@ -59,7 +59,7 @@ async def test_conversion_lag_integration():
                         if i < 3:  # Show first 3 time points
                             print(f"      Day {day}: {prob:.2%} conversion probability")
                 else:
-                    print(f"      Using fallback prediction")
+                    print(f"      RecSim REQUIRED: prediction") not available
                     
             except Exception as e:
                 print(f"      Note: {e}")
@@ -85,7 +85,7 @@ async def test_conversion_lag_integration():
                 for day, rate in zip(time_points, hazard_rates):
                     print(f"      Day {day}: hazard rate = {rate:.4f}")
             else:
-                print(f"      Using fallback hazard rates")
+                print(f"      RecSim REQUIRED: hazard rates") not available
                 
         except Exception as e:
             print(f"   ⚠️  Hazard rate calculation using fallback: {e}")
@@ -157,7 +157,7 @@ async def test_conversion_lag_integration():
                     print(f"      Conversion rate: {stats.get('conversion_rate', 0):.1%}")
                     print(f"      Avg time to conversion: {stats.get('avg_conversion_time_days', 'N/A')} days")
             else:
-                print(f"      Using fallback insights")
+                print(f"      RecSim REQUIRED: insights") not available
                 
         except Exception as e:
             print(f"   ⚠️  Insights using fallback: {e}")
@@ -183,7 +183,7 @@ async def test_conversion_lag_integration():
                 if impact is not None:
                     print(f"   ✅ {window}-day window: {impact:.1%} conversions captured")
                 else:
-                    print(f"   ⚠️  {window}-day window: using fallback estimate")
+                    print(f"   ⚠️  {window}-day window: RecSim REQUIRED: estimate") not available
                     
             except Exception as e:
                 print(f"   ⚠️  {window}-day window: {e}")

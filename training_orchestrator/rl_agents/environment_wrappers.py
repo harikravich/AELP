@@ -9,14 +9,8 @@ import random
 from dataclasses import dataclass
 import logging
 
-# Import Criteo model for realistic CTR predictions
-try:
-    from criteo_response_model import CriteoUserResponseModel
-    CRITEO_MODEL_AVAILABLE = True
-except ImportError:
-    logging.warning("CriteoUserResponseModel not available. Using fallback CTR calculations.")
-    CRITEO_MODEL_AVAILABLE = False
-    CriteoUserResponseModel = None
+# Import Criteo model for realistic CTR predictions - REQUIRED
+from criteo_response_model import CriteoUserResponseModel
 
 logger = logging.getLogger(__name__)
 
@@ -241,7 +235,7 @@ class AdCampaignEnvWrapper:
         return self._get_state(), reward, done, info
     
     def _get_base_ctr(self) -> float:
-        """Get base CTR using Criteo model or fallback to static calculations."""
+        """Get base CTR using Criteo model or use static calculations."""
         
         if self.criteo_model:
             try:
@@ -300,7 +294,7 @@ class AdCampaignEnvWrapper:
                 logger.warning(f"Error using Criteo model for CTR prediction: {e}")
                 # Fall through to static matrix
         
-        # Fallback to static CTR matrix
+        # Use static CTR matrix if needed
         ctr_matrix = {
             ('image', 'young_adults'): 0.025,
             ('image', 'professionals'): 0.032,

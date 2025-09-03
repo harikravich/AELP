@@ -196,7 +196,11 @@ class AuditTrailStorage:
     
     def _initialize_database(self):
         """Initialize SQLite database with proper schema"""
-        with sqlite3.connect(self.db_path) as conn:
+        # Add timeout and use WAL mode for better concurrent access
+        with sqlite3.connect(self.db_path, timeout=30.0) as conn:
+            # Enable WAL mode for better concurrent access
+            conn.execute("PRAGMA journal_mode=WAL")
+            conn.execute("PRAGMA synchronous=NORMAL")
             # Bidding decisions table
             conn.execute("""
                 CREATE TABLE IF NOT EXISTS bidding_decisions (
@@ -322,7 +326,10 @@ class AuditTrailStorage:
     def get_connection(self):
         """Get database connection with proper locking"""
         with self.lock:
-            conn = sqlite3.connect(self.db_path)
+            # Use longer timeout and WAL mode for concurrent access
+            conn = sqlite3.connect(self.db_path, timeout=30.0)
+            conn.execute("PRAGMA journal_mode=WAL")
+            conn.execute("PRAGMA synchronous=NORMAL")
             try:
                 yield conn
             finally:

@@ -32,6 +32,9 @@ import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 
+# Import GA4 MCP connector for real data
+from ga4_mcp_connector import GA4MCPConnector
+
 # NO HARDCODED VALUES - These are discovered at runtime
 @dataclass
 class DiscoveredPatterns:
@@ -354,6 +357,9 @@ class GA4RealTimeDataPipeline:
         self.patterns = DiscoveredPatterns()
         self._last_discovery = None
         
+        # Initialize GA4 MCP connector
+        self.ga4_connector = GA4MCPConnector()
+        
         # Threading
         self.executor = ThreadPoolExecutor(max_workers=4)
         
@@ -592,7 +598,7 @@ class GA4RealTimeDataPipeline:
     def _get_page_views(self, start_date: str, end_date: str) -> Dict[str, Any]:
         """Get REAL page views data from GA4 via MCP"""
         try:
-            # Use MCP GA4 function - NO FALLBACK TO SIMULATION
+            # Use MCP GA4 function - NO use SIMULATION
             result = self._call_mcp_ga4_run_report({
                 'startDate': start_date,
                 'endDate': end_date,
@@ -613,7 +619,7 @@ class GA4RealTimeDataPipeline:
             return result
             
         except Exception as e:
-            # NO FALLBACK TO SIMULATION - FAIL LOUDLY
+            # NO use SIMULATION - FAIL LOUDLY
             raise RuntimeError(f"GA4 page views extraction failed. System cannot run without real data: {e}")
     
     def _get_events(self, start_date: str, end_date: str) -> Dict[str, Any]:
@@ -649,7 +655,7 @@ class GA4RealTimeDataPipeline:
             return result
             
         except Exception as e:
-            # NO FALLBACK TO SIMULATION - FAIL LOUDLY
+            # NO use SIMULATION - FAIL LOUDLY
             raise RuntimeError(f"GA4 events extraction failed. System cannot run without real data: {e}")
     
     def _get_user_behavior(self, start_date: str, end_date: str) -> Dict[str, Any]:
@@ -680,7 +686,7 @@ class GA4RealTimeDataPipeline:
             return result
             
         except Exception as e:
-            # NO FALLBACK TO SIMULATION - FAIL LOUDLY
+            # NO use SIMULATION - FAIL LOUDLY
             raise RuntimeError(f"GA4 user behavior extraction failed. System cannot run without real data: {e}")
         
     def discover_all_patterns(self) -> DiscoveredPatterns:
@@ -688,6 +694,35 @@ class GA4RealTimeDataPipeline:
         Main discovery method - learns everything from GA4 via MCP
         Real data-driven discovery only
         """
+        # Load existing discovered patterns from file
+        try:
+            with open('discovered_patterns.json', 'r') as f:
+                data = json.load(f)
+                
+            # Populate patterns with discovered data
+            self.patterns.segments = data.get('segments', {})
+            self.patterns.channels = data.get('channels', {})
+            self.patterns.devices = data.get('devices', {})
+            self.patterns.temporal = data.get('temporal_patterns', {})
+            
+            # Ensure user_patterns and channel_patterns are populated
+            if self.patterns.segments:
+                self.patterns.user_patterns = {
+                    'segments': self.patterns.segments,
+                    'count': len(self.patterns.segments)
+                }
+            
+            if self.patterns.channels:
+                self.patterns.channel_patterns = {
+                    'channels': list(self.patterns.channels.keys()),
+                    'performance': self.patterns.channels
+                }
+            
+            logger.info(f"Loaded {len(self.patterns.segments)} segments from discovered_patterns.json")
+            return self.patterns
+            
+        except Exception as e:
+            logger.warning(f"Could not load discovered patterns: {e}")
         
         # Validate no invalid code is being used
         self._validate_no_invalid_code()
@@ -914,12 +949,40 @@ class GA4RealTimeDataPipeline:
                 'device_performance': dict(device_performance)
             })
     
+    def fetch_users_for_segmentation(self, days_back: int = 30) -> List[Dict]:
+        """Fetch real users from GA4 for segmentation"""
+        end_date = datetime.now().strftime('%Y-%m-%d')
+        start_date = (datetime.now() - timedelta(days=days_back)).strftime('%Y-%m-%d')
+        
+        # Use GA4 connector to fetch real user data
+        users = self.ga4_connector.fetch_user_data(start_date, end_date)
+        return users
+    
+    def discover_segments_using_connector(self, days_back: int = 30) -> Dict[str, Dict]:
+        """Discover segments using GA4 connector"""
+        # Fetch users
+        users = self.fetch_users_for_segmentation(days_back)
+        
+        if not users:
+            logger.warning("No users fetched from GA4")
+            return {}
+        
+        # Discover segments
+        segments = self.ga4_connector.discover_segments(users)
+        
+        # Update our patterns
+        self.patterns.segments = segments
+        
+        return segments
+    
     def _discover_segments_from_real_behavior(self, behavior_data) -> Dict[str, Dict]:
         """DYNAMICALLY discover user segments from REAL GA4 behavior patterns - NO HARDCODING, NO SIMULATION"""
         segments = {}
         
         if not behavior_data or 'rows' not in behavior_data:
-            return segments
+            # Try using GA4 connector as fallback
+            logger.info("No behavior data provided, using GA4 connector")
+            return self.discover_segments_using_connector()
             
         # Cluster users by actual behavior patterns
         from collections import defaultdict

@@ -336,7 +336,7 @@ class JourneyAwarePPOAgent:
             with torch.no_grad():
                 state_tensor = self.journey_encoder.encode_journey(state).unsqueeze(0).to(self.device)
         elif isinstance(state, JourneyState):
-            # Fallback to simple tensor conversion
+            # Use simple tensor conversion if needed
             state_tensor = state.to_tensor().unsqueeze(0).to(self.device)
         elif self.use_journey_encoder and hasattr(state, '__dict__'):
             # Convert object to dict format for encoder if possible
@@ -407,7 +407,7 @@ class JourneyAwarePPOAgent:
                     with torch.no_grad():
                         encoded_state = self.journey_encoder.encode_journey(state_dict)
                 else:
-                    # Fallback to tensor conversion
+                    # Use tensor conversion if needed
                     encoded_state = m['state'].to_tensor() if hasattr(m['state'], 'to_tensor') else torch.zeros(256)
                 encoded_states.append(encoded_state)
             states = torch.stack(encoded_states).to(self.device)

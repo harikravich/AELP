@@ -1,0 +1,1308 @@
+hariravichandran@thrive-backend:~/AELP$ GAELP_ENV=production GAELP_DRY_RUN=true python3 gaelp_production_orchestrator.py
+2025-09-03 15:06:44,201 - discovered_parameter_config - INFO - Parameter config initialized with ZERO hardcoded values
+✅ AuctionGym Fixed Integration loaded - Real second-price auction mechanics!
+2025-09-03 15:06:44,800 - __main__ - WARNING - ConvergenceMonitor not available
+2025-09-03 15:06:44,862 - discovery_engine - INFO - GA4 Real-Time Data Pipeline initialized for property 308028264
+2025-09-03 15:06:44,862 - discovery_engine - INFO - GA4 MCP connection verified for property 308028264
+2025-09-03 15:06:44,863 - segment_discovery - INFO - SegmentDiscoveryEngine initialized - NO hardcoded segments allowed
+2025-09-03 15:06:44,863 - segment_discovery - INFO - Clustering methods: ['kmeans', 'dbscan', 'hierarchical', 'gaussian_mixture']
+2025-09-03 15:06:44,863 - segment_discovery - INFO - Min cluster size: 50, Max clusters: 20
+2025-09-03 15:06:44,863 - dynamic_segment_integration - INFO - DynamicSegmentManager initialized - NO hardcoded segments allowed
+2025-09-03 15:06:44,863 - discovery_engine - INFO - Loaded 4 segments from discovered_patterns.json
+2025-09-03 15:06:44,868 - segment_discovery - INFO - Loaded 600 user behavior records from GA4
+2025-09-03 15:06:44,868 - segment_discovery - INFO - Starting segment discovery with 600 users
+2025-09-03 15:06:44,868 - segment_discovery - INFO - Methods: ['kmeans', 'dbscan', 'hierarchical', 'gaussian_mixture']
+2025-09-03 15:06:44,868 - segment_discovery - INFO - NO HARDCODED SEGMENTS - All discovered from data
+2025-09-03 15:06:44,911 - segment_discovery - INFO - Extracted features for 600 users
+2025-09-03 15:06:44,914 - segment_discovery - INFO - Applying kmeans clustering...
+2025-09-03 15:06:46,426 - segment_discovery - INFO - Cluster optimization - Elbow: 2, Silhouette: 3, Calinski: 12, Davies: 3, Chosen: 3
+2025-09-03 15:06:46,560 - segment_discovery - INFO - kmeans discovered 3 segments
+2025-09-03 15:06:46,560 - segment_discovery - INFO - Applying dbscan clustering...
+2025-09-03 15:06:46,678 - segment_discovery - INFO - dbscan discovered 2 segments
+2025-09-03 15:06:46,678 - segment_discovery - INFO - Applying hierarchical clustering...
+2025-09-03 15:06:48,262 - segment_discovery - INFO - Cluster optimization - Elbow: 2, Silhouette: 3, Calinski: 12, Davies: 3, Chosen: 3
+2025-09-03 15:06:48,301 - segment_discovery - INFO - hierarchical discovered 3 segments
+2025-09-03 15:06:48,301 - segment_discovery - INFO - Applying gaussian_mixture clustering...
+2025-09-03 15:06:49,905 - segment_discovery - INFO - Cluster optimization - Elbow: 2, Silhouette: 3, Calinski: 12, Davies: 3, Chosen: 3
+2025-09-03 15:06:50,053 - segment_discovery - INFO - gaussian_mixture discovered 3 segments
+2025-09-03 15:06:50,057 - segment_discovery - INFO - ✅ Validated 4 segments - no hardcoded names found
+2025-09-03 15:06:50,057 - segment_discovery - INFO - Final selection: 4 segments
+2025-09-03 15:06:50,057 - segment_discovery - INFO - ✅ All segments discovered dynamically from data
+2025-09-03 15:06:50,058 - dynamic_segment_integration - INFO - Updated 4 segment mappings
+2025-09-03 15:06:50,058 - dynamic_segment_integration - INFO - Initialized with 4 discovered segments
+2025-09-03 15:06:50,077 - __main__ - WARNING - BidExplainabilitySystem not available
+2025-09-03 15:06:50,130 - __main__ - WARNING - GoogleAdsGAELPIntegration not available
+2025-09-03 15:06:50,134 - __main__ - WARNING - SuccessCriteriaMonitor not available
+2025-09-03 15:06:50,609 - __main__ - INFO - 🚀 GAELP Production Orchestrator initialized in production mode
+2025-09-03 15:06:50,610 - __main__ - INFO - 🚀 Starting GAELP Production Orchestrator...
+2025-09-03 15:06:50,610 - __main__ - INFO - 📦 Initializing all components...
+2025-09-03 15:06:50,610 - __main__ - INFO - 🛡️ Initializing safety systems...
+2025-09-03 15:06:50,614 - budget_safety_controller - INFO - Budget safety database initialized
+2025-09-03 15:06:50,614 - budget_safety_controller - INFO - Budget safety configuration loaded from budget_safety_config.json
+2025-09-03 15:06:50,615 - budget_safety_controller - INFO - Started 4 budget monitoring threads
+2025-09-03 15:06:50,615 - budget_safety_controller - INFO - Budget Safety Controller initialized with comprehensive protection
+2025-09-03 15:06:50,615 - __main__ - INFO - ✅ Safety systems ready
+2025-09-03 15:06:50,615 - __main__ - INFO - 📊 Initializing data pipeline...
+2025-09-03 15:06:50,615 - discovery_engine - INFO - GA4 Real-Time Data Pipeline initialized for property 308028264
+2025-09-03 15:06:50,616 - discovery_engine - INFO - GA4 MCP connection verified for property 308028264
+2025-09-03 15:06:50,616 - segment_discovery - INFO - SegmentDiscoveryEngine initialized - NO hardcoded segments allowed
+2025-09-03 15:06:50,616 - segment_discovery - INFO - Clustering methods: ['kmeans', 'dbscan', 'hierarchical', 'gaussian_mixture']
+2025-09-03 15:06:50,616 - segment_discovery - INFO - Min cluster size: 20, Max clusters: 15
+2025-09-03 15:06:50,616 - __main__ - INFO - ✅ SegmentDiscoveryEngine initialized with GA4 pipeline
+2025-09-03 15:06:50,616 - __main__ - INFO - ✅ Data pipeline ready
+2025-09-03 15:06:50,616 - __main__ - INFO - 🤖 Initializing RL system...
+2025-09-03 15:06:50,617 - auction_gym_integration_fixed - INFO - Initialized empirical bidder: Qustodio with $320.0 budget
+2025-09-03 15:06:50,617 - auction_gym_integration_fixed - INFO - Initialized truthful bidder: Bark with $380.0 budget
+2025-09-03 15:06:50,617 - auction_gym_integration_fixed - INFO - Initialized empirical bidder: Circle with $280.0 budget
+2025-09-03 15:06:50,617 - auction_gym_integration_fixed - INFO - Initialized truthful bidder: Norton with $350.0 budget
+2025-09-03 15:06:50,617 - auction_gym_integration_fixed - INFO - Initialized empirical bidder: Life360 with $400.0 budget
+2025-09-03 15:06:50,617 - auction_gym_integration_fixed - INFO - Initialized empirical bidder: SmallComp1 with $220.0 budget
+2025-09-03 15:06:50,617 - auction_gym_integration_fixed - INFO - Initialized truthful bidder: McAfee with $360.0 budget
+2025-09-03 15:06:50,617 - auction_gym_integration_fixed - INFO - Initialized empirical bidder: Kaspersky with $300.0 budget
+2025-09-03 15:06:50,617 - auction_gym_integration_fixed - INFO - AuctionGym initialized with second_price auction, 4 slots, 8 competitors
+2025-09-03 15:06:50,617 - auction_gym_integration_fixed - INFO - Competitors: ['Qustodio ($320)', 'Bark ($380)', 'Circle ($280)', 'Norton ($350)', 'Life360 ($400)', 'SmallComp1 ($220)', 'McAfee ($360)', 'Kaspersky ($300)']
+2025-09-03 15:06:50,617 - auction_gym_integration_fixed - INFO - FixedAuctionGymIntegration initialized with real second-price mechanics
+2025-09-03 15:06:50,617 - __main__ - INFO - ✅ Auction orchestrator initialized
+2025-09-03 15:06:50,617 - gaelp_parameter_manager - INFO - Loaded GA4 patterns from discovered_patterns.json
+2025-09-03 15:06:50,617 - gaelp_parameter_manager - INFO - Processed 4 channel performance records
+2025-09-03 15:06:50,618 - gaelp_parameter_manager - INFO - Processed 4 user segments
+2025-09-03 15:06:50,618 - gaelp_parameter_manager - INFO - Processed 3 device performance records
+2025-09-03 15:06:50,618 - gaelp_parameter_manager - INFO - Processed temporal patterns with 0 hourly patterns
+2025-09-03 15:06:50,618 - gaelp_parameter_manager - INFO - ✅ ParameterManager initialized with 4 channels, 4 segments, 3 device types
+2025-09-03 15:06:50,618 - fortified_environment_no_hardcoding - INFO - Multi-objective reward system with volume/CAC balance initialized
+2025-09-03 15:06:50,618 - fortified_environment_no_hardcoding - INFO - Initializing production fortified environment...
+2025-09-03 15:06:50,618 - discovery_engine - INFO - GA4 Real-Time Data Pipeline initialized for property 308028264
+2025-09-03 15:06:50,619 - discovery_engine - INFO - GA4 MCP connection verified for property 308028264
+2025-09-03 15:06:51,416 - persistent_user_database - INFO - BigQuery connection established successfully
+2025-09-03 15:06:51,622 - persistent_user_database - INFO - Dataset aura-thrive-platform.gaelp_users already exists
+2025-09-03 15:06:51,898 - persistent_user_database - INFO - Table persistent_users already exists
+2025-09-03 15:06:52,063 - persistent_user_database - INFO - Table journey_sessions already exists
+2025-09-03 15:06:52,200 - persistent_user_database - INFO - Table persistent_touchpoints already exists
+2025-09-03 15:06:52,364 - persistent_user_database - INFO - Table competitor_exposures already exists
+2025-09-03 15:06:52,364 - persistent_user_database - INFO - All persistent user database tables ensured
+2025-09-03 15:06:52,364 - persistent_user_database - INFO - PersistentUserDatabase initialized with dataset: gaelp_users
+2025-09-03 15:06:52,370 - bigquery_batch_writer - INFO - BigQueryBatchWriter initialized with batch_size=984, flush_interval=5.0s
+2025-09-03 15:06:52,370 - persistent_user_database_batched - INFO - Batch writer initialized with batch_size=984, flush_interval=5.0s
+2025-09-03 15:06:52,996 - user_journey_database - INFO - BigQuery connection established
+2025-09-03 15:06:52,996 - training_orchestrator.delayed_conversion_system - INFO - Initialized realistic conversion patterns for 4 segments
+2025-09-03 15:06:52,996 - training_orchestrator.delayed_conversion_system - INFO - DelayedConversionSystem initialized with segment-based conversion tracking
+2025-09-03 15:06:52,996 - budget_pacer - INFO - Budget pacer initialized with advanced pacing algorithms
+2025-09-03 15:06:52,997 - auction_gym_integration_fixed - INFO - Initialized empirical bidder: Qustodio with $320.0 budget
+2025-09-03 15:06:52,997 - auction_gym_integration_fixed - INFO - Initialized truthful bidder: Bark with $380.0 budget
+2025-09-03 15:06:52,997 - auction_gym_integration_fixed - INFO - Initialized empirical bidder: Circle with $280.0 budget
+2025-09-03 15:06:52,997 - auction_gym_integration_fixed - INFO - Initialized truthful bidder: Norton with $350.0 budget
+2025-09-03 15:06:52,997 - auction_gym_integration_fixed - INFO - Initialized empirical bidder: Life360 with $400.0 budget
+2025-09-03 15:06:52,997 - auction_gym_integration_fixed - INFO - Initialized empirical bidder: SmallComp1 with $220.0 budget
+2025-09-03 15:06:52,997 - auction_gym_integration_fixed - INFO - Initialized truthful bidder: McAfee with $360.0 budget
+2025-09-03 15:06:52,997 - auction_gym_integration_fixed - INFO - Initialized empirical bidder: Kaspersky with $300.0 budget
+2025-09-03 15:06:52,997 - auction_gym_integration_fixed - INFO - AuctionGym initialized with second_price auction, 4 slots, 8 competitors
+2025-09-03 15:06:52,997 - auction_gym_integration_fixed - INFO - Competitors: ['Qustodio ($320)', 'Bark ($380)', 'Circle ($280)', 'Norton ($350)', 'Life360 ($400)', 'SmallComp1 ($220)', 'McAfee ($360)', 'Kaspersky ($300)']
+2025-09-03 15:06:52,998 - fortified_environment_no_hardcoding - INFO - Production environment initialized:
+2025-09-03 15:06:52,998 - fortified_environment_no_hardcoding - INFO -   - Budget: 1.0 (discovered)
+2025-09-03 15:06:52,998 - fortified_environment_no_hardcoding - INFO -   - Channels: 4 discovered
+2025-09-03 15:06:52,998 - fortified_environment_no_hardcoding - INFO -   - Segments: 4 discovered
+2025-09-03 15:06:52,998 - fortified_environment_no_hardcoding - INFO -   - Creatives: 10 discovered
+2025-09-03 15:06:52,998 - fortified_environment_no_hardcoding - INFO -   - Devices: 3 discovered
+2025-09-03 15:06:52,998 - gaelp_parameter_manager - INFO - Loaded GA4 patterns from discovered_patterns.json
+2025-09-03 15:06:52,998 - gaelp_parameter_manager - INFO - Processed 4 channel performance records
+2025-09-03 15:06:52,998 - gaelp_parameter_manager - INFO - Processed 4 user segments
+2025-09-03 15:06:52,998 - gaelp_parameter_manager - INFO - Processed 3 device performance records
+2025-09-03 15:06:52,998 - gaelp_parameter_manager - INFO - Processed temporal patterns with 0 hourly patterns
+2025-09-03 15:06:52,999 - gaelp_parameter_manager - INFO - ✅ ParameterManager initialized with 4 channels, 4 segments, 3 device types
+2025-09-03 15:06:52,999 - fortified_rl_agent_no_hardcoding - INFO - Target network update frequency set to 1000 steps for maximum stability
+2025-09-03 15:06:52,999 - fortified_rl_agent_no_hardcoding - INFO - Discovered hyperparameters: {'learning_rate': 0.00014, 'epsilon': 0.3, 'epsilon_decay': 0.99995, 'epsilon_min': 0.1, 'hidden_dim': 256, 'num_heads': 8, 'num_bid_levels': 20, 'gamma': 0.99, 'buffer_size': 80000, 'batch_size': 32, 'training_frequency': 32, 'target_update_frequency': 1000, 'target_update_tau': 0.001, 'dropout_rate': 0.2, 'warm_start_steps': 3, 'exploration_noise_factor': 0.1}
+2025-09-03 15:06:52,999 - fortified_rl_agent_no_hardcoding - INFO - Discovered trajectory hyperparameters: {'n_step_range': [5, 10], 'gae_lambda': 0.98, 'use_monte_carlo': True, 'max_trajectory_buffer_size': 1000, 'bootstrap_threshold': 0.8}
+2025-09-03 15:06:52,999 - fortified_rl_agent_no_hardcoding - INFO - Discovered sequence length: 16 (based on avg touchpoints: 8)
+2025-09-03 15:06:53,042 - fortified_rl_agent_no_hardcoding - INFO - Discovered sequence length: 16 (based on avg touchpoints: 8)
+2025-09-03 15:06:53,079 - fortified_rl_agent_no_hardcoding - INFO - Discovered sequence length: 16 (based on avg touchpoints: 8)
+2025-09-03 15:06:53,118 - fortified_rl_agent_no_hardcoding - INFO - Discovered sequence length: 16 (based on avg touchpoints: 8)
+2025-09-03 15:06:53,156 - fortified_rl_agent_no_hardcoding - INFO - Discovered sequence length: 16 (based on avg touchpoints: 8)
+2025-09-03 15:06:53,196 - fortified_rl_agent_no_hardcoding - INFO - Discovered sequence length: 16 (based on avg touchpoints: 8)
+2025-09-03 15:06:53,245 - fortified_rl_agent_no_hardcoding - INFO - Discovered LR scheduler config: adaptive
+2025-09-03 15:06:53,245 - fortified_rl_agent_no_hardcoding - INFO -   - Warmup steps: 200
+2025-09-03 15:06:53,245 - fortified_rl_agent_no_hardcoding - INFO -   - Plateau patience: 10
+2025-09-03 15:06:53,245 - fortified_rl_agent_no_hardcoding - INFO -   - LR bounds: [1.11e-06, 1.00e-02]
+2025-09-03 15:06:53,245 - fortified_rl_agent_no_hardcoding - INFO - Initialized adaptive LR scheduler: adaptive, initial_lr=0.00014
+2025-09-03 15:06:54,438 - fortified_rl_agent_no_hardcoding - INFO - Discovered sequence length: 16 (based on avg touchpoints: 8)
+2025-09-03 15:06:54,439 - fortified_rl_agent_no_hardcoding - INFO - Initialized sequence modeling with length: 16
+2025-09-03 15:06:54,440 - fortified_rl_agent_no_hardcoding - INFO - Initialized advanced exploration systems
+2025-09-03 15:06:54,440 - fortified_rl_agent_no_hardcoding - INFO - Discovered sequence length: 16 (based on avg touchpoints: 8)
+2025-09-03 15:06:54,454 - fortified_rl_agent_no_hardcoding - INFO - Discovered gradient clip threshold from hyperparameters: 10.0
+2025-09-03 15:06:54,454 - fortified_rl_agent_no_hardcoding - INFO - GradientFlowStabilizer initialized with adaptive clipping threshold: 10.0000
+2025-09-03 15:06:54,455 - fortified_rl_agent_no_hardcoding - INFO - ConvergenceMonitor initialized with thresholds: {'min_improvement_threshold': 0.01, 'plateau_threshold': 0.005, 'instability_threshold': 0.06, 'gradient_norm_threshold': 5.0, 'q_value_variance_threshold': 0.5, 'exploration_diversity_threshold': 0.1, 'convergence_patience': 100, 'emergency_gradient_threshold': 30.0, 'overestimation_bias_threshold': 0.05}
+2025-09-03 15:06:54,455 - fortified_rl_agent_no_hardcoding - INFO - Convergence criteria: {'min_episodes': 500, 'performance_stability_window': 100, 'min_exploration_ratio': 0.1, 'min_channels_used': 2, 'min_segments_reached': 1, 'convergence_confirmation_steps': 50}
+2025-09-03 15:06:54,455 - fortified_rl_agent_no_hardcoding - INFO - ProductionFortifiedRLAgent initialized with:
+2025-09-03 15:06:54,456 - fortified_rl_agent_no_hardcoding - INFO -   - 4 discovered channels: ['organic', 'display', 'search', 'social']
+2025-09-03 15:06:54,456 - fortified_rl_agent_no_hardcoding - INFO -   - 4 discovered segments: ['cluster_0', 'cluster_1', 'cluster_2', 'cluster_3']
+2025-09-03 15:06:54,456 - fortified_rl_agent_no_hardcoding - INFO -   - 10 discovered creatives
+2025-09-03 15:06:54,456 - fortified_rl_agent_no_hardcoding - INFO -   - Bid ranges: {'default': {'min': 0.0, 'max': 1.0, 'optimal': 0.0}}
+2025-09-03 15:06:54,456 - fortified_rl_agent_no_hardcoding - INFO -   - Data statistics computed from actual patterns
+2025-09-03 15:06:54,456 - fortified_rl_agent_no_hardcoding - INFO -   - Advanced exploration strategies: UCB, Thompson, Novelty, Count-based
+2025-09-03 15:06:54,456 - fortified_rl_agent_no_hardcoding - INFO - Warm starting from discovered successful patterns...
+2025-09-03 15:06:54,456 - fortified_rl_agent_no_hardcoding - INFO - Found 5 high-performing segments for warm start
+2025-09-03 15:06:54,457 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,458 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,459 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,460 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,461 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,462 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,464 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,465 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,466 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,467 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,469 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,470 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,471 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,472 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,474 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,475 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,476 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,477 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,478 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,479 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,480 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,481 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,482 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,483 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,484 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,485 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,486 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,487 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,488 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,489 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,490 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,491 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,492 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,494 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,495 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,496 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,497 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,498 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,499 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,500 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,501 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,502 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,503 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,504 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,505 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,506 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,507 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,508 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,509 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,510 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,511 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,512 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,513 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,514 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,515 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,516 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,517 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,518 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,519 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,521 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,522 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,523 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,524 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,525 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,526 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,527 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,528 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,529 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,530 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,531 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,532 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,533 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,534 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,535 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,536 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,537 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,538 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,539 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,540 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,541 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,542 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,543 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,544 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,545 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,547 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,548 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,549 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,550 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,551 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,552 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,553 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,554 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,555 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,556 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,557 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,558 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,559 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,560 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,561 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,562 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,563 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,564 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,565 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,566 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,567 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,568 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,569 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,570 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,571 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,572 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,573 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,574 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,575 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,576 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,577 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,578 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,579 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,580 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,581 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,582 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,583 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,584 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,585 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,586 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,587 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,588 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,589 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,590 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,591 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,592 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,594 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,595 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,596 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,597 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,598 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,599 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,600 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,601 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,602 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,603 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,604 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,605 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,606 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,608 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,609 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,610 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,611 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,612 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,613 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,614 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,615 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,616 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,617 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,618 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,619 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,620 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,621 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,622 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,623 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,624 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,626 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,627 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,628 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,629 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,630 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,631 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,632 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,633 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,634 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,635 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,636 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,637 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,638 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,639 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,640 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,641 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,642 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,643 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,644 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,645 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,646 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,647 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,648 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,649 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,650 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,651 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,652 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,653 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,654 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,655 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,656 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,657 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,659 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,660 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,661 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,662 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,663 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,664 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,665 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,666 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,667 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,668 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,669 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,670 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,671 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,672 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,673 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,674 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,675 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,676 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,677 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,678 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,679 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,680 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,681 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,682 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,683 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,684 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,685 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,686 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,687 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,688 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,689 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,690 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,691 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,692 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,693 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,694 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,695 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,696 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,697 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,699 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,700 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,701 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,702 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,703 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,704 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,705 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,706 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,707 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,708 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,709 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,710 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,711 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,712 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,713 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,714 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,715 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,716 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,717 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,718 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,719 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,720 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,721 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,722 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,723 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,724 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,725 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,726 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,727 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,729 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,730 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,731 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,732 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,733 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,734 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,735 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,736 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,737 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,738 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,739 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,740 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,741 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,742 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,743 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,744 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,745 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,746 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,747 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,748 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,749 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,750 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,751 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,752 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,753 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,754 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,755 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,756 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,757 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,758 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,759 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,761 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,762 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,763 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,764 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,765 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,766 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,767 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,768 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,769 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,770 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,771 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,772 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,773 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,774 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,775 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,776 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,777 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,778 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,779 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,780 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,781 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,782 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,783 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,784 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,785 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,786 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,787 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,788 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,789 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,790 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,791 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,792 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,793 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,794 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,795 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,796 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,797 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,798 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,799 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,800 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,801 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,802 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,803 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,804 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,805 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,806 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,807 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,808 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,809 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,810 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,811 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,812 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,813 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,814 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,815 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,816 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,817 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,818 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,819 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,820 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,821 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,822 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,823 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,824 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,825 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,826 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,827 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,828 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,829 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,830 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,831 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,832 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,833 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,834 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,835 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,836 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,837 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,839 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,840 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,841 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,842 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,843 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,844 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,845 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,846 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,847 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,848 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,849 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,850 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,851 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,852 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,853 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,854 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,855 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,856 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,857 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,858 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,859 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,860 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,861 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,862 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,863 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,864 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,865 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,866 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,867 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,868 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,869 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,870 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,871 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,872 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,873 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,874 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,875 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,876 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,877 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,878 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,879 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,880 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,881 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,882 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,883 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,884 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,885 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,886 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,888 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,889 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,890 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,891 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,892 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,893 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,894 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,895 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,896 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,897 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,898 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,899 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,900 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,901 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,902 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,903 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,904 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,905 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,906 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,907 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,908 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,909 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,910 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,911 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,912 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,913 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,914 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,915 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,916 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,917 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,918 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,920 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,921 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,922 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,923 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,924 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,925 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,926 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,927 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,928 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,929 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,930 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,931 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,932 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,933 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,934 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,935 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,936 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,937 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,938 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,939 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,940 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,942 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,943 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,944 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,945 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,946 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,947 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,948 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,949 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,950 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,951 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,952 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,953 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,954 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,955 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,956 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,957 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,958 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,959 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,960 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,961 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,962 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,963 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,964 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,965 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,966 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,967 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,968 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,969 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,970 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,971 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,972 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,973 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:06:54,973 - fortified_rl_agent_no_hardcoding - INFO - Pre-training with 1000 warm start samples...
+2025-09-03 15:06:54,974 - fortified_rl_agent_no_hardcoding - INFO - Using reduced learning rate 0.000014 for warm start (original: 0.000140)
+2025-09-03 15:06:55,521 - fortified_rl_agent_no_hardcoding - INFO - Double DQN Stats: {'standard_dqn_mean_q': 1.492315411567688, 'double_dqn_mean_q': 0.9442963600158691, 'overestimation_reduction': 0.3672273617921837, 'double_dqn_benefit': 0.3672273617921837}
+2025-09-03 15:06:55,706 - fortified_rl_agent_no_hardcoding - INFO - Double DQN Stats: {'standard_dqn_mean_q': 1.5660490989685059, 'double_dqn_mean_q': 0.9004854559898376, 'overestimation_reduction': 0.42499538706484263, 'double_dqn_benefit': 0.42499538706484263}
+2025-09-03 15:06:55,889 - fortified_rl_agent_no_hardcoding - INFO - Double DQN Stats: {'standard_dqn_mean_q': 1.515843152999878, 'double_dqn_mean_q': 0.9909141063690186, 'overestimation_reduction': 0.3462950936526753, 'double_dqn_benefit': 0.3462950936526753}
+2025-09-03 15:06:55,890 - fortified_rl_agent_no_hardcoding - INFO - Warm start complete, restored learning rate to 0.000140
+2025-09-03 15:06:55,898 - __main__ - INFO - ✅ RL system ready
+2025-09-03 15:06:55,898 - __main__ - INFO - 💰 Initializing attribution & budget...
+2025-09-03 15:06:55,899 - attribution_system - INFO - Attribution database initialized successfully
+2025-09-03 15:06:55,899 - attribution_system - INFO - MultiTouchAttributionEngine initialized with database: attribution_system.db
+2025-09-03 15:06:55,899 - budget_optimizer - INFO - Budget optimizer initialized: $1000.0 daily budget, maximize_conversions objective
+2025-09-03 15:06:55,899 - __main__ - INFO - ✅ Attribution & budget ready
+2025-09-03 15:06:55,900 - __main__ - INFO - 📈 Initializing monitoring...
+2025-09-03 15:06:55,900 - regression_detector - INFO - Loaded 1 checkpoints from metadata
+2025-09-03 15:06:55,900 - regression_detector - INFO - Regression monitoring database initialized
+2025-09-03 15:06:55,901 - production_checkpoint_manager - WARNING - Insufficient holdout samples: 5
+2025-09-03 15:06:55,901 - production_checkpoint_manager - INFO - Generating synthetic holdout data
+2025-09-03 15:06:55,958 - production_checkpoint_manager - INFO - Production Checkpoint Manager initialized
+2025-09-03 15:06:55,958 - production_checkpoint_manager - INFO -   Checkpoint directory: production_checkpoints
+2025-09-03 15:06:55,958 - production_checkpoint_manager - INFO -   Max checkpoints: 50
+2025-09-03 15:06:55,958 - production_checkpoint_manager - INFO -   Auto rollback: True
+2025-09-03 15:06:55,958 - production_checkpoint_manager - INFO -   Existing checkpoints: 0
+2025-09-03 15:06:55,958 - __main__ - INFO - ✅ Monitoring ready
+2025-09-03 15:06:55,958 - __main__ - INFO - 🔄 Initializing online learning...
+2025-09-03 15:06:55,959 - production_online_learner - INFO - Initialized with baseline CVR: 0.0270
+2025-09-03 15:06:55,959 - production_online_learner - INFO - Production online learner initialized
+2025-09-03 15:06:55,960 - __main__ - INFO - 🔄 Continuous learning cycle started
+2025-09-03 15:06:55,960 - __main__ - INFO - ✅ Online learning ready
+2025-09-03 15:06:55,960 - __main__ - INFO - 👻 Initializing shadow mode...
+2025-09-03 15:06:55,960 - production_online_learner - INFO - Starting continuous learning cycle
+2025-09-03 15:06:55,961 - gaelp_parameter_manager - INFO - Loaded GA4 patterns from discovered_patterns.json
+2025-09-03 15:06:55,961 - gaelp_parameter_manager - INFO - Processed 4 channel performance records
+2025-09-03 15:06:55,961 - gaelp_parameter_manager - INFO - Processed 4 user segments
+2025-09-03 15:06:55,961 - gaelp_parameter_manager - INFO - Processed 3 device performance records
+2025-09-03 15:06:55,961 - gaelp_parameter_manager - INFO - Processed temporal patterns with 0 hourly patterns
+2025-09-03 15:06:55,961 - gaelp_parameter_manager - INFO - ✅ ParameterManager initialized with 4 channels, 4 segments, 3 device types
+2025-09-03 15:06:55,961 - discovery_engine - INFO - GA4 Real-Time Data Pipeline initialized for property 308028264
+2025-09-03 15:06:55,961 - discovery_engine - INFO - GA4 MCP connection verified for property 308028264
+2025-09-03 15:06:55,962 - discovery_engine - INFO - Loaded 4 segments from discovered_patterns.json
+2025-09-03 15:06:55,962 - shadow_mode_environment - INFO - Loaded patterns from discovery engine
+2025-09-03 15:06:55,962 - shadow_mode_environment - INFO - Shadow mode environment initialized
+2025-09-03 15:06:55,962 - shadow_mode_manager - INFO - Initialized model current: production_v1
+2025-09-03 15:06:55,962 - discovery_engine - INFO - Loaded 4 segments from discovered_patterns.json
+2025-09-03 15:06:55,962 - shadow_mode_environment - INFO - Loaded patterns from discovery engine
+2025-09-03 15:06:55,962 - shadow_mode_environment - INFO - Shadow mode environment initialized
+2025-09-03 15:06:55,962 - shadow_mode_manager - INFO - Initialized model challenger: production_v2
+2025-09-03 15:06:55,977 - shadow_mode_manager - INFO - Database initialized: shadow_testing_shadow_1756912015.db
+2025-09-03 15:06:55,977 - shadow_mode_manager - INFO - Shadow Mode Manager initialized for test: production_shadow_test
+2025-09-03 15:06:55,977 - __main__ - INFO - ✅ Shadow mode ready
+2025-09-03 15:06:55,977 - __main__ - INFO - 🧪 Initializing A/B testing...
+2025-09-03 15:06:55,977 - statistical_ab_testing_framework - INFO - Context dimension calculated: 23 (segments=4)
+2025-09-03 15:06:55,977 - statistical_ab_testing_framework - INFO - StatisticalABTestFramework initialized
+2025-09-03 15:06:55,977 - __main__ - INFO - ✅ A/B testing ready
+2025-09-03 15:06:55,977 - __main__ - INFO - 💡 Initializing explainability...
+2025-09-03 15:06:55,977 - __main__ - WARNING - ⚠️ Explainability not available, skipping
+2025-09-03 15:06:55,977 - __main__ - INFO - ✅ All components initialized successfully
+2025-09-03 15:06:55,977 - __main__ - INFO - 🔍 Starting initial segment discovery...
+2025-09-03 15:06:55,977 - discovery_engine - INFO - Loaded 4 segments from discovered_patterns.json
+2025-09-03 15:06:55,984 - segment_discovery - INFO - Loaded 600 user behavior records from GA4
+2025-09-03 15:06:55,984 - segment_discovery - INFO - Starting segment discovery with 600 users
+2025-09-03 15:06:55,984 - segment_discovery - INFO - Methods: ['kmeans', 'dbscan', 'hierarchical', 'gaussian_mixture']
+2025-09-03 15:06:55,984 - segment_discovery - INFO - NO HARDCODED SEGMENTS - All discovered from data
+2025-09-03 15:06:56,027 - segment_discovery - INFO - Extracted features for 600 users
+2025-09-03 15:06:56,030 - segment_discovery - INFO - Applying kmeans clustering...
+2025-09-03 15:06:57,984 - segment_discovery - INFO - Cluster optimization - Elbow: 2, Silhouette: 3, Calinski: 15, Davies: 3, Chosen: 3
+2025-09-03 15:06:58,116 - segment_discovery - INFO - kmeans discovered 3 segments
+2025-09-03 15:06:58,116 - segment_discovery - INFO - Applying dbscan clustering...
+2025-09-03 15:06:58,194 - segment_discovery - INFO - dbscan discovered 2 segments
+2025-09-03 15:06:58,195 - segment_discovery - INFO - Applying hierarchical clustering...
+2025-09-03 15:07:00,255 - segment_discovery - INFO - Cluster optimization - Elbow: 2, Silhouette: 3, Calinski: 15, Davies: 3, Chosen: 3
+2025-09-03 15:07:00,294 - segment_discovery - INFO - hierarchical discovered 3 segments
+2025-09-03 15:07:00,295 - segment_discovery - INFO - Applying gaussian_mixture clustering...
+2025-09-03 15:07:02,347 - segment_discovery - INFO - Cluster optimization - Elbow: 2, Silhouette: 3, Calinski: 15, Davies: 3, Chosen: 3
+2025-09-03 15:07:02,498 - segment_discovery - INFO - gaussian_mixture discovered 3 segments
+2025-09-03 15:07:02,498 - segment_discovery - INFO - ✅ Validated 5 segments - no hardcoded names found
+2025-09-03 15:07:02,499 - segment_discovery - INFO - Final selection: 5 segments
+2025-09-03 15:07:02,499 - segment_discovery - INFO - ✅ All segments discovered dynamically from data
+2025-09-03 15:07:02,500 - fortified_rl_agent_no_hardcoding - INFO - Updating agent with 5 discovered segments
+2025-09-03 15:07:02,500 - fortified_rl_agent_no_hardcoding - INFO - ✅ Agent updated with discovered segments: ['Active Researchers (Mobile) [9-5]', 'Active Researchers (Mobile) [9-5]', 'Active Researchers (Mobile) [9-5]']
+2025-09-03 15:07:02,504 - __main__ - INFO - ✅ Initial segment discovery complete: 5 segments found
+2025-09-03 15:07:02,504 - __main__ - INFO -    - Active Researchers (Mobile) [9-5]: 120 users, CVR: 0.025
+2025-09-03 15:07:02,504 - __main__ - INFO -    - Active Researchers (Mobile) [9-5]: 198 users, CVR: 0.030
+2025-09-03 15:07:02,504 - __main__ - INFO -    - Active Researchers (Mobile) [9-5]: 133 users, CVR: 0.000
+2025-09-03 15:07:02,514 - budget_optimizer - INFO - Optimizing hourly allocation for 2025-09-03 using adaptive_ml
+2025-09-03 15:07:02,514 - __main__ - INFO - ✅ GAELP Production Orchestrator started successfully
+2025-09-03 15:07:02,518 - budget_optimizer - WARNING - Insufficient data for optimization: 0 windows
+2025-09-03 15:07:02,518 - __main__ - INFO - 🎉 GAELP Production Orchestrator is running!
+2025-09-03 15:07:02,518 - budget_optimizer - INFO - No performance data yet - using bootstrap even distribution strategy
+2025-09-03 15:07:02,518 - __main__ - INFO - Budget optimization complete. Confidence: 0.50
+2025-09-03 15:07:02,518 - __main__ - INFO - 💰 Budget pacing multiplier for hour 15: 1.03
+2025-09-03 15:07:02,518 - budget_optimizer - WARNING - No recent performance data or current allocations for reallocation
+2025-09-03 15:07:02,521 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:02,521 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:02,521 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:02,522 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:02,526 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:02,613 - audit_trail - INFO - Audit trail storage initialized: gaelp_audit_trail.db
+2025-09-03 15:07:02,613 - audit_trail - INFO - GAELP Compliance Audit Trail initialized
+2025-09-03 15:07:02,623 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:02,626 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:07:02,626 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:07:02,626 - fortified_rl_agent_no_hardcoding - INFO - Calculated high reward threshold from conversion: 0.15000000000000002
+2025-09-03 15:07:02,646 - budget_safety_controller - WARNING - Campaign training not registered, using default limits
+2025-09-03 15:07:02,651 - budget_safety_controller - INFO - Campaign training registered with budget limits: Daily=$1000.0
+2025-09-03 15:07:02,659 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:02,660 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:02,660 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:02,660 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:02,661 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:02,688 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:02,697 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:02,697 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:02,698 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:02,698 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:02,699 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:02,727 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:02,738 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:02,738 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:02,738 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:02,738 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:02,739 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:02,767 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:02,777 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:02,777 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:02,777 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:02,777 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:02,778 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:02,805 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:02,815 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:02,815 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:02,815 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:02,815 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:02,816 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:02,843 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:02,853 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:02,853 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:02,854 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:02,854 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:02,855 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:02,882 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:02,892 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:02,892 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:02,893 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:02,893 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:02,894 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:02,925 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:02,935 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:02,936 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:02,936 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:02,936 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:02,937 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:02,967 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:02,978 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:02,978 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:02,979 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:02,979 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:02,980 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:03,031 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:03,041 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,041 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,041 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:03,041 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:03,042 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:03,073 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:03,082 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,082 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,083 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:03,083 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:03,084 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:03,114 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:03,124 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,125 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,125 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:03,125 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:03,126 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:03,174 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:03,184 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,184 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,184 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:03,184 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:03,185 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:03,212 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:03,221 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,222 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,222 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:03,222 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:03,223 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:03,254 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:03,264 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,264 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,264 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:03,265 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:03,266 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:03,293 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:03,303 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,303 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,304 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:03,304 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:03,305 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:03,332 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:03,341 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,342 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,342 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:03,342 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:03,343 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:03,370 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:03,379 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,380 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,380 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:03,380 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:03,381 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:03,408 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:03,418 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,419 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,419 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:03,419 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:03,420 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:03,465 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:03,475 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,475 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,475 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:03,475 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:03,476 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:03,502 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:03,512 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,512 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,512 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:03,513 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:03,514 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:03,564 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:03,574 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,574 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,574 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:03,574 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:03,575 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:03,619 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:03,630 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,630 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,630 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:03,630 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:03,631 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:03,659 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:03,670 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,670 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,671 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:03,671 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:03,672 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:03,717 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:03,727 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,728 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,728 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:03,728 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:03,729 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:03,756 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:03,766 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,766 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,766 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:03,766 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:03,767 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:03,794 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:03,804 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,804 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,804 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:03,804 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:03,806 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:03,833 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:03,845 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,846 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,846 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:03,846 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:03,847 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:03,875 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:03,885 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,885 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,885 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:03,885 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:03,886 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:03,913 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:03,924 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,924 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,924 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:03,924 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:03,926 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:03,952 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:03,962 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,962 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:03,963 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:03,963 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:03,964 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:03,990 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:04,000 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,000 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,001 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:04,001 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:04,002 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:04,029 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:04,031 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:07:04,032 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:07:04,032 - fortified_rl_agent_no_hardcoding - INFO - Calculated high reward threshold from conversion: 0.15000000000000002
+2025-09-03 15:07:04,060 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,061 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,061 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:04,061 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:04,062 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:04,105 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:04,115 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,115 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,116 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:04,116 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:04,117 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:04,161 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:04,170 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,171 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,171 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:04,171 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:04,172 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:04,197 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:04,207 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,208 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,208 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:04,208 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:04,209 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:04,236 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:04,247 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,248 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,248 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:04,248 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:04,249 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:04,293 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:04,303 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,304 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,304 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:04,304 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:04,305 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:04,333 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:04,342 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,343 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,343 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:04,343 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:04,344 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:04,372 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:04,382 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,383 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,383 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:04,383 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:04,384 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:04,410 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:04,420 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,421 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,421 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:04,421 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:04,422 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:04,467 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:04,477 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,477 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,477 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:04,477 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:04,478 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:04,522 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:04,531 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,532 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,532 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:04,532 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:04,533 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:04,562 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:04,572 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,572 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,572 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:04,572 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:04,573 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:04,601 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:04,612 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,613 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,613 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:04,613 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:04,614 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:04,641 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:04,651 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,652 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,652 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:04,652 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:04,653 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:04,680 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:04,690 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,690 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,690 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:04,690 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:04,691 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:04,719 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:04,729 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,729 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,730 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:04,730 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:04,731 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:04,775 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:04,785 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,785 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,786 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:04,786 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:04,787 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:04,830 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:04,831 - budget_optimizer - INFO - Learned patterns from 50 performance windows
+2025-09-03 15:07:04,831 - budget_optimizer - INFO - Re-learned conversion patterns from updated data
+2025-09-03 15:07:04,840 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,841 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,841 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:04,841 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:04,842 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:04,884 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:04,894 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,895 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,895 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:04,895 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:04,896 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:04,926 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:04,935 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,936 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,936 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:04,936 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:04,937 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:04,965 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:04,975 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,976 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:04,976 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:04,976 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:04,977 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:05,004 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:05,014 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,015 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,015 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:05,015 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:05,016 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:05,043 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:05,055 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,055 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,056 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:05,056 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:05,057 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:05,099 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:05,109 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,109 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,110 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:05,110 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:05,111 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:05,139 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:05,149 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,149 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,149 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:05,149 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:05,150 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:05,176 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:05,186 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,186 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,186 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:05,186 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:05,187 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:05,216 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:05,226 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,227 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,227 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:05,227 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:05,228 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:05,256 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:05,266 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,266 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,267 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:05,267 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:05,268 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:05,295 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:05,305 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,306 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,306 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:05,306 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:05,307 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:05,333 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:05,344 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,344 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,345 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:05,345 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:05,346 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:05,373 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:05,382 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,382 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,382 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:05,382 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:05,383 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:05,426 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:05,437 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,437 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,437 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:05,438 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:05,439 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:05,465 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:05,468 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:07:05,468 - fortified_rl_agent_no_hardcoding - INFO - Discovered conversion threshold from segments: 0.030000000000000002
+2025-09-03 15:07:05,468 - fortified_rl_agent_no_hardcoding - INFO - Calculated high reward threshold from conversion: 0.15000000000000002
+2025-09-03 15:07:05,495 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,495 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,495 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:05,495 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:05,497 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:05,524 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:05,534 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,534 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,534 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:05,534 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:05,535 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:05,580 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:05,589 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,589 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,589 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:05,589 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:05,590 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:05,617 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:05,627 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,627 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,627 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:05,628 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:05,629 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:05,656 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:05,666 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,666 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,666 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:05,666 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:05,668 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:05,693 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:05,703 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,703 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,703 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:05,703 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:05,704 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:05,732 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:05,742 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,743 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,743 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:05,743 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:05,744 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:05,770 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:05,778 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,778 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,779 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:05,779 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:05,780 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:05,806 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:05,817 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,817 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,817 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:05,818 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:05,819 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:05,846 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:05,856 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,857 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,857 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:05,857 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:05,858 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:05,884 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:05,893 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,893 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,894 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:05,894 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:05,895 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:05,921 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:05,932 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,932 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,932 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:05,932 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:05,933 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:05,962 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:05,972 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,973 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:05,973 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:05,973 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:05,974 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:06,000 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:06,010 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,011 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,011 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:06,011 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:06,012 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:06,039 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:06,049 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,049 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,049 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:06,049 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:06,051 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:06,077 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:06,086 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,087 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,087 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:06,087 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:06,088 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:06,113 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:06,123 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,123 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,124 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:06,124 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:06,125 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:06,151 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:06,160 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,160 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,161 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:06,161 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:06,162 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:06,187 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:06,197 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,197 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,197 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:06,197 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:06,198 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:06,225 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:06,236 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,236 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,236 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:06,237 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:06,238 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:06,266 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:06,275 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,275 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,276 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:06,276 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:06,277 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:06,302 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:06,312 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,312 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,312 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:06,312 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:06,313 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:06,356 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:06,366 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,366 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,367 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:06,367 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:06,368 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:06,393 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:06,403 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,403 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,403 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:06,403 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:06,404 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:06,432 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:06,441 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,442 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,442 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:06,442 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:06,443 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:06,469 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:06,478 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,478 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,478 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:06,478 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:06,479 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:06,505 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:06,516 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,516 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,516 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:06,517 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:06,518 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:06,544 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+2025-09-03 15:07:06,555 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,556 - shadow_mode_environment - WARNING - ShadowModeEnvironment.step() called before reset() - initializing now
+2025-09-03 15:07:06,556 - shadow_mode_manager - ERROR - Error getting decision from current: 'conversion_rate'
+2025-09-03 15:07:06,556 - shadow_mode_manager - ERROR - Error getting decision from challenger: 'conversion_rate'
+2025-09-03 15:07:06,557 - fortified_rl_agent_no_hardcoding - INFO - Discovered high-performance CVR threshold: 0.04 from 4 segments
+2025-09-03 15:07:06,604 - attribution_system - INFO - Tracked impression: search/gaelp_training_episode_0
+Killed
+hariravichandran@thrive-backend:~/AELP$ 

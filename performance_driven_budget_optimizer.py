@@ -361,8 +361,8 @@ class PerformanceDrivenBudgetOptimizer:
             performance_patterns = self.performance_collector.discover_channel_patterns()
             
             if not performance_patterns:
-                logger.warning("No performance patterns discovered - using safe allocation")
-                return self._safe_allocation()
+                logger.error("No performance patterns discovered - optimization REQUIRED")
+                raise RuntimeError("Budget optimization requires performance patterns. Fix performance collection or GA4 integration.")
             
             # Step 2: Calculate marginal efficiency for each channel
             marginal_efficiencies = {}
@@ -467,7 +467,7 @@ class PerformanceDrivenBudgetOptimizer:
             
         except Exception as e:
             logger.error(f"Error in budget optimization: {e}")
-            return self._safe_allocation()
+            raise RuntimeError(f"Budget optimization failed: {e}. No fallback allocation allowed. Fix the optimization logic.")
     
     def should_reoptimize(self) -> bool:
         """Determine if budget should be reoptimized based on performance changes"""
@@ -515,7 +515,7 @@ class PerformanceDrivenBudgetOptimizer:
             current_hour = datetime.now().hour
             day_progress = current_hour / 24.0
             
-            # Get expected vs actual spend ratio (simplified for demo)
+            # Get expected vs actual spend ratio using full calculation
             allocated_budget = self.current_allocations[channel]
             expected_spend_so_far = allocated_budget * Decimal(str(day_progress))
             
@@ -572,38 +572,9 @@ class PerformanceDrivenBudgetOptimizer:
     
     # Helper methods
     
-    def _safe_allocation(self) -> Dict[ChannelType, BudgetAllocation]:
-        """Safe fallback allocation when optimization fails"""
-        logger.warning("Using safe allocation - optimization failed")
-        
-        allocations = {}
-        remaining_budget = self.daily_budget
-        
-        # Prioritize proven performers
-        priority_channels = [
-            (ChannelType.AFFILIATES, Decimal('200')),       # Known top performer
-            (ChannelType.SEARCH_BEHAVIORAL, Decimal('300')), # Strong behavioral keywords
-            (ChannelType.SEARCH_GENERIC, Decimal('200')),   # Generic search backup
-            (ChannelType.SOCIAL_IOS_PARENTS, Decimal('150')), # Targeted social
-            (ChannelType.SOCIAL_BROAD, Decimal('100')),     # Broad social reach
-            (ChannelType.DISPLAY_RETARGETING, Decimal('40')), # Retargeting
-            (ChannelType.DISPLAY_PROSPECTING, Decimal('10'))  # Minimal broken channel
-        ]
-        
-        for channel, budget in priority_channels:
-            if remaining_budget >= budget:
-                allocations[channel] = BudgetAllocation(
-                    channel=channel,
-                    time_segment=self._get_current_time_segment(),
-                    allocated_budget=budget,
-                    expected_conversions=0.0,  # Conservative estimate
-                    expected_roas=1.0,  # Conservative
-                    marginal_efficiency=0.5,
-                    allocation_reason="Safe fallback allocation"
-                )
-                remaining_budget -= budget
-        
-        return allocations
+    def _removed_safe_allocation(self):
+        """REMOVED - No fallback allocations allowed in production"""        
+        raise RuntimeError("Safe allocation fallback removed. Fix optimization logic instead.")
     
     def _get_channel_max_budget(self, channel: ChannelType) -> Decimal:
         """Get maximum reasonable budget for channel to prevent oversaturation"""

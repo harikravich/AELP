@@ -110,7 +110,19 @@ class ShadowModeEnvironment:
         self.episode_step = 0
         self.max_steps_per_episode = 100
         
-        # Simulation parameters
+        # Discovered patterns for realistic simulation
+        # Initialize patterns FIRST before any methods that use it
+        self.patterns = {}
+        try:
+            self.patterns = self.discovery.discover_all_patterns()
+            logger.info(f"Loaded patterns from discovery engine")
+        except Exception as e:
+            # NO FALLBACKS - must fix the actual problem
+            logger.error(f"RecSim REQUIRED but failed to load patterns: {e}")
+            # Patterns is already initialized as empty dict, so attribute exists
+            raise RuntimeError(f"Cannot initialize without discovery patterns: {e}")
+        
+        # Simulation parameters - AFTER patterns are initialized
         self.market_conditions = self._initialize_market_conditions()
         self.competitor_models = self._initialize_competitor_models()
         self.user_behavior_models = self._initialize_user_behavior_models()
@@ -118,27 +130,6 @@ class ShadowModeEnvironment:
         # Metrics tracking
         self.metrics = ShadowEnvironmentMetrics()
         self.episode_history = deque(maxlen=1000)
-        
-        # Discovered patterns for realistic simulation
-        try:
-            self.patterns = self.discovery.discover_all_patterns()
-            logger.info(f"Loaded patterns from discovery engine")
-        except Exception as e:
-            # Fallback if discovery doesn't work properly
-            logger.info(f"Using fallback patterns due to: {e}")
-            from collections import namedtuple
-            MockPatterns = namedtuple('MockPatterns', ['user_patterns', 'temporal_patterns'])
-            self.patterns = MockPatterns(
-                user_patterns={
-                    'segments': {
-                        'researching_parent': {'conversion_rate': 0.025, 'engagement_score': 0.6},
-                        'concerned_parent': {'conversion_rate': 0.035, 'engagement_score': 0.7},
-                        'crisis_parent': {'conversion_rate': 0.055, 'engagement_score': 0.9},
-                        'proactive_parent': {'conversion_rate': 0.015, 'engagement_score': 0.4}
-                    }
-                },
-                temporal_patterns={'peak_hours': [19, 20, 21]}
-            )
         
         logger.info("Shadow mode environment initialized")
     
@@ -190,31 +181,46 @@ class ShadowModeEnvironment:
     
     def _initialize_user_behavior_models(self) -> Dict[str, Any]:
         """Initialize user behavior simulation models"""
-        segments = self.patterns.user_patterns.get('segments', {})
+        segments = {}
+        try:
+            if hasattr(self.patterns, 'user_patterns') and isinstance(self.patterns.user_patterns, dict):
+                segments = self.patterns.user_patterns.get('segments', {})
+            if not segments and hasattr(self.patterns, 'segments'):
+                segments = getattr(self.patterns, 'segments')
+        except Exception:
+            segments = {}
         
         behavior_models = {}
-        for segment_name, segment_data in segments.items():
+        for segment_name, segment_data in (segments or {}).items():
+            # Extract metrics from either flat or nested behavioral schema
+            base_cvr = 0.0
+            engagement_score = None
+            if isinstance(segment_data, dict) and 'behavioral_metrics' in segment_data:
+                beh = segment_data.get('behavioral_metrics') or {}
+                base_cvr = float(beh.get('conversion_rate', 0.0))
+                if 'avg_session_duration' in beh or 'avg_pages_per_session' in beh:
+                    dur = float(beh.get('avg_session_duration', 0.0))
+                    pps = float(beh.get('avg_pages_per_session', 0.0))
+                    engagement_score = min(1.0, (dur/1200.0)*0.6 + (pps/15.0)*0.4)
+            else:
+                base_cvr = float(segment_data.get('conversion_rate', 0.0))
+                engagement_score = segment_data.get('engagement_score')
+
+            if engagement_score is None:
+                engagement_score = 0.5
+
             behavior_models[segment_name] = {
-                'base_ctr': min(0.1, segment_data.get('engagement_score', 0.5) * 0.08),
-                'base_cvr': segment_data.get('conversion_rate', 0.02),
+                'base_ctr': min(0.1, engagement_score * 0.08),
+                'base_cvr': max(0.001, min(0.3, base_cvr)),
                 'price_sensitivity': np.random.beta(2, 3),
                 'fatigue_sensitivity': np.random.beta(2, 2),
                 'content_preferences': self._generate_content_preferences(segment_name),
                 'temporal_preferences': self._generate_temporal_preferences(segment_name)
             }
         
-        # Default behavior if no segments discovered
+        # Require discovered segments; if none, fail loudly (no demo data)
         if not behavior_models:
-            behavior_models = {
-                'default_user': {
-                    'base_ctr': 0.02,
-                    'base_cvr': 0.015,
-                    'price_sensitivity': 0.5,
-                    'fatigue_sensitivity': 0.3,
-                    'content_preferences': {},
-                    'temporal_preferences': {}
-                }
-            }
+            raise RuntimeError("No discovered segments available to initialize user behavior models.")
         
         return behavior_models
     
@@ -308,6 +314,12 @@ class ShadowModeEnvironment:
         Execute action in shadow environment
         Returns: observation, reward, terminated, truncated, info
         """
+        # Ensure environment is initialized
+        if self.current_user_state is None:
+            logger.warning("ShadowModeEnvironment.step() called before reset() - initializing now")
+            obs, info = self.reset()
+            # Continue with step after reset
+        
         self.episode_step += 1
         
         # Extract action components

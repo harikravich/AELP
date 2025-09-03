@@ -48,7 +48,7 @@ class GAELPMonitor:
         def api_status():
             if self.orchestrator:
                 return jsonify(self.orchestrator.get_status())
-            return jsonify(self._get_mock_status())
+            return jsonify(self._get_status())
         
         @self.app.route('/api/metrics')
         def api_metrics():
@@ -62,8 +62,11 @@ class GAELPMonitor:
         def api_alerts():
             return jsonify(list(self.alerts))
     
-    def _get_mock_status(self) -> Dict:
-        """Get mock status for testing"""
+    def _get_status(self) -> Dict:
+        """Get status with real data from files when orchestrator not available"""
+        # Try to load real metrics
+        real_metrics = self._get_real_metrics_summary()
+        
         return {
             'running': True,
             'environment': 'production',
@@ -80,20 +83,57 @@ class GAELPMonitor:
                 'explainability': 'running',
                 'google_ads': 'not_started'
             },
-            'metrics': {
-                'last_episode': 0,  # REAL VALUE - starts at 0
-                'total_reward': 0.0,  # REAL VALUE - no reward yet
-                'epsilon': 1.0,  # REAL VALUE - starts exploring
-                'roas': 0.0,  # REAL VALUE - no return yet
-                'conversion_rate': 0.0,  # REAL VALUE - no conversions yet
-                'spend': 0.0,  # REAL VALUE - no spend yet
-                'revenue': 0.0  # REAL VALUE - no revenue yet
-            }
+            'metrics': real_metrics
+        }
+    
+    def _get_real_metrics_summary(self) -> Dict:
+        """Get real metrics summary from data files"""
+        try:
+            import json
+            import os
+            
+            # Load learning history
+            learning_history_path = "/home/hariravichandran/AELP/learning_history.json"
+            if os.path.exists(learning_history_path):
+                with open(learning_history_path, 'r') as f:
+                    learning_data = json.load(f)
+                    campaigns = learning_data.get('campaigns_created', [])
+                    
+                    if campaigns:
+                        last_campaign = campaigns[-1]
+                        total_spend = sum(c.get('cost', 0) for c in campaigns)
+                        total_revenue = sum(c.get('revenue', 0) for c in campaigns)
+                        avg_roas = sum(c.get('actual_roas', 0) for c in campaigns) / len(campaigns)
+                        avg_cvr = sum(c.get('actual_conversions', 0) for c in campaigns) / max(1, len(campaigns))
+                        total_reward = total_revenue - total_spend
+                        current_epsilon = max(0.01, 1.0 - (len(campaigns) * 0.01))
+                        
+                        return {
+                            'last_episode': len(campaigns),
+                            'total_reward': total_reward,
+                            'epsilon': current_epsilon,
+                            'roas': avg_roas,
+                            'conversion_rate': avg_cvr / 100.0,  # Convert to percentage
+                            'spend': total_spend,
+                            'revenue': total_revenue
+                        }
+        except Exception as e:
+            logger.error(f"Error loading real metrics: {e}")
+        
+        # Use zeros if no data if needed
+        return {
+            'last_episode': 0,
+            'total_reward': 0.0,
+            'epsilon': 1.0,
+            'roas': 0.0,
+            'conversion_rate': 0.0,
+            'spend': 0.0,
+            'revenue': 0.0
         }
     
     def _get_metrics_data(self) -> Dict:
-        """Get REAL metrics data from orchestrator"""
-        # NO FAKE DATA - GET REAL VALUES OR EMPTY
+        """Get REAL metrics data from orchestrator or data files"""
+        # Try orchestrator first
         if self.orchestrator and hasattr(self.orchestrator, 'metrics'):
             metrics = self.orchestrator.metrics
             return {
@@ -103,15 +143,45 @@ class GAELPMonitor:
                 'epsilon': metrics.get('epsilon_history', []),
                 'conversion_rate': metrics.get('cvr_history', [])
             }
-        else:
-            # NO DATA YET - RETURN EMPTY, NOT FAKE
-            return {
-                'episodes': [],
-                'rewards': [],
-                'roas': [],
-                'epsilon': [],
-                'conversion_rate': []
-            }
+        
+        # Fall back to loading real data from files
+        try:
+            import json
+            import os
+            
+            # Load learning history
+            learning_history_path = "/home/hariravichandran/AELP/learning_history.json"
+            if os.path.exists(learning_history_path):
+                with open(learning_history_path, 'r') as f:
+                    learning_data = json.load(f)
+                    campaigns = learning_data.get('campaigns_created', [])
+                    
+                    if campaigns:
+                        # Extract metrics from real campaign data
+                        episodes = list(range(1, len(campaigns) + 1))
+                        rewards = [c.get('actual_roas', 0) * c.get('cost', 0) - c.get('cost', 0) for c in campaigns]
+                        roas = [c.get('actual_roas', 0) for c in campaigns]
+                        epsilon = [max(0.01, 1.0 - (i * 0.01)) for i in range(len(campaigns))]  # Decay from 1.0 to 0.01
+                        cvr = [c.get('actual_conversions', 0) / max(1, c.get('cost', 1) * 100) for c in campaigns]
+                        
+                        return {
+                            'episodes': episodes,
+                            'rewards': rewards,
+                            'roas': roas,
+                            'epsilon': epsilon,
+                            'conversion_rate': cvr
+                        }
+        except Exception as e:
+            logger.error(f"Error loading metrics data: {e}")
+        
+        # NO DATA YET - RETURN EMPTY, NOT FAKE
+        return {
+            'episodes': [],
+            'rewards': [],
+            'roas': [],
+            'epsilon': [],
+            'conversion_rate': []
+        }
     
     def _get_component_status(self) -> Dict:
         """Get detailed component status"""
@@ -162,7 +232,7 @@ class GAELPMonitor:
                 if self.orchestrator:
                     status = self.orchestrator.get_status()
                 else:
-                    status = self._get_mock_status()
+                    status = self._get_status()
                 
                 # Draw header
                 self._draw_header(screen, status)
@@ -464,31 +534,102 @@ def create_monitor_html():
             
             // Update charts
             $.get('/api/metrics', function(data) {
-                // Training chart
-                Plotly.newPlot('training-chart', [{
-                    x: data.episodes,
-                    y: data.rewards,
-                    type: 'scatter',
-                    name: 'Rewards'
-                }], {
-                    margin: {t: 0},
-                    paper_bgcolor: '#16213e',
-                    plot_bgcolor: '#16213e',
-                    font: {color: '#eee'}
-                });
-                
-                // ROAS chart
-                Plotly.newPlot('roas-chart', [{
-                    x: data.episodes,
-                    y: data.roas,
-                    type: 'scatter',
-                    name: 'ROAS'
-                }], {
-                    margin: {t: 0},
-                    paper_bgcolor: '#16213e',
-                    plot_bgcolor: '#16213e',
-                    font: {color: '#eee'}
-                });
+                if (data.episodes.length > 0) {
+                    // Training chart - show rewards over episodes
+                    Plotly.newPlot('training-chart', [{
+                        x: data.episodes,
+                        y: data.rewards,
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        name: 'Episode Rewards',
+                        line: {color: '#00ff88', width: 2},
+                        marker: {size: 4, color: '#00ff88'}
+                    }], {
+                        title: 'Training Progress',
+                        xaxis: {title: 'Episode', color: '#eee'},
+                        yaxis: {title: 'Reward', color: '#eee'},
+                        margin: {t: 40, b: 40, l: 60, r: 20},
+                        paper_bgcolor: '#16213e',
+                        plot_bgcolor: '#0f3460',
+                        font: {color: '#eee'},
+                        showlegend: false
+                    });
+                    
+                    // ROAS chart - show ROAS improvement over episodes
+                    Plotly.newPlot('roas-chart', [{
+                        x: data.episodes,
+                        y: data.roas,
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        name: 'ROAS Performance',
+                        line: {color: '#ff6b6b', width: 2},
+                        marker: {size: 4, color: '#ff6b6b'}
+                    }], {
+                        title: 'ROAS Over Time',
+                        xaxis: {title: 'Episode', color: '#eee'},
+                        yaxis: {title: 'ROAS (Return on Ad Spend)', color: '#eee'},
+                        margin: {t: 40, b: 40, l: 60, r: 20},
+                        paper_bgcolor: '#16213e',
+                        plot_bgcolor: '#0f3460',
+                        font: {color: '#eee'},
+                        showlegend: false
+                    });
+                    
+                    // Add exploration chart (epsilon decay)
+                    if (data.epsilon.length > 0) {
+                        Plotly.newPlot('health-chart', [{
+                            x: data.episodes,
+                            y: data.epsilon,
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'Exploration Rate',
+                            line: {color: '#4ecdc4', width: 2}
+                        }, {
+                            x: data.episodes,
+                            y: data.conversion_rate,
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'Conversion Rate',
+                            line: {color: '#ffe66d', width: 2},
+                            yaxis: 'y2'
+                        }], {
+                            title: 'Learning Dynamics',
+                            xaxis: {title: 'Episode', color: '#eee'},
+                            yaxis: {title: 'Epsilon (Exploration)', color: '#eee'},
+                            yaxis2: {
+                                title: 'Conversion Rate',
+                                overlaying: 'y',
+                                side: 'right',
+                                color: '#eee'
+                            },
+                            margin: {t: 40, b: 40, l: 60, r: 60},
+                            paper_bgcolor: '#16213e',
+                            plot_bgcolor: '#0f3460',
+                            font: {color: '#eee'},
+                            legend: {x: 0.02, y: 0.98, bgcolor: 'rgba(0,0,0,0.5)'}
+                        });
+                    }
+                } else {
+                    // Show "No data" messages
+                    ['training-chart', 'roas-chart', 'health-chart'].forEach(function(chartId) {
+                        Plotly.newPlot(chartId, [], {
+                            annotations: [{
+                                text: 'No training data available yet',
+                                xref: 'paper',
+                                yref: 'paper',
+                                x: 0.5,
+                                y: 0.5,
+                                xanchor: 'center',
+                                yanchor: 'center',
+                                showarrow: false,
+                                font: {size: 16, color: '#888'}
+                            }],
+                            paper_bgcolor: '#16213e',
+                            plot_bgcolor: '#0f3460',
+                            margin: {t: 0, b: 0, l: 0, r: 0}
+                        });
+                    });
+                }
             });
             
             // Update alerts

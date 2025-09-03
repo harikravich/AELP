@@ -38,14 +38,8 @@ from attribution_models import (
     create_journey_from_episode, calculate_multi_touch_rewards
 )
 
-# Import conversion lag model for dynamic windows
-try:
-    from conversion_lag_model import ConversionLagModel, ConversionJourney
-    CONVERSION_LAG_AVAILABLE = True
-except ImportError:
-    CONVERSION_LAG_AVAILABLE = False
-    ConversionLagModel = None
-    ConversionJourney = None
+# Import conversion lag model - REQUIRED for dynamic windows
+from conversion_lag_model import ConversionLagModel, ConversionJourney
 
 logger = logging.getLogger(__name__)
 
@@ -309,7 +303,7 @@ class MultiTouchAttributionEngine:
         
         self._save_touchpoint(touchpoint)
         
-        logger.info(f"Tracked impression: {touchpoint.channel}/{touchpoint.campaign}")
+        logger.debug(f"Tracked impression: {touchpoint.channel}/{touchpoint.campaign}")
         return touchpoint.id
     
     def track_click(self,

@@ -571,16 +571,9 @@ class EmailNurtureSystem:
         </html>
         """
     
-    def _template_default(self, lead_data: Dict[str, Any]) -> str:
-        """Default template fallback"""
-        return """
-        <html>
-        <body>
-            <p>Thank you for using the Teen Social Media Scanner.</p>
-            <p>For questions, contact support@aura.com</p>
-        </body>
-        </html>
-        """
+    def _removed_template_default(self, lead_data: Dict[str, Any]) -> str:
+        """REMOVED - No fallback templates allowed"""
+        raise RuntimeError("Default template fallback removed. All templates must be personalized based on lead data.")
     
     def send_email(self, to_email: str, subject: str, html_content: str) -> bool:
         """Send email with error handling"""

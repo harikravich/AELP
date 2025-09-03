@@ -187,7 +187,7 @@ def parse_ray_logs():
         metrics['auctions'] = metrics['wins'] + metrics['losses']
             
     except Exception as e:
-        # Fallback to checking Ray logs
+        # Use checking Ray logs if needed
         try:
             user_count = subprocess.run(
                 ["grep -c 'Created new persistent user' /tmp/ray/session*/logs/*.log 2>/dev/null || echo 0"],

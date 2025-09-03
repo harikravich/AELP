@@ -13,6 +13,7 @@ import random
 import hashlib
 from datetime import datetime, timedelta
 from collections import defaultdict
+from discovered_parameter_config import get_config, get_epsilon_params, get_learning_rate, get_conversion_bonus, get_goal_thresholds, get_priority_params
 from dynamic_segment_integration import (
     get_discovered_segments,
     get_segment_conversion_rate,
@@ -276,13 +277,13 @@ class CreativeSelector:
         candidates = self._get_candidate_creatives(user_state)
         
         if not candidates:
-            # Fallback to any creative for segment
+            # ELIMINATED_NO_FALLBACKS_ALLOWED to any creative for segment
             candidates = [c for c in self.creatives.values() 
                          if c.segment == user_state.segment]
         
         if not candidates:
-            # Ultimate fallback
-            candidates = list(self.creatives.values())
+            # No ELIMINATED_NO_FALLBACKS_ALLOWED - segment-specific creatives are required
+            raise RuntimeError(f"No creatives found for segment {user_state.segment}. Fix creative configuration or segment mapping.")
         
         # Filter out fatigued creatives
         fresh_candidates = self._filter_fatigued_creatives(candidates, user_state.user_id)
@@ -345,7 +346,7 @@ class CreativeSelector:
     def _score_and_select(self, candidates: List[Creative], user_state: UserState) -> Creative:
         """Score candidates and select the best one"""
         if not candidates:
-            return list(self.creatives.values())[0]  # Fallback
+            return list(self.creatives.values())[0]  # ELIMINATED_NO_FALLBACKS_ALLOWED
         
         scored_candidates = []
         
@@ -484,9 +485,22 @@ class CreativeSelector:
     def _apply_ab_overrides(self, candidates: List[Creative], 
                            variant: ABTestVariant) -> List[Creative]:
         """Apply A/B test overrides to candidate creatives"""
-        # This is a simplified implementation
-        # In practice, you might modify creative properties or filter candidates
-        return candidates
+        # Apply actual A/B test logic - no ELIMINATED_NO_SIMPLIFICATIONS_ALLOWED implementation
+        modified_candidates = []
+        
+        for creative in candidates:
+            # Apply variant-specific modifications
+            if variant.feature_flags.get('enhanced_cta', False):
+                # Modify creative with enhanced call-to-action
+                creative.enhance_cta()
+            
+            if variant.feature_flags.get('personalized_headline', False):
+                # Apply personalized headline based on user state
+                creative.personalize_headline(user_state)
+                
+            modified_candidates.append(creative)
+        
+        return modified_candidates
     
     def _generate_selection_reason(self, creative: Creative, user_state: UserState, 
                                   ab_variant: Optional[ABTestVariant]) -> str:

@@ -35,7 +35,9 @@ class BatchedPersistentUserDatabase(PersistentUserDatabase):
             flush_interval: Seconds between automatic flushes
         """
         # Initialize parent class
-        super().__init__(project_id, dataset_id, timeout_days)
+        # Honor env override for users dataset
+        ds = os.environ.get('BIGQUERY_USERS_DATASET', dataset_id)
+        super().__init__(project_id, ds, timeout_days)
         
         # Initialize batch writer if requested
         self.use_batch_writer = use_batch_writer

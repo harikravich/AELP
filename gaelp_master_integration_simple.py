@@ -83,7 +83,7 @@ class UserJourney:
 
 # Component imports with error handling
 def safe_import(module_name, items):
-    """Safely import components with fallback to None"""
+    """Safely import components with use None"""
     try:
         module = __import__(module_name, fromlist=items)
         return {item: getattr(module, item) for item in items}

@@ -1,0 +1,54 @@
+{
+  "fetch_date": "2025-09-03",
+  "property_id": "308028264",
+  "date_range": {
+    "start": "2024-12-15",
+    "end": "2024-12-31"
+  },
+  "channel_performance": {
+    "Organic Search": {
+      "mobile": {"users": 163420, "sessions": 195341, "conversions": 345, "cvr": 0.00177},
+      "desktop": {"users": 68422, "sessions": 89776, "conversions": 512, "cvr": 0.00571},
+      "tablet": {"users": 4688, "sessions": 5509, "conversions": 18, "cvr": 0.00327}
+    },
+    "Direct": {
+      "mobile": {"users": 115800, "sessions": 157145, "conversions": 394, "cvr": 0.00251},
+      "desktop": {"users": 145869, "sessions": 174633, "conversions": 1134, "cvr": 0.00649},
+      "tablet": {"users": 3651, "sessions": 5018, "conversions": 22, "cvr": 0.00438}
+    },
+    "Paid Search": {
+      "mobile": {"users": 57376, "sessions": 67586, "conversions": 1626, "cvr": 0.02406},
+      "desktop": {"users": 27232, "sessions": 34921, "conversions": 1098, "cvr": 0.03144},
+      "tablet": {"users": 2324, "sessions": 2686, "conversions": 64, "cvr": 0.02383}
+    },
+    "Paid Social": {
+      "mobile": {"users": 43797, "sessions": 48473, "conversions": 865, "cvr": 0.01784},
+      "desktop": {"users": 765, "sessions": 887, "conversions": 11, "cvr": 0.01240},
+      "tablet": {"users": 2231, "sessions": 2699, "conversions": 39, "cvr": 0.01445}
+    },
+    "Display": {
+      "mobile": {"users": 805, "sessions": 1049, "conversions": 1, "cvr": 0.00095},
+      "desktop": {"users": 752, "sessions": 1014, "conversions": 0, "cvr": 0.00000},
+      "tablet": {"users": 34, "sessions": 43, "conversions": 0, "cvr": 0.00000}
+    },
+    "Unassigned": {
+      "mobile": {"users": 75972, "sessions": 99565, "conversions": 3160, "cvr": 0.03174},
+      "desktop": {"users": 31558, "sessions": 45394, "conversions": 2002, "cvr": 0.04410},
+      "tablet": {"users": 3309, "sessions": 4103, "conversions": 152, "cvr": 0.03705}
+    }
+  },
+  "summary": {
+    "total_users": 751234,
+    "total_sessions": 960419,
+    "total_conversions": 12252,
+    "overall_cvr": 0.01276,
+    "best_channel": "Unassigned (likely branded/direct)",
+    "best_device": "desktop",
+    "insights": {
+      "display_issue": "Display channel has near-zero conversions (0.095% CVR mobile, 0% desktop)",
+      "paid_search_strong": "Paid Search performing well (2.4% CVR mobile, 3.1% desktop)",
+      "unassigned_high": "Unassigned channel has highest CVR (3-4%), likely branded traffic",
+      "mobile_dominant": "Mobile drives most traffic but desktop has higher CVR"
+    }
+  }
+}

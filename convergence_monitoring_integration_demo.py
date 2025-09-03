@@ -22,6 +22,13 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Re-export the production ConvergenceMonitor for orchestrator imports
+try:
+    from fortified_rl_agent_no_hardcoding import ConvergenceMonitor  # noqa: F401
+except Exception:
+    # Leave unbound; orchestrator will warn if unavailable
+    pass
+
 def demo_training_with_convergence_monitoring():
     """
     Demonstrate how to integrate convergence monitoring into training.

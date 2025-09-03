@@ -11,13 +11,8 @@ from typing import Dict, Any, List
 import logging
 
 # Import the RecSim-AuctionGym bridge
-try:
-    from recsim_auction_bridge import RecSimAuctionBridge, UserSegment
-    from recsim_user_model import RecSimUserModel
-    BRIDGE_AVAILABLE = True
-except ImportError:
-    logging.warning("RecSim-AuctionGym bridge not available. Using fallback.")
-    BRIDGE_AVAILABLE = False
+from recsim_auction_bridge import RecSimAuctionBridge, UserSegment
+from recsim_user_model import RecSimUserModel
 
 class UpdatedGAELPSimulation:
     """
@@ -32,7 +27,7 @@ class UpdatedGAELPSimulation:
             print("✅ Using RecSim-AuctionGym bridge for realistic simulation")
         else:
             self.bridge = None
-            print("❌ Bridge not available - using fallback simulation")
+            print("❌ Bridge not available - RecSim REQUIRED: simulation") not available
         
         # Track active user sessions
         self.active_users = {}
@@ -44,7 +39,7 @@ class UpdatedGAELPSimulation:
         AFTER: Use RecSimUserModel to generate users with authentic segments
         """
         if not BRIDGE_AVAILABLE:
-            # Fallback to old method
+            # Use old method if needed
             return {
                 'user_id': user_id or f"fake_user_{np.random.randint(1000, 9999)}",
                 'segment': np.random.choice(['impulse', 'researcher', 'loyal']),
@@ -81,7 +76,7 @@ class UpdatedGAELPSimulation:
         AFTER: Use AuctionGym calls through the bridge for realistic competition
         """
         if not BRIDGE_AVAILABLE:
-            # Fallback to old random auction
+            # Use old random auction if needed
             return {
                 'won': np.random.random() < 0.3,
                 'price_paid': bid * np.random.uniform(0.5, 0.9),
@@ -339,6 +334,6 @@ if __name__ == "__main__":
         print("   - Realistic queries generated based on journey stage")
         print("   - Auction participation based on user segment behavior")
     else:
-        print("⚠️ RecSim-AuctionGym bridge not available")
-        print("   - Install dependencies: recsim_user_model.py, recsim_auction_bridge.py")
-        print("   - Check that auction_gym_integration.py is available")
+        from NO_FALLBACKS import StrictModeEnforcer
+        StrictModeEnforcer.enforce('RECSIM_SIMULATION_EXAMPLE', fallback_attempted=True)
+        raise RuntimeError("RecSim-AuctionGym bridge MUST be available. NO FALLBACKS! Install dependencies.")

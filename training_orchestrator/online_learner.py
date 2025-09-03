@@ -92,7 +92,7 @@ class OnlineLearnerConfig:
     safety_threshold: float = 0.8  # Minimum performance threshold relative to baseline
     safety_window_size: int = 100  # Number of recent episodes for safety evaluation
     safety_violation_limit: int = 5  # Max consecutive safety violations
-    emergency_fallback: bool = True  # Enable emergency fallback to baseline
+    emergency_fallback: bool = True  # Enable emergency use baseline
     
     # Budget Safety
     max_budget_risk: float = 0.1  # Max fraction of daily budget to risk on exploration

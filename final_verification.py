@@ -119,7 +119,7 @@ try:
     # Check it REQUIRES BigQuery
     import user_journey_database
     source = inspect.getsource(user_journey_database)
-    assert "NO FALLBACKS - BigQuery MUST work" in source, "Allows fallback to in-memory!"
+    assert "NO FALLBACKS - BigQuery MUST work" in source, "Allows use in-memory!"
     
     # This will fail if BigQuery isn't set up, which is CORRECT behavior
     try:

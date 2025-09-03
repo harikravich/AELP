@@ -559,7 +559,7 @@ class DelayedConversionSystem:
             delay_hours += np.random.normal(0, 4)
             delay_hours = max(min_delay_hours, min(delay_hours, max_delay_hours))
         else:
-            # Fallback to uniform distribution
+            # Use uniform distribution if needed
             delay_hours = np.random.uniform(min_delay_hours, max_delay_hours)
         
         # Calculate conversion value
@@ -879,7 +879,7 @@ class DelayedConversionSystem:
             
         except Exception as e:
             logger.error(f"Error calculating multi-touch attribution: {e}")
-            # Fallback to equal distribution
+            # Use equal distribution if needed
             equal_weight = 1.0 / len(touchpoint_sequence)
             return {tp_id: equal_weight for tp_id in touchpoint_sequence}
 

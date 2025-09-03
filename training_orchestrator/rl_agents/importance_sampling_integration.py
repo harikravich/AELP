@@ -118,7 +118,7 @@ class ImportanceSamplingReplayBuffer:
                 if idx < len(self.buffer):
                     batch.append(self.buffer[idx])
                 else:
-                    # Fallback to random sampling if index out of range
+                    # Use random sampling if index out of range if needed
                     batch.append(random.choice(self.buffer))
             
             crisis_count = sum(1 for exp in sampled_experiences if exp.event_type == 'crisis_parent')

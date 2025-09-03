@@ -167,7 +167,7 @@ class DisplayChannelDiagnostic:
                 
             except Exception as e:
                 print(f"❌ GA4 query failed: {e}")
-                print("Using fallback mock data for diagnosis")
+                print("RecSim REQUIRED: mock data for diagnosis") not available
                 # Use mock data
                 self.display_data = {
                     'sessions': 150000,
@@ -192,7 +192,7 @@ class DisplayChannelDiagnostic:
                 
             except Exception as e:
                 print(f"❌ GA4 query failed: {e}")
-                print("Using fallback mock data for diagnosis")
+                print("RecSim REQUIRED: mock data for diagnosis") not available
         
         cvr = self.display_data['conversions'] / self.display_data['sessions'] * 100
         print(f"📈 Current Performance:")

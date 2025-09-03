@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GAELP Production Monitor</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background: #1a1a2e; 
+            color: #eee;
+            margin: 0;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: #16213e;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+        }
+        .component {
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 12px;
+        }
+        .running { background: #27ae60; }
+        .error { background: #e74c3c; }
+        .not-started { background: #95a5a6; }
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            margin: 5px 0;
+            background: #0f3460;
+            border-radius: 5px;
+        }
+        .chart { height: 300px; }
+        .alerts {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .alert-item {
+            padding: 10px;
+            margin: 5px 0;
+            background: #e74c3c;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🚀 GAELP PRODUCTION MONITOR 🚀</h1>
+        <p id="status">Loading...</p>
+    </div>
+    
+    <div class="dashboard">
+        <div class="card">
+            <h2>Component Status</h2>
+            <div id="components" class="component-grid"></div>
+        </div>
+        
+        <div class="card">
+            <h2>Key Metrics</h2>
+            <div id="metrics"></div>
+        </div>
+        
+        <div class="card">
+            <h2>Training Progress</h2>
+            <div id="training-chart" class="chart"></div>
+        </div>
+        
+        <div class="card">
+            <h2>ROAS Performance</h2>
+            <div id="roas-chart" class="chart"></div>
+        </div>
+        
+        <div class="card">
+            <h2>Recent Alerts</h2>
+            <div id="alerts" class="alerts"></div>
+        </div>
+        
+        <div class="card">
+            <h2>System Health</h2>
+            <div id="health-chart" class="chart"></div>
+        </div>
+    </div>
+    
+    <script>
+        function updateDashboard() {
+            // Update status
+            $.get('/api/status', function(data) {
+                $('#status').text(`Environment: ${data.environment} | Status: ${data.running ? '✅ RUNNING' : '❌ STOPPED'}`);
+            });
+            
+            // Update components
+            $.get('/api/components', function(data) {
+                let html = '';
+                for (let group in data) {
+                    for (let comp in data[group]) {
+                        let status = data[group][comp].status;
+                        html += `<div class="component ${status}">${comp}</div>`;
+                    }
+                }
+                $('#components').html(html);
+            });
+            
+            // Update metrics
+            $.get('/api/status', function(data) {
+                let metrics = data.metrics || {};
+                let html = '';
+                html += `<div class="metric"><span>Episode:</span><span>${metrics.last_episode || 0}</span></div>`;
+                html += `<div class="metric"><span>ROAS:</span><span>${(metrics.roas || 0).toFixed(2)}</span></div>`;
+                html += `<div class="metric"><span>CVR:</span><span>${((metrics.conversion_rate || 0) * 100).toFixed(2)}%</span></div>`;
+                html += `<div class="metric"><span>Spend:</span><span>$${(metrics.spend || 0).toFixed(2)}</span></div>`;
+                html += `<div class="metric"><span>Revenue:</span><span>$${(metrics.revenue || 0).toFixed(2)}</span></div>`;
+                $('#metrics').html(html);
+            });
+            
+            // Update charts
+            $.get('/api/metrics', function(data) {
+                if (data.episodes.length > 0) {
+                    // Training chart - show rewards over episodes
+                    Plotly.newPlot('training-chart', [{
+                        x: data.episodes,
+                        y: data.rewards,
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        name: 'Episode Rewards',
+                        line: {color: '#00ff88', width: 2},
+                        marker: {size: 4, color: '#00ff88'}
+                    }], {
+                        title: 'Training Progress',
+                        xaxis: {title: 'Episode', color: '#eee'},
+                        yaxis: {title: 'Reward', color: '#eee'},
+                        margin: {t: 40, b: 40, l: 60, r: 20},
+                        paper_bgcolor: '#16213e',
+                        plot_bgcolor: '#0f3460',
+                        font: {color: '#eee'},
+                        showlegend: false
+                    });
+                    
+                    // ROAS chart - show ROAS improvement over episodes
+                    Plotly.newPlot('roas-chart', [{
+                        x: data.episodes,
+                        y: data.roas,
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        name: 'ROAS Performance',
+                        line: {color: '#ff6b6b', width: 2},
+                        marker: {size: 4, color: '#ff6b6b'}
+                    }], {
+                        title: 'ROAS Over Time',
+                        xaxis: {title: 'Episode', color: '#eee'},
+                        yaxis: {title: 'ROAS (Return on Ad Spend)', color: '#eee'},
+                        margin: {t: 40, b: 40, l: 60, r: 20},
+                        paper_bgcolor: '#16213e',
+                        plot_bgcolor: '#0f3460',
+                        font: {color: '#eee'},
+                        showlegend: false
+                    });
+                    
+                    // Add exploration chart (epsilon decay)
+                    if (data.epsilon.length > 0) {
+                        Plotly.newPlot('health-chart', [{
+                            x: data.episodes,
+                            y: data.epsilon,
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'Exploration Rate',
+                            line: {color: '#4ecdc4', width: 2}
+                        }, {
+                            x: data.episodes,
+                            y: data.conversion_rate,
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'Conversion Rate',
+                            line: {color: '#ffe66d', width: 2},
+                            yaxis: 'y2'
+                        }], {
+                            title: 'Learning Dynamics',
+                            xaxis: {title: 'Episode', color: '#eee'},
+                            yaxis: {title: 'Epsilon (Exploration)', color: '#eee'},
+                            yaxis2: {
+                                title: 'Conversion Rate',
+                                overlaying: 'y',
+                                side: 'right',
+                                color: '#eee'
+                            },
+                            margin: {t: 40, b: 40, l: 60, r: 60},
+                            paper_bgcolor: '#16213e',
+                            plot_bgcolor: '#0f3460',
+                            font: {color: '#eee'},
+                            legend: {x: 0.02, y: 0.98, bgcolor: 'rgba(0,0,0,0.5)'}
+                        });
+                    }
+                } else {
+                    // Show "No data" messages
+                    ['training-chart', 'roas-chart', 'health-chart'].forEach(function(chartId) {
+                        Plotly.newPlot(chartId, [], {
+                            annotations: [{
+                                text: 'No training data available yet',
+                                xref: 'paper',
+                                yref: 'paper',
+                                x: 0.5,
+                                y: 0.5,
+                                xanchor: 'center',
+                                yanchor: 'center',
+                                showarrow: false,
+                                font: {size: 16, color: '#888'}
+                            }],
+                            paper_bgcolor: '#16213e',
+                            plot_bgcolor: '#0f3460',
+                            margin: {t: 0, b: 0, l: 0, r: 0}
+                        });
+                    });
+                }
+            });
+            
+            // Update alerts
+            $.get('/api/alerts', function(data) {
+                let html = '';
+                for (let alert of data.slice(-5)) {
+                    html += `<div class="alert-item">${alert}</div>`;
+                }
+                $('#alerts').html(html || '<p>No recent alerts</p>');
+            });
+        }
+        
+        // Update every 2 seconds
+        updateDashboard();
+        setInterval(updateDashboard, 2000);
+    </script>
+</body>
+</html>
+    

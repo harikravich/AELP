@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 """
-GAELP Simplified MCP Connectors - Direct Ad Platform Integration
-==============================================================
+GAELP MCP Connectors - Direct Ad Platform Integration
+====================================================
 
-This module provides a simplified interface to Meta Ads, Google Ads, and TikTok Ads 
-using direct API calls and basic HTTP clients. This is a fallback when MCP servers
-are not available or not properly configured.
+This module provides FULL implementation of Meta Ads, Google Ads, and TikTok Ads 
+using direct API calls. NO FALLBACKS - proper MCP servers are required.
 
 Author: GAELP Team
 Version: 1.0.0

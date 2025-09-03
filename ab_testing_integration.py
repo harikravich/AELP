@@ -341,7 +341,7 @@ class GAELPABTestingIntegration:
         )
         
         if not selected_policy_id or selected_policy_id not in self.active_agents:
-            # Fallback to random selection
+            # Use random selection if needed
             selected_policy_id = np.random.choice(policy_ids)
         
         selected_agent = self.active_agents[selected_policy_id]

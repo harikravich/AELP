@@ -158,7 +158,7 @@ class GAELPGoogleAdsAgent:
         
         else:
             raise ValueError(f"Unsupported campaign type: {campaign_type}")
-    
+
     async def _optimize_initial_config(self, config: CampaignConfig) -> CampaignConfig:
         """
         Apply RL-driven optimizations to initial campaign configuration

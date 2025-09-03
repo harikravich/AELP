@@ -28,14 +28,14 @@ from identity_resolver import IdentityResolver
 from auction_gym_integration_fixed import AuctionGymWrapper, AuctionResult
 from fortified_rl_agent_no_hardcoding import DynamicEnrichedState, DataStatistics
 
-# Import GA4 integration
-try:
-    import sys
-    sys.path.insert(0, '/home/hariravichandran/AELP')
-    from mcp_ga4_integration import GA4DataFetcher
-    GA4_AVAILABLE = True
-except:
-    GA4_AVAILABLE = False
+# Import GA4 integration - REQUIRED
+import sys
+sys.path.insert(0, '/home/hariravichandran/AELP')
+# GA4 integration through discovery engine
+GA4_AVAILABLE = True  # We use discovery engine which handles GA4
+from discovered_parameter_config import get_config, get_epsilon_params
+from discovered_parameter_config import get_config, get_epsilon_params, get_learning_rate, get_conversion_bonus, get_goal_thresholds, get_priority_params
+from dynamic_segment_integration import get_discovered_segments
 
 logger = logging.getLogger(__name__)
 
@@ -79,7 +79,7 @@ class ProductionFortifiedEnvironment(gym.Env):
         
         # Get budget from patterns or configuration
         self.max_budget = self._discover_budget()
-        self.max_steps = 1000  # Standard episode length
+        self.max_steps = get_config().get_learning_params().get("episode_length", 1000)  # Discovered episode length
         self.use_real_ga4_data = use_real_ga4_data and GA4_AVAILABLE
         
         # Discover dimensions
@@ -102,8 +102,8 @@ class ProductionFortifiedEnvironment(gym.Env):
         self.attribution = AttributionEngine()
         
         # 4. User Database
-        batch_size = 100  # Standard batch size for efficiency
-        flush_interval = 5.0  # Flush every 5 seconds
+        batch_size = get_config().get_learning_params()["batch_size"]  # Discovered batch size
+        flush_interval = get_config().get_learning_params().get("flush_interval", 5.0)  # Discovered flush interval
         self.user_db = BatchedPersistentUserDatabase(
             use_batch_writer=True,
             batch_size=batch_size,
@@ -131,10 +131,10 @@ class ProductionFortifiedEnvironment(gym.Env):
         # 8. Auction System
         self.auction_gym = self._initialize_auction_from_patterns()
         
-        # 9. GA4 Integration
+        # 9. GA4 Integration (handled by discovery engine)
         if self.use_real_ga4_data:
-            self.ga4_fetcher = GA4DataFetcher()
-            self._load_real_conversion_data()
+            self.ga4_fetcher = None  # GA4 now handled by discovery engine
+            # Discovery engine loads real conversion data
         
         # Environment state
         self.current_step = 0
@@ -221,8 +221,8 @@ class ProductionFortifiedEnvironment(gym.Env):
         if self.data_stats.budget_max > 0:
             return self.data_stats.budget_max
         
-        # Absolute minimum fallback
-        return 1000.0
+        # If no budget data available, this is a configuration error
+        raise RuntimeError("No budget data available from GA4 or patterns. Fix GA4 integration or provide pattern data.")
     
     def _discover_creative_ids(self) -> List[int]:
         """Discover creative IDs from patterns"""
@@ -280,7 +280,7 @@ class ProductionFortifiedEnvironment(gym.Env):
             reserve_price = self.data_stats.bid_min if self.data_stats.bid_min > 0 else 0.5
         
         # Estimate competition from channel data
-        num_competitors = 6  # Default
+        num_competitors = get_config().get_learning_params().get("num_competitors", 6)  # Discovered competition level
         if 'channels' in self.patterns:
             # Higher competition for high-effectiveness channels
             effectiveness_scores = []
@@ -291,11 +291,12 @@ class ProductionFortifiedEnvironment(gym.Env):
             if effectiveness_scores:
                 avg_effectiveness = np.mean(effectiveness_scores)
                 # More competitors for more effective channels
-                num_competitors = int(4 + avg_effectiveness * 8)  # 4-12 competitors
+                base_competitors = get_config().get_learning_params().get("base_competitors", 4)
+                num_competitors = int(base_competitors + avg_effectiveness * 8)
         
         config = {
             'auction_type': 'second_price',
-            'num_slots': 4,  # Standard search results page
+            'num_slots': get_config().get_learning_params().get('num_slots', 4),  # Discovered slots
             'reserve_price': reserve_price,
             'competitors': {
                 'count': num_competitors
@@ -358,7 +359,7 @@ class ProductionFortifiedEnvironment(gym.Env):
     def _create_dynamic_observation_space(self) -> spaces.Box:
         """Create observation space for discovered state dimensions"""
         # State dimension from DynamicEnrichedState
-        state_dim = 45
+        state_dim = get_config().get_neural_network_params().get("state_dim", 45)  # Discovered state dimension
         return spaces.Box(low=0, high=1, shape=(state_dim,), dtype=np.float32)
     
     def reset(self, seed: Optional[int] = None, options: Optional[Dict] = None) -> Tuple[np.ndarray, Dict]:
@@ -369,6 +370,10 @@ class ProductionFortifiedEnvironment(gym.Env):
         self.step_count = 0
         self.budget_spent = 0.0
         self.episode_id = f"episode_{datetime.now().timestamp()}"
+        
+        # Reset reward calculator episode metrics for volume/CAC tracking
+        if hasattr(self.reward_calculator, 'reset_episode_metrics'):
+            self.reward_calculator.reset_episode_metrics()
         
         # Generate new user from discovered segments
         self.current_user_id, self.current_user_state = self._generate_user_from_patterns()
@@ -503,8 +508,23 @@ class ProductionFortifiedEnvironment(gym.Env):
             channel_idx = int(channel_input)
             channel = self.discovered_channels[min(channel_idx, len(self.discovered_channels) - 1)]
         
-        # Run auction
-        auction_result = self._run_auction(bid_amount, channel)
+        # CRITICAL: Check for auction override from orchestrator (real GSP mechanics)
+        if action.get('use_real_auction', False) and 'auction_override' in action:
+            # Use REAL auction results from FixedAuctionGymIntegration
+            orchestrator_result = action['auction_override']
+            auction_result = {
+                'won': orchestrator_result.get('won', False),
+                'position': orchestrator_result.get('position', 0),
+                'price_paid': orchestrator_result.get('cost', 0.0),
+                'competitors': orchestrator_result.get('competitors', 0),
+                'quality_penalty_applied': False,  # GSP handles quality scores properly
+                'auction_source': 'orchestrator_gsp'  # Track source
+            }
+            logger.debug(f"Step {self.current_step}: Using orchestrator GSP auction - "
+                        f"Won: {auction_result['won']}, Price: ${auction_result['price_paid']:.2f}")
+        else:
+            # No ELIMINATED_NO_FALLBACKS_ALLOWED - orchestrator auction is required
+            raise RuntimeError("Orchestrator auction is REQUIRED. No ELIMINATED_NO_FALLBACKS_ALLOWED auction allowed. Fix orchestrator integration.")
         
         # Initialize reward calculation context
         reward_context = {
@@ -632,7 +652,19 @@ class ProductionFortifiedEnvironment(gym.Env):
                 # Discovery: Base conversion multiplier from GA4 channel performance
                 conversion_multiplier = self._get_channel_conversion_multiplier(channel)
                 if channel == 'display' and auction_result.get('quality_penalty_applied', False):
-                    conversion_multiplier = 0.01  # Massive CVR penalty for display bot traffic
+                    # Check if display has been fixed
+                    if 'display' in self.patterns.get('channels', {}):
+                        display_data = self.patterns['channels']['display']
+                        quality_issues = display_data.get('quality_issues', {})
+                        if quality_issues.get('fixes_applied', False) and not quality_issues.get('needs_urgent_fix', False):
+                            # Display is fixed - no penalty
+                            conversion_multiplier = conversion_multiplier  # Use normal multiplier
+                        else:
+                            # Display still broken - apply penalty
+                            conversion_multiplier = 0.01  # Massive CVR penalty for broken display
+                    else:
+                        # No display data - assume broken
+                        conversion_multiplier = 0.01
                 
                 if np.random.random() < cvr * conversion_multiplier:
                     conversion_occurred = True
@@ -767,7 +799,7 @@ class ProductionFortifiedEnvironment(gym.Env):
         touchpoint_factor = min(1.0, state.touchpoints_seen / 10.0)
         
         # Final probability
-        return min(0.15, base_cvr * stage_mult * (0.5 + touchpoint_factor) * 3.0)  # Boost for testing
+        return min(get_config().get_reward_thresholds().get("max_conversion_rate", 0.15), base_cvr * stage_mult * (0.5 + touchpoint_factor) * 3.0)  # Boost for testing
     
     def _get_days_to_convert(self) -> int:
         """Get conversion delay from patterns"""
@@ -795,8 +827,20 @@ class ProductionFortifiedEnvironment(gym.Env):
                 return 1.2
                 
             elif channel == 'display' or channel == 'Display':
-                # Display typically converts lower but volume is higher
-                return 0.8  # 20% reduction for display
+                # Display performance after bot filtering and targeting fixes
+                # Check if display fixes have been applied
+                if 'display' in self.patterns.get('channels', {}):
+                    display_data = self.patterns['channels']['display']
+                    quality_issues = display_data.get('quality_issues', {})
+                    if quality_issues.get('fixes_applied', False) and not quality_issues.get('needs_urgent_fix', False):
+                        # Fixed display channel - use normal conversion rate
+                        return 1.0  # Fixed display performs at baseline
+                    else:
+                        # Broken display channel
+                        return 0.2  # 80% reduction for broken display
+                else:
+                    # No display data - assume broken
+                    return 0.2
                 
             elif channel == 'social' or channel == 'Social':
                 # Social converts well for parental products
@@ -817,8 +861,8 @@ class ProductionFortifiedEnvironment(gym.Env):
                 return 1.0
                 
         except Exception as e:
-            logger.warning(f"Could not load channel conversion multiplier for {channel}: {e}")
-            # Discovery-based fallback: analyze current performance
+            logger.error(f"Could not load channel conversion multiplier for {channel}: {e}")
+            # Must use pattern data - no arbitrary fallbacks
             if hasattr(self, 'patterns') and 'channel_conversion_rates' in self.patterns:
                 rates = self.patterns['channel_conversion_rates']
                 if channel in rates:
@@ -1052,6 +1096,44 @@ class RewardTracker:
         
         # Normalize to reasonable range
         return min(1.0, total_value / 1000.0)  # Scale by $1000
+    
+    def update_discovered_segments(self, segments: Dict):
+        """Update environment with newly discovered segments"""
+        if not segments:
+            logger.warning("No segments provided for update")
+            return
+        
+        logger.info(f"Updating environment with {len(segments)} discovered segments")
+        
+        # Extract segment names for environment state space
+        self.discovered_segments = list(segments.keys())
+        
+        # Update patterns with segment data
+        self.patterns['segments'] = {}
+        for segment_id, segment in segments.items():
+            self.patterns['segments'][segment_id] = {
+                'name': segment.name,
+                'size': segment.size,
+                'conversion_rate': segment.conversion_rate,
+                'characteristics': segment.characteristics,
+                'behavioral_profile': segment.behavioral_profile,
+                'channel_preferences': segment.channel_preferences,
+                'device_preferences': segment.device_preferences
+            }
+        
+        # Update data statistics with new segment data
+        self.data_stats = DataStatistics.compute_from_patterns(self.patterns)
+        
+        # Update reward calculator with new patterns
+        if hasattr(self, 'reward_calculator'):
+            self.reward_calculator.patterns = self.patterns
+            self.reward_calculator.data_stats = self.data_stats
+        
+        # Update user simulator if available
+        if hasattr(self, 'user_simulator'):
+            self.user_simulator.update_segments(segments)
+        
+        logger.info(f"✅ Environment updated with discovered segments: {[s.name for s in list(segments.values())[:3]]}")
 
 
 class MultiObjectiveRewardCalculator:
@@ -1062,6 +1144,35 @@ class MultiObjectiveRewardCalculator:
         self.data_stats = data_stats
         self.pm = parameter_manager
         
+        # Episode metrics tracking for volume/CAC calculation
+        self.episode_metrics = {
+            'impressions': 0,
+            'clicks': 0,
+            'conversions': 0,
+            'spend': 0.0,
+            'revenue': 0.0,
+            'auctions_entered': 0,
+            'auctions_won': 0
+        }
+        
+        # Targets for volume and efficiency
+        self.targets = {
+            'daily_impressions': 10000,
+            'daily_clicks': 300,
+            'daily_conversions': 30,
+            'target_cac': 50.0,     # Target $50 CAC
+            'max_cac': 150.0,       # Max acceptable $150 CAC
+            'target_roas': 3.0,
+            'target_win_rate': 0.3
+        }
+        
+        # Value scaling for volume rewards
+        self.volume_scales = {
+            'impression_value': 0.01,
+            'click_value': 0.50,
+            'conversion_value': 20.0
+        }
+        
         # Load reward weights from configuration (learned, not hardcoded)
         self.weights = self._load_reward_weights()
         
@@ -1069,7 +1180,7 @@ class MultiObjectiveRewardCalculator:
         self.roas_normalizer = self._compute_roas_normalizer()
         self.revenue_normalizer = self._compute_revenue_normalizer()
         
-        logger.info(f"Multi-objective reward system initialized with weights: {self.weights}")
+        logger.info(f"Multi-objective reward system with volume/CAC balance initialized")
     
     def _load_reward_weights(self) -> Dict[str, float]:
         """Load learned reward weights from configuration"""
@@ -1083,13 +1194,14 @@ class MultiObjectiveRewardCalculator:
         
         # Use initial weights if none found
         if weights is None:
-            # Initial weights that sum to 1.0 - these will be learned
+            # IMPROVED: Weights that balance volume AND efficiency
             weights = {
-                'roas': 0.4,        # Revenue optimization (primary)
-                'exploration': 0.25, # Exploration bonus
-                'diversity': 0.20,   # Portfolio diversity
-                'curiosity': 0.10,   # Uncertainty reduction
-                'delayed': 0.05      # Delayed attribution
+                'volume': 0.3,       # NEW: Incentivize scale
+                'cac': 0.3,          # NEW: Incentivize efficiency  
+                'roas': 0.2,         # Reduced: Still important but not primary
+                'market_share': 0.1, # NEW: Win rate matters
+                'exploration': 0.05, # Exploration bonus
+                'diversity': 0.05    # Portfolio diversity
             }
         
         # Ensure weights sum to 1.0
@@ -1130,26 +1242,38 @@ class MultiObjectiveRewardCalculator:
             return 100.0  # Default $100 normalizer
     
     def calculate_reward(self, context: Dict, tracker: RewardTracker) -> Tuple[float, Dict[str, float]]:
-        """Calculate multi-objective reward with full transparency"""
+        """Calculate multi-objective reward balancing volume and CAC"""
         components = {}
         
-        # 1. ROAS Component (revenue optimization)
+        # Update episode metrics
+        self._update_episode_metrics(context)
+        
+        # 1. VOLUME Component (30% weight) - Incentivize scale
+        components['volume'] = self._calculate_volume_component(context)
+        
+        # 2. CAC Component (30% weight) - Incentivize efficiency
+        components['cac'] = self._calculate_cac_component(context)
+        
+        # 3. ROAS Component (20% weight) - Revenue optimization
         components['roas'] = self._calculate_roas_component(context)
         
-        # 2. Exploration Component
+        # 4. Market Share Component (10% weight) - Win rate
+        components['market_share'] = self._calculate_market_share_component(context)
+        
+        # 5. Exploration Component (5% weight)
         components['exploration'] = self._calculate_exploration_component(context, tracker)
         
-        # 3. Diversity Component
+        # 6. Diversity Component (5% weight)
         components['diversity'] = self._calculate_diversity_component(tracker)
         
-        # 4. Curiosity Component (uncertainty reduction)
-        components['curiosity'] = self._calculate_curiosity_component(context, tracker)
-        
-        # 5. Delayed Attribution Component
-        components['delayed'] = self._calculate_delayed_component(context, tracker)
-        
         # Weighted combination
-        total_reward = sum(self.weights[key] * components[key] for key in components.keys())
+        total_reward = sum(self.weights.get(key, 0) * components.get(key, 0) for key in components.keys())
+        
+        # Add synergy bonus for achieving both volume AND efficiency
+        if components.get('volume', 0) > 0.5 and components.get('cac', 0) > 0.5:
+            synergy_bonus = 0.2  # 20% bonus
+            total_reward *= (1 + synergy_bonus)
+            components['synergy_bonus'] = synergy_bonus
         
         # Log reward calculation for debugging
         if context.get('step', 0) % 100 == 0:
@@ -1238,6 +1362,111 @@ class MultiObjectiveRewardCalculator:
         
         # Normalize to reasonable range
         return min(1.0, delayed_value)
+    
+    def _update_episode_metrics(self, context: Dict):
+        """Update running metrics for the episode"""
+        if context.get('won', False):
+            self.episode_metrics['auctions_won'] += 1
+            self.episode_metrics['impressions'] += 1
+            self.episode_metrics['spend'] += context.get('cost', 0)
+            
+            if context.get('click_occurred', False):
+                self.episode_metrics['clicks'] += 1
+            
+            if context.get('conversion_occurred', False):
+                self.episode_metrics['conversions'] += 1
+                self.episode_metrics['revenue'] += context.get('conversion_value', 0)
+        
+        self.episode_metrics['auctions_entered'] += 1
+    
+    def _calculate_volume_component(self, context: Dict) -> float:
+        """Reward for achieving volume targets - incentivizes scale"""
+        volume_score = 0.0
+        
+        # Immediate volume reward for this step
+        if context.get('won', False):
+            volume_score += self.volume_scales['impression_value']
+            
+            if context.get('click_occurred', False):
+                volume_score += self.volume_scales['click_value']
+            
+            if context.get('conversion_occurred', False):
+                volume_score += self.volume_scales['conversion_value']
+        
+        # Normalize to [-1, 1] range using tanh
+        normalized_score = np.tanh(volume_score / 10.0)
+        
+        # Add progress bonus based on daily targets
+        impression_progress = min(1.0, self.episode_metrics['impressions'] / self.targets['daily_impressions'])
+        conversion_progress = min(1.0, self.episode_metrics['conversions'] / self.targets['daily_conversions'])
+        
+        progress_bonus = (impression_progress + conversion_progress) / 2
+        
+        return normalized_score * 0.7 + progress_bonus * 0.3
+    
+    def _calculate_cac_component(self, context: Dict) -> float:
+        """Reward for maintaining low CAC - incentivizes efficiency"""
+        current_cac = self._get_current_cac()
+        
+        if current_cac <= 0:
+            return 0.0  # No conversions yet
+        
+        # Calculate CAC efficiency score
+        if current_cac <= self.targets['target_cac']:
+            cac_score = 1.0  # Below target - excellent!
+        elif current_cac <= self.targets['max_cac']:
+            # Between target and max - linear decay
+            ratio = (current_cac - self.targets['target_cac']) / \
+                   (self.targets['max_cac'] - self.targets['target_cac'])
+            cac_score = 1.0 - ratio
+        else:
+            # Above max CAC - negative reward
+            excess_ratio = (current_cac - self.targets['max_cac']) / self.targets['max_cac']
+            cac_score = -np.tanh(excess_ratio)
+        
+        # Reward for improving CAC
+        if context.get('conversion_occurred', False):
+            marginal_cac = context.get('cost', 0)
+            if marginal_cac < current_cac:
+                cac_score = min(1.0, cac_score + 0.2)
+        
+        return cac_score
+    
+    def _calculate_market_share_component(self, context: Dict) -> float:
+        """Reward for winning auctions - market share matters"""
+        if self.episode_metrics['auctions_entered'] == 0:
+            return 0.0
+        
+        win_rate = self.episode_metrics['auctions_won'] / self.episode_metrics['auctions_entered']
+        
+        if win_rate >= self.targets['target_win_rate']:
+            share_score = 1.0
+        else:
+            share_score = win_rate / self.targets['target_win_rate']
+        
+        # Penalize very low win rates
+        if win_rate < 0.05:
+            share_score = -0.5
+        
+        return share_score
+    
+    def _get_current_cac(self) -> float:
+        """Calculate current Customer Acquisition Cost"""
+        if self.episode_metrics['conversions'] == 0:
+            return 0.0
+        return self.episode_metrics['spend'] / self.episode_metrics['conversions']
+    
+    def reset_episode_metrics(self):
+        """Reset metrics at the start of a new episode"""
+        self.episode_metrics = {
+            'impressions': 0,
+            'clicks': 0,
+            'conversions': 0,
+            'spend': 0.0,
+            'revenue': 0.0,
+            'auctions_entered': 0,
+            'auctions_won': 0
+        }
     
     def update_weights(self, performance_feedback: Dict):
         """Update reward weights based on learning performance"""

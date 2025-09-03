@@ -473,7 +473,7 @@ class MultiObjectiveOptimizer:
     def get_pareto_optimal_action(self, state: Any, q_values: Dict[str, torch.Tensor]) -> int:
         """Select action from Pareto frontier."""
         if not self.pareto_archive:
-            # Fallback to weighted sum
+            # Use weighted sum if needed
             combined_q = sum(q * w for q, w in zip(q_values.values(), self.weights))
             return combined_q.argmax().item()
         
@@ -589,7 +589,7 @@ class AdvancedRLAgent:
         
         # Validate action
         if action_mask is not None and action_mask[action] == 0:
-            # Fallback to valid action
+            # Use valid action if needed
             valid_actions = np.where(action_mask == 1)[0]
             action = np.random.choice(valid_actions) if len(valid_actions) > 0 else 0
         

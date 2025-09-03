@@ -128,7 +128,7 @@ class ParameterManager:
         
         for key, data in channel_data.items():
             # Handle simplified format from discovery engine
-            if isinstance(data, dict) and 'views' in data:
+            if isinstance(data, dict) and ('views' in data or 'sessions' in data):
                 # Simple format from discovery engine
                 channel_id = key  # e.g., "organic"
                 self.channel_performance[channel_id] = ChannelPerformance(
@@ -141,8 +141,8 @@ class ParameterManager:
                     estimated_cac=50.0,  # Default estimate
                     revenue=0.0
                 )
-            else:
-                # Original detailed format
+            elif 'channel_group' in data and 'source' in data and 'medium' in data:
+                # Original detailed format (only if all required fields present)
                 channel_id = f"{data['channel_group']}|{data['source']}|{data['medium']}"
                 self.channel_performance[channel_id] = ChannelPerformance(
                     channel_group=data['channel_group'],
@@ -220,22 +220,22 @@ class ParameterManager:
         
         for key, data in device_data.items():
             # Handle simplified format from discovery engine
-            if isinstance(data, dict) and 'views' in data:
+            if isinstance(data, dict) and ('share' in data or 'conversion_rate' in data or 'views' in data):
                 # Simple format from discovery engine
                 device_id = key  # e.g., "mobile", "desktop", "tablet"
                 self.device_performance[device_id] = DevicePerformance(
                     device_category=key,
-                    os='unknown',
-                    brand='unknown',
+                    os='discovered',
+                    brand='discovered',
                     channel='organic',
-                    sessions=data.get('sessions', 0),
-                    conversions=0,  # Not tracked in simple format
-                    cvr=0.02,  # Default estimate
+                    sessions=int(data.get('share', 0.33) * 1000),  # Convert share to estimated sessions
+                    conversions=int(data.get('share', 0.33) * 1000 * data.get('conversion_rate', 0.02)),
+                    cvr=data.get('conversion_rate', 0.02),
                     revenue=0.0,
-                    avg_duration=300.0
+                    avg_duration=data.get('avg_session_duration', 300.0)
                 )
-            else:
-                # Original detailed format
+            elif 'device_category' in data and 'os' in data and 'brand' in data:
+                # Original detailed format (only if all required fields present)
                 device_id = f"{data['device_category']}_{data['os']}_{data['brand']}"
                 self.device_performance[device_id] = DevicePerformance(
                     device_category=data['device_category'],

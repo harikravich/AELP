@@ -1,0 +1,61 @@
+{
+  "timestamp": "2025-09-03T03:36:27.769012",
+  "learning_verified": false,
+  "verification_checks": {
+    "weights_updating": false,
+    "gradients_flowing": false,
+    "loss_improving": false,
+    "entropy_decreasing": false,
+    "performance_improving": false,
+    "replay_functioning": false,
+    "exploration_decaying": false,
+    "convergence_stable": false
+  },
+  "problems_found": [
+    "CRITICAL: Weights not updating - check optimizer.step()"
+  ],
+  "summary_statistics": {
+    "weight_changes": {
+      "count": 100,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "recent_mean": 0.0
+    },
+    "weight_magnitudes": {
+      "count": 100,
+      "mean": 0.9685014486312866,
+      "std": 0.0,
+      "min": 0.9685014486312866,
+      "max": 0.9685014486312866,
+      "recent_mean": 0.9685014486312866
+    },
+    "episode_rewards": {
+      "count": 50,
+      "mean": 38.7237056386915,
+      "std": 2.0961869511894977,
+      "min": 33.67663622401324,
+      "max": 42.33514971752754,
+      "recent_mean": 37.757733332217086
+    },
+    "episode_lengths": {
+      "count": 50,
+      "mean": 51.0,
+      "std": 0.0,
+      "min": 51.0,
+      "max": 51.0,
+      "recent_mean": 51.0
+    },
+    "buffer_sizes": {
+      "count": 100,
+      "mean": 2500.5,
+      "std": 28.86607004772212,
+      "min": 2451.0,
+      "max": 2550.0,
+      "recent_mean": 2545.5
+    }
+  },
+  "total_anomalies": 0,
+  "data_points": 0
+}

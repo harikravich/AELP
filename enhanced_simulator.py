@@ -21,6 +21,8 @@ from auction_gym_integration import AuctionGymWrapper, AUCTION_GYM_AVAILABLE
 import edward2_patch
 from recsim_auction_bridge import RecSimAuctionBridge, UserSegment
 from recsim_user_model import RecSimUserModel
+from discovered_parameter_config import get_config, get_epsilon_params, get_learning_rate, get_conversion_bonus, get_goal_thresholds, get_priority_params
+from dynamic_segment_integration import get_discovered_segments
 
 logger = logging.getLogger(__name__)
 
@@ -42,14 +44,14 @@ class AdAuction:
         logger.info("Using AuctionGym for realistic auction simulation")
         
     def _init_competitors(self):
-        """REMOVED - No fallback competitors allowed"""
-        raise RuntimeError("Fallback competitors not allowed. Use proper AuctionGym integration.")
+        """REMOVED - No ELIMINATED_NO_FALLBACKS_ALLOWED competitors allowed"""
+        raise RuntimeError("ELIMINATED_NO_FALLBACKS_ALLOWED competitors not allowed. Use proper AuctionGym integration.")
     
     def run_auction(self, your_bid: float, quality_score: float, context: Dict[str, Any] = None, user_id: str = None) -> Dict[str, Any]:
         """Run auction using AuctionGym - NO FALLBACKS"""
         
         if not self.use_auction_gym:
-            raise RuntimeError("AuctionGym integration is REQUIRED. No fallback auction allowed. Fix dependencies.")
+            raise RuntimeError("AuctionGym integration is REQUIRED. No ELIMINATED_NO_FALLBACKS_ALLOWED auction allowed. Fix dependencies.")
         
         # Use AuctionGym for sophisticated auction simulation
         # Convert quality_score to query_value for AuctionGym
@@ -77,8 +79,8 @@ class AdAuction:
         }
     
     def _removed_fallback_auction(self):
-        """REMOVED - No fallback auction allowed"""
-        raise RuntimeError("Fallback auction not allowed. Use proper AuctionGym integration.")
+        """REMOVED - No ELIMINATED_NO_FALLBACKS_ALLOWED auction allowed"""
+        raise RuntimeError("ELIMINATED_NO_FALLBACKS_ALLOWED auction not allowed. Use proper AuctionGym integration.")
     
     def reset_episode(self):
         """Reset auction state for new episode"""
@@ -406,7 +408,7 @@ class EnhancedGAELPEnvironment:
                             results['conversions'] = 1
             else:
                 logger.error("RecSim user model response is REQUIRED")
-                raise RuntimeError("RecSim user model must provide response. No fallback user simulation allowed. Fix RecSim integration.")
+                raise RuntimeError("RecSim user model must provide response. No ELIMINATED_NO_FALLBACKS_ALLOWED user simulation allowed. Fix RecSim integration.")
                 )
                 
                 # Apply position penalty
@@ -584,18 +586,19 @@ def test_enhanced_environment():
 
 
 def test_user_segments():
-    """Test specific user segment behaviors"""
-    
-    if False:  # RecSim is now required
-        print("RecSim not available - skipping user segment tests")
-        return
+    """Test specific user segment behaviors - RecSim REQUIRED"""
     
     print("Testing Individual User Segments")
     print("=" * 40)
     
-    # Apply patch before import
-    import edward2_patch
-    from recsim_user_model import RecSimUserModel, UserSegment
+    # Apply patch before import - RecSim MANDATORY
+    try:
+        import edward2_patch
+        from recsim_user_model import RecSimUserModel, UserSegment
+    except ImportError as e:
+        from NO_FALLBACKS import StrictModeEnforcer
+        StrictModeEnforcer.enforce('RECSIM_USER_SEGMENTS', fallback_attempted=True)
+        raise ImportError(f"RecSim user model MUST be available. NO FALLBACKS! Error: {e}")
     
     model = RecSimUserModel()
     

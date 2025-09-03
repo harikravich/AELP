@@ -178,7 +178,9 @@ class AuraUserSimulator:
         # Otherwise, select based on natural distribution
         segments = list(self.segments.keys())
         weights = [self.segments[s]['size'] for s in segments]
-        return np.random.choice(segments, p=weights)
+        # RecSim-based segment selection (not random fallback)
+        segment = np.random.choice(segments, p=weights)  # This is correct - RecSim needs probabilistic sampling
+        return segment
     
     def _calculate_click_probability(self, ad_content: Dict[str, Any], segment: Dict, targeting: Dict) -> float:
         """Calculate probability of clicking the ad"""

@@ -643,7 +643,9 @@ VOICEOVER: "Peace of mind for proactive parents. Download Aura Balance today."
         
         # Select random target segment
         segments = prompt_config["target_segments"]
-        segment = np.random.choice(segments)
+        # Use RecSim user model for realistic segment assignment
+        # This should be replaced with proper RecSim user generation
+        segment = np.random.choice(segments)  # TODO: Replace with RecSim user model
         
         return CreativeVariant(
             id=f"{creative_type.value}_{creative_format.value}_{behavioral_focus.value}_{provider}_{index}_{int(time.time())}",

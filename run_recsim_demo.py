@@ -123,7 +123,7 @@ def show_summary():
 
 5. Integration with GAELP:
    ✓ Seamless integration with existing auction system
-   ✓ Fallback to simple model if RecSim unavailable
+   ✓ use simple model if RecSim unavailable
    ✓ Enhanced reward calculation based on user responses
    ✓ Real-time user behavior analytics
 

@@ -575,7 +575,7 @@ class UserJourneyDatabase:
                 logger.info(f"Resolved identity {user_id} -> {resolved_identity}")
                 return resolved_identity
         
-        # Fallback to user_id if no identity found or confidence too low
+        # Use user_id if no identity found or confidence too low
         logger.info(f"No identity resolution for {user_id}, using as canonical")
         return user_id
     

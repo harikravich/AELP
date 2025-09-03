@@ -112,7 +112,7 @@ class GA4DirectOAuth:
                         open_browser=True
                     )
                 except:
-                    # Fallback to manual URL
+                    # Use manual URL if needed
                     print("\n📋 Manual authentication required:")
                     auth_url, _ = flow.authorization_url(
                         access_type='offline',

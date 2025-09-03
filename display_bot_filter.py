@@ -304,11 +304,11 @@ class DisplayBotFilter:
                 # Use real data to generate realistic placement analysis
                 placement_data = self.generate_realistic_placement_data(display_data)
             else:
-                print("⚠️  No quality issues data found, using mock data for analysis")
-                placement_data = self.generate_mock_placement_data()
+                print("❌ No quality issues data found - analysis REQUIRED")
+                raise RuntimeError("Quality issues data is required for bot filtering analysis. Fix data collection.")
         except FileNotFoundError:
-            print("⚠️  No patterns file found, using mock data for analysis")
-            placement_data = self.generate_mock_placement_data()
+            print("❌ No patterns file found - data collection REQUIRED")
+            raise RuntimeError("Patterns file is required for bot filtering. Fix data collection pipeline.")
         
         # Analyze placements
         placement_analysis = self.analyze_placements(placement_data)
@@ -443,64 +443,9 @@ class DisplayBotFilter:
         
         return placements
 
-    def generate_mock_placement_data(self) -> List[Dict]:
-        """Generate mock placement data for testing"""
-        return [
-            {
-                'placement_url': 'suspicious-ads-network.com',
-                'sessions': 45000,
-                'conversions': 0,
-                'bounce_rate': 0.99,
-                'avg_session_duration': 0.3,
-                'pages_per_session': 1.0,
-                'new_user_rate': 1.0
-            },
-            {
-                'placement_url': 'fake-traffic-source.tk',
-                'sessions': 30000,
-                'conversions': 1,
-                'bounce_rate': 0.98,
-                'avg_session_duration': 0.5,
-                'pages_per_session': 1.0,
-                'new_user_rate': 0.999
-            },
-            {
-                'placement_url': 'parenting-blog-network.com',
-                'sessions': 15000,
-                'conversions': 45,
-                'bounce_rate': 0.75,
-                'avg_session_duration': 120.0,
-                'pages_per_session': 2.3,
-                'new_user_rate': 0.85
-            },
-            {
-                'placement_url': 'mental-health-resources.org',
-                'sessions': 12000,
-                'conversions': 72,
-                'bounce_rate': 0.65,
-                'avg_session_duration': 180.0,
-                'pages_per_session': 3.1,
-                'new_user_rate': 0.70
-            },
-            {
-                'placement_url': 'bot-generated-content.ml',
-                'sessions': 25000,
-                'conversions': 2,
-                'bounce_rate': 0.97,
-                'avg_session_duration': 0.8,
-                'pages_per_session': 1.01,
-                'new_user_rate': 0.995
-            },
-            {
-                'placement_url': 'family-wellness-magazine.com',
-                'sessions': 8000,
-                'conversions': 28,
-                'bounce_rate': 0.70,
-                'avg_session_duration': 95.0,
-                'pages_per_session': 2.8,
-                'new_user_rate': 0.75
-            }
-        ]
+    def removed_generate_mock_placement_data(self):
+        """REMOVED - No mock data generation allowed in production"""
+        raise RuntimeError("Mock placement data generation removed. Use real placement data from GA4.")
     
     def print_filtering_results(self, exclusion_lists: Dict):
         """Print bot filtering results"""

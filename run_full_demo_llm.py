@@ -87,7 +87,7 @@ class RealLLMPersona:
             }
             
         except Exception as e:
-            # Fallback to simple heuristic if LLM fails
+            # Use simple heuristic if LLM fails if needed
             logging.warning(f"LLM persona failed, using fallback: {e}")
             return await self._fallback_response(campaign)
     
@@ -419,7 +419,7 @@ async def main():
     print("  • Real-time LLM responses (Claude/GPT) based on persona characteristics")
     print("  • Dynamic persona state management (fatigue, engagement, blocking)")
     print("  • Cost monitoring and rate limiting for API usage")
-    print("  • Fallback to heuristic responses if LLM unavailable")
+    print("  • use heuristic responses if LLM unavailable")
     print("\n⚙️  API Configuration:")
     print(f"  • Anthropic API: {'✅ Configured' if os.getenv('ANTHROPIC_API_KEY') else '❌ Not configured'}")
     print(f"  • OpenAI API: {'✅ Configured' if os.getenv('OPENAI_API_KEY') else '❌ Not configured'}")

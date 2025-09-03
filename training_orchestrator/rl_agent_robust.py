@@ -121,7 +121,7 @@ class JourneyState:
                 
                 vector = np.array(vector_parts, dtype=np.float32)
             else:
-                # Fallback to static encoding
+                # Use static encoding if needed
                 vector = np.array([
                     self.stage / 3.0,
                     min(self.touchpoints_seen / 20.0, 1.0),

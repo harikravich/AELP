@@ -32,12 +32,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 # Import conversion lag model for enhanced conversion timing prediction
-try:
-    from conversion_lag_model import ConversionLagModel, ConversionJourney
-    CONVERSION_LAG_MODEL_AVAILABLE = True
-except ImportError:
-    CONVERSION_LAG_MODEL_AVAILABLE = False
-    print("Warning: ConversionLagModel not available. Enhanced conversion timing disabled.")
+from conversion_lag_model import ConversionLagModel, ConversionJourney
 
 logger = logging.getLogger(__name__)
 

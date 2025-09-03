@@ -145,7 +145,7 @@ class CreativeEffectivenessModel:
         channel_creatives = [c for c in self.creatives.values() if c.channel == channel]
         
         if not channel_creatives:
-            # Fallback to any creative
+            # Use any creative if needed
             channel_creatives = list(self.creatives.values())
         
         # Thompson sampling

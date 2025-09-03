@@ -23,14 +23,10 @@ from identity_resolver import IdentityResolver
 from auction_gym_integration_fixed import AuctionGymWrapper, AuctionResult
 from fortified_rl_agent import EnrichedJourneyState, NUM_CREATIVES, NUM_CHANNELS
 
-# Import GA4 integration
-try:
-    import sys
-    sys.path.insert(0, '/home/hariravichandran/AELP')
-    from mcp_ga4_integration import GA4DataFetcher
-    GA4_AVAILABLE = True
-except:
-    GA4_AVAILABLE = False
+# Import GA4 integration - REQUIRED
+import sys
+sys.path.insert(0, '/home/hariravichandran/AELP')
+from mcp_ga4_integration import GA4DataFetcher
 
 logger = logging.getLogger(__name__)
 

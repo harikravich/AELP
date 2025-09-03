@@ -12,21 +12,12 @@ from typing import Dict, Any, List
 import logging
 from unittest.mock import Mock
 
-# Import the RecSim-AuctionGym bridge
-try:
-    from recsim_auction_bridge import RecSimAuctionBridge, UserSegment
-    from recsim_user_model import RecSimUserModel
-    BRIDGE_AVAILABLE = True
-except ImportError:
-    logging.warning("RecSim-AuctionGym bridge not available. Using fallback.")
-    BRIDGE_AVAILABLE = False
+# Import the RecSim-AuctionGym bridge - REQUIRED
+from recsim_auction_bridge import RecSimAuctionBridge, UserSegment
+from recsim_user_model import RecSimUserModel
 
-# Import training components
-try:
-    from online_learner import OnlineLearner, OnlineLearnerConfig
-    LEARNER_AVAILABLE = True
-except ImportError:
-    LEARNER_AVAILABLE = False
+# Import training components - REQUIRED
+from online_learner import OnlineLearner, OnlineLearnerConfig
 
 
 class EnhancedMockAgent:
@@ -47,7 +38,7 @@ class EnhancedMockAgent:
             print("🎯 Agent using RecSim-AuctionGym bridge for realistic actions")
         else:
             self.bridge = None
-            print("⚠️ Agent using fallback random actions")
+            print("⚠️ Agent RecSim REQUIRED: random actions") not available
         
         # Track current user for session continuity
         self.current_user_id = None
@@ -208,7 +199,7 @@ class RealisticEnvironmentSimulator:
             self.bridge = RecSimAuctionBridge()
             print("🌟 Environment using RecSim-AuctionGym bridge for realistic responses")
         else:
-            print("⚠️ Environment using fallback random responses")
+            print("⚠️ Environment RecSim REQUIRED: random responses") not available
         
         self.episode_count = 0
         
@@ -489,7 +480,9 @@ def analyze_enhanced_results(results: Dict, agent: EnhancedMockAgent):
             print(f"  Current Segment: {agent_state['current_segment']}")
     
     else:
-        print("\n⚠️ Using fallback simulation (RecSim bridge not available)")
+        from NO_FALLBACKS import StrictModeEnforcer
+        StrictModeEnforcer.enforce('RECSIM_BRIDGE_TRAINING', fallback_attempted=True)
+        raise RuntimeError("RecSim bridge REQUIRED for training. NO FALLBACKS ALLOWED!")
 
 
 async def main():
@@ -502,7 +495,11 @@ async def main():
     
     # Check availability
     print(f"\n🔍 Component Status:")
-    print(f"  RecSim-AuctionGym Bridge: {'✅ Available' if BRIDGE_AVAILABLE else '❌ Not Available'}")
+    if not BRIDGE_AVAILABLE:
+        from NO_FALLBACKS import StrictModeEnforcer
+        StrictModeEnforcer.enforce('RECSIM_BRIDGE_AVAILABILITY', fallback_attempted=True)
+        raise RuntimeError("RecSim-AuctionGym Bridge MUST be available. NO FALLBACKS!")
+    print(f"  RecSim-AuctionGym Bridge: ✅ MANDATORY and Available")
     print(f"  Online Learner: {'✅ Available' if LEARNER_AVAILABLE else '❌ Not Available'}")
     
     # Run enhanced training

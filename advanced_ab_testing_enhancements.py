@@ -532,7 +532,7 @@ class AdvancedABTestingFramework(StatisticalABTestFramework):
             except Exception as e:
                 logger.warning(f"LinUCB allocation failed: {e}, falling back to base method")
         
-        # Fallback to base method
+        # Use base method if needed
         return super().assign_variant(test_id, user_id, context)
     
     def record_observation_advanced(self, test_id: str, variant_id: str, user_id: str,

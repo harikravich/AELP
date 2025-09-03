@@ -504,6 +504,26 @@ class GAELPSuccessCriteriaDefinition:
                 if criteria.business_critical}
 
 
+# Backward-compatible wrapper expected by orchestrator
+class SuccessCriteriaMonitor:
+    """Compatibility wrapper exposing a simple monitor interface.
+
+    Internally composes GAELPSuccessCriteriaDefinition and PerformanceMonitor.
+    """
+    def __init__(self, db_path: str = "/home/hariravichandran/AELP/gaelp_performance.db"):
+        self.definition = GAELPSuccessCriteriaDefinition()
+        self.monitor = PerformanceMonitor(self.definition, db_path=db_path)
+
+    def start(self, interval_seconds: int = 60):
+        self.monitor.start_monitoring(check_interval_seconds=interval_seconds)
+
+    def stop(self):
+        self.monitor.stop_monitoring()
+
+    def get_status(self) -> Dict[str, Any]:
+        return self.monitor.get_system_health_summary()
+
+
 class PerformanceMonitor:
     """
     Real-time performance monitoring system for GAELP success criteria.

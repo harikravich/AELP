@@ -39,7 +39,9 @@ def test_recsim():
         import recsim_ng.core.value as value
         # If we get here, RecSim is available
     except ImportError:
-        raise Exception("RecSim not available")
+        from NO_FALLBACKS import StrictModeEnforcer
+        StrictModeEnforcer.enforce('RECSIM_19_COMPONENTS', fallback_attempted=True)
+        raise Exception("RecSim MUST be available. NO FALLBACKS ALLOWED!")
 
 # 3. AUCTIONGYM
 def test_auctiongym():

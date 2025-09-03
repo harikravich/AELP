@@ -1,0 +1,520 @@
+
+================================================================================
+RECSIM FALLBACK VIOLATION REPORT
+================================================================================
+
+SUMMARY:
+- Total Violations: 69
+- Critical Violations: 17
+- High Priority Violations: 52
+
+CLAUDE.MD COMPLIANCE: ❌ FAIL
+
+
+================================================================================
+CRITICAL VIOLATIONS (MUST FIX IMMEDIATELY):
+================================================================================
+
+FILE: /home/hariravichandran/AELP/enhanced_simulator.py
+LINE: 411
+PATTERN: fallback.*user
+CODE: raise RuntimeError("RecSim user model must provide response. No ELIMINATED_NO_FALLBACKS_ALLOWED user simulation allowed. Fix RecSim integration.")
+SEVERITY: CRITICAL
+---
+
+FILE: /home/hariravichandran/AELP/fix_recsim_fallbacks.py
+LINE: 32
+PATTERN: except.*recsim
+CODE: 'old': r'raise Exception\("RecSim not available"\)',
+SEVERITY: CRITICAL
+---
+
+FILE: /home/hariravichandran/AELP/fix_recsim_fallbacks.py
+LINE: 35
+PATTERN: except.*recsim
+CODE: raise Exception("RecSim MUST be available. NO FALLBACKS ALLOWED!")'''
+SEVERITY: CRITICAL
+---
+
+FILE: /home/hariravichandran/AELP/fix_recsim_fallbacks.py
+LINE: 192
+PATTERN: fallback.*user
+CODE: print("NO FALLBACKS - realistic user behavior guaranteed!")
+SEVERITY: CRITICAL
+---
+
+FILE: /home/hariravichandran/AELP/persistent_user_database.py
+LINE: 202
+PATTERN: fallback.*user
+CODE: StrictModeEnforcer.check_fallback_usage('PERSISTENT_USER_DATABASE')
+SEVERITY: CRITICAL
+---
+
+FILE: /home/hariravichandran/AELP/test_persistent_user_persistence.py
+LINE: 28
+PATTERN: simplified.*user
+CODE: Simplified but WORKING persistent user manager for critical testing.
+SEVERITY: CRITICAL
+---
+
+FILE: /home/hariravichandran/AELP/verify_recsim_no_fallbacks.py
+LINE: 23
+PATTERN: try.*import.*recsim
+CODE: r'try.*import.*recsim',
+SEVERITY: CRITICAL
+---
+
+FILE: /home/hariravichandran/AELP/verify_recsim_no_fallbacks.py
+LINE: 24
+PATTERN: except.*recsim
+CODE: r'except.*recsim',
+SEVERITY: CRITICAL
+---
+
+FILE: /home/hariravichandran/AELP/verify_recsim_no_fallbacks.py
+LINE: 25
+PATTERN: RECSIM_AVAILABLE.*=.*False
+CODE: r'RECSIM_AVAILABLE.*=.*False',
+SEVERITY: CRITICAL
+---
+
+FILE: /home/hariravichandran/AELP/verify_recsim_no_fallbacks.py
+LINE: 30
+PATTERN: fallback.*user
+CODE: r'fallback.*user',
+SEVERITY: CRITICAL
+---
+
+FILE: /home/hariravichandran/AELP/verify_recsim_no_fallbacks.py
+LINE: 31
+PATTERN: simplified.*user
+CODE: r'simplified.*user',
+SEVERITY: CRITICAL
+---
+
+FILE: /home/hariravichandran/AELP/verify_recsim_no_fallbacks.py
+LINE: 82
+PATTERN: try.*import.*recsim
+CODE: r'try.*import.*recsim',
+SEVERITY: CRITICAL
+---
+
+FILE: /home/hariravichandran/AELP/verify_recsim_no_fallbacks.py
+LINE: 83
+PATTERN: except.*recsim
+CODE: r'except.*recsim',
+SEVERITY: CRITICAL
+---
+
+FILE: /home/hariravichandran/AELP/verify_recsim_no_fallbacks.py
+LINE: 84
+PATTERN: RECSIM_AVAILABLE.*=.*False
+CODE: r'RECSIM_AVAILABLE.*=.*False',
+SEVERITY: CRITICAL
+---
+
+FILE: /home/hariravichandran/AELP/verify_recsim_no_fallbacks.py
+LINE: 85
+PATTERN: fallback.*user
+CODE: r'fallback.*user',
+SEVERITY: CRITICAL
+---
+
+FILE: /home/hariravichandran/AELP/verify_recsim_no_fallbacks.py
+LINE: 86
+PATTERN: simplified.*user
+CODE: r'simplified.*user'
+SEVERITY: CRITICAL
+---
+
+FILE: /home/hariravichandran/AELP/run_recsim_demo_enforced.py
+LINE: 45
+PATTERN: fallback.*user
+CODE: print("NO FALLBACKS - realistic user behavior guaranteed!")
+SEVERITY: CRITICAL
+---
+
+================================================================================
+HIGH PRIORITY VIOLATIONS:
+================================================================================
+
+FILE: /home/hariravichandran/AELP/enhanced_simulator.py
+LINE: 143
+PATTERN: recsim.*not available
+CODE: raise RuntimeError("RecSim bridge REQUIRED but not available. NO FALLBACKS ALLOWED.")
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/enhanced_simulator.py
+LINE: 571
+PATTERN: if.*recsim.*available
+CODE: # Show user behavior analytics if RecSim is available
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/enhanced_simulator_fixed.py
+LINE: 362
+PATTERN: random\.choice.*user
+CODE: user_id = np.random.choice(list(self.metrics['persistent_users']))
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/enhanced_simulator_fixed.py
+LINE: 362
+PATTERN: np\.random\.choice.*user
+CODE: user_id = np.random.choice(list(self.metrics['persistent_users']))
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/comprehensive_behavioral_health_creative_generator.py
+LINE: 769
+PATTERN: random\.choice.*segment
+CODE: segment = np.random.choice(segments)
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/run_recsim_demo.py
+LINE: 126
+PATTERN: if.*recsim.*available
+CODE: ✓ use simple model if RecSim unavailable
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/aura_campaign_simulator.py
+LINE: 160
+PATTERN: random\.choice.*segment
+CODE: return np.random.choice(segments, p=weights)
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/test_recsim_integration.py
+LINE: 7
+PATTERN: recsim.*or.*fallback
+CODE: """Test that RecSim integration works without fallbacks"""
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/fix_recsim_fallbacks.py
+LINE: 21
+PATTERN: recsim.*not available
+CODE: 'old': r'else:\s*print\("⚠️ RecSim-AuctionGym bridge not available"\).*?print\("   - Check that auction_gym_integration\.py is available"\)',
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/fix_recsim_fallbacks.py
+LINE: 32
+PATTERN: recsim.*not available
+CODE: 'old': r'raise Exception\("RecSim not available"\)',
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/fix_recsim_fallbacks.py
+LINE: 43
+PATTERN: random\.choice.*segment
+CODE: segment = np.random.choice(segments, p=weights)  # This is correct - RecSim needs probabilistic sampling
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/fix_recsim_fallbacks.py
+LINE: 53
+PATTERN: random\.choice.*user
+CODE: segment = np.random.choice(segments)  # TODO: Replace with RecSim user model'''
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/fix_recsim_fallbacks.py
+LINE: 53
+PATTERN: random\.choice.*segment
+CODE: segment = np.random.choice(segments)  # TODO: Replace with RecSim user model'''
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/fix_recsim_fallbacks.py
+LINE: 53
+PATTERN: np\.random\.choice.*user
+CODE: segment = np.random.choice(segments)  # TODO: Replace with RecSim user model'''
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/fix_recsim_fallbacks.py
+LINE: 66
+PATTERN: recsim.*not available
+CODE: 'pattern': r'RecSim REQUIRED: (.+)', not available
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/fix_recsim_fallbacks.py
+LINE: 67
+PATTERN: recsim.*not available
+CODE: 'replacement': r'RecSim REQUIRED: \1 not available',
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/fix_recsim_fallbacks.py
+LINE: 152
+PATTERN: recsim.*or.*fallback
+CODE: RecSim is MANDATORY - NO FALLBACKS ALLOWED.
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/fix_recsim_fallbacks.py
+LINE: 192
+PATTERN: fallback.*behavior
+CODE: print("NO FALLBACKS - realistic user behavior guaranteed!")
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/fix_recsim_fallbacks.py
+LINE: 254
+PATTERN: if.*recsim.*available
+CODE: - System FAILS if RecSim unavailable: Enforced
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/behavioral_health_headline_generator.py
+LINE: 389
+PATTERN: random\.choice.*segment
+CODE: segment = np.random.choice(segments)
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/aura_campaign_simulator_updated.py
+LINE: 182
+PATTERN: random\.choice.*segment
+CODE: segment = np.random.choice(segments, p=weights)  # This is correct - RecSim needs probabilistic sampling
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/run_recsim_demo_fixed.py
+LINE: 164
+PATTERN: if.*recsim.*available
+CODE: NO FALLBACKS are allowed - system will fail if RecSim unavailable.
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/simple_behavioral_health_creative_generator.py
+LINE: 3
+PATTERN: simplified.*behavior
+CODE: Simplified Behavioral Health Creative Generator for Aura Balance
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/simple_behavioral_health_creative_generator.py
+LINE: 101
+PATTERN: simplified.*behavior
+CODE: Simplified creative generator for behavioral health campaigns
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/simple_behavioral_health_creative_generator.py
+LINE: 648
+PATTERN: random\.choice.*user
+CODE: segment = np.random.choice(segments)  # TODO: Replace with RecSim user model
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/simple_behavioral_health_creative_generator.py
+LINE: 648
+PATTERN: random\.choice.*segment
+CODE: segment = np.random.choice(segments)  # TODO: Replace with RecSim user model
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/simple_behavioral_health_creative_generator.py
+LINE: 648
+PATTERN: np\.random\.choice.*user
+CODE: segment = np.random.choice(segments)  # TODO: Replace with RecSim user model
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/verify_recsim_no_fallbacks.py
+LINE: 26
+PATTERN: recsim.*not available
+CODE: r'recsim.*not available',
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/verify_recsim_no_fallbacks.py
+LINE: 27
+PATTERN: recsim.*skipping
+CODE: r'recsim.*skipping',
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/verify_recsim_no_fallbacks.py
+LINE: 32
+PATTERN: mock.*user
+CODE: r'mock.*user',
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/verify_recsim_no_fallbacks.py
+LINE: 33
+PATTERN: dummy.*user
+CODE: r'dummy.*user',
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/verify_recsim_no_fallbacks.py
+LINE: 35
+PATTERN: if.*recsim.*else.*simple
+CODE: r'if.*recsim.*else.*simple',
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/verify_recsim_no_fallbacks.py
+LINE: 38
+PATTERN: fallback.*behavior
+CODE: r'fallback.*behavior',
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/verify_recsim_no_fallbacks.py
+LINE: 39
+PATTERN: simplified.*behavior
+CODE: r'simplified.*behavior',
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/verify_recsim_no_fallbacks.py
+LINE: 40
+PATTERN: basic.*behavior.*model
+CODE: r'basic.*behavior.*model',
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/verify_recsim_no_fallbacks.py
+LINE: 41
+PATTERN: default.*behavior
+CODE: r'default.*behavior',
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/verify_recsim_no_fallbacks.py
+LINE: 46
+PATTERN: generate.*simple.*user
+CODE: r'generate.*simple.*user',
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/verify_recsim_no_fallbacks.py
+LINE: 49
+PATTERN: if.*recsim.*available
+CODE: r'if.*recsim.*available',
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/verify_recsim_no_fallbacks.py
+LINE: 50
+PATTERN: try.*recsim.*except.*pass
+CODE: r'try.*recsim.*except.*pass',
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/verify_recsim_no_fallbacks.py
+LINE: 51
+PATTERN: recsim.*or.*fallback
+CODE: r'recsim.*or.*fallback'
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/verify_recsim_no_fallbacks.py
+LINE: 194
+PATTERN: if.*recsim.*available
+CODE: - System MUST fail if RecSim unavailable
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/verify_recsim_no_fallbacks.py
+LINE: 251
+PATTERN: recsim.*or.*fallback
+CODE: raise RuntimeError(f"RecSim integration MUST work. NO FALLBACKS! Error: {e}")
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/run_recsim_demo_enforced.py
+LINE: 5
+PATTERN: recsim.*or.*fallback
+CODE: RecSim is MANDATORY - NO FALLBACKS ALLOWED.
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/run_recsim_demo_enforced.py
+LINE: 45
+PATTERN: fallback.*behavior
+CODE: print("NO FALLBACKS - realistic user behavior guaranteed!")
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/integrated_behavioral_simulator.py
+LINE: 111
+PATTERN: recsim.*or.*fallback
+CODE: # Initialize RecSim - MANDATORY, NO FALLBACKS
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/integrated_behavioral_simulator.py
+LINE: 113
+PATTERN: recsim.*or.*fallback
+CODE: raise RuntimeError("RecSim usage is MANDATORY. NO FALLBACKS ALLOWED.")
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/integrated_behavioral_simulator.py
+LINE: 115
+PATTERN: if.*recsim.*available
+CODE: if not RECSIM_AVAILABLE:
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/integrated_behavioral_simulator.py
+LINE: 117
+PATTERN: recsim.*or.*fallback
+CODE: StrictModeEnforcer.enforce('RECSIM_BEHAVIORAL_SIMULATOR', fallback_attempted=True)
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/integrated_behavioral_simulator.py
+LINE: 121
+PATTERN: recsim.*or.*fallback
+CODE: logger.info("Using MANDATORY RecSim for user behavior - NO FALLBACKS")
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/integrated_behavioral_simulator.py
+LINE: 151
+PATTERN: default.*behavior
+CODE: """Default campaign configuration for Aura behavioral health"""
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/recsim_user_model.py
+LINE: 25
+PATTERN: recsim.*or.*fallback
+CODE: # RecSim NG imports - NO FALLBACKS ALLOWED
+SEVERITY: HIGH
+---
+
+FILE: /home/hariravichandran/AELP/recsim_user_model.py
+LINE: 262
+PATTERN: random\.choice.*segment
+CODE: segment = np.random.choice(segments, p=weights)
+SEVERITY: HIGH
+---
+
+================================================================================
+❌ RECSIM INTEGRATION VIOLATIONS FOUND
+================================================================================
+
+REQUIRED ACTIONS:
+1. Remove ALL fallback patterns immediately
+2. Ensure RecSim is MANDATORY for user simulation
+3. Replace random user generation with RecSim models
+4. Remove conditional RecSim usage
+5. Enforce strict RecSim dependency
+
+Per CLAUDE.md requirements:
+- NO FALLBACKS allowed
+- NO SIMPLIFICATIONS allowed  
+- RecSim is MANDATORY for realistic user behavior
+- System MUST fail if RecSim unavailable

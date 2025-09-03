@@ -868,12 +868,12 @@ class AttributionSystemTester:
                 assert len(attribution) > 0, f"Model {model_name} returned no attribution - possible fallback"
                 assert sum(attribution.values()) > 0, f"Model {model_name} returned zero attribution - possible mock"
                 
-                # Verify different models produce different results (no fallback to same logic)
+                # Verify different models produce different results (no use same logic)
                 if model_name != 'linear':
                     linear_attribution = engine.calculate_attribution(test_journey, 'linear')
                     assert attribution != linear_attribution, f"Model {model_name} produces same results as linear - possible fallback"
             
-            # Test 3: Verify data-driven model requires training (no fallback to simple model)
+            # Test 3: Verify data-driven model requires training (no use simple model)
             dd_model = engine.models['data_driven']
             assert hasattr(dd_model, 'train'), "Data-driven model must have train method"
             assert hasattr(dd_model, 'is_trained'), "Data-driven model must track training state"

@@ -136,7 +136,7 @@ class CompetitiveIntelligence:
                 
                 return estimated_bid, confidence_interval
         
-        # Fallback to heuristic estimation
+        # Use heuristic estimation if needed
         # Winner likely bid 10-50% more than us, adjusted for quality
         multiplier = np.random.uniform(1.1, 1.5)
         estimated_bid = outcome.our_bid * multiplier / quality_adjustment

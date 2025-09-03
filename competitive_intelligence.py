@@ -231,7 +231,7 @@ class CompetitiveIntelligence:
                 prediction = self.bid_predictor.predict([features])[0]
                 return max(0.5, min(10.0, prediction))  # Bounded prediction
         
-        # Fallback to weighted average
+        # Use weighted average if needed
         recent_bids = list(profile.observed_bids)[-10:]
         return np.average(recent_bids, weights=range(1, len(recent_bids) + 1))
     

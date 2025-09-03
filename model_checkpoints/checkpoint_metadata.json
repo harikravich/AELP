@@ -1,0 +1,26 @@
+{
+  "checkpoints": {
+    "checkpoint_20250903_033810_90": {
+      "model_path": "/home/hariravichandran/AELP/model_checkpoints/checkpoint_20250903_033810_90.pkl",
+      "performance_metrics": {
+        "roas": 2.2,
+        "conversion_rate": 0.03,
+        "reward": 90,
+        "episode": 90
+      },
+      "creation_time": "2025-09-03T03:38:10.124830",
+      "episodes_trained": 90,
+      "validation_scores": {
+        "composite_score": 28.78,
+        "validation_roas": 2.2,
+        "validation_conversion_rate": 0.03,
+        "validation_reward": 90,
+        "validation_episode": 90
+      },
+      "is_baseline": true,
+      "is_rollback_candidate": true
+    }
+  },
+  "current_model_id": "checkpoint_20250903_033810_90",
+  "baseline_model_id": "checkpoint_20250903_033810_90"
+}

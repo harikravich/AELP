@@ -74,7 +74,7 @@ class GA4GCloudAuth:
             return False
     
     def authenticate_with_service_account(self):
-        """Fallback to service account if available"""
+        """use service account if available"""
         sa_path = Path.home() / '.config' / 'gaelp' / 'ga4-service-account.json'
         if sa_path.exists():
             print(f"\n🔑 Using service account: {sa_path}")

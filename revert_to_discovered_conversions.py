@@ -42,7 +42,7 @@ discovered_func = """def _get_conversion_probability(self, state: DynamicEnriche
         base_cvr = state.segment_cvr  # This comes from discovered_patterns.json
         
         if base_cvr == 0:
-            # Fallback to channel CVR if segment doesn't have one
+            # Use channel CVR if segment doesn't have one if needed
             channel_name = self.discovered_channels[state.current_channel_index]
             channel_data = self.parameter_manager.patterns.get('channel_performance', {}).get(channel_name, {})
             base_cvr = channel_data.get('cvr', 0.01)  # Use discovered channel CVR

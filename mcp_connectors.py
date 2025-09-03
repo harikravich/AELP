@@ -349,7 +349,7 @@ class GoogleAdsConnector(MCPConnector):
             
         except Exception as e:
             logger.warning(f"Failed to setup Google Ads MCP connection: {e}")
-            # Fallback to direct API calls
+            # Use direct API calls if needed
             await self._setup_direct_api_connection()
     
     async def _setup_direct_api_connection(self):

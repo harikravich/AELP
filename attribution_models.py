@@ -17,6 +17,8 @@ import logging
 
 # Import conversion lag model for dynamic attribution windows - REQUIRED
 from conversion_lag_model import ConversionLagModel, ConversionJourney
+from discovered_parameter_config import get_config, get_epsilon_params, get_learning_rate, get_conversion_bonus, get_goal_thresholds, get_priority_params
+from dynamic_segment_integration import get_discovered_segments
 
 logger = logging.getLogger(__name__)
 
@@ -179,7 +181,7 @@ class PositionBasedAttribution(AttributionModel):
             add_privacy_noise: Whether to add iOS 14.5+ privacy noise
         """
         super().__init__(add_privacy_noise=add_privacy_noise)
-        if abs(first_weight + last_weight + middle_weight - 1.0) > 1e-6:
+        if abs(first_weight + last_weight + middle_weight - 1.0) > get_priority_params()["epsilon"]:
             raise ValueError("Weights must sum to 1.0")
         
         self.first_weight = first_weight
@@ -323,7 +325,7 @@ class DataDrivenAttribution(AttributionModel):
         features.append(time_to_conversion / (24 * 3600))  # Days to conversion
         
         # Channel encoding (simple one-hot for common channels)
-        common_channels = ['email', 'social', 'search', 'direct', 'referral']
+        common_channels = self.discovery.get_discovered_channels()
         for channel in common_channels:
             features.append(1.0 if touchpoint.channel == channel else 0.0)
         
@@ -337,11 +339,11 @@ class DataDrivenAttribution(AttributionModel):
         """Calculate data-driven attribution weights."""
         if not self.is_trained:
             logger.error("DataDrivenAttribution model is not trained")
-            raise RuntimeError("DataDrivenAttribution model MUST be trained before use. No fallback attribution allowed.")
+            raise RuntimeError("DataDrivenAttribution model MUST be trained before use. No ELIMINATED_NO_FALLBACKS_ALLOWED attribution allowed.")
         
         if not journey.touchpoints:
             logger.error("No touchpoints found in journey")
-            raise RuntimeError("Journey must have touchpoints for attribution. No fallback attribution allowed.")
+            raise RuntimeError("Journey must have touchpoints for attribution. No ELIMINATED_NO_FALLBACKS_ALLOWED attribution allowed.")
 
         attribution_scores = {}
         total_score = 0.0
@@ -370,7 +372,7 @@ class DataDrivenAttribution(AttributionModel):
                 attribution_scores[tp_id] /= total_score
         else:
             logger.error("Total attribution score is zero - model not properly trained")
-            raise RuntimeError("DataDrivenAttribution model failed to generate valid scores. Retrain model or fix training data. No fallback attribution allowed.")
+            raise RuntimeError("DataDrivenAttribution model failed to generate valid scores. Retrain model or fix training data. No ELIMINATED_NO_FALLBACKS_ALLOWED attribution allowed.")
 
         return attribution_scores
 

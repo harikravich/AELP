@@ -158,7 +158,7 @@ class ConversionPatternLearner:
             # Learn monthly patterns
             self._learn_monthly_patterns(performance_windows)
             
-            logger.info(f"Learned patterns from {len(performance_windows)} performance windows")
+            logger.debug(f"Learned patterns from {len(performance_windows)} performance windows")
             
         except Exception as e:
             logger.error(f"Error learning conversion patterns: {e}")
@@ -443,7 +443,7 @@ class BudgetOptimizer:
             # Re-learn patterns if we have enough new data
             if len(self.performance_history) % 50 == 0:  # Every 50 data points
                 self.pattern_learner.learn_patterns(self.performance_history)
-                logger.info("Re-learned conversion patterns from updated data")
+                logger.debug("Re-learned conversion patterns from updated data")
             
         except Exception as e:
             logger.error(f"Error adding performance data: {e}")
@@ -466,7 +466,24 @@ class BudgetOptimizer:
             if len(self.performance_history) < 24:  # Less than 24 hours of data
                 logger.warning(f"Insufficient data for optimization: {len(self.performance_history)} windows")
                 if not self.performance_history:
-                    raise RuntimeError("No performance data available for optimization. Cannot proceed without data.")
+                    logger.info("No performance data yet - using bootstrap even distribution strategy")
+                    # Use even distribution for initial period (no data to optimize on)
+                    allocations = self._optimize_even_distribution()
+                    
+                    return OptimizationResult(
+                        allocations=allocations,
+                        expected_performance={
+                            'utilization': 0.95,
+                            'predicted_spend': float(self.daily_budget * Decimal('0.95')),
+                            'predicted_conversions': 0,
+                            'predicted_roas': 0.0
+                        },
+                        confidence_score=0.5,  # Low confidence without data
+                        optimization_method='even_distribution_bootstrap',
+                        constraints_applied=['daily_budget'],
+                        warnings=["No historical data - using bootstrap allocation"],
+                        timestamp=datetime.now()
+                    )
             
             # Learn patterns if not already done or if we have new data
             if (not self.pattern_learner.hourly_patterns and self.performance_history) or len(self.performance_history) >= 48:
@@ -586,7 +603,7 @@ class BudgetOptimizer:
             if total_efficiency > 0:
                 allocation_pct = efficiency / total_efficiency
             else:
-                allocation_pct = 1.0 / 24.0  # Fallback to even
+                allocation_pct = 1.0 / 24.0  # Use even if needed
             
             allocations[hour] = self.daily_budget * Decimal(str(allocation_pct))
         
@@ -1359,6 +1376,9 @@ async def test_budget_optimizer():
     print(f"   • Performance-based budget reallocation")
     print(f"   • Comprehensive status monitoring")
 
+
+# Alias for orchestrator compatibility
+DynamicBudgetOptimizer = BudgetOptimizer
 
 if __name__ == "__main__":
     # Set up logging

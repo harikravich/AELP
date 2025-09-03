@@ -116,7 +116,7 @@ class SegmentDiscoveryEngine:
             if ga4_discovery_engine:
                 self.ga4_discovery_engine = ga4_discovery_engine
             elif GA4DiscoveryEngine:
-                self.ga4_discovery_engine = GA4DiscoveryEngine(cache_only=True)
+                self.ga4_discovery_engine = GA4DiscoveryEngine(write_enabled=False)
             else:
                 self.ga4_discovery_engine = None
         except Exception as e:
@@ -1299,7 +1299,7 @@ def main():
     
     # Initialize discovery engine with GA4 integration
     try:
-        ga4_engine = GA4DiscoveryEngine(cache_only=True) if GA4DiscoveryEngine else None
+        ga4_engine = GA4DiscoveryEngine(write_enabled=False) if GA4DiscoveryEngine else None
         engine = SegmentDiscoveryEngine(min_cluster_size=20, max_clusters=15, ga4_discovery_engine=ga4_engine)
     except Exception as e:
         print(f"Warning: Could not initialize GA4 engine: {e}")

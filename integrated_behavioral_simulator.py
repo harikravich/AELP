@@ -32,22 +32,12 @@ from trigger_event_system import (
     TriggerEvolution
 )
 
-# Import auction and user behavior systems
-try:
-    from auction_gym_integration import AuctionGymWrapper, AUCTION_GYM_AVAILABLE
-except ImportError:
-    AUCTION_GYM_AVAILABLE = False
-    AuctionGymWrapper = None
+# Import auction and user behavior systems - REQUIRED
+from auction_gym_integration import AuctionGymWrapper, AUCTION_GYM_AVAILABLE
 
-try:
-    import edward2_patch
-    from recsim_auction_bridge import RecSimAuctionBridge
-    from recsim_user_model import RecSimUserModel
-    RECSIM_AVAILABLE = True
-except ImportError:
-    RECSIM_AVAILABLE = False
-    RecSimAuctionBridge = None
-    RecSimUserModel = None
+import edward2_patch
+from recsim_auction_bridge import RecSimAuctionBridge
+from recsim_user_model import RecSimUserModel
 
 # Import Criteo for CTR calibration
 from criteo_data_loader import CriteoDataLoader
@@ -118,13 +108,17 @@ class IntegratedBehavioralSimulator:
         self.auction_gym = AuctionGymWrapper(config=auction_config)
         logger.info("Using AuctionGym for auction simulation")
         
-        # Initialize RecSim if available
-        if use_recsim and RECSIM_AVAILABLE:
-            self.recsim_bridge = RecSimAuctionBridge()
-            logger.info("Using RecSim for user behavior")
-        else:
-            self.recsim_bridge = None
-            logger.info("RecSim not available, using persona-based behavior")
+        # Initialize RecSim - MANDATORY, NO FALLBACKS
+        if not use_recsim:
+            raise RuntimeError("RecSim usage is MANDATORY. NO FALLBACKS ALLOWED.")
+        
+        if not RECSIM_AVAILABLE:
+            from NO_FALLBACKS import StrictModeEnforcer
+            StrictModeEnforcer.enforce('RECSIM_BEHAVIORAL_SIMULATOR', fallback_attempted=True)
+            raise RuntimeError("RecSim MUST be available. NO FALLBACKS ALLOWED.")
+            
+        self.recsim_bridge = RecSimAuctionBridge()
+        logger.info("Using MANDATORY RecSim for user behavior - NO FALLBACKS")
         
         # Load Criteo data
         self.criteo_loader = CriteoDataLoader()

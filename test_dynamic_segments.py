@@ -237,7 +237,7 @@ class DynamicSegmentTester:
             segments = engine.discover_segments()
             
             if not segments:
-                print("⚠️  Using fallback segments for E2E test")
+                print("⚠️  RecSim REQUIRED: segments for E2E test") not available
                 # Create mock segments for testing
                 from segment_discovery import DiscoveredSegment
                 segments = {

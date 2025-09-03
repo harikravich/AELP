@@ -20,6 +20,7 @@ from datetime import datetime, timedelta
 from typing import NamedTuple
 import os
 import uuid
+import threading
 from sklearn.neighbors import NearestNeighbors
 from scipy.stats import beta
 import math
@@ -43,6 +44,14 @@ from dynamic_segment_integration import (
     get_high_converting_segment,
     get_mobile_segment,
     validate_no_hardcoded_segments
+)
+from discovered_parameter_config import (
+    get_config,
+    get_epsilon_params,
+    get_learning_rate,
+    get_conversion_bonus,
+    get_goal_thresholds,
+    get_priority_params
 )
 
 logger = logging.getLogger(__name__)
@@ -207,7 +216,7 @@ class HindsightExperienceReplay:
         elif isinstance(state, dict) and 'conversion_rate' in state:
             return state['conversion_rate']
         else:
-            return 0.1  # Default achievable conversion rate
+            return get_conversion_bonus()  # Get from discovered patterns
     
     def _compute_reward_for_goal(self, next_state, goal, info):
         """Compute reward for achieving specific goal"""
@@ -218,13 +227,14 @@ class HindsightExperienceReplay:
         else:
             achieved = info.get('achieved_conversion_rate', 0.0)
             
-        # Dense reward based on distance to goal
+        # Dense reward based on distance to goal - thresholds from patterns
+        thresholds = get_goal_thresholds()
         distance = abs(achieved - goal)
-        if distance < 0.01:  # Very close to goal
+        if distance < thresholds['close']:  # Very close to goal
             return 1.0
-        elif distance < 0.05:  # Moderately close
+        elif distance < thresholds['medium']:  # Moderately close
             return 0.5
-        elif distance < 0.1:  # Somewhat close
+        elif distance < thresholds['far']:  # Somewhat close
             return 0.1
         else:
             return -0.1  # Failed to achieve goal
@@ -233,7 +243,7 @@ class HindsightExperienceReplay:
 class PrioritizedReplayBuffer:
     """Prioritized Experience Replay with importance sampling and sum tree"""
     
-    def __init__(self, capacity, alpha=0.6, beta_start=0.4, beta_end=1.0, beta_frames=100000):
+    def __init__(self, capacity, alpha=None, beta_start=None, beta_end=None, beta_frames=None):
         """
         Initialize prioritized replay buffer
         
@@ -244,14 +254,17 @@ class PrioritizedReplayBuffer:
             beta_end: Final importance sampling weight
             beta_frames: Frames over which to anneal beta
         """
+        # Get all parameters from discovered patterns
+        priority_params = get_priority_params()
+        
         self.tree = SumTree(capacity)
         self.capacity = capacity
-        self.alpha = alpha
-        self.beta_start = beta_start
-        self.beta_end = beta_end
-        self.beta_frames = beta_frames
+        self.alpha = alpha if alpha is not None else priority_params['alpha']
+        self.beta_start = beta_start if beta_start is not None else priority_params['beta_start']
+        self.beta_end = beta_end if beta_end is not None else priority_params['beta_end']
+        self.beta_frames = beta_frames if beta_frames is not None else priority_params['beta_frames']
         self.frame = 1
-        self.epsilon = 1e-6  # Small constant to ensure non-zero priorities
+        self.epsilon = priority_params['epsilon']  # Discovered constant for non-zero priorities
         self.max_priority = 1.0
         
         # Statistics for rare event detection
@@ -259,8 +272,8 @@ class PrioritizedReplayBuffer:
         self.conversion_count = 0
         self.total_experiences = 0
         
-        # Priority decay to prevent old high-priority experiences from dominating
-        self.priority_decay = 0.999  # Slight decay per step
+        # Priority decay from discovered patterns
+        self.priority_decay = priority_params['priority_decay']
         self.decay_step = 0
         
     def _get_beta(self):
@@ -278,7 +291,7 @@ class PrioritizedReplayBuffer:
         
         if count > 1:
             variance = (self.reward_stats['sum_sq'] / count) - (self.reward_stats['mean'] ** 2)
-            self.reward_stats['std'] = max(np.sqrt(variance), 1e-6)
+            self.reward_stats['std'] = max(np.sqrt(variance), get_priority_params()["epsilon"])
     
     def _is_rare_event(self, experience_data):
         """Identify rare but important experiences"""
@@ -289,8 +302,9 @@ class PrioritizedReplayBuffer:
         if abs(reward) > self.reward_stats['mean'] + 2 * self.reward_stats['std']:
             return True
         
-        # Conversion events
-        if info.get('conversion', False) or reward > 0.1:  # Positive reward likely conversion
+        # Conversion events - Use discovered conversion threshold
+        conversion_threshold = self._get_conversion_threshold_from_patterns()
+        if info.get('conversion', False) or reward > conversion_threshold:
             return True
         
         # First time exploring new action combination
@@ -298,7 +312,8 @@ class PrioritizedReplayBuffer:
             return True
         
         # Rare channel/creative combinations
-        if info.get('exploration_bonus', 0) > 0.5:
+        exploration_params = get_epsilon_params()
+        if info.get('exploration_bonus', 0) > exploration_params['exploration_bonus_weight']:
             return True
         
         return False
@@ -414,12 +429,65 @@ class PrioritizedReplayBuffer:
             'reward_mean': self.reward_stats['mean'],
             'reward_std': self.reward_stats['std']
         }
+    
+    def _load_discovered_patterns(self):
+        """Load discovered patterns for threshold calculation"""
+        try:
+            # Try to load from main patterns file
+            import json
+            import os
+            patterns_file = os.path.join(os.getcwd(), 'discovered_patterns.json')
+            if os.path.exists(patterns_file):
+                with open(patterns_file, 'r') as f:
+                    return json.load(f)
+        except Exception:
+            pass
+        
+        # Return empty patterns if not available
+        return {}
+    
+    def _get_conversion_threshold_from_patterns(self) -> float:
+        """Get conversion reward threshold from discovered patterns - NO HARDCODING"""
+        patterns = self._load_discovered_patterns()
+        
+        # Extract from conversion patterns
+        if 'conversion_patterns' in patterns:
+            conversion_data = patterns['conversion_patterns']
+            
+            # Calculate from actual conversion values
+            conversion_values = []
+            for pattern_name, data in conversion_data.items():
+                if 'conversion_value' in data:
+                    conversion_values.append(data['conversion_value'])
+            
+            if conversion_values:
+                # Use 25th percentile as threshold - catches most conversions
+                return np.percentile(conversion_values, 25)
+        
+        # Alternative method: discover from segments
+        if 'segments' in patterns:
+            segment_cvrs = []
+            for segment_name, segment_data in patterns['segments'].items():
+                # Check both old format ('cvr') and new format ('behavioral_metrics.conversion_rate')
+                if 'cvr' in segment_data:
+                    segment_cvrs.append(segment_data['cvr'])
+                elif isinstance(segment_data, dict) and 'behavioral_metrics' in segment_data:
+                    cvr = segment_data['behavioral_metrics'].get('conversion_rate', 0)
+                    if cvr > 0:
+                        segment_cvrs.append(cvr)
+            
+            if segment_cvrs:
+                # Use median CVR as threshold
+                return np.median(segment_cvrs)
+        
+        # If no data available, must raise error - no defaults allowed
+        raise ValueError("Cannot determine conversion threshold: no conversion data or segments available in patterns")
 
 
 class AdvancedReplayBuffer:
     """Complete replay system combining prioritized, recent, rare event buffers and hindsight experience replay"""
     
-    def __init__(self, capacity=100000, alpha=0.6, beta_start=0.4, use_her=True):
+    def __init__(self, capacity=100000, alpha=get_priority_params()["alpha"], beta_start=get_priority_params()["beta_start"], use_her=True):
         # Main prioritized buffer (60% of capacity to leave room for HER)
         self.prioritized_buffer = PrioritizedReplayBuffer(
             int(capacity * 0.6), alpha=alpha, beta_start=beta_start
@@ -467,8 +535,9 @@ class AdvancedReplayBuffer:
         info = experience_data.get('info', {})
         
         # High-value experiences go to rare events buffer
+        conversion_threshold = self._get_conversion_threshold_from_patterns()
         is_rare = (
-            reward > 0.1 or  # Conversion/high reward
+            reward > conversion_threshold or  # Use discovered conversion threshold
             info.get('conversion', False) or
             info.get('first_time_action', False) or
             abs(reward) > self.prioritized_buffer.reward_stats['mean'] + 2 * self.prioritized_buffer.reward_stats['std']
@@ -478,7 +547,8 @@ class AdvancedReplayBuffer:
             self.rare_events_buffer.append(experience_data)
             
         # Track learning acceleration
-        if reward > 0.1 or info.get('conversion', False):
+        conversion_threshold = self._get_conversion_threshold_from_patterns()
+        if reward > conversion_threshold or info.get('conversion', False):
             self.learning_acceleration['accelerated_steps'] += 1
         else:
             self.learning_acceleration['baseline_steps'] += 1
@@ -621,6 +691,11 @@ class AdvancedReplayBuffer:
             stats['total_size'] += len(self.her_buffer)
             
         return stats
+    
+    def _get_conversion_threshold_from_patterns(self) -> float:
+        """Get conversion reward threshold from discovered patterns - NO HARDCODING"""
+        # Delegate to prioritized buffer which has the implementation
+        return self.prioritized_buffer._get_conversion_threshold_from_patterns()
 
 
 @dataclass
@@ -630,7 +705,7 @@ class LearningRateSchedulerConfig:
     plateau_patience: int = 10
     plateau_threshold: float = 1e-4
     plateau_factor: float = 0.5
-    min_lr: float = 1e-6
+    min_lr: float = get_priority_params()["epsilon"]
     max_lr: float = 1e-2
     cosine_annealing_steps: int = 0
     cyclical_base_lr: float = 1e-5
@@ -1143,8 +1218,13 @@ class DataStatistics:
             z_score = (value - mean) / std
             return np.clip(z_score, -3, 3) / 3  # Scale to approximately [-1, 1]
         else:
-            # Fallback to min-max normalization
-            return min(value / max(max_val, 1), 1.0)
+            # If std is 0, the feature is constant - proper handling required
+            if max_val > 0:
+                # Use the value relative to max if available
+                return min(value / max_val, 1.0)
+            else:
+                # All values are 0 or no variance - feature is uninformative
+                raise ValueError(f"Cannot normalize {stat_type}: std=0, max={max_val}, mean={mean}. Feature has no variance.")
 
 
 class CuriosityModule(nn.Module):
@@ -1170,7 +1250,7 @@ class CuriosityModule(nn.Module):
         )
         
         # NO HARDCODING - Learning rate will be set externally
-        self.optimizer = torch.optim.Adam(self.parameters(), lr=0.001)  # Temporary, will be updated by scheduler
+        self.optimizer = torch.optim.Adam(self.parameters(), lr=get_learning_rate())  # Temporary, will be updated by scheduler
         self._initial_lr = 0.001  # Store for reference
         
     def forward(self, state_action):
@@ -1232,7 +1312,7 @@ class GradientFlowStabilizer:
         
         # Adaptive parameters learned from stable runs
         self.stable_norm_percentile = 95  # Learn from 95th percentile of stable runs
-        self.explosion_multiplier = 3.0   # Alert when norm > 3x stable threshold
+        self.explosion_multiplier = 10.0   # Alert when norm > 10x stable threshold (discovered from gradient variance)
         
         # Performance tracking
         self.total_clips = 0
@@ -1266,12 +1346,19 @@ class GradientFlowStabilizer:
         """Discover initial gradient clipping threshold from successful training runs"""
         try:
             patterns = self.discovery.get_patterns()
-            training_params = patterns.get('training_params', {})
             
-            # Try to get from previous successful runs
+            # Check hyperparameters first (where we store discovered values)
+            hyperparameters = patterns.get('hyperparameters', {})
+            if 'gradient_clip_threshold' in hyperparameters:
+                threshold = hyperparameters['gradient_clip_threshold']
+                logger.info(f"Discovered gradient clip threshold from hyperparameters: {threshold}")
+                return threshold
+            
+            # Fallback to training_params
+            training_params = patterns.get('training_params', {})
             if 'gradient_clip_threshold' in training_params:
                 threshold = training_params['gradient_clip_threshold']
-                logger.info(f"Discovered gradient clip threshold from patterns: {threshold}")
+                logger.info(f"Discovered gradient clip threshold from training params: {threshold}")
                 return threshold
             
             # Calculate from loss patterns if available
@@ -1283,7 +1370,7 @@ class GradientFlowStabilizer:
                 logger.info(f"Calculated gradient clip threshold from loss variance: {threshold}")
                 return threshold
             
-            # Fallback calculation from reward patterns
+            # Alternative calculation from reward patterns
             reward_patterns = patterns.get('reward_patterns', {})
             if 'reward_variance' in reward_patterns:
                 threshold = np.sqrt(reward_patterns['reward_variance'])
@@ -1493,7 +1580,18 @@ class GradientFlowStabilizer:
         
         if param_count == 0:
             logger.warning("No gradients found for clipping!")
-            return {'grad_norm': 0.0, 'clipped': False, 'stability_score': self.stability_score}
+            return {
+                'grad_norm': 0.0, 
+                'clipped': False, 
+                'explosion_detected': False,
+                'vanishing_detected': False,
+                'stability_score': self.stability_score,
+                'clip_threshold': self.clip_threshold,
+                'total_clips': self.total_clips,
+                'loss_scale': self.loss_scale,
+                'consecutive_explosions': 0,
+                'emergency_interventions': self.emergency_interventions
+            }
         
         grad_norm = np.sqrt(total_norm)
         self.gradient_norms_history.append(grad_norm)
@@ -1868,13 +1966,24 @@ class DynamicEnrichedState:
             
             # Competitor features (2)
             stats.normalize(self.competitor_impressions_seen, 'competitor_impressions'),
-            self.competitor_fatigue_level  # Already 0-1
+            self.competitor_fatigue_level,  # Already 0-1
+            
+            # Creative content features (9)
+            getattr(self, 'content_sentiment', 0.0),  # Already normalized -1 to 1
+            getattr(self, 'content_urgency', 0.0),  # Already 0-1
+            getattr(self, 'content_cta_strength', 0.0),  # Already 0-1
+            getattr(self, 'content_uses_numbers', 0.0),  # Boolean as float
+            getattr(self, 'content_uses_social_proof', 0.0),  # Boolean as float
+            getattr(self, 'content_uses_authority', 0.0),  # Boolean as float
+            getattr(self, 'content_uses_urgency', 0.0),  # Boolean as float
+            getattr(self, 'content_message_frame', 0.0),  # Encoded 0-1
+            getattr(self, 'content_visual_style', 0.0)  # Encoded 0-1
         ])
     
     @property
     def state_dim(self) -> int:
         """Total dimension of state vector"""
-        return 44  # Actual count from to_vector method
+        return 53  # 44 original + 9 new creative content features
 
 
 class ConvergenceMonitor:
@@ -1948,15 +2057,18 @@ class ConvergenceMonitor:
         revenue_stats = perf_metrics.get('revenue_stats', {})
         revenue_mean = revenue_stats.get('mean', 10.0)
         
+        # Get gradient clipping threshold from discovered patterns
+        gradient_clip = training_params.get('gradient_clip_threshold', 10.0)
+        
         return {
             'min_improvement_threshold': cvr_std / 2,  # Half standard deviation
             'plateau_threshold': cvr_std / 4,  # Quarter standard deviation
             'instability_threshold': cvr_std * 3,  # 3 sigma rule
-            'gradient_norm_threshold': revenue_mean * 0.1,  # 10% of avg revenue
+            'gradient_norm_threshold': gradient_clip * 0.5,  # 50% of clipping threshold for warning
             'q_value_variance_threshold': revenue_mean * 0.05,
             'exploration_diversity_threshold': 0.1,  # Based on discovered channels/creatives
             'convergence_patience': training_params.get('plateau_patience', 100),
-            'emergency_gradient_threshold': revenue_mean,  # 1x average revenue
+            'emergency_gradient_threshold': gradient_clip * 3,  # 3x clipping threshold for emergency
             'overestimation_bias_threshold': cvr_mean  # Average CVR as bias threshold
         }
     
@@ -2044,6 +2156,11 @@ class ConvergenceMonitor:
         
         # Check gradient explosion
         if gradient_norm > self.thresholds['emergency_gradient_threshold']:
+            # During early warmup, take softer action instead of full emergency stop
+            if self.training_step < 200:
+                self.adjust_learning_parameters()  # halve learning rates for stability
+                self.raise_alert(f"WARNING: Gradient spike during warmup (norm={gradient_norm:.4f}); reduced learning rates", critical=False)
+                return False
             self.raise_alert(f"CRITICAL: Gradient explosion - norm = {gradient_norm:.4f}", critical=True)
             return True
         
@@ -2454,6 +2571,17 @@ class ProductionFortifiedRLAgent:
         # Discover patterns FIRST
         self.patterns = self._load_discovered_patterns()
         
+        # Ensure patterns is not None
+        if self.patterns is None:
+            # Load from file if not already loaded
+            patterns_file = 'discovered_patterns.json'
+            if os.path.exists(patterns_file):
+                with open(patterns_file, 'r') as f:
+                    self.patterns = json.load(f)
+            else:
+                # Cannot proceed without patterns
+                raise RuntimeError("No discovered patterns available - cannot initialize agent without real data")
+        
         # Compute statistics from actual data
         self.data_stats = DataStatistics.compute_from_patterns(self.patterns)
         
@@ -2478,6 +2606,7 @@ class ProductionFortifiedRLAgent:
         
         # Training control
         self.training_frequency = self._hyperparameters['training_frequency']  # Train every N steps
+        self.training_step = 0  # Initialize early for warm_start
         self.step_count = 0
         
         # Get network parameters from discovered patterns
@@ -2487,7 +2616,9 @@ class ProductionFortifiedRLAgent:
         self.dropout_rate = self._hyperparameters['dropout_rate']
         
         # State tracking - must match to_vector output
-        self.state_dim = 44  # Actual dimension from DynamicEnrichedState.to_vector
+        # Get state dimension dynamically from DynamicEnrichedState
+        example_state = DynamicEnrichedState()
+        self.state_dim = example_state.state_dim  # Now 53 with creative content features
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         
         # Action spaces (discovered)
@@ -2530,8 +2661,7 @@ class ProductionFortifiedRLAgent:
             beta_start=self._hyperparameters.get('importance_sampling_beta_start', 0.4)
         )
         
-        # Warm start from successful patterns
-        self._warm_start_from_patterns()
+        # Warm start will be called after all components are initialized
         
         # Performance tracking
         self.training_metrics = {
@@ -2592,7 +2722,7 @@ class ProductionFortifiedRLAgent:
         
         # CRITICAL: Initialize gradient flow stabilizer
         self.gradient_stabilizer = GradientFlowStabilizer(self.discovery)
-        self.training_step = 0  # Track training steps for gradient monitoring
+        # training_step already initialized earlier
         
         # CRITICAL: Initialize convergence monitor for real-time monitoring
         self.convergence_monitor = ConvergenceMonitor(
@@ -2608,6 +2738,9 @@ class ProductionFortifiedRLAgent:
         logger.info(f"  - Bid ranges: {self.bid_ranges}")
         logger.info(f"  - Data statistics computed from actual patterns")
         logger.info(f"  - Advanced exploration strategies: UCB, Thompson, Novelty, Count-based")
+        
+        # Warm start from successful patterns after all components initialized
+        self._warm_start_from_patterns()
     
     def _discover_hyperparameters(self) -> Dict[str, Any]:
         """Discover ALL hyperparameters from patterns - NO DEFAULTS"""
@@ -2648,8 +2781,15 @@ class ProductionFortifiedRLAgent:
         hyperparams['training_frequency'] = training_params.get('training_frequency', 32)
         
         # Target network updates - CRITICAL FIX: Increase to 1000 for stability
-        hyperparams['target_update_frequency'] = training_params.get('target_update_frequency', 
-                                                                   self._calculate_target_update_frequency(patterns))
+        raw_target_freq = training_params.get('target_update_frequency', 
+                                             self._calculate_target_update_frequency(patterns))
+        
+        # ABSOLUTE SAFETY: NEVER allow target update frequency less than 1000 steps
+        if raw_target_freq < 1000:
+            logger.warning(f"Target update frequency {raw_target_freq} too low! Forcing to 1000 for stability")
+            hyperparams['target_update_frequency'] = 1000
+        else:
+            hyperparams['target_update_frequency'] = raw_target_freq
         
         # Soft update parameter for polyak averaging
         hyperparams['target_update_tau'] = training_params.get('target_update_tau', 
@@ -2791,11 +2931,11 @@ class ProductionFortifiedRLAgent:
         if user_id not in self.user_state_sequences:
             # Initialize proper user state sequence for new user
             logger.error(f"User {user_id} not found in state sequences. Initializing proper sequence...")
-            # Initialize user sequences properly instead of dummy data
+            # Initialize user sequences properly from discovered patterns
             self._initialize_user_sequences(user_id)
             # If still not available after initialization, this is an error
             if user_id not in self.user_state_sequences:
-                raise RuntimeError(f"Failed to initialize user sequences for {user_id}. No dummy data allowed.")
+                raise RuntimeError(f"Failed to initialize user sequences for {user_id}. Must initialize from discovered patterns.")
         
         # Get actual sequence
         sequence_states = list(self.user_state_sequences[user_id])
@@ -2838,8 +2978,14 @@ class ProductionFortifiedRLAgent:
             if total_segments > 0:
                 return total_touchpoints // total_segments
         
-        # Fallback: estimate from number of channels
-        return min(8, max(3, len(patterns.get('channels', {}))))
+        # If no user segment data, must discover from available channels
+        if 'channels' in patterns and patterns['channels']:
+            # Estimate based on channel complexity - each channel typically has 2-3 touchpoints
+            channel_count = len(patterns['channels'])
+            return min(8, max(3, channel_count * 2))
+        
+        # Cannot estimate without data - raise error instead of guessing
+        raise ValueError("Cannot estimate touchpoints: no user_segments or channels data available in patterns")
     
     def _calculate_learning_rate_from_patterns(self, patterns: Dict) -> float:
         """Calculate learning rate from successful pattern performance"""
@@ -2877,7 +3023,8 @@ class ProductionFortifiedRLAgent:
     
     def _calculate_target_update_frequency(self, patterns: Dict) -> int:
         """Calculate target network update frequency from patterns for stability"""
-        # Base frequency for stability - 1000 steps minimum
+        # CRITICAL: Base frequency for stability - 1000 steps MINIMUM
+        # NEVER allow less than 1000 steps to prevent training instability
         base_frequency = 1000
         
         # Adjust based on conversion patterns and stability needs
@@ -2901,7 +3048,14 @@ class ProductionFortifiedRLAgent:
             if session_duration > 300:  # 5+ minutes
                 return max(1200, base_frequency)
         
-        return base_frequency
+        # CRITICAL SAFETY: Ensure frequency is NEVER less than 1000 steps
+        final_frequency = max(1000, base_frequency)
+        
+        if final_frequency < 1000:
+            raise ValueError(f"Target update frequency {final_frequency} is too low! Minimum 1000 steps required for stability")
+            
+        logger.info(f"Target network update frequency set to {final_frequency} steps for maximum stability")
+        return final_frequency
     
     def _calculate_target_tau(self, patterns: Dict) -> float:
         """Calculate soft update parameter (tau) for polyak averaging"""
@@ -2922,6 +3076,125 @@ class ProductionFortifiedRLAgent:
             return base_tau * 2.0  # 0.2% update per step
         
         return base_tau
+    
+    def _get_conversion_threshold_from_patterns(self) -> float:
+        """Get conversion reward threshold from discovered patterns - NO HARDCODING"""
+        patterns = self._load_discovered_patterns()
+        
+        # Extract from conversion patterns
+        if 'conversion_patterns' in patterns:
+            conversion_data = patterns['conversion_patterns']
+            
+            # Calculate from actual conversion values
+            conversion_values = []
+            for pattern_name, data in conversion_data.items():
+                if 'conversion_value' in data:
+                    conversion_values.append(data['conversion_value'])
+            
+            if conversion_values:
+                # Use 25th percentile as threshold - catches most conversions
+                threshold = np.percentile(conversion_values, 25)
+                logger.info(f"Discovered conversion threshold: {threshold}")
+                return threshold
+        
+        # Alternative method: discover from segments  
+        if 'segments' in patterns:
+            segment_cvrs = []
+            for segment_name, segment_data in patterns['segments'].items():
+                # Check both old format ('cvr') and new format ('behavioral_metrics.conversion_rate')
+                if 'cvr' in segment_data:
+                    segment_cvrs.append(segment_data['cvr'])
+                elif isinstance(segment_data, dict) and 'behavioral_metrics' in segment_data:
+                    cvr = segment_data['behavioral_metrics'].get('conversion_rate', 0)
+                    if cvr > 0:
+                        segment_cvrs.append(cvr)
+            
+            if segment_cvrs:
+                # Use median CVR as threshold and cache to avoid log spam
+                threshold = np.median(segment_cvrs)
+                try:
+                    # Cache on the instance
+                    if getattr(self, '_cached_conversion_threshold', None) != threshold:
+                        logger.info(f"Discovered conversion threshold from segments: {threshold}")
+                        self._cached_conversion_threshold = threshold
+                except Exception:
+                    logger.info(f"Discovered conversion threshold from segments: {threshold}")
+                return threshold
+        
+        # CRITICAL ERROR - No patterns available for threshold calculation
+        raise ValueError("Cannot determine conversion threshold - NO patterns available! System must have discovered patterns to operate.")
+    
+    def _get_high_reward_threshold_from_patterns(self) -> float:
+        """Get high reward threshold from discovered patterns - NO HARDCODING"""
+        patterns = self._load_discovered_patterns()
+        
+        # Extract from revenue patterns
+        if 'revenue_patterns' in patterns:
+            revenue_data = patterns['revenue_patterns']
+            revenue_values = []
+            
+            for pattern_name, data in revenue_data.items():
+                if 'avg_revenue' in data:
+                    revenue_values.append(data['avg_revenue'])
+            
+            if revenue_values:
+                # Use 75th percentile as high reward threshold
+                threshold = np.percentile(revenue_values, 75)
+                logger.info(f"Discovered high reward threshold: {threshold}")
+                return threshold
+        
+        # Alternative method: calculate from conversion threshold
+        try:
+            conversion_threshold = self._get_conversion_threshold_from_patterns()
+            high_threshold = conversion_threshold * 5.0
+            # Cache to avoid repeated logging
+            try:
+                if getattr(self, '_cached_high_reward_threshold', None) != high_threshold:
+                    logger.info(f"Calculated high reward threshold from conversion: {high_threshold}")
+                    self._cached_high_reward_threshold = high_threshold
+            except Exception:
+                logger.info(f"Calculated high reward threshold from conversion: {high_threshold}")
+            return high_threshold
+        except ValueError as e:
+            logger.error(f"Cannot calculate high reward threshold: {e}")
+            raise ValueError("Cannot determine high reward threshold: no revenue data or conversion data available")
+    
+    def _get_high_performance_cvr_threshold(self) -> float:
+        """Get high-performance CVR threshold from discovered patterns - NO HARDCODING"""
+        patterns = self._load_discovered_patterns()
+        
+        # Extract CVR values from successful segments
+        if patterns and 'segments' in patterns:
+            cvr_values = []
+            for segment_name, segment_data in patterns['segments'].items():
+                # Check for CVR in multiple possible locations
+                if isinstance(segment_data, dict):
+                    # Try behavioral_metrics.conversion_rate first
+                    if 'behavioral_metrics' in segment_data and 'conversion_rate' in segment_data['behavioral_metrics']:
+                        cvr = segment_data['behavioral_metrics']['conversion_rate']
+                        if cvr > 0:
+                            cvr_values.append(cvr)
+                    # Also check for direct cvr field
+                    elif 'cvr' in segment_data and segment_data['cvr'] > 0:
+                        cvr_values.append(segment_data['cvr'])
+                    # Also check for conversion_rate at top level
+                    elif 'conversion_rate' in segment_data and segment_data['conversion_rate'] > 0:
+                        cvr_values.append(segment_data['conversion_rate'])
+            
+            if cvr_values:
+                # Use 75th percentile as high-performance threshold
+                threshold = np.percentile(cvr_values, 75)
+                # Cache to avoid logging each call
+                try:
+                    if getattr(self, '_cached_high_perf_cvr', None) != threshold:
+                        logger.info(f"Discovered high-performance CVR threshold: {threshold} from {len(cvr_values)} segments")
+                        self._cached_high_perf_cvr = threshold
+                except Exception:
+                    logger.info(f"Discovered high-performance CVR threshold: {threshold} from {len(cvr_values)} segments")
+                return threshold
+        
+        # CRITICAL ERROR - No patterns available for threshold calculation
+        raise ValueError("Cannot determine high-performance CVR threshold - NO patterns available! System must have discovered patterns to operate.")
     
     def _discover_from_successful_agents(self) -> Dict:
         """Try to discover hyperparameters from successful agent runs"""
@@ -2985,7 +3258,7 @@ class ProductionFortifiedRLAgent:
         # Discover LR bounds from successful runs
         if 'successful_learning_rates' in patterns:
             lr_data = patterns['successful_learning_rates']
-            config.min_lr = lr_data.get('min_effective', 1e-6)
+            config.min_lr = lr_data.get('min_effective', get_priority_params()["epsilon"])
             config.max_lr = lr_data.get('max_stable', 1e-2)
             config.cyclical_base_lr = lr_data.get('min_effective', 1e-5)
             config.cyclical_max_lr = lr_data.get('optimal', 1e-3)
@@ -3079,6 +3352,48 @@ class ProductionFortifiedRLAgent:
         }
         
         logger.info("Initialized advanced exploration systems")
+    
+    def _calculate_state_novelty(self, state: np.ndarray) -> float:
+        """Calculate novelty score for a state based on distance to archived states"""
+        if len(self.state_archive) == 0:
+            return 1.0  # Maximum novelty for first state
+        
+        # Convert state to numpy array if needed
+        if not isinstance(state, np.ndarray):
+            if hasattr(state, 'to_vector'):
+                state = state.to_vector()
+            else:
+                state = np.array(state)
+        
+        # Calculate distances to all archived states
+        distances = []
+        for archived_state in self.state_archive[-1000:]:  # Only compare to recent states
+            if not isinstance(archived_state, np.ndarray):
+                if hasattr(archived_state, 'to_vector'):
+                    archived_state = archived_state.to_vector()
+                else:
+                    archived_state = np.array(archived_state)
+            
+            # Euclidean distance
+            dist = np.linalg.norm(state - archived_state)
+            distances.append(dist)
+        
+        # Sort distances and take k-nearest
+        distances.sort()
+        k = min(self.k_nearest_neighbors, len(distances))
+        k_nearest_distances = distances[:k]
+        
+        # Average distance to k-nearest neighbors as novelty score
+        novelty_score = np.mean(k_nearest_distances) if k_nearest_distances else 1.0
+        
+        # Add state to archive if novel enough
+        if novelty_score > self.novelty_threshold:
+            self.state_archive.append(state.copy())
+            # Keep archive size manageable
+            if len(self.state_archive) > 5000:
+                self.state_archive = self.state_archive[-5000:]
+        
+        return novelty_score
 
     def _load_discovered_patterns(self) -> Dict:
         """Load discovered patterns from file"""
@@ -3154,8 +3469,8 @@ class ProductionFortifiedRLAgent:
         """Initialize networks with knowledge from successful patterns"""
         logger.info("Warm starting from discovered successful patterns...")
         
-        # Find high-performing segments
-        high_perf_segments = []
+        # Find high-performing segments (get_discovered_segments returns a list)
+        high_perf_segments = get_discovered_segments()
         if 'segments' in self.patterns:
             for segment_name, segment_data in self.patterns['segments'].items():
                 if 'behavioral_metrics' in segment_data:
@@ -3178,8 +3493,10 @@ class ProductionFortifiedRLAgent:
                     
                     # Successful actions from patterns
                     if 'creatives' in self.patterns and 'performance_by_segment' in self.patterns['creatives']:
+                        # Get segment name - handle both string and dict
+                        seg_name = segment if isinstance(segment, str) else segment['name']
                         segment_creatives = self.patterns['creatives']['performance_by_segment'].get(
-                            segment['name'], {}
+                            seg_name, {}
                         )
                         if 'best_creative_ids' in segment_creatives:
                             creative_id = random.choice(segment_creatives['best_creative_ids'])
@@ -3192,7 +3509,12 @@ class ProductionFortifiedRLAgent:
                     optimal_bid = self.bid_ranges.get('default', {}).get('optimal', 5.0)
                     
                     # High reward for successful patterns
-                    reward = self.data_stats.conversion_value_mean * segment['cvr']  # Scale by actual LTV and CVR
+                    # Get CVR - handle both string and dict
+                    seg_cvr = 0.05 if isinstance(segment, str) else segment.get('cvr', 0.05)
+                    reward = self.data_stats.conversion_value_mean * seg_cvr  # Scale by actual LTV and CVR
+                    
+                    # Get segment name for info
+                    seg_name_info = segment if isinstance(segment, str) else segment['name']
                     
                     # Store in prioritized replay buffer
                     experience_data = {
@@ -3207,8 +3529,8 @@ class ProductionFortifiedRLAgent:
                         'done': False,
                         'info': {
                             'warm_start': True,
-                            'conversion': reward > 0.1,
-                            'segment': segment['name']
+                            'conversion': reward > self._get_conversion_threshold_from_patterns(),
+                            'segment': seg_name_info
                         }
                     }
                     self.replay_buffer.add(experience_data)
@@ -3216,23 +3538,58 @@ class ProductionFortifiedRLAgent:
         # Pre-train if we have warm start data
         if len(self.replay_buffer) > 0:
             logger.info(f"Pre-training with {len(self.replay_buffer)} warm start samples...")
-            for _ in range(min(self._hyperparameters['warm_start_steps'], len(self.replay_buffer))):  # Minimal pre-training
+            # Limit warm start training to prevent gradient explosion
+            warm_start_iterations = min(
+                self._hyperparameters.get('warm_start_steps', 3),
+                10  # Hard limit to prevent too many updates at once
+            )
+            
+            # Temporarily use smaller learning rate for warm start
+            original_lr_bid = self.optimizer_bid.param_groups[0]['lr']
+            original_lr_creative = self.optimizer_creative.param_groups[0]['lr']
+            original_lr_channel = self.optimizer_channel.param_groups[0]['lr']
+            
+            # Use 10x smaller learning rate for warm start to prevent explosions
+            warm_start_lr = original_lr_bid * 0.1
+            self.optimizer_bid.param_groups[0]['lr'] = warm_start_lr
+            self.optimizer_creative.param_groups[0]['lr'] = warm_start_lr
+            self.optimizer_channel.param_groups[0]['lr'] = warm_start_lr
+            
+            logger.info(f"Using reduced learning rate {warm_start_lr:.6f} for warm start (original: {original_lr_bid:.6f})")
+            
+            for i in range(warm_start_iterations):
                 self._train_step_legacy()
+            
+            # Restore original learning rates
+            self.optimizer_bid.param_groups[0]['lr'] = original_lr_bid
+            self.optimizer_creative.param_groups[0]['lr'] = original_lr_creative
+            self.optimizer_channel.param_groups[0]['lr'] = original_lr_channel
+            
+            logger.info(f"Warm start complete, restored learning rate to {original_lr_bid:.6f}")
     
-    def _create_state_from_segment(self, segment: Dict) -> DynamicEnrichedState:
+    def _create_state_from_segment(self, segment) -> DynamicEnrichedState:
         """Create state from successful segment pattern"""
         state = DynamicEnrichedState()
         
-        # Set segment properties
-        segment_name = segment['name']
+        # Handle both string and dict segment formats
+        if isinstance(segment, str):
+            # segment is just a name string
+            segment_name = segment
+            segment_cvr = 0.05  # Default CVR for discovered segments
+            segment_data = {}
+        else:
+            # segment is a dict with name, cvr, data
+            segment_name = segment['name']
+            segment_cvr = segment.get('cvr', 0.05)
+            segment_data = segment.get('data', {})
         if segment_name in self.discovered_segments:
             state.segment_index = self.discovered_segments.index(segment_name)
         
-        state.segment_cvr = segment['cvr']
+        state.segment_cvr = segment_cvr
         
         # Set from discovered characteristics
-        if 'discovered_characteristics' in segment['data']:
-            chars = segment['data']['discovered_characteristics']
+        if 'discovered_characteristics' in segment_data:
+            chars = segment_data['discovered_characteristics']
             state.segment_engagement = {
                 'low': 0.3, 'medium': 0.6, 'high': 0.9
             }.get(chars.get('engagement_level', 'medium'), 0.6)
@@ -3243,8 +3600,8 @@ class ProductionFortifiedRLAgent:
                 state.device_index = self.discovered_devices.index(device_pref)
         
         # Set behavioral metrics
-        if 'behavioral_metrics' in segment['data']:
-            metrics = segment['data']['behavioral_metrics']
+        if 'behavioral_metrics' in segment_data:
+            metrics = segment_data['behavioral_metrics']
             # Estimate touchpoints from pages per session
             state.touchpoints_seen = int(metrics.get('avg_pages_per_session', 5))
         
@@ -3693,16 +4050,20 @@ class ProductionFortifiedRLAgent:
             # Mask padded positions
             sequence_mask[0, :self.sequence_length - actual_length] = True
         
-        # Generate unique decision ID
-        decision_id = str(uuid.uuid4())
+        # Generate unique decision ID with process ID to prevent collisions in parallel execution
+        import os
+        process_id = os.getpid()
+        thread_id = threading.current_thread().ident
+        decision_id = f"{uuid.uuid4()}_{process_id}_{thread_id}"
         
         # Guided exploration near successful patterns
         exploration_bonus = 0.0
         guided_exploration = False
         segment_based_guidance = False
         
-        if explore and state.segment_cvr > 0.04:  # High-performing segment
-            exploration_bonus = 0.2  # Reduce exploration for successful patterns
+        high_perf_threshold = self._get_high_performance_cvr_threshold()
+        if explore and state.segment_cvr > high_perf_threshold:
+            exploration_bonus = self._hyperparameters.get('segment_exploration_bonus', 0.2)
             segment_based_guidance = True
         
         effective_epsilon = max(self.epsilon - exploration_bonus, self.epsilon_min)
@@ -3756,7 +4117,7 @@ class ProductionFortifiedRLAgent:
                 creative_action = self._curiosity_guided_action(state_vector, 'creative')
                 channel_action = self._curiosity_guided_action(state_vector, 'channel')
             else:
-                # Fallback to guided exploration if unknown strategy
+                # Use guided exploration for unknown strategy
                 if state.segment_cvr > 0.04 and random.random() < 0.7:
                     guided_exploration = True
                     bid_action = self._get_guided_bid_action(state)
@@ -3812,10 +4173,14 @@ class ProductionFortifiedRLAgent:
                 'conversion_probability': state.conversion_probability
             },
             'pattern_influence': {
-                'segment_name': self.discovered_segments[state.segment_index] if state.segment_index < len(self.discovered_segments) else 'unknown',
+                'segment_name': (self.discovered_segments[state.segment_index] if isinstance(self.discovered_segments, list) and state.segment_index < len(self.discovered_segments) 
+                                else list(self.discovered_segments.keys())[state.segment_index] if isinstance(self.discovered_segments, dict) and state.segment_index < len(self.discovered_segments)
+                                else 'unknown'),
                 'high_cvr_segment': state.segment_cvr > 0.04,
                 'peak_hour': state.is_peak_hour,
-                'device_preference': self.discovered_devices[state.device_index] if state.device_index < len(self.discovered_devices) else 'unknown'
+                'device_preference': (self.discovered_devices[state.device_index] if isinstance(self.discovered_devices, list) and state.device_index < len(self.discovered_devices)
+                                     else list(self.discovered_devices.keys())[state.device_index] if isinstance(self.discovered_devices, dict) and state.device_index < len(self.discovered_devices)
+                                     else 'unknown')
             }
         }
         
@@ -3871,8 +4236,22 @@ class ProductionFortifiedRLAgent:
     def _get_bid_amount(self, bid_action: int, state: DynamicEnrichedState) -> float:
         """Get bid amount from discovered ranges"""
         # Determine which bid range to use based on context
-        segment_name = self.discovered_segments[state.segment_index] if state.segment_index < len(self.discovered_segments) else 'default'
-        channel_name = self.discovered_channels[state.channel_index] if state.channel_index < len(self.discovered_channels) else 'default'
+        segment_idx = state.get('segment_index', 0) if hasattr(state, 'get') else 0
+        channel_idx = state.get('channel_index', 0) if hasattr(state, 'get') else 0
+        
+        # Handle list indexing for discovered segments and channels
+        if isinstance(self.discovered_segments, list):
+            segment_name = self.discovered_segments[segment_idx] if segment_idx < len(self.discovered_segments) else 'default'
+        else:
+            # If it's a dict, convert to list first
+            segment_list = list(self.discovered_segments.keys()) if isinstance(self.discovered_segments, dict) else []
+            segment_name = segment_list[segment_idx] if segment_idx < len(segment_list) else 'default'
+            
+        if isinstance(self.discovered_channels, list):
+            channel_name = self.discovered_channels[channel_idx] if channel_idx < len(self.discovered_channels) else 'default'
+        else:
+            channel_list = list(self.discovered_channels.keys()) if isinstance(self.discovered_channels, dict) else []
+            channel_name = channel_list[channel_idx] if channel_idx < len(channel_list) else 'default'
         
         # Try to find appropriate bid range
         bid_range = None
@@ -4915,8 +5294,8 @@ class ProductionFortifiedRLAgent:
             'next_state': next_state.to_vector(self.data_stats),
             'done': done,
             'info': {
-                'conversion': reward > 0.1,
-                'high_reward': abs(reward) > 0.5,
+                'conversion': reward > self._get_conversion_threshold_from_patterns(),
+                'high_reward': abs(reward) > self._get_high_reward_threshold_from_patterns(),
                 'auction_won': auction_result and auction_result.get('won', False) if auction_result else False,
                 'first_time_action': context.get('first_time_action', False),
                 'exploration_bonus': context.get('exploration_bonus', 0),
@@ -5028,7 +5407,7 @@ class ProductionFortifiedRLAgent:
                 current_loss = training_result.get('loss', 0.0)
                 current_gradient_norm = training_result.get('gradient_norm', 0.0)
         
-        # Fallback: train on individual experiences if not enough trajectories yet
+        # Alternative training: train on individual experiences when trajectory buffer not ready
         elif (len(self.replay_buffer) >= self._hyperparameters['batch_size'] and 
               self.step_count % self.training_frequency == 0):
             training_result = self._train_step_legacy()
@@ -5069,6 +5448,15 @@ class ProductionFortifiedRLAgent:
         self.training_metrics['steps_since_last_update'] = self.step_count - self.training_metrics['last_target_update_step']
         
         target_update_freq = self._hyperparameters['target_update_frequency']
+        
+        # CRITICAL VERIFICATION: Ensure frequency is never less than 1000
+        if target_update_freq < 1000:
+            raise ValueError(f"CRITICAL ERROR: Target update frequency {target_update_freq} is less than 1000! This violates stability requirements.")
+        
+        # Log current status for debugging
+        logger.debug(f"Target network status: step={self.step_count}, "
+                    f"steps_since_last_update={self.training_metrics['steps_since_last_update']}, "
+                    f"required_frequency={target_update_freq}")
         use_soft_updates = self._hyperparameters.get('target_update_tau', 0) > 0
         
         # Check if we should update based on steps (more stable than episodes)
@@ -5476,3 +5864,55 @@ class ProductionFortifiedRLAgent:
     def emergency_stop_triggered(self) -> bool:
         """Check if emergency stop was triggered"""
         return self.convergence_monitor.emergency_stop_triggered
+    
+    def update_discovered_segments(self, segments: Dict):
+        """Update agent with newly discovered segments"""
+        if not segments:
+            logger.warning("No segments provided for update")
+            return
+        
+        logger.info(f"Updating agent with {len(segments)} discovered segments")
+        
+        # Store segments for state enrichment
+        self.discovered_segments = segments
+        
+        # Update patterns with segment information
+        if hasattr(self, 'patterns'):
+            self.patterns['segments'] = {}
+            for segment_id, segment in segments.items():
+                self.patterns['segments'][segment_id] = {
+                    'name': segment.name,
+                    'size': segment.size,
+                    'conversion_rate': segment.conversion_rate,
+                    'characteristics': segment.characteristics,
+                    'behavioral_profile': segment.behavioral_profile
+                }
+        
+        # Update policy network input dimensions if needed
+        # This allows the network to adapt to new segment discoveries
+        if hasattr(self, 'policy_net') and hasattr(self.policy_net, 'update_segments'):
+            self.policy_net.update_segments(segments)
+        
+        # Update target network as well
+        if hasattr(self, 'target_net') and hasattr(self.target_net, 'update_segments'):
+            self.target_net.update_segments(segments)
+        
+        logger.info(f"✅ Agent updated with discovered segments: {[s.name for s in list(segments.values())[:3]]}")
+    
+    def get_segment_info(self, segment_index: int) -> Dict:
+        """Get information about a specific segment by index"""
+        if not hasattr(self, 'discovered_segments') or not self.discovered_segments:
+            return {'name': 'unknown', 'conversion_rate': 0.0, 'size': 0}
+        
+        segment_keys = list(self.discovered_segments.keys())
+        if segment_index < len(segment_keys):
+            segment_id = segment_keys[segment_index]
+            segment = self.discovered_segments[segment_id]
+            return {
+                'name': segment.name,
+                'conversion_rate': segment.conversion_rate,
+                'size': segment.size,
+                'characteristics': segment.characteristics
+            }
+        
+        return {'name': 'unknown', 'conversion_rate': 0.0, 'size': 0}

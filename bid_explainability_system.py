@@ -15,6 +15,7 @@ fully transparent and understandable for audit, optimization, and compliance.
 """
 
 import json
+import uuid
 import logging
 import numpy as np
 import pandas as pd
@@ -156,7 +157,7 @@ class BidExplainabilityEngine:
         """
         
         timestamp = datetime.now()
-        logger.info(f"Generating explanation for decision {decision_id}")
+        logger.debug(f"Generating explanation for decision {decision_id}")
         
         # Extract core decision values
         final_bid = action.get('bid_amount', 0.0)
@@ -243,7 +244,7 @@ class BidExplainabilityEngine:
         # Update explanation quality metrics
         self._update_explanation_metrics(explanation)
         
-        logger.info(f"Generated explanation for decision {decision_id} with confidence {decision_confidence.value}")
+        logger.debug(f"Generated explanation for decision {decision_id} with confidence {decision_confidence.value}")
         return explanation
     
     def _extract_primary_factors(self, state: Any, action: Dict, context: Dict, model_outputs: Dict) -> List[DecisionFactor]:
@@ -374,10 +375,21 @@ class BidExplainabilityEngine:
             ))
         
         # Device context factor  
-        if hasattr(state, 'device'):
+        if hasattr(state, 'device') or hasattr(state, 'device_index'):
             device_names = ['mobile', 'desktop', 'tablet']
-            device_name = device_names[min(state.device, len(device_names) - 1)]
-            device_performance = getattr(state, 'device_performance', 0.5)
+            # Derive device index/name robustly
+            device_val = getattr(state, 'device', getattr(state, 'device_index', 0))
+            if isinstance(device_val, (int, float)):
+                idx = int(device_val)
+                idx = max(0, min(idx, len(device_names) - 1))
+                device_name = device_names[idx]
+            elif isinstance(device_val, str):
+                # Map known names to canonical
+                dev_lower = device_val.lower()
+                device_name = dev_lower if dev_lower in device_names else 'mobile'
+            else:
+                device_name = 'mobile'
+            device_performance = float(getattr(state, 'device_performance', 0.5))
             
             factors.append(DecisionFactor(
                 name="Device Type Performance",
@@ -397,8 +409,13 @@ class BidExplainabilityEngine:
         # Journey stage factor
         if hasattr(state, 'stage'):
             stage_names = ['unaware', 'aware', 'considering', 'intent', 'converted']
-            stage_name = stage_names[min(state.stage, len(stage_names) - 1)]
-            stage_value = state.stage / 4.0
+            try:
+                stage_idx = int(getattr(state, 'stage', 0))
+            except Exception:
+                stage_idx = 0
+            stage_idx = max(0, min(stage_idx, len(stage_names) - 1))
+            stage_name = stage_names[stage_idx]
+            stage_value = stage_idx / 4.0
             
             factors.append(DecisionFactor(
                 name="Customer Journey Stage",
@@ -706,7 +723,9 @@ class BidExplainabilityEngine:
         
         # High uncertainty risk
         min_bid, max_bid = uncertainty_range
-        uncertainty_ratio = (max_bid - min_bid) / action.get('bid_amount', 1.0)
+        bid_amt = float(action.get('bid_amount', 1.0)) if isinstance(action, dict) else float(getattr(action, 'bid_amount', 1.0))
+        denom = max(abs(bid_amt), 1e-6)
+        uncertainty_ratio = (float(max_bid) - float(min_bid)) / denom
         if uncertainty_ratio > 0.4:
             risks.append(f"High uncertainty range (${min_bid:.2f} - ${max_bid:.2f}) suggests volatile conditions")
         
@@ -937,6 +956,44 @@ class BidExplainabilityEngine:
         self.explanation_metrics.coverage = (self.explanation_metrics.coverage * 0.9 + coverage * 0.1)
         
         logger.debug(f"Updated explanation metrics - Coverage: {self.explanation_metrics.coverage:.2%}")
+
+
+class BidExplainabilitySystem:
+    """Compatibility wrapper expected by orchestrator.
+
+    Provides a simplified interface `explain_bid_decision(state, action)` that
+    internally builds a full explanation using available context without any
+    hardcoded demo data.
+    """
+    def __init__(self):
+        self._engine = BidExplainabilityEngine()
+
+    def explain_bid_decision(self, state: Any, action: Dict[str, Any]) -> BidDecisionExplanation:
+        # Derive minimal, real context from inputs
+        decision_id = str(uuid.uuid4())
+        user_id = getattr(state, 'user_id', 'unknown_user')
+        campaign_id = getattr(state, 'campaign_id', 'gaelp_training')
+        context: Dict[str, Any] = {
+            'competition_level': getattr(state, 'competition_level', 0.5),
+            'pacing_factor': getattr(state, 'pacing_factor', 1.0),
+            'segment_cvr': getattr(state, 'segment_cvr', 0.0),
+            'channel': action.get('channel', 'unknown'),
+        }
+        model_outputs: Dict[str, Any] = {}
+        decision_factors: Dict[str, Any] = {
+            'epsilon_used': getattr(state, 'epsilon_used', None),
+            'guided_exploration': getattr(state, 'guided_exploration', False)
+        }
+        return self._engine.explain_bid_decision(
+            decision_id=decision_id,
+            user_id=user_id,
+            campaign_id=campaign_id,
+            state=state,
+            action=action,
+            context=context,
+            model_outputs=model_outputs,
+            decision_factors=decision_factors
+        )
 
 
 # Integration with audit trail

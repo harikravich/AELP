@@ -11,13 +11,8 @@ from datetime import datetime, timedelta
 from typing import Dict, Any, List
 
 # Import GAELP components (mock integration since we're demonstrating the interfaces)
-try:
-    from enhanced_simulator import EnhancedGAELPEnvironment
-    from auction_gym_integration import AuctionGymWrapper
-    GAELP_AVAILABLE = True
-except ImportError:
-    print("GAELP components not fully available - using mock interfaces")
-    GAELP_AVAILABLE = False
+from enhanced_simulator import EnhancedGAELPEnvironment
+from auction_gym_integration import AuctionGymWrapper
 
 # Import our competitor system
 from competitor_agents import (

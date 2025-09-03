@@ -599,7 +599,7 @@ class StatisticalABTestFramework:
             
             # Ensure we have at least some segments for consistent dimensionality
             if not segments:
-                segments = ['default_segment']  # Fallback to ensure consistent dimensions
+                segments = ['default_segment']  # Use ensure consistent dimensions if needed
             
             # Segment one-hot encoding
             segment = context.get('segment', segments[0])
@@ -666,7 +666,7 @@ class StatisticalABTestFramework:
             if user_hash < cumulative_prob:
                 return i
         
-        return len(variants) - 1  # Fallback to last variant
+        return len(variants) - 1  # Use last variant if needed
     
     def _thompson_sampling_allocation(self, variants: List[TestVariant]) -> int:
         """Thompson sampling allocation using Beta posteriors"""

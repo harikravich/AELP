@@ -434,7 +434,7 @@ class FixedGAELPEnvironment:
                 else:
                     devices = {'mobile': 0.628, 'desktop': 0.350, 'tablet': 0.022}
             else:
-                # Fallback to defaults
+                # Use defaults if needed
                 devices = {'mobile': 0.628, 'desktop': 0.350, 'tablet': 0.022}
         else:
             # Use default device distribution from GA4

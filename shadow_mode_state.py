@@ -281,23 +281,37 @@ class DynamicEnrichedState:
         return DynamicEnrichedState.from_dict(clone_data)
     
     def update_from_discovery(self, discovery_patterns: Dict[str, Any]):
-        """Update state with latest discovery patterns"""
+        """Update state with latest discovery patterns (supports object or dict)"""
+        patterns = discovery_patterns.__dict__ if hasattr(discovery_patterns, '__dict__') else discovery_patterns
+
         # Update segment information
-        if 'segments' in discovery_patterns.get('user_patterns', {}):
-            segments = discovery_patterns['user_patterns']['segments']
-            if self.segment_name in segments:
-                segment_data = segments[self.segment_name]
-                self.segment_cvr = segment_data.get('conversion_rate', self.segment_cvr)
-                self.segment_engagement = segment_data.get('engagement_score', self.segment_engagement)
-        
+        segments = None
+        user_patterns = patterns.get('user_patterns') or {}
+        if isinstance(user_patterns, dict):
+            segments = user_patterns.get('segments')
+        if not segments:
+            segments = patterns.get('segments')
+        if isinstance(segments, dict) and self.segment_name in segments:
+            segment_data = segments[self.segment_name]
+            if isinstance(segment_data, dict) and 'behavioral_metrics' in segment_data:
+                beh = segment_data.get('behavioral_metrics') or {}
+                self.segment_cvr = float(beh.get('conversion_rate', self.segment_cvr))
+                # Estimate engagement if available
+                if 'avg_session_duration' in beh or 'avg_pages_per_session' in beh:
+                    dur = float(beh.get('avg_session_duration', 0.0))
+                    pps = float(beh.get('avg_pages_per_session', 0.0))
+                    self.segment_engagement = min(1.0, (dur/1200.0)*0.6 + (pps/15.0)*0.4)
+            else:
+                self.segment_cvr = float(segment_data.get('conversion_rate', self.segment_cvr))
+                self.segment_engagement = float(segment_data.get('engagement_score', self.segment_engagement))
+
         # Update temporal patterns
-        if 'peak_hours' in discovery_patterns.get('temporal_patterns', {}):
-            peak_hours = discovery_patterns['temporal_patterns']['peak_hours']
+        temporal = patterns.get('temporal_patterns') or patterns.get('temporal') or {}
+        if isinstance(temporal, dict):
+            peak_hours = temporal.get('peak_hours') or temporal.get('discovered_peak_hours') or []
             self.is_peak_hour = self.hour_of_day in peak_hours
-        
-        # Update seasonality
-        if 'seasonality_factor' in discovery_patterns.get('temporal_patterns', {}):
-            self.seasonality_factor = discovery_patterns['temporal_patterns']['seasonality_factor']
+            if 'seasonality_factor' in temporal:
+                self.seasonality_factor = temporal['seasonality_factor']
     
     def get_state_summary(self) -> str:
         """Get human-readable state summary"""
@@ -322,27 +336,30 @@ def create_synthetic_state_for_testing(segment_name: str = None,
                                      device: str = None,
                                      stage: int = None,
                                      discovery_patterns: Dict[str, Any] = None) -> DynamicEnrichedState:
-    """Create synthetic state for shadow testing"""
-    
-    # Default patterns if not provided
+    """Create synthetic state for shadow testing using discovered patterns only"""
+
     if discovery_patterns is None:
-        discovery_patterns = {
-            'user_patterns': {
-                'segments': {
-                    'researching_parent': {'conversion_rate': 0.025, 'engagement_score': 0.6},
-                    'concerned_parent': {'conversion_rate': 0.035, 'engagement_score': 0.7},
-                    'crisis_parent': {'conversion_rate': 0.055, 'engagement_score': 0.9},
-                    'proactive_parent': {'conversion_rate': 0.015, 'engagement_score': 0.4}
-                }
-            },
-            'temporal_patterns': {
-                'peak_hours': [19, 20, 21],
-                'seasonality_factor': 1.1
-            }
-        }
-    
+        raise RuntimeError("Discovery patterns are required for shadow testing; no defaults or demo data allowed.")
+
+    # Support DiscoveredPatterns object or plain dict
+    if hasattr(discovery_patterns, '__dict__'):
+        patterns_dict = discovery_patterns.__dict__
+    else:
+        patterns_dict = discovery_patterns
+
+    # Derive segments mapping from patterns
+    segments_map = None
+    user_patterns = patterns_dict.get('user_patterns') or {}
+    if isinstance(user_patterns, dict):
+        segments_map = user_patterns.get('segments')
+    if not segments_map:
+        # Fall back to top-level discovered segments structure if present
+        segments_map = patterns_dict.get('segments')
+    if not segments_map or not isinstance(segments_map, dict):
+        raise RuntimeError("Discovered patterns do not include segment definitions required for shadow testing.")
+
     # Random selections if not specified
-    segments = list(discovery_patterns['user_patterns']['segments'].keys())
+    segments = list(segments_map.keys())
     channels = ['organic', 'paid_search', 'social', 'display', 'email']
     devices = ['mobile', 'desktop', 'tablet']
     
@@ -351,10 +368,31 @@ def create_synthetic_state_for_testing(segment_name: str = None,
     selected_device = device or np.random.choice(devices)
     selected_stage = stage if stage is not None else np.random.randint(0, 5)
     
-    # Get segment data
-    segment_data = discovery_patterns['user_patterns']['segments'].get(
-        selected_segment, {'conversion_rate': 0.02, 'engagement_score': 0.5}
-    )
+    # Get segment data and extract metrics from discovered schema
+    seg = segments_map.get(selected_segment, {})
+    # Accept either flat {'conversion_rate': x, 'engagement_score': y}
+    # or nested {'behavioral_metrics': {'conversion_rate': x, ...}}
+    if isinstance(seg, dict) and 'behavioral_metrics' in seg:
+        beh = seg.get('behavioral_metrics') or {}
+        conversion_rate = float(beh.get('conversion_rate')) if beh.get('conversion_rate') is not None else None
+        # Estimate engagement score from available behavioral metrics if not present
+        # Use normalized combination of session duration and pages/session when available
+        if 'avg_session_duration' in beh or 'avg_pages_per_session' in beh:
+            dur = float(beh.get('avg_session_duration', 0.0))
+            pps = float(beh.get('avg_pages_per_session', 0.0))
+            # Normalize: duration ~ [0,1200], pps ~ [0,15]
+            engagement_score = min(1.0, (dur/1200.0)*0.6 + (pps/15.0)*0.4)
+        else:
+            engagement_score = None
+    else:
+        conversion_rate = float(seg.get('conversion_rate')) if seg.get('conversion_rate') is not None else None
+        engagement_score = float(seg.get('engagement_score')) if seg.get('engagement_score') is not None else None
+
+    if conversion_rate is None:
+        raise RuntimeError(f"Selected segment '{selected_segment}' lacks conversion_rate in discovered patterns.")
+    if engagement_score is None:
+        # Default to mid engagement derived from available signals only; no hardcoded categories
+        engagement_score = 0.5
     
     # Create state
     state = DynamicEnrichedState(
@@ -365,8 +403,8 @@ def create_synthetic_state_for_testing(segment_name: str = None,
         
         # Segment
         segment_name=selected_segment,
-        segment_cvr=segment_data['conversion_rate'],
-        segment_engagement=segment_data['engagement_score'],
+        segment_cvr=conversion_rate,
+        segment_engagement=engagement_score,
         
         # Context
         device=selected_device,
@@ -385,7 +423,7 @@ def create_synthetic_state_for_testing(segment_name: str = None,
         is_returning_user=np.random.choice([True, False], p=[0.3, 0.7]),
         
         # Conversion
-        conversion_probability=segment_data['conversion_rate'] * (1 + np.random.normal(0, 0.2)),
+        conversion_probability=conversion_rate * (1 + np.random.normal(0, 0.2)),
         segment_avg_ltv=np.random.lognormal(4.6, 0.4),  # ~$100 average
         
         # Shadow mode

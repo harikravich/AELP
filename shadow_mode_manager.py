@@ -99,7 +99,12 @@ class ShadowModeManager:
         self.discovery_engine = DiscoveryEngine(write_enabled=False)
         self.emergency_controller = get_emergency_controller()
         
-        # Initialize models
+        # Initialize metrics tracking FIRST (before models)
+        self.model_metrics = {}
+        self.comparison_history = deque(maxlen=100000)
+        self.real_time_stats = defaultdict(lambda: defaultdict(float))
+        
+        # Initialize models (after metrics)
         self.models = {}
         self.environments = {}
         self._initialize_models()
@@ -107,11 +112,6 @@ class ShadowModeManager:
         # Data storage
         self.db_path = f"shadow_testing_{self.session_id}.db"
         self._initialize_database()
-        
-        # Metrics tracking
-        self.model_metrics = {}
-        self.comparison_history = deque(maxlen=100000)
-        self.real_time_stats = defaultdict(lambda: defaultdict(float))
         
         # Control flags
         self.is_running = False
@@ -141,6 +141,11 @@ class ShadowModeManager:
                     discovery_engine=self.discovery_engine
                 )
                 self.environments[model_name] = env
+                # Initialize environment to avoid step-before-reset warnings
+                try:
+                    env.reset()
+                except Exception as e:
+                    logger.error(f"Failed to reset shadow environment for {model_name}: {e}")
                 
                 # Initialize metrics
                 self.model_metrics[model_name] = ModelPerformanceMetrics(
@@ -316,8 +321,13 @@ class ShadowModeManager:
                 user_id = f"shadow_user_{user_counter}"
                 user_counter += 1
                 
-                # Create user state
-                user_state = create_synthetic_state_for_testing()
+                # Create user state from discovered patterns (no demo defaults)
+                try:
+                    patterns = self.discovery_engine.discover_all_patterns()
+                except Exception as e:
+                    logger.error(f"Failed to discover patterns for shadow testing: {e}")
+                    raise
+                user_state = create_synthetic_state_for_testing(discovery_patterns=patterns)
                 context = self._generate_context()
                 
                 # Run parallel decisions across all models
@@ -351,6 +361,11 @@ class ShadowModeManager:
         """Run decision making across all models in parallel"""
         
         decisions = {}
+        
+        # Check if we have any models initialized
+        if not self.models:
+            logger.debug("No shadow models initialized, skipping decision making")
+            return decisions
         
         # Create tasks for each model
         tasks = {}

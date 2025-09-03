@@ -27,6 +27,8 @@ from decimal import Decimal
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import StandardScaler
 import warnings
+from discovered_parameter_config import get_config, get_epsilon_params, get_learning_rate, get_conversion_bonus, get_goal_thresholds, get_priority_params
+from dynamic_segment_integration import get_discovered_segments
 warnings.filterwarnings('ignore')
 
 logger = logging.getLogger(__name__)

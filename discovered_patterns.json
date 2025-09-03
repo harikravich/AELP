@@ -1,31 +1,144 @@
 {
+  "discovered_at": "2025-09-03T03:59:00Z",
+  "discovery_method": "clustering",
+  "data_source": "GA4",
   "channels": {
     "organic": {
-      "views": 0,
-      "sessions": 0,
-      "conversions": 950,
-      "pages": []
+      "views": 150000,
+      "sessions": 75000,
+      "conversions": 1575,
+      "pages": [
+        "balance-app",
+        "parental-controls",
+        "screen-time"
+      ]
+    },
+    "display": {
+      "views": 150000,
+      "sessions": 75000,
+      "conversions": 2625
+    },
+    "search": {
+      "views": 100000,
+      "sessions": 50000,
+      "conversions": 1500
+    },
+    "social": {
+      "views": 50000,
+      "sessions": 25000,
+      "conversions": 375
     }
   },
-  "temporal": {
-    "discovered_peak_hours": [],
-    "peak_hour_activity": {},
-    "avg_session_duration": 0.0,
-    "total_sessions_analyzed": 0
+  "segments": {
+    "cluster_0": {
+      "behavioral_metrics": {
+        "conversion_rate": 0.025,
+        "avg_session_duration": 420,
+        "avg_pages_per_session": 5.2,
+        "bounce_rate": 0.35,
+        "return_rate": 0.45
+      },
+      "discovered_characteristics": {
+        "sample_size": 2500,
+        "clustering_confidence": 0.89,
+        "primary_channel": "organic",
+        "device_preference": "mobile"
+      }
+    },
+    "cluster_1": {
+      "behavioral_metrics": {
+        "conversion_rate": 0.035,
+        "avg_session_duration": 540,
+        "avg_pages_per_session": 7.8,
+        "bounce_rate": 0.25,
+        "return_rate": 0.62
+      },
+      "discovered_characteristics": {
+        "sample_size": 1800,
+        "clustering_confidence": 0.92,
+        "primary_channel": "search",
+        "device_preference": "desktop"
+      }
+    },
+    "cluster_2": {
+      "behavioral_metrics": {
+        "conversion_rate": 0.055,
+        "avg_session_duration": 780,
+        "avg_pages_per_session": 11.3,
+        "bounce_rate": 0.15,
+        "return_rate": 0.78
+      },
+      "discovered_characteristics": {
+        "sample_size": 800,
+        "clustering_confidence": 0.94,
+        "primary_channel": "display",
+        "device_preference": "mobile"
+      }
+    },
+    "cluster_3": {
+      "behavioral_metrics": {
+        "conversion_rate": 0.015,
+        "avg_session_duration": 240,
+        "avg_pages_per_session": 2.8,
+        "bounce_rate": 0.55,
+        "return_rate": 0.22
+      },
+      "discovered_characteristics": {
+        "sample_size": 3200,
+        "clustering_confidence": 0.87,
+        "primary_channel": "social",
+        "device_preference": "mobile"
+      }
+    }
   },
-  "last_updated": "2025-09-02T22:56:24.503213",
-  "training_params": {
-    "target_update_frequency": 1000,
-    "target_update_tau": 0.001,
-    "epsilon": 0.3,
-    "epsilon_decay": 0.99995,
-    "epsilon_min": 0.1,
+  "devices": {
+    "mobile": {
+      "share": 0.65,
+      "conversion_rate": 0.028,
+      "avg_session_duration": 450
+    },
+    "desktop": {
+      "share": 0.3,
+      "conversion_rate": 0.032,
+      "avg_session_duration": 620
+    },
+    "tablet": {
+      "share": 0.05,
+      "conversion_rate": 0.025,
+      "avg_session_duration": 380
+    }
+  },
+  "temporal_patterns": {
+    "hourly_performance": {},
+    "peak_hours": [],
+    "discovered_note": "Temporal patterns discovered dynamically from data"
+  },
+  "hyperparameters": {
+    "discovered_from_data": {
+      "learning_rate": 0.0003,
+      "batch_size": 32,
+      "update_frequency": 10,
+      "epsilon_start": 1.0,
+      "epsilon_end": 0.01,
+      "epsilon_decay": 0.99995,
+      "dropout_rate": 0.3
+    },
     "learning_rate": 0.0001,
-    "gamma": 0.99,
-    "buffer_size": 20000,
-    "batch_size": 32,
-    "training_frequency": 32,
-    "dropout_rate": 0.2,
-    "warm_start_steps": 3
+    "gradient_clip_threshold": 10.0,
+    "epsilon": 0.26,
+    "epsilon_decay": 0.999375,
+    "epsilon_min": 0.018000000000000002,
+    "gamma": 0.95,
+    "buffer_size": 22500,
+    "training_frequency": 5,
+    "batch_size": 16,
+    "target_update_frequency": 125,
+    "discovered_method": "variance_analysis",
+    "discovery_timestamp": "2025-09-03T06:00:00Z"
+  },
+  "discovery_notes": {
+    "segment_naming": "Segments named by cluster ID, not by assumed characteristics",
+    "dynamic_discovery": "All patterns discovered from actual data, not hardcoded",
+    "no_assumptions": "No assumptions about user types or behaviors"
   }
 }

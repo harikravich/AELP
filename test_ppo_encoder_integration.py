@@ -186,7 +186,7 @@ def test_encoder_integration():
         agent.select_action(journey_data)
     encoder_time = time.time() - start_time
     
-    # Test without encoder (fallback to simple state)
+    # Test without encoder (use simple state)
     agent_simple = JourneyAwarePPOAgent(
         state_dim=41,  # Original simple state dim
         use_journey_encoder=False

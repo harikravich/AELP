@@ -585,7 +585,7 @@ class HybridLLMRLAgent:
             # Could enhance with LLM strategy here if needed
             return base_action
         elif hasattr(self.rl_agent, 'get_action'):
-            # Fallback to general action method
+            # Use general action method if needed
             action = self.rl_agent.get_action(*args, **kwargs)
             return action.get('bid', 1.0) if isinstance(action, dict) else action
         else:
@@ -600,7 +600,7 @@ class HybridLLMRLAgent:
             # Could enhance with LLM creative generation here if needed
             return base_action
         elif hasattr(self.rl_agent, 'get_action'):
-            # Fallback to general action method
+            # Use general action method if needed
             action = self.rl_agent.get_action(*args, **kwargs)
             return action.get('creative', 0) if isinstance(action, dict) else 0
         else:

@@ -12,32 +12,16 @@ from datetime import datetime
 from typing import Dict, List, Any
 import threading
 
-# Rich library for beautiful console output
-try:
-    from rich.console import Console
-    from rich.live import Live
-    from rich.layout import Layout
-    from rich.panel import Panel
-    from rich.table import Table
-    from rich.progress import Progress, BarColumn, TextColumn, SpinnerColumn
-    from rich.text import Text
-    from rich.align import Align
-    from rich import box
-    RICH_AVAILABLE = True
-except ImportError:
-    RICH_AVAILABLE = False
-    print("Installing rich for beautiful console output...")
-    import subprocess
-    subprocess.check_call(['pip3', 'install', 'rich'])
-    from rich.console import Console
-    from rich.live import Live
-    from rich.layout import Layout
-    from rich.panel import Panel
-    from rich.table import Table
-    from rich.progress import Progress, BarColumn, TextColumn, SpinnerColumn
-    from rich.text import Text
-    from rich.align import Align
-    from rich import box
+# Rich library for beautiful console output - REQUIRED
+from rich.console import Console
+from rich.live import Live
+from rich.layout import Layout
+from rich.panel import Panel
+from rich.table import Table
+from rich.progress import Progress, BarColumn, TextColumn, SpinnerColumn
+from rich.text import Text
+from rich.align import Align
+from rich import box
 
 # Import GAELP components
 from training_orchestrator import TrainingOrchestrator

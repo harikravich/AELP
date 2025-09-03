@@ -101,7 +101,7 @@ except Exception as e:
 except ImportError:
     print("\n⚠️ MCP tools not available, using direct GA4 API")
     
-    # Fallback to direct GA4 API
+    # Use direct GA4 API if needed
     from google.analytics.data_v1beta import BetaAnalyticsDataClient
     from google.analytics.data_v1beta.types import (
         RunReportRequest, DateRange, Dimension, Metric

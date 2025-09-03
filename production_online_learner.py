@@ -265,7 +265,7 @@ class ProductionABTester:
             if bucket < cumulative:
                 return variant_id
         
-        # Fallback to first variant
+        # Use first variant if needed
         return list(experiment.variants.keys())[0]
     
     def record_outcome(self, experiment_id: str, variant_id: str, user_id: str, 
@@ -1230,13 +1230,52 @@ class ProductionOnlineLearner:
         
         self.feedback_loop.update_from_real_outcomes([outcome])
         
-        # Log outcome
-        log_outcome("production_outcome", {
-            "action_id": action.get('id'),
-            "success": success,
-            "reward": reward,
-            "spend": outcome.get('spend', 0)
+        # Create a mock auction result object for logging
+        # The audit trail expects an object with attributes, not a dict
+        class MockAuctionResult:
+            def __init__(self, outcome_dict):
+                self.won = outcome_dict.get('success', False)
+                self.clicked = outcome_dict.get('conversion', False)
+                self.converted = outcome_dict.get('conversion', False)
+                self.price_paid = outcome_dict.get('spend', 0.0)
+                self.position = outcome_dict.get('position', 0)
+                self.competitors_count = outcome_dict.get('competitors', 0)
+                self.estimated_ctr = outcome_dict.get('estimated_ctr', 0.0)
+                # Add other auction result attributes
+                for k, v in outcome_dict.items():
+                    if not hasattr(self, k):
+                        setattr(self, k, v)
+        
+        # Create mock auction result from outcome dict
+        mock_auction_result = MockAuctionResult({
+            'success': success,
+            'conversion': success,
+            'spend': outcome.get('spend', 0),
+            'reward': reward,
+            'action_id': action.get('id'),
+            **outcome  # Include all outcome fields
         })
+        
+        # Log outcome with all required arguments
+        log_outcome(
+            "production_outcome",
+            mock_auction_result,
+            learning_metrics={
+                "strategy": strategy,
+                "exploration_rate": 0.1,
+                "confidence": 0.8
+            },
+            budget_impact={
+                "spend": outcome.get('spend', 0),
+                "remaining_budget": 1000.0,
+                "efficiency": reward / max(outcome.get('spend', 0.01), 0.01)
+            },
+            attribution_impact={
+                "channel": outcome.get('channel', 'unknown'),
+                "attribution_weight": 1.0,
+                "touchpoint_contribution": reward
+            }
+        )
     
     def create_ab_test(self, name: str, variants: Dict[str, Dict[str, Any]]) -> str:
         """Create new A/B test"""

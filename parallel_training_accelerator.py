@@ -16,11 +16,7 @@ import time
 import asyncio
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 # import ray  # Optional - only if installed
-try:
-    import ray
-    RAY_AVAILABLE = True
-except ImportError:
-    RAY_AVAILABLE = False
+import ray
 import os
 
 # Configure logging

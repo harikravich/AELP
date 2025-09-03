@@ -83,15 +83,37 @@ class PerformanceDashboard:
     def create_learning_curves(self, data: Dict[str, Any]) -> go.Figure:
         """Create interactive learning curves showing agent improvement"""
         if 'learning_history' not in data or 'campaigns_created' not in data['learning_history']:
-            return go.Figure().add_annotation(text="No learning data available", 
-                                            xref="paper", yref="paper", x=0.5, y=0.5)
+            fig = go.Figure()
+            fig.add_annotation(
+                text="No learning data available - Start training to see results", 
+                xref="paper", yref="paper", x=0.5, y=0.5,
+                font=dict(size=16), showarrow=False
+            )
+            fig.update_layout(
+                title="Agent Learning Progress",
+                height=400,
+                paper_bgcolor='white',
+                plot_bgcolor='white'
+            )
+            return fig
         
         campaigns = data['learning_history']['campaigns_created']
         df = pd.DataFrame(campaigns)
         
         if df.empty:
-            return go.Figure().add_annotation(text="No campaign data available", 
-                                            xref="paper", yref="paper", x=0.5, y=0.5)
+            fig = go.Figure()
+            fig.add_annotation(
+                text="No campaign data available - Training in progress", 
+                xref="paper", yref="paper", x=0.5, y=0.5,
+                font=dict(size=16), showarrow=False
+            )
+            fig.update_layout(
+                title="Agent Learning Progress",
+                height=400,
+                paper_bgcolor='white',
+                plot_bgcolor='white'
+            )
+            return fig
         
         # Convert timestamp to datetime
         df['timestamp'] = pd.to_datetime(df['timestamp'])
@@ -171,15 +193,37 @@ class PerformanceDashboard:
     def create_strategy_performance_chart(self, data: Dict[str, Any]) -> go.Figure:
         """Create chart showing discovered strategy performance"""
         if 'rl_analysis' not in data or 'strategies' not in data['rl_analysis']:
-            return go.Figure().add_annotation(text="No strategy data available", 
-                                            xref="paper", yref="paper", x=0.5, y=0.5)
+            fig = go.Figure()
+            fig.add_annotation(
+                text="No strategies discovered yet - Keep training to find optimal strategies", 
+                xref="paper", yref="paper", x=0.5, y=0.5,
+                font=dict(size=16), showarrow=False
+            )
+            fig.update_layout(
+                title="Discovered Strategy Performance Rankings",
+                height=400,
+                paper_bgcolor='white',
+                plot_bgcolor='white'
+            )
+            return fig
         
         strategies = data['rl_analysis']['strategies']
         df = pd.DataFrame(strategies)
         
         if df.empty:
-            return go.Figure().add_annotation(text="No strategy analysis available", 
-                                            xref="paper", yref="paper", x=0.5, y=0.5)
+            fig = go.Figure()
+            fig.add_annotation(
+                text="Strategy analysis in progress - Results will appear here", 
+                xref="paper", yref="paper", x=0.5, y=0.5,
+                font=dict(size=16), showarrow=False
+            )
+            fig.update_layout(
+                title="Discovered Strategy Performance Rankings",
+                height=400,
+                paper_bgcolor='white',
+                plot_bgcolor='white'
+            )
+            return fig
         
         # Sort by performance
         df = df.sort_values('performance', ascending=True)

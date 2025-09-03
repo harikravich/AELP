@@ -26,11 +26,7 @@ from google.cloud import bigquery
 import numpy as np
 
 # Import batch writer for efficient BigQuery operations
-try:
-    from bigquery_batch_writer import BigQueryBatchWriter
-    BATCH_WRITER_AVAILABLE = True
-except ImportError:
-    BATCH_WRITER_AVAILABLE = False
+from bigquery_batch_writer import BigQueryBatchWriter
     
 logger = logging.getLogger(__name__)
 
@@ -188,7 +184,8 @@ class PersistentUserDatabase:
         
         # Use Thrive project - MUST be available
         self.project_id = project_id or os.environ.get('GOOGLE_CLOUD_PROJECT', 'aura-thrive-platform')
-        self.dataset_id = dataset_id
+        # Allow overriding dataset via env for separation of concerns
+        self.dataset_id = os.environ.get('BIGQUERY_USERS_DATASET', dataset_id)
         self.timeout_days = timeout_days
         
         # Initialize BigQuery client - NO FALLBACKS

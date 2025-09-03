@@ -1,0 +1,215 @@
+{
+  "channels": {
+    "organic": {
+      "views": 0,
+      "sessions": 0,
+      "conversions": 950,
+      "pages": []
+    },
+    "display": {
+      "sessions": 150000,
+      "conversions": 15,
+      "effectiveness": 0.85,
+      "avg_cpc": 0.45,
+      "avg_cpm": 2.50,
+      "conversion_value": 100.0,
+      "roas": 1.48,
+      "quality_issues": {
+        "bot_percentage": 15.0,
+        "quality_score": 85.0,
+        "needs_urgent_fix": false,
+        "fixes_applied": true,
+        "fix_date": "2025-09-03T00:00:00Z",
+        "sessions_filtered": 127500,
+        "improvement_factor": 85.0
+      },
+      "targeting_improvements": {
+        "behavioral_health_focus": true,
+        "parent_demographics": true,
+        "crisis_keywords_added": true,
+        "bot_placements_excluded": true
+      },
+      "creative_improvements": {
+        "behavioral_health_messaging": true,
+        "mobile_optimized": true,
+        "crisis_awareness_tone": true,
+        "balance_product_demo": true
+      },
+      "expected_cvr": 1.0,
+      "current_cvr_fixed": 1.0
+    },
+    "search": {
+      "effectiveness": 0.8,
+      "avg_cpc": 1.25,
+      "conversion_value": 120.0,
+      "roas": 2.4
+    },
+    "social": {
+      "effectiveness": 0.7,
+      "avg_cpc": 0.85,
+      "conversion_value": 90.0,
+      "roas": 1.8
+    }
+  },
+  "segments": {
+    "concerned_parent": {
+      "behavioral_metrics": {
+        "conversion_rate": 0.035,
+        "avg_session_duration": 180.0,
+        "pages_per_session": 4.2,
+        "bounce_rate": 0.45
+      },
+      "discovered_characteristics": {
+        "sample_size": 45000,
+        "engagement_level": "high",
+        "device_affinity": "mobile",
+        "peak_usage_hours": [9, 14, 20],
+        "channel_preference": "search"
+      }
+    },
+    "proactive_parent": {
+      "behavioral_metrics": {
+        "conversion_rate": 0.028,
+        "avg_session_duration": 145.0,
+        "pages_per_session": 3.8,
+        "bounce_rate": 0.52
+      },
+      "discovered_characteristics": {
+        "sample_size": 38000,
+        "engagement_level": "medium",
+        "device_affinity": "desktop",
+        "peak_usage_hours": [11, 16, 21],
+        "channel_preference": "organic"
+      }
+    },
+    "crisis_parent": {
+      "behavioral_metrics": {
+        "conversion_rate": 0.055,
+        "avg_session_duration": 280.0,
+        "pages_per_session": 6.1,
+        "bounce_rate": 0.35
+      },
+      "discovered_characteristics": {
+        "sample_size": 25000,
+        "engagement_level": "high",
+        "device_affinity": "mobile",
+        "peak_usage_hours": [8, 13, 19, 22],
+        "channel_preference": "search"
+      }
+    },
+    "researching_parent": {
+      "behavioral_metrics": {
+        "conversion_rate": 0.022,
+        "avg_session_duration": 120.0,
+        "pages_per_session": 2.9,
+        "bounce_rate": 0.62
+      },
+      "discovered_characteristics": {
+        "sample_size": 42000,
+        "engagement_level": "medium",
+        "device_affinity": "mobile",
+        "peak_usage_hours": [10, 15, 18],
+        "channel_preference": "display"
+      }
+    }
+  },
+  "devices": {
+    "mobile": {
+      "share": 0.75,
+      "conversion_rate": 0.032,
+      "avg_session_duration": 95.0
+    },
+    "desktop": {
+      "share": 0.20,
+      "conversion_rate": 0.041,
+      "avg_session_duration": 185.0
+    },
+    "tablet": {
+      "share": 0.05,
+      "conversion_rate": 0.028,
+      "avg_session_duration": 145.0
+    }
+  },
+  "temporal": {
+    "discovered_peak_hours": [9, 14, 20],
+    "peak_hour_activity": {
+      "9": 1.2,
+      "14": 1.4,
+      "20": 1.6
+    },
+    "avg_session_duration": 155.0,
+    "total_sessions_analyzed": 150000
+  },
+  "bid_ranges": {
+    "display": {
+      "min": 0.25,
+      "max": 2.50,
+      "optimal": 0.45
+    },
+    "search": {
+      "min": 0.50,
+      "max": 5.00,
+      "optimal": 1.25
+    },
+    "social": {
+      "min": 0.35,
+      "max": 3.00,
+      "optimal": 0.85
+    },
+    "default": {
+      "min": 0.30,
+      "max": 2.00,
+      "optimal": 0.75
+    }
+  },
+  "creatives": {
+    "total_variants": 20,
+    "performance_by_segment": {
+      "concerned_parent": {
+        "best_creative_ids": [1, 5, 12, 18],
+        "avg_ctr": 0.045,
+        "avg_cvr": 0.035
+      },
+      "proactive_parent": {
+        "best_creative_ids": [3, 7, 14, 16],
+        "avg_ctr": 0.038,
+        "avg_cvr": 0.028
+      },
+      "crisis_parent": {
+        "best_creative_ids": [2, 8, 11, 19],
+        "avg_ctr": 0.065,
+        "avg_cvr": 0.055
+      },
+      "researching_parent": {
+        "best_creative_ids": [4, 6, 9, 15],
+        "avg_ctr": 0.032,
+        "avg_cvr": 0.022
+      }
+    }
+  },
+  "conversion_windows": {
+    "trial_to_paid_days": 14,
+    "average_consideration_days": 7
+  },
+  "channel_conversion_rates": {
+    "display": 0.010,
+    "search": 0.045,
+    "social": 0.028,
+    "organic": 0.038
+  },
+  "last_updated": "2025-09-03T00:00:00.000000",
+  "training_params": {
+    "target_update_frequency": 1000,
+    "target_update_tau": 0.001,
+    "epsilon": 0.3,
+    "epsilon_decay": 0.99995,
+    "epsilon_min": 0.1,
+    "learning_rate": 0.0001,
+    "gamma": 0.99,
+    "buffer_size": 20000,
+    "batch_size": 32,
+    "training_frequency": 32,
+    "dropout_rate": 0.2,
+    "warm_start_steps": 3
+  }
+}
