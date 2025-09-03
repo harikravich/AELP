@@ -92,10 +92,7 @@ class ProductionFortifiedEnvironment(gym.Env):
         logger.info("Initializing production fortified environment...")
         
         # 1. Discovery Engine
-        self.discovery = DiscoveryEngine(
-            write_enabled=not is_parallel,
-            cache_only=is_parallel
-        )
+        self.discovery = DiscoveryEngine()
         
         # 2. Creative Selector
         self.creative_selector = CreativeSelector()
