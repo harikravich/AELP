@@ -40,4 +40,5 @@ d3rlpy_logs/
 # Temporary
 *.tmp
 *.bak
-*.swp
+*.swp*.db
+*.db-journal
