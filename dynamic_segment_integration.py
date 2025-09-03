@@ -67,48 +67,11 @@ class DynamicSegmentManager:
             logger.info(f"Initialized with {len(segments)} discovered segments")
         except Exception as e:
             logger.error(f"Failed to initialize segments: {e}")
-            self._create_fallback_segments()
+            raise RuntimeError(f"Segment discovery is REQUIRED. No fallback segments allowed. Fix discovery engine: {e}")
     
     def _create_fallback_segments(self):
-        """Create minimal dynamic segments if discovery fails"""
-        logger.warning("Creating fallback dynamic segments - NOT hardcoded")
-        
-        # These are generated, not hardcoded
-        fallback_segments = {
-            "dynamic_segment_1": SegmentMapping(
-                segment_id="dynamic_segment_1",
-                discovered_name="Active Mobile Browsers",
-                behavioral_type="high_engagement",
-                device_preference="mobile",
-                conversion_rate=0.035,
-                engagement_level="high",
-                activity_pattern="evening",
-                confidence=0.6
-            ),
-            "dynamic_segment_2": SegmentMapping(
-                segment_id="dynamic_segment_2", 
-                discovered_name="Light Desktop Scanners",
-                behavioral_type="low_engagement",
-                device_preference="desktop",
-                conversion_rate=0.018,
-                engagement_level="low",
-                activity_pattern="business_hours",
-                confidence=0.7
-            ),
-            "dynamic_segment_3": SegmentMapping(
-                segment_id="dynamic_segment_3",
-                discovered_name="Regular Cross-Device Users", 
-                behavioral_type="medium_engagement",
-                device_preference="mobile",
-                conversion_rate=0.025,
-                engagement_level="medium",
-                activity_pattern="varied",
-                confidence=0.8
-            )
-        }
-        
-        self.segment_mappings = fallback_segments
-        logger.info(f"Created {len(fallback_segments)} fallback dynamic segments")
+        """REMOVED - No fallback segments allowed"""
+        raise RuntimeError("Fallback segments are not allowed. All segments must be discovered from real data.")
     
     def _update_segment_mappings(self, discovered_segments: Dict[str, DiscoveredSegment]):
         """Update internal mappings from discovered segments"""
@@ -238,7 +201,10 @@ class DynamicSegmentManager:
         """Get conversion rate for segment"""
         self.update_segments()
         mapping = self.segment_mappings.get(segment_id)
-        return mapping.conversion_rate if mapping else 0.02  # Default fallback
+        if not mapping:
+            logger.error(f"Segment not found: {segment_id}. Available: {list(self.segment_mappings.keys())}")
+            raise RuntimeError(f"Segment '{segment_id}' not found in discovered segments. No fallback values allowed.")
+        return mapping.conversion_rate
     
     def get_segment_name(self, segment_id: str) -> str:
         """Get human-readable name for segment"""

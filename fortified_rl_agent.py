@@ -888,11 +888,9 @@ class FortifiedRLAgent:
                     try:
                         fatigue_penalty = min(fatigue_score * 0.5, 0.3)
                         relevance_score -= fatigue_penalty
-                    except:
-                        # Fallback fatigue calculation
-                        if creative.impressions > 0:
-                            fatigue_penalty = min(creative.impressions / 1000.0, 0.2)
-                            relevance_score -= fatigue_penalty
+                    except Exception as e:
+                        logger.error(f"Creative fatigue calculation failed: {e}")
+                        raise RuntimeError(f"Creative fatigue calculation is REQUIRED. Fix calculation or data: {e}")
                 
                 creative_scores.append((int(creative_id) % NUM_CREATIVES, relevance_score))
                 
@@ -912,8 +910,9 @@ class FortifiedRLAgent:
             else:
                 return rl_creative_action
         
-        # Fallback to RL selection
-        return rl_creative_action
+        # No creative scores available - this indicates a system error
+        logger.error("No creative scores available for selection")
+        raise RuntimeError("Creative scoring system failed. Fix creative analysis or data. No fallback selections allowed.")
     
     def save_model(self, path: str):
         """Save model weights"""

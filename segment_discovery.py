@@ -478,7 +478,8 @@ class SegmentDiscoveryEngine:
                 continue
         
         if not silhouette_scores:
-            return 2  # Default fallback
+            logger.error("No valid silhouette scores found for clustering")
+            raise RuntimeError("Failed to determine optimal clusters. No fallback values allowed. Check data quality or clustering parameters.")
         
         # Find elbow point in inertia
         if len(inertias) > 2:
