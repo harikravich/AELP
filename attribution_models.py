@@ -335,9 +335,13 @@ class DataDrivenAttribution(AttributionModel):
 
     def calculate_attribution(self, journey: Journey) -> Dict[str, float]:
         """Calculate data-driven attribution weights."""
-        if not self.is_trained or not journey.touchpoints:
-            # Fallback to linear attribution
-            return LinearAttribution().calculate_attribution(journey)
+        if not self.is_trained:
+            logger.error("DataDrivenAttribution model is not trained")
+            raise RuntimeError("DataDrivenAttribution model MUST be trained before use. No fallback attribution allowed.")
+        
+        if not journey.touchpoints:
+            logger.error("No touchpoints found in journey")
+            raise RuntimeError("Journey must have touchpoints for attribution. No fallback attribution allowed.")
 
         attribution_scores = {}
         total_score = 0.0
@@ -365,9 +369,8 @@ class DataDrivenAttribution(AttributionModel):
             for tp_id in attribution_scores:
                 attribution_scores[tp_id] /= total_score
         else:
-            # Fallback to equal attribution
-            equal_weight = 1.0 / len(journey.touchpoints)
-            attribution_scores = {tp.id: equal_weight for tp in journey.touchpoints}
+            logger.error("Total attribution score is zero - model not properly trained")
+            raise RuntimeError("DataDrivenAttribution model failed to generate valid scores. Retrain model or fix training data. No fallback attribution allowed.")
 
         return attribution_scores
 

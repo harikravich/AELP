@@ -115,18 +115,11 @@ class ParameterManager:
             logger.info(f"Loaded GA4 patterns from {self.patterns_file}")
         except Exception as e:
             logger.error(f"Failed to load patterns: {e}")
-            self.patterns = self._get_fallback_patterns()
+            raise RuntimeError(f"Pattern file '{self.patterns_file}' is REQUIRED. No fallback patterns allowed: {e}")
     
     def _get_fallback_patterns(self) -> Dict[str, Any]:
-        """EMERGENCY FALLBACK - Should never be used in production"""
-        logger.critical("USING EMERGENCY FALLBACK PATTERNS - This should never happen!")
-        return {
-            "channel_performance": {},
-            "user_segments": {},
-            "device_patterns": {},
-            "temporal_patterns": {},
-            "conversion_windows": {}
-        }
+        """REMOVED - No fallback patterns allowed"""
+        raise RuntimeError("Fallback patterns are not allowed. Fix pattern loading or provide proper data file.")
     
     def _process_channel_data(self):
         """Process channel performance data"""
@@ -277,19 +270,10 @@ class ParameterManager:
                 (medium is None or perf.medium == medium)):
                 return perf.cvr_percent / 100.0
         
-        # Fallback to channel group average
-        channel_cvrs = [
-            perf.cvr_percent / 100.0 
-            for perf in self.channel_performance.values() 
-            if perf.channel_group == channel_group
-        ]
-        
-        if channel_cvrs:
-            return np.mean(channel_cvrs)
-        
-        # Last resort - overall average
-        all_cvrs = [perf.cvr_percent / 100.0 for perf in self.channel_performance.values()]
-        return np.mean(all_cvrs) if all_cvrs else 0.02
+        # No exact match found - this is an error condition
+        logger.error(f"Channel not found: {channel_group}, source: {source}, medium: {medium}")
+        available_channels = [f"{perf.channel_group}/{perf.source}/{perf.medium}" for perf in self.channel_performance.values()]
+        raise RuntimeError(f"Channel '{channel_group}' not found in discovered patterns. Available channels: {available_channels}. No fallback values allowed.")
     
     def get_channel_cac(self, channel_group: str, source: str = None, medium: str = None) -> float:
         """Get customer acquisition cost for channel from real data"""
@@ -299,14 +283,10 @@ class ParameterManager:
                 (medium is None or perf.medium == medium)):
                 return perf.estimated_cac
         
-        # Fallback to channel group average
-        channel_cacs = [
-            perf.estimated_cac 
-            for perf in self.channel_performance.values() 
-            if perf.channel_group == channel_group
-        ]
-        
-        return np.mean(channel_cacs) if channel_cacs else 50.0
+        # No exact match found - this is an error condition
+        logger.error(f"Channel CAC not found: {channel_group}, source: {source}, medium: {medium}")
+        available_channels = [f"{perf.channel_group}/{perf.source}/{perf.medium}" for perf in self.channel_performance.values()]
+        raise RuntimeError(f"Channel CAC for '{channel_group}' not found in discovered patterns. Available channels: {available_channels}. No fallback values allowed.")
     
     def get_channel_revenue_per_session(self, channel_group: str) -> float:
         """Get revenue per session for channel from real data"""
@@ -414,7 +394,8 @@ class ParameterManager:
         if matching_devices:
             return np.mean([dev.avg_duration for dev in matching_devices])
         
-        return 250.0  # Fallback from real data average
+        logger.error(f"No device engagement duration found for device category: {device_category}")
+        raise RuntimeError(f"Device engagement duration not found in discovered patterns for '{device_category}'. No fallback values allowed.")
     
     # === TEMPORAL PARAMETERS ===
     
@@ -463,7 +444,8 @@ class ParameterManager:
             hours_by_sessions.sort(key=lambda x: x[1], reverse=True)
             return [hour for hour, _ in hours_by_sessions[:6]]
         
-        return [10, 11, 12, 13, 14, 15]  # Business hours fallback
+        logger.error("No hourly patterns found in discovered data")
+        raise RuntimeError("Hourly patterns are REQUIRED from discovered data. No fallback hours allowed.")
     
     def get_evening_parent_pattern_multiplier(self) -> float:
         """Get evening parent pattern multiplier from real data"""
@@ -498,14 +480,8 @@ class ParameterManager:
                 "21_day": conversion_windows.get("21_day_lag", {}).get("cvr", 1.4) / 100.0
             }
         
-        # Fallback based on industry standards
-        return {
-            "1_day": 0.015,
-            "3_day": 0.015,
-            "7_day": 0.013,
-            "14_day": 0.014,
-            "21_day": 0.014
-        }
+        logger.error("No conversion window data found in discovered patterns")
+        raise RuntimeError("Conversion window data is REQUIRED from discovered patterns. No fallback probabilities allowed.")
     
     def get_optimal_attribution_window(self) -> int:
         """Get optimal attribution window from real data"""
@@ -545,8 +521,8 @@ class ParameterManager:
         hourly_patterns = self.temporal_patterns.get("hourly_patterns", {})
         
         if not hourly_patterns:
-            # Even distribution fallback
-            return {hour: 1/24 for hour in range(24)}
+            logger.error("No hourly patterns found for budget distribution")
+            raise RuntimeError("Hourly patterns are REQUIRED from discovered data for budget distribution. No fallback distributions allowed.")
         
         # Weight by revenue (sessions * conversion rate * revenue per conversion)
         hourly_weights = {}

@@ -2789,12 +2789,13 @@ class ProductionFortifiedRLAgent:
     def _get_user_sequence_tensor(self, user_id: str) -> Tuple[torch.Tensor, torch.Tensor]:
         """Get sequence tensor and mask for user"""
         if user_id not in self.user_state_sequences:
-            # Return dummy data for new user
-            zero_state = np.zeros(self.state_dim)
-            sequence_states = [zero_state] * self.sequence_length
-            sequence_tensor = torch.FloatTensor(sequence_states).unsqueeze(0).to(self.device)
-            sequence_mask = torch.ones(1, self.sequence_length, dtype=torch.bool, device=self.device)
-            return sequence_tensor, sequence_mask
+            # Initialize proper user state sequence for new user
+            logger.error(f"User {user_id} not found in state sequences. Initializing proper sequence...")
+            # Initialize user sequences properly instead of dummy data
+            self._initialize_user_sequences(user_id)
+            # If still not available after initialization, this is an error
+            if user_id not in self.user_state_sequences:
+                raise RuntimeError(f"Failed to initialize user sequences for {user_id}. No dummy data allowed.")
         
         # Get actual sequence
         sequence_states = list(self.user_state_sequences[user_id])

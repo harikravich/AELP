@@ -405,13 +405,8 @@ class EnhancedGAELPEnvironment:
                         if np.random.random() < conversion_rate:
                             results['conversions'] = 1
             else:
-                # Fallback to our user behavior simulation
-                # Adjust response based on position (lower positions get lower CTR)
-                position_factor = 1.0 / auction_result['position']
-                
-                user_response = self.user_model.simulate_response(
-                    ad_creative=action.get('creative', {}),
-                    context=context
+                logger.error("RecSim user model response is REQUIRED")
+                raise RuntimeError("RecSim user model must provide response. No fallback user simulation allowed. Fix RecSim integration.")
                 )
                 
                 # Apply position penalty
