@@ -81,30 +81,37 @@ class GAELPMonitor:
                 'google_ads': 'not_started'
             },
             'metrics': {
-                'last_episode': 1234,
-                'total_reward': 567.89,
-                'epsilon': 0.05,
-                'roas': 4.2,
-                'conversion_rate': 0.045,
-                'spend': 892.34,
-                'revenue': 3747.83
+                'last_episode': 0,  # REAL VALUE - starts at 0
+                'total_reward': 0.0,  # REAL VALUE - no reward yet
+                'epsilon': 1.0,  # REAL VALUE - starts exploring
+                'roas': 0.0,  # REAL VALUE - no return yet
+                'conversion_rate': 0.0,  # REAL VALUE - no conversions yet
+                'spend': 0.0,  # REAL VALUE - no spend yet
+                'revenue': 0.0  # REAL VALUE - no revenue yet
             }
         }
     
     def _get_metrics_data(self) -> Dict:
-        """Get metrics data for charts"""
-        # Generate sample data for visualization
-        episodes = list(range(100))
-        rewards = [100 + i * 2 + np.random.randn() * 10 for i in episodes]
-        roas = [2.5 + i * 0.02 + np.random.randn() * 0.3 for i in episodes]
-        
-        return {
-            'episodes': episodes,
-            'rewards': rewards,
-            'roas': roas,
-            'epsilon': [0.9 * (0.995 ** i) for i in episodes],
-            'conversion_rate': [0.02 + i * 0.0003 + np.random.randn() * 0.005 for i in episodes]
-        }
+        """Get REAL metrics data from orchestrator"""
+        # NO FAKE DATA - GET REAL VALUES OR EMPTY
+        if self.orchestrator and hasattr(self.orchestrator, 'metrics'):
+            metrics = self.orchestrator.metrics
+            return {
+                'episodes': metrics.get('episode_history', []),
+                'rewards': metrics.get('reward_history', []),
+                'roas': metrics.get('roas_history', []),
+                'epsilon': metrics.get('epsilon_history', []),
+                'conversion_rate': metrics.get('cvr_history', [])
+            }
+        else:
+            # NO DATA YET - RETURN EMPTY, NOT FAKE
+            return {
+                'episodes': [],
+                'rewards': [],
+                'roas': [],
+                'epsilon': [],
+                'conversion_rate': []
+            }
     
     def _get_component_status(self) -> Dict:
         """Get detailed component status"""

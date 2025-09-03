@@ -3665,6 +3665,7 @@ class ProductionFortifiedRLAgent:
         
         # Convert current state to vector
         current_state_vector = state.to_vector(self.data_stats)
+        state_vector = current_state_vector  # Alias for compatibility
         
         # Add current state to user sequence
         self.user_state_sequences[user_id].append(current_state_vector)
@@ -3969,7 +3970,11 @@ class ProductionFortifiedRLAgent:
     
     def _ucb_action_selection(self, state_vector: torch.Tensor, action_type: str) -> int:
         """Select action using Upper Confidence Bound algorithm"""
-        state_key = tuple(state_vector.cpu().numpy().flatten())
+        # Handle both tensor and numpy array inputs
+        if isinstance(state_vector, torch.Tensor):
+            state_key = tuple(state_vector.cpu().numpy().flatten())
+        else:
+            state_key = tuple(state_vector.flatten())
         
         if action_type == 'bid':
             num_actions = self.bid_actions
@@ -4006,7 +4011,11 @@ class ProductionFortifiedRLAgent:
     
     def _thompson_sampling_action(self, state_vector: torch.Tensor, action_type: str) -> int:
         """Select action using Thompson Sampling with Beta distributions"""
-        state_key = tuple(state_vector.cpu().numpy().flatten())
+        # Handle both tensor and numpy array inputs
+        if isinstance(state_vector, torch.Tensor):
+            state_key = tuple(state_vector.cpu().numpy().flatten())
+        else:
+            state_key = tuple(state_vector.flatten())
         
         if action_type == 'bid':
             num_actions = self.bid_actions
@@ -4036,7 +4045,11 @@ class ProductionFortifiedRLAgent:
     
     def _is_novel_state(self, state_vector: torch.Tensor) -> bool:
         """Determine if current state is novel based on archive"""
-        state_np = state_vector.cpu().numpy().flatten()
+        # Handle both tensor and numpy array inputs
+        if isinstance(state_vector, torch.Tensor):
+            state_np = state_vector.cpu().numpy().flatten()
+        else:
+            state_np = state_vector.flatten()
         
         if len(self.state_archive) == 0:
             return True
@@ -4067,6 +4080,12 @@ class ProductionFortifiedRLAgent:
     
     def _curiosity_guided_action(self, state_vector: torch.Tensor, action_type: str) -> int:
         """Select action guided by curiosity (prediction error)"""
+        # Ensure state_vector is a tensor
+        if not isinstance(state_vector, torch.Tensor):
+            state_tensor = torch.FloatTensor(state_vector).unsqueeze(0)
+        else:
+            state_tensor = state_vector
+            
         if action_type == 'bid':
             num_actions = self.bid_actions
             q_network = self.q_network_bid
@@ -4079,7 +4098,7 @@ class ProductionFortifiedRLAgent:
         
         # Get Q-values for base preference
         with torch.no_grad():
-            q_values = q_network(state_vector).cpu().numpy().flatten()
+            q_values = q_network(state_tensor).cpu().numpy().flatten()
         
         # Add curiosity bonus based on prediction uncertainty
         curiosity_bonuses = []
@@ -4096,7 +4115,12 @@ class ProductionFortifiedRLAgent:
             action_vector = action_vector.unsqueeze(0).to(self.device)
             
             # Get curiosity bonus (prediction error encourages exploration)
-            curiosity_bonus = self._get_curiosity_bonus(state_vector, action_vector)
+            # Ensure state is tensor for curiosity calculation
+            if not isinstance(state_vector, torch.Tensor):
+                state_for_curiosity = torch.FloatTensor(state_vector).unsqueeze(0).to(self.device)
+            else:
+                state_for_curiosity = state_vector
+            curiosity_bonus = self._get_curiosity_bonus(state_for_curiosity, action_vector)
             curiosity_bonuses.append(curiosity_bonus)
         
         # Combine Q-values with curiosity bonuses

@@ -12,6 +12,7 @@ import logging
 import asyncio
 import threading
 import time
+import numpy as np
 from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional, Tuple
 from dataclasses import dataclass, field
@@ -32,7 +33,7 @@ from fortified_rl_agent_no_hardcoding import ProductionFortifiedRLAgent
 from fortified_environment_no_hardcoding import ProductionFortifiedEnvironment
 
 # Data & Discovery
-from discovery_engine import GA4RealTimeDataPipeline, GA4DiscoveryEngine
+from discovery_engine import GA4RealTimeDataPipeline
 try:
     from segment_discovery import SegmentDiscoveryEngine
 except ImportError:
@@ -142,6 +143,38 @@ try:
 except ImportError:
     logger.warning("FixedAuctionGymIntegration not available")
     FixedAuctionGymIntegration = None
+
+# ==================== WRAPPER CLASSES ====================
+
+class DiscoveryEngineWrapper:
+    """Wrapper to provide DiscoveryEngine interface for GA4RealTimeDataPipeline"""
+    
+    def __init__(self, pipeline: GA4RealTimeDataPipeline):
+        self.pipeline = pipeline
+        self.patterns_file = "discovered_patterns.json"
+        self._load_patterns()
+    
+    def _load_patterns(self):
+        """Load discovered patterns from file"""
+        try:
+            with open(self.patterns_file, 'r') as f:
+                self.patterns = json.load(f)
+        except:
+            self.patterns = {}
+    
+    def get_discovered_patterns(self) -> Dict[str, Any]:
+        """Return discovered patterns"""
+        return self.patterns
+    
+    def get_patterns(self) -> Dict[str, Any]:
+        """Alias for get_discovered_patterns for compatibility"""
+        return self.patterns
+    
+    def get_conversion_data(self, *args, **kwargs):
+        """Delegate to pipeline if available"""
+        if hasattr(self.pipeline, 'get_conversion_data'):
+            return self.pipeline.get_conversion_data(*args, **kwargs)
+        return []
 
 # ==================== ORCHESTRATOR ====================
 
@@ -260,17 +293,14 @@ class GAELPProductionOrchestrator:
         self.component_status['emergency_controller'] = ComponentStatus.RUNNING
         
         # Budget safety
-        budget_config = {
-            'daily_limit': self.config.max_daily_spend,
-            'max_bid': self.config.max_bid_amount,
-            'monitoring_interval': 30
-        }
-        self.components['budget_safety'] = BudgetSafetyController(budget_config)
-        self.component_status['budget_safety'] = ComponentStatus.RUNNING
+        if BudgetSafetyController:
+            self.components['budget_safety'] = BudgetSafetyController()
+            self.component_status['budget_safety'] = ComponentStatus.RUNNING
         
         # Success criteria monitor
-        self.components['success_monitor'] = SuccessCriteriaMonitor()
-        self.component_status['success_monitor'] = ComponentStatus.RUNNING
+        if SuccessCriteriaMonitor:
+            self.components['success_monitor'] = SuccessCriteriaMonitor()
+            self.component_status['success_monitor'] = ComponentStatus.RUNNING
         
         logger.info("✅ Safety systems ready")
     
@@ -304,25 +334,34 @@ class GAELPProductionOrchestrator:
         self.components['environment'] = ProductionFortifiedEnvironment()
         self.component_status['environment'] = ComponentStatus.RUNNING
         
-        # RL Agent with all improvements
-        agent_config = {
-            'enable_double_dqn': self.config.enable_double_dqn,
-            'enable_prioritized_replay': self.config.enable_prioritized_replay,
-            'enable_lstm': self.config.enable_lstm_sequence,
-            'epsilon_decay': 0.99995,  # Fixed from TODO #1
-            'training_frequency': 32,   # Fixed from TODO #2
-            'target_update_freq': 1000, # Fixed from TODO #13
-        }
-        self.components['rl_agent'] = ProductionFortifiedRLAgent(**agent_config)
+        # RL Agent needs components from environment
+        env = self.components['environment']
+        
+        # Import parameter manager for agent
+        from gaelp_parameter_manager import ParameterManager
+        
+        # Wrap the discovery engine to provide the expected interface
+        wrapped_discovery = DiscoveryEngineWrapper(env.discovery)
+        
+        self.components['rl_agent'] = ProductionFortifiedRLAgent(
+            discovery_engine=wrapped_discovery,
+            creative_selector=env.creative_selector,
+            attribution_engine=env.attribution,
+            budget_pacer=env.budget_pacer,
+            identity_resolver=env.identity_resolver,
+            parameter_manager=ParameterManager()
+        )
         self.component_status['rl_agent'] = ComponentStatus.RUNNING
         
         # Auction integration
-        self.components['auction'] = FixedAuctionGymIntegration()
-        self.component_status['auction'] = ComponentStatus.RUNNING
+        if FixedAuctionGymIntegration:
+            self.components['auction'] = FixedAuctionGymIntegration()
+            self.component_status['auction'] = ComponentStatus.RUNNING
         
         # Creative analyzer
-        self.components['creative_analyzer'] = CreativeContentAnalyzer()
-        self.component_status['creative_analyzer'] = ComponentStatus.RUNNING
+        if CreativeContentAnalyzer:
+            self.components['creative_analyzer'] = CreativeContentAnalyzer()
+            self.component_status['creative_analyzer'] = ComponentStatus.RUNNING
         
         logger.info("✅ RL system ready")
     
@@ -333,7 +372,7 @@ class GAELPProductionOrchestrator:
         # Multi-touch attribution
         if MultiTouchAttributionEngine:
             self.components['attribution'] = MultiTouchAttributionEngine(
-                database_path="attribution_system.db"
+                db_path="attribution_system.db"
             )
             self.component_status['attribution'] = ComponentStatus.RUNNING
         
@@ -349,18 +388,21 @@ class GAELPProductionOrchestrator:
         logger.info("📈 Initializing monitoring...")
         
         # Convergence monitor
-        self.components['convergence_monitor'] = ConvergenceMonitor()
-        self.component_status['convergence_monitor'] = ComponentStatus.RUNNING
+        if ConvergenceMonitor:
+            self.components['convergence_monitor'] = ConvergenceMonitor()
+            self.component_status['convergence_monitor'] = ComponentStatus.RUNNING
         
         # Regression detector
-        self.components['regression_detector'] = RegressionDetector()
-        self.component_status['regression_detector'] = ComponentStatus.RUNNING
+        if RegressionDetector:
+            self.components['regression_detector'] = RegressionDetector()
+            self.component_status['regression_detector'] = ComponentStatus.RUNNING
         
         # Checkpoint manager
-        self.components['checkpoint_manager'] = ProductionCheckpointManager(
-            checkpoint_dir="production_checkpoints"
-        )
-        self.component_status['checkpoint_manager'] = ComponentStatus.RUNNING
+        if ProductionCheckpointManager:
+            self.components['checkpoint_manager'] = ProductionCheckpointManager(
+                checkpoint_dir="production_checkpoints"
+            )
+            self.component_status['checkpoint_manager'] = ComponentStatus.RUNNING
         
         logger.info("✅ Monitoring ready")
     
@@ -368,9 +410,12 @@ class GAELPProductionOrchestrator:
         """Initialize online learning system"""
         logger.info("🔄 Initializing online learning...")
         
+        # Create wrapper for discovery engine interface
+        discovery_wrapper = DiscoveryEngineWrapper(self.components['ga4_pipeline'])
+        
         self.components['online_learner'] = ProductionOnlineLearner(
-            rl_agent=self.components['rl_agent'],
-            environment=self.components['environment']
+            agent=self.components['rl_agent'],
+            discovery_engine=discovery_wrapper
         )
         self.component_status['online_learner'] = ComponentStatus.RUNNING
         
@@ -380,7 +425,24 @@ class GAELPProductionOrchestrator:
         """Initialize shadow mode testing"""
         logger.info("👻 Initializing shadow mode...")
         
-        self.components['shadow_mode'] = ShadowModeManager()
+        # Create shadow test configuration
+        from shadow_mode_manager import ShadowTestConfiguration
+        shadow_config = ShadowTestConfiguration(
+            test_name="production_shadow_test",
+            duration_hours=24.0,
+            models={
+                "current": {"model_id": "production_v1"},
+                "challenger": {"model_id": "production_v2"}
+            },
+            traffic_percentage=1.0,
+            comparison_threshold=0.1,
+            statistical_confidence=0.95,
+            min_sample_size=100,
+            save_all_decisions=True,
+            real_time_reporting=True
+        )
+        
+        self.components['shadow_mode'] = ShadowModeManager(shadow_config)
         self.component_status['shadow_mode'] = ComponentStatus.RUNNING
         
         logger.info("✅ Shadow mode ready")
@@ -389,19 +451,23 @@ class GAELPProductionOrchestrator:
         """Initialize A/B testing framework"""
         logger.info("🧪 Initializing A/B testing...")
         
-        self.components['ab_testing'] = StatisticalABTestingFramework()
-        self.component_status['ab_testing'] = ComponentStatus.RUNNING
-        
-        logger.info("✅ A/B testing ready")
+        if StatisticalABTestingFramework:
+            self.components['ab_testing'] = StatisticalABTestingFramework()
+            self.component_status['ab_testing'] = ComponentStatus.RUNNING
+            logger.info("✅ A/B testing ready")
+        else:
+            logger.warning("⚠️ A/B testing not available, skipping")
     
     def _init_explainability(self):
         """Initialize explainability system"""
         logger.info("💡 Initializing explainability...")
         
-        self.components['explainability'] = BidExplainabilitySystem()
-        self.component_status['explainability'] = ComponentStatus.RUNNING
-        
-        logger.info("✅ Explainability ready")
+        if BidExplainabilitySystem:
+            self.components['explainability'] = BidExplainabilitySystem()
+            self.component_status['explainability'] = ComponentStatus.RUNNING
+            logger.info("✅ Explainability ready")
+        else:
+            logger.warning("⚠️ Explainability not available, skipping")
     
     def _init_google_ads(self):
         """Initialize Google Ads integration"""
@@ -411,10 +477,14 @@ class GAELPProductionOrchestrator:
             logger.warning("⚠️ Google Ads customer ID not set, skipping integration")
             return
         
-        self.components['google_ads'] = GoogleAdsGAELPIntegration(
-            customer_id=self.config.google_ads_customer_id,
-            rl_agent=self.components['rl_agent']
-        )
+        if GoogleAdsGAELPIntegration:
+            self.components['google_ads'] = GoogleAdsGAELPIntegration(
+                customer_id=self.config.google_ads_customer_id,
+                rl_agent=self.components['rl_agent']
+            )
+        else:
+            logger.warning("⚠️ GoogleAdsGAELPIntegration not available")
+            return
         self.component_status['google_ads'] = ComponentStatus.RUNNING
         
         logger.info("✅ Google Ads ready")
@@ -526,7 +596,9 @@ class GAELPProductionOrchestrator:
                 episode += 1
                 
             except Exception as e:
+                import traceback
                 logger.error(f"Training loop error: {e}")
+                logger.error(f"Traceback: {traceback.format_exc()}")
                 time.sleep(30)
     
     def _run_training_episode(self, episode: int) -> Dict[str, Any]:
@@ -535,30 +607,85 @@ class GAELPProductionOrchestrator:
         agent = self.components['rl_agent']
         
         # Reset environment
-        state = env.reset()
+        state_tuple = env.reset()
+        # Handle both tuple and non-tuple returns
+        if isinstance(state_tuple, tuple):
+            state, _ = state_tuple
+        else:
+            state = state_tuple
+            
         done = False
         total_reward = 0
         steps = 0
         
         while not done and steps < 1000:
-            # Get action from agent
-            action = agent.act(state)
+            # Get action from agent - wrap state in proper object
+            from fortified_rl_agent_no_hardcoding import DynamicEnrichedState
+            
+            # Create enriched state from numpy array
+            enriched_state = DynamicEnrichedState()
+            
+            # Parse the numpy state vector and populate fields
+            if isinstance(state, np.ndarray) and len(state) >= 10:
+                # Map state vector to enriched state fields
+                enriched_state.stage = int(state[0]) if len(state) > 0 else 0
+                enriched_state.touchpoints_seen = int(state[1]) if len(state) > 1 else 0
+                enriched_state.days_since_first_touch = float(state[2]) if len(state) > 2 else 0.0
+                enriched_state.segment_index = int(state[3]) if len(state) > 3 else 0
+                enriched_state.device_index = int(state[4]) if len(state) > 4 else 0
+                enriched_state.channel_index = int(state[5]) if len(state) > 5 else 0
+                enriched_state.creative_index = int(state[6]) if len(state) > 6 else 0
+                enriched_state.competition_level = float(state[7]) if len(state) > 7 else 0.0
+                enriched_state.budget_remaining_pct = float(state[8]) if len(state) > 8 else 1.0
+                enriched_state.current_bid = float(state[9]) if len(state) > 9 else 0.0
+            
+            action = agent.select_action(enriched_state)
             
             # Generate explanation if enabled
-            if self.config.enable_explainability:
+            if self.config.enable_explainability and 'explainability' in self.components:
                 explanation = self.components['explainability'].explain_bid_decision(
                     state, action
                 )
             
             # Step environment
-            next_state, reward, done, info = env.step(action)
+            step_result = env.step(action)
+            # Handle both old (4 values) and new (5 values) Gym API
+            if len(step_result) == 5:
+                next_state, reward, done, truncated, info = step_result
+                done = done or truncated  # Combine termination conditions
+            else:
+                next_state, reward, done, info = step_result
             
             # Store experience
-            agent.remember(state, action, reward, next_state, done)
+            experience = {
+                'state': state,
+                'action': action,
+                'reward': reward,
+                'next_state': next_state,
+                'done': done
+            }
+            agent.replay_buffer.add(experience)
             
             # Train if enough experiences
-            if len(agent.memory) > agent.batch_size and steps % 32 == 0:
-                agent.replay()
+            batch_size = agent._hyperparameters.get('batch_size', 32)
+            if len(agent.replay_buffer) > batch_size and steps % 32 == 0:
+                # Train the agent with the experience
+                enriched_next_state = DynamicEnrichedState()
+                if isinstance(next_state, np.ndarray) and len(next_state) >= 10:
+                    enriched_next_state.stage = int(next_state[0]) if len(next_state) > 0 else 0
+                    enriched_next_state.touchpoints_seen = int(next_state[1]) if len(next_state) > 1 else 0
+                    enriched_next_state.days_since_first_touch = float(next_state[2]) if len(next_state) > 2 else 0.0
+                    enriched_next_state.segment_index = int(next_state[3]) if len(next_state) > 3 else 0
+                    enriched_next_state.device_index = int(next_state[4]) if len(next_state) > 4 else 0
+                    enriched_next_state.channel_index = int(next_state[5]) if len(next_state) > 5 else 0
+                    enriched_next_state.creative_index = int(next_state[6]) if len(next_state) > 6 else 0
+                    enriched_next_state.competition_level = float(next_state[7]) if len(next_state) > 7 else 0.0
+                    enriched_next_state.budget_remaining_pct = float(next_state[8]) if len(next_state) > 8 else 1.0
+                    enriched_next_state.current_bid = float(next_state[9]) if len(next_state) > 9 else 0.0
+                
+                # Call the train method
+                if hasattr(agent, 'train'):
+                    agent.train(enriched_state, action, reward, enriched_next_state, done)
             
             state = next_state
             total_reward += reward
@@ -568,6 +695,11 @@ class GAELPProductionOrchestrator:
             if self._check_safety_violations(action, info):
                 logger.warning("🛑 Safety violation detected, ending episode")
                 done = True
+        
+        # Decay epsilon after episode
+        if hasattr(agent, 'epsilon_decay') and hasattr(agent, 'epsilon_min'):
+            agent.epsilon = max(agent.epsilon_min, agent.epsilon * agent.epsilon_decay)
+            logger.debug(f"Updated epsilon to {agent.epsilon:.4f}")
         
         return {
             'episode': episode,
@@ -584,17 +716,22 @@ class GAELPProductionOrchestrator:
         # Check budget safety
         budget_safety = self.components.get('budget_safety')
         if budget_safety:
-            violation = budget_safety.check_spending_limits(
+            from decimal import Decimal
+            is_safe, violations = budget_safety.record_spending(
                 campaign_id='training',
-                amount=info.get('bid_amount', 0)
+                channel=info.get('channel', 'unknown'),
+                amount=Decimal(str(info.get('cost', 0))),
+                bid_amount=Decimal(str(info.get('bid_amount', 0)))
             )
-            if violation:
+            if not is_safe:
+                logger.warning(f"Budget safety violations: {violations}")
                 return True
         
         # Check emergency controls
         emergency = self.components.get('emergency_controller')
         if emergency:
-            if emergency.check_emergency_stop():
+            if emergency.emergency_stop_triggered or not emergency.is_system_healthy():
+                logger.warning("Emergency stop triggered or system unhealthy")
                 return True
         
         return False
@@ -611,8 +748,9 @@ class GAELPProductionOrchestrator:
         # Check regression detector
         detector = self.components.get('regression_detector')
         if detector:
-            regression = detector.check_for_regression(self.metrics)
-            if regression:
+            regressions = detector.check_for_regressions()
+            if regressions:
+                logger.warning(f"Detected {len(regressions)} regressions")
                 return True
         
         return False
@@ -660,10 +798,8 @@ class GAELPProductionOrchestrator:
             if checkpoint_manager and self.components.get('rl_agent'):
                 checkpoint_id = checkpoint_manager.save_checkpoint(
                     model=self.components['rl_agent'],
-                    metadata={
-                        'metrics': self.metrics,
-                        'episode': self.metrics.get('last_episode', 0)
-                    }
+                    model_version=f"episode_{self.metrics.get('last_episode', 0)}",
+                    metrics=self.metrics
                 )
                 logger.info(f"💾 Saved checkpoint: {checkpoint_id}")
         except Exception as e:

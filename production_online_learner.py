@@ -32,7 +32,20 @@ import sqlite3
 import warnings
 warnings.filterwarnings("ignore")
 
-from discovery_engine import GA4DiscoveryEngine as DiscoveryEngine
+from discovery_engine import GA4RealTimeDataPipeline
+
+# Create a dummy DiscoveryEngine class for SafetyGuardrails init
+class DiscoveryEngine:
+    def __init__(self):
+        pass
+    
+    def get_discovered_patterns(self):
+        try:
+            import json
+            with open('discovered_patterns.json', 'r') as f:
+                return json.load(f)
+        except:
+            return {}
 from audit_trail import log_decision, log_outcome, log_budget
 
 logger = logging.getLogger(__name__)
