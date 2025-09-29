@@ -1,0 +1,9 @@
+secrets/
+vendor_imports/bigspy_*.csv
+vendor_imports/*cookies*.txt
+vendor_imports/*cookies*.json
+vendor_imports/*export*.csv
+reports/vendor_scores.json
+reports/creative_objects/vendor_*.json
+reports/creative_features/creative_features.jsonl
+

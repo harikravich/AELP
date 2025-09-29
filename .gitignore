@@ -17,6 +17,21 @@ venv/
 # Node
 node_modules/
 .next/
+dist/
+.venv/
+venv/
+secrets/
+outputs/
+vendor_imports/
+reports/
+*.env.local
+*.envrc
+# Env files (never commit)
+*.env
+*.env.*
+.google_ads_credentials.env
+**/__pycache__/
+*.pytest_cache/
 
 # Logs
 *.log
@@ -42,3 +57,11 @@ d3rlpy_logs/
 *.bak
 *.swp*.db
 *.db-journal
+# OAuth credentials and tokens
+google_ads_oauth.json
+*.pickle
+*.pkl
+*.key
+*.pem
+*.json
+.config/gaelp/

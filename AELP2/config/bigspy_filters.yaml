@@ -1,0 +1,10 @@
+query: |
+  antivirus; vpn; identity protection; credit monitoring; phishing; dark web; password manager; aura; behavioral health; anxiety; mental health; credit score; identity theft; data breach; scam; family plan; free trial
+country: United States
+language: English
+networks: [Facebook, Instagram]
+os: [iOS, Android]
+dedup: Strict
+sort: Popularity
+only_new: false
+
