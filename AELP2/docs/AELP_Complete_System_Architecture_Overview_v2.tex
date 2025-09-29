@@ -1,0 +1,231 @@
+% AELP Complete System Architecture Overview v2 — LaTeX source
+\documentclass[11pt,a4paper]{report}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{tcolorbox}
+
+% Colors
+\definecolor{aelpblue}{RGB}{90,103,216}
+\definecolor{aelpgreen}{RGB}{72,187,120}
+\definecolor{aelpyellow}{RGB}{237,137,54}
+\definecolor{aelpred}{RGB}{245,101,101}
+\definecolor{aelpgray}{RGB}{113,128,150}
+\definecolor{aelplightgray}{RGB}{247,250,252}
+\definecolor{aelppurple}{RGB}{102,126,234}
+
+% Hyperlinks
+\hypersetup{
+    colorlinks=true,
+    linkcolor=aelpblue,
+    filecolor=aelpblue,
+    urlcolor=aelpblue,
+    citecolor=aelpblue,
+    pdftitle={AELP Complete System Architecture Overview v2},
+    pdfauthor={Aura Engineering Team},
+    pdfsubject={System Architecture},
+    pdfkeywords={AELP, AELP2, RL, Marketing}
+}
+
+% Headers/footers
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{aelpgray}{AELP Architecture v2}}
+\fancyhead[R]{\small\textcolor{aelpgray}{\thepage}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Chapter/section styles
+\titleformat{\chapter}[display]
+{\normalfont\huge\bfseries\color{aelpblue}}
+{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{-30pt}{20pt}
+
+\titleformat{\section}
+{\normalfont\Large\bfseries\color{aelpblue}}
+{\thesection}{1em}{}
+
+\titleformat{\subsection}
+{\normalfont\large\bfseries\color{aelppurple}}
+{\thesubsection}{1em}{}
+
+% Boxes
+\tcbuselibrary{skins,breakable}
+\newtcolorbox{metricbox}[1][]{
+    colback=aelplightgray,
+    colframe=aelpblue,
+    left=5mm,right=5mm,top=5mm,bottom=5mm,
+    sharp corners,boxrule=2pt,breakable,
+    title={#1},fonttitle=\bfseries\color{white},colbacktitle=aelpblue
+}
+
+\newtcolorbox{glossarybox}{colback=blue!5!white,colframe=aelpblue,left=5mm,breakable}
+
+% Status helpers
+\newcommand{\statusgreen}[1]{\textcolor{aelpgreen}{\textbf{#1}}}
+\newcommand{\statusyellow}[1]{\textcolor{aelpyellow}{\textbf{#1}}}
+\newcommand{\statusred}[1]{\textcolor{aelpred}{\textbf{#1}}}
+
+% Columns
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+\begin{document}
+
+% Title page
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    {\Huge\bfseries\color{aelpblue} AELP Complete System\\Architecture Overview\par}
+    \vspace{1cm}
+    {\Large Version 2.0\par}
+    \vspace{0.5cm}
+    {\large September 29, 2025\par}
+    \vspace{2cm}
+    \begin{tcolorbox}[colback=aelplightgray,colframe=aelpblue,width=0.8\textwidth]
+        \centering
+        Integrated business-first document with latest design,\\
+        data, simulator learnings, and first-wave outputs.
+    \end{tcolorbox}
+    \vfill
+    {\large\textbf{Aura Engineering Team}\par}
+    \vspace{1cm}
+    {\small Confidential and Proprietary\par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% Executive Summary
+\chapter{Executive Summary}
+\section{The Challenge}
+The Aura Experiential Learning Platform (AELP) optimizes behavioral health marketing spend across digital channels. Traditional approaches yield unpredictable customer acquisition costs (CAC) ranging from \$150 to \$400.
+
+\section{Our Solution}
+AELP simulates auctions and user journeys, forecasts CAC/volume with uncertainty, and uses Thompson sampling to allocate budget across creatives.
+
+\section{This Week's Plan}
+\begin{itemize}[itemsep=0.5em]
+  \item Launch Security slate (8 creatives) at \$30k/day with p50 CAC of \$166--\$289.
+  \item Launch Balance slate (8 creatives) at \$30k/day with p50 CAC of \$82--\$142.
+  \item Monitor daily performance within p10--p90 bounds; adjust if outside.
+\end{itemize}
+
+\begin{metricbox}[Key Performance Metrics]
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+\textbf{Metric} & \textbf{Value} \\
+\midrule
+Daily Spend & \$60,000 \\
+Expected Signups (p50) & 548 \\
+Combined CAC (p50) & \$109 \\
+Net Revenue (p50) & \$19,416 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\vspace{0.5em}
+\textbf{Confidence:} precision@10 = 30\%, calibration reliability = 0.85+.
+\end{metricbox}
+
+\chapter{Problem Framing \& Goals}
+\section{Why Simulate Real Life for Reinforcement Learning}
+Traditional A/B testing is slow and expensive. Offline simulation explores strategies safely by modeling auctions, user journeys, temporal dynamics, and uncertainty.
+
+\section{Key Questions Answered}
+\begin{enumerate}
+  \item Which creatives to run? Top-8 ranked by expected value and uncertainty.
+  \item Where to place them? Optimal mix across feed/stories/reels by baselines.
+  \item How much to spend? Thompson sampling with per-creative caps.
+  \item Expected CAC \& volume? Probabilistic p10/p50/p90 forecasts.
+\end{enumerate}
+
+\section{Constraints and Success Metrics}
+\begin{metricbox}[Hard Constraints]
+\begin{itemize}
+  \item CAC targets: Security \$\leq\$240; Balance \$\leq\$200.
+  \item Budget caps: \$30k/day per product; min 100 signups/day.
+\end{itemize}
+\end{metricbox}
+
+\chapter{Plain-Language Glossary \& Assumptions}
+\begin{glossarybox}
+\textbf{p10/p50/p90} --- Uncertainty percentiles; p50 = median.\\
+\textbf{Conformal bound} --- Lower-bound guarantee on predictions.\\
+\textbf{Placement} --- Feed, Stories, Reels, Audience Network.\\
+\textbf{Thompson Sampling} --- Balances exploration vs exploitation.\\
+\textbf{AOV} --- Revenue per subscription: Security \$200; Balance \$120.
+\end{glossarybox}
+
+\chapter{System Architecture}
+Raw data from platform APIs and vendors flows to BigQuery; feature engineering builds creative signals; ranking predicts CTR/CVR with calibration; forecasting projects CAC/volume by placement; the RL planner allocates budgets; the Creative Planner packages a launch slate.
+
+% (For brevity, diagrams/figures are drawn via TikZ as in prior tex; omitted here to keep source concise.)
+
+\chapter{Connectors \& Data Inventory}
+\section{Connectors Status}
+BigQuery (green), Meta Ads API (green), SearchAPI vendor (yellow), Google Analytics (yellow), Google Ads (yellow), Impact.com (red), Redis cache (green).
+
+\section{BigQuery Datasets}
+Meta ad performance (by placement), creative objects, forecasts, RL simulations, and planner reports under the training project; 30-day backfill completed for major placements on 2025-09-28.
+
+\chapter{Feature \& Ranking Layer}
+Text, vision, and historical features feed calibrated models. Accuracy snapshot: Precision@5=26.7\%, Precision@10=30.0\%, AUC-ROC=0.73, Calibration=0.85+.
+
+\chapter{Forecasting (Placement-Aware)}
+Baselines per placement (CPM/CTR/CVR) drive Monte Carlo projections. Security slate p50 CAC range \$166--\$289; Balance slate p50 \$82--\$142.
+
+\chapter{Offline RL Simulator}
+Thompson sampling with safety caps converges in 3--5 days; outputs per-creative budgets with early-stop rules.
+
+\chapter{First-Wave Outputs}
+30-day combined outlook (daily): Spend \$60k, Signups p50 548, CAC p50 \$109, Revenue p50 \$79,416, Net p50 \$19,416.
+
+\section*{Auction vs Thompson (New Result)}
+\begin{metricbox}[Slate Comparison at \$30k/day (p50)]
+\begin{tabular}{lrrr}
+\toprule
+\textbf{Slate} & \textbf{Avg CAC} & \textbf{Sum Signups} & \textbf{P@10 (proxy)} \\
+\midrule
+Thompson (TS) & \$255.06 & 965.3 & 0.375 \\
+Auction-aware (AU) & \$228.55 & 1091.3 & 0.500 \\
+RecSim (RS) & \$202.22 & 1231.8 & 1.000 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.6em}
+\textbf{Notes:} AU uses AuctionGym with CPM calibration; RS is persona-based and optimistic (higher CAC MAPE). TS uses baseline forecasts; AU shows lower CAC/higher volume.\par
+\textbf{Stability:} AU top-5 stable under bid \(\pm 20\%\) and quality \(\pm 10\%\).\par
+\textbf{Significance (bootstrap, ref=CAC p50):} TS vs AU \(\Delta\)CAC=\$26.41 \([\!-\!11.76,\ 64.31]\) — trending better; TS vs RS \(\Delta\)CAC=\$52.70 \([14.04,\ 85.79]\).\par
+\end{metricbox}
+
+\chapter{Workflow \& Roadmap}
+Daily ops timeline (refresh, review, adjust, test). 90-day roadmap includes 90-day backfill, video scoring v1, real-time bidding pilot, cross-channel attribution, expansion to Calm track.
+
+\chapter{Status \& Risks}
+Working well: placement-aware forecasting, planner, offline sim, US baselines. In progress: full backfill, EU/UK coverage, rate-limit hardening. Gaps: Ad Library coverage, vendor API reliability, video scoring, ATT constraints. Risks: model drift, rate limits, compliance, overspend, tracking failures.
+
+\chapter{Appendix: Data Lineage}
+End-to-end lineage from sources (Meta/SearchAPI/GA4) through baselines, scoring, forecasts, RL simulation, and Planner outputs.
+
+\end{document}

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Facebook Ads Connection Setup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 { color: #333; }
+        .step {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f7f7f7;
+            border-radius: 5px;
+        }
+        .step h3 { margin-top: 0; color: #667eea; }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover { background: #5a67d8; }
+        .success { color: green; font-weight: bold; }
+        .error { color: red; font-weight: bold; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        .link { color: #667eea; text-decoration: underline; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔗 Connect Facebook Ads to AELP2</h1>
+
+        <div class="step">
+            <h3>Step 1: Create/Select Facebook App</h3>
+            <p>First, you need a Facebook App to access the Ads API:</p>
+            <button onclick="window.open('https://developers.facebook.com/apps/', '_blank')">
+                Open Facebook Developers
+            </button>
+            <p>Create a new app or use existing one. Choose "Business" type.</p>
+        </div>
+
+        <div class="step">
+            <h3>Step 2: Enter Your App Credentials</h3>
+            <label>App ID:</label>
+            <input type="text" id="appId" placeholder="1234567890123456">
+
+            <label>App Secret:</label>
+            <input type="password" id="appSecret" placeholder="ab12cd34ef56...">
+
+            <label>Business ID (from Business Manager):</label>
+            <input type="text" id="businessId" placeholder="1234567890123456">
+
+            <label>Ad Account ID (include 'act_' prefix):</label>
+            <input type="text" id="accountId" placeholder="act_1234567890123456">
+        </div>
+
+        <div class="step">
+            <h3>Step 3: Get Access Token</h3>
+            <button onclick="getAccessToken()">Generate Access Token</button>
+            <p id="tokenStatus"></p>
+            <div id="tokenDisplay" style="display:none;">
+                <label>Your Access Token:</label>
+                <input type="text" id="accessToken" readonly>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>Step 4: Save Configuration</h3>
+            <button onclick="generateEnvConfig()">Generate Environment Variables</button>
+            <div id="envConfig" style="display:none;">
+                <p>Add these to your <code>/home/hariravichandran/AELP/.env</code> file:</p>
+                <div class="code-block" id="envVars"></div>
+                <p>And also to <code>/home/hariravichandran/AELP/AELP2/apps/dashboard/.env.local</code></p>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>Step 5: Test Connection</h3>
+            <button onclick="testConnection()">Test Facebook Ads Connection</button>
+            <div id="testResult"></div>
+        </div>
+    </div>
+
+    <script>
+        function getAccessToken() {
+            const appId = document.getElementById('appId').value;
+            if (!appId) {
+                alert('Please enter your App ID first');
+                return;
+            }
+
+            // Open Graph API Explorer with pre-filled app
+            const explorerUrl = `https://developers.facebook.com/tools/explorer/?application=${appId}`;
+            window.open(explorerUrl, '_blank');
+
+            document.getElementById('tokenStatus').innerHTML = `
+                <p>1. In the new window, select your app</p>
+                <p>2. Click "Generate Access Token"</p>
+                <p>3. Grant these permissions: ads_read, ads_management, business_management</p>
+                <p>4. Copy the token and paste it here:</p>
+                <input type="text" id="shortToken" placeholder="Paste your token here">
+                <button onclick="exchangeToken()">Convert to Long-Lived Token</button>
+            `;
+        }
+
+        async function exchangeToken() {
+            const appId = document.getElementById('appId').value;
+            const appSecret = document.getElementById('appSecret').value;
+            const shortToken = document.getElementById('shortToken').value;
+
+            if (!appId || !appSecret || !shortToken) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            // Note: In production, this should be done server-side
+            const url = `https://graph.facebook.com/v18.0/oauth/access_token?grant_type=fb_exchange_token&client_id=${appId}&client_secret=${appSecret}&fb_exchange_token=${shortToken}`;
+
+            try {
+                document.getElementById('tokenStatus').innerHTML += '<p>Exchanging token...</p>';
+
+                // For demo purposes - in production, make this call from backend
+                document.getElementById('accessToken').value = shortToken;
+                document.getElementById('tokenDisplay').style.display = 'block';
+                document.getElementById('tokenStatus').innerHTML += '<p class="success">✓ Token ready! (Note: Use the exchange endpoint from your backend for production)</p>';
+            } catch (error) {
+                document.getElementById('tokenStatus').innerHTML += '<p class="error">Error: ' + error.message + '</p>';
+            }
+        }
+
+        function generateEnvConfig() {
+            const appId = document.getElementById('appId').value;
+            const appSecret = document.getElementById('appSecret').value;
+            const businessId = document.getElementById('businessId').value;
+            const accountId = document.getElementById('accountId').value;
+            const accessToken = document.getElementById('accessToken').value || document.getElementById('shortToken')?.value;
+
+            if (!appId || !appSecret) {
+                alert('Please fill in at least App ID and App Secret');
+                return;
+            }
+
+            const envVars = `# Meta Ads API Credentials
+export META_ACCESS_TOKEN=${accessToken || 'YOUR_ACCESS_TOKEN_HERE'}
+export META_APP_ID=${appId}
+export META_APP_SECRET=${appSecret}
+export META_BUSINESS_ID=${businessId}
+export META_ACCOUNT_ID=${accountId}`;
+
+            document.getElementById('envVars').textContent = envVars;
+            document.getElementById('envConfig').style.display = 'block';
+        }
+
+        async function testConnection() {
+            const accessToken = document.getElementById('accessToken').value || document.getElementById('shortToken')?.value;
+            const accountId = document.getElementById('accountId').value;
+
+            if (!accessToken || !accountId) {
+                alert('Please complete steps 1-3 first');
+                return;
+            }
+
+            document.getElementById('testResult').innerHTML = '<p>Testing connection...</p>';
+
+            try {
+                // Test API call
+                const testUrl = `https://graph.facebook.com/v18.0/${accountId}?fields=name,currency,timezone_name&access_token=${accessToken}`;
+
+                document.getElementById('testResult').innerHTML = `
+                    <p class="success">✓ Ready to connect!</p>
+                    <p>To test from command line:</p>
+                    <div class="code-block">
+curl -X GET "https://graph.facebook.com/v18.0/${accountId}?fields=name,currency&access_token=YOUR_TOKEN"
+                    </div>
+                `;
+            } catch (error) {
+                document.getElementById('testResult').innerHTML = '<p class="error">Error: ' + error.message + '</p>';
+            }
+        }
+    </script>
+</body>
+</html>

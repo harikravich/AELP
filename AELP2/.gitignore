@@ -7,3 +7,31 @@ reports/vendor_scores.json
 reports/creative_objects/vendor_*.json
 reports/creative_features/creative_features.jsonl
 
+# Build artifacts & caches
+.next/
+dist/
+build/
+*.log
+
+# Local env & config (never commit)
+.env
+.env.*
+*.env
+*.env.*
+
+# Node & Python virtual envs (redundant with root .gitignore but kept for safety)
+node_modules/
+.venv/
+venv/
+
+# Heavy design assets (kept out of git)
+assets/
+
+# PIDs and local state
+*.pid
+*.pid.lock
+
+# Data dumps/raw
+data/
+raw/
+exports/

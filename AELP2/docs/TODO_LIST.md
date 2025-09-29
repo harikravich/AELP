@@ -1,0 +1,421 @@
+# Flattened TODO List
+
+- [Done] P0) Live Google Canary (Safe, Controlled Pilot) — Define success criteria (trust gates): Done
+- [Unknown] P0) Live Google Canary (Safe, Controlled Pilot) — Fidelity thresholds to pass pre‑pilot: ROAS MAPE ≤ 0.5, CAC MAPE ≤ 0.5, KS(win_rate vs impression_share) ≤ 0.35
+- [Unknown] P0) Live Google Canary (Safe, Controlled Pilot) — Pilot KPIs: ROAS vs holdout, CAC delta, spend adherence, zero policy violations
+- [Done] P0) Live Google Canary (Safe, Controlled Pilot) — Permissions & accounts: Done
+- [Unknown] P0) Live Google Canary (Safe, Controlled Pilot) — Confirm Google Ads developer token has Standard access for production
+- [Unknown] P0) Live Google Canary (Safe, Controlled Pilot) — Ensure OAuth refresh token is tied to MCC and can manage the target `customer_id`
+- [Unknown] P0) Live Google Canary (Safe, Controlled Pilot) — Identify 1–2 canary campaigns (`AELP2_GOOGLE_CANARY_CAMPAIGN_IDS`) and daily budget cap
+- [In Progress] P0) Live Google Canary (Safe, Controlled Pilot) — Guardrails & change budgets: In Progress
+- [Unknown] P0) Live Google Canary (Safe, Controlled Pilot) — Enforce per‑day bid/budget delta caps (default ±10%) and operation limits per run
+- [Unknown] P0) Live Google Canary (Safe, Controlled Pilot) — Emergency stop wired (`AELP2/scripts/emergency_stop.py`)
+- [In Progress] P0) Live Google Canary (Safe, Controlled Pilot) — Action applier (canary): In Progress
+- [Unknown] P0) Live Google Canary (Safe, Controlled Pilot) — Add script to read allowed campaign IDs and apply safe changes with audit logs
+- [Unknown] P0) Live Google Canary (Safe, Controlled Pilot) — Start with budgets only; bids later (ad group/criterion max CPC)
+- [Unknown] P0) Live Google Canary (Safe, Controlled Pilot) — Default to shadow; real mutations only with `AELP2_ALLOW_GOOGLE_MUTATIONS=1`
+- [Done] P0) Live Google Canary (Safe, Controlled Pilot) — Approvals/HITL: Done
+- [Unknown] P0) Live Google Canary (Safe, Controlled Pilot) — One‑click apply in dashboard for queued change sets; default require approval for structural/creative (added Control panel button → `/api/control/apply-canary`, gated by flags)
+- [In Progress] P0) Live Google Canary (Safe, Controlled Pilot) — Monitoring & rollback: In Progress
+- [Unknown] P0) Live Google Canary (Safe, Controlled Pilot) — Cloud Monitoring alerts (spend anomaly, policy errors, mutation failures)
+- [Unknown] P0) Live Google Canary (Safe, Controlled Pilot) — Rollback plan: script added (`AELP2/scripts/canary_rollback.py`) to write rollback intents; dashboard button added
+- [Unknown] P0) Live Google Canary (Safe, Controlled Pilot) — Canary monitoring pipeline added: `AELP2/pipelines/canary_monitoring.py` writes ops alerts for spend spikes
+- [Pending] P0) Live Google Canary (Safe, Controlled Pilot) — Timeline: Pending
+- [Unknown] P0) Live Google Canary (Safe, Controlled Pilot) — T‑0 pass fidelity gates, T‑1 day shadow comparison on canary set, T‑2 days ±5–10% budget deltas with daily review, ramp if KPIs hold
+- [Done] P0a) KPI Alignment & CAC Consistency (Do Before/With Canary) — Lock true KPI: Done
+- [Unknown] P0a) KPI Alignment & CAC Consistency (Do Before/With Canary) — Identify exact Google Ads conversion_action_ids for primary signup (or category, e.g., SIGN_UP) and set `AELP2_KPI_CONVERSION_ACTION_IDS`.
+- [Unknown] P0a) KPI Alignment & CAC Consistency (Do Before/With Canary) — Filter to `include_in_conversions_metric = TRUE` in KPI queries and views.
+- [Unknown] P0a) KPI Alignment & CAC Consistency (Do Before/With Canary) — Agree on recency window (e.g., last 7/14/30 days) for baseline KPIs.
+- [Done] P0a) KPI Alignment & CAC Consistency (Do Before/With Canary) — Update views/pipelines: Done
+- [Done] P0a) KPI Alignment & CAC Consistency (Do Before/With Canary) — `ads_kpi_daily` to use only the locked KPI IDs and include_in_conversions filter: Done (create_bq_views supports KPI-only; --dry_run verified)
+- [Unknown] P0a) KPI Alignment & CAC Consistency (Do Before/With Canary) — Ensure `reconcile_posthoc` and `fidelity_evaluation` consume KPI-only CAC/ROAS consistently.
+- [Unknown] P0a) KPI Alignment & CAC Consistency (Do Before/With Canary) — Continue to align ROAS basis to AOV/ltv via env (`AELP2_ROAS_BASIS`, `AELP2_AOV`/`AELP2_LTV`).
+- [Done] P0a) KPI Alignment & CAC Consistency (Do Before/With Canary) — RL consistency: Done
+- [Unknown] P0a) KPI Alignment & CAC Consistency (Do Before/With Canary) — Ensure in-run reward maps 1:1 to KPI (AOV-aligned revenue) and GA4 lag-aware windows (post-hoc reconciliation path added).
+- [Unknown] P0a) KPI Alignment & CAC Consistency (Do Before/With Canary) — Regression check implemented: `AELP2/pipelines/kpi_consistency_check.py` writes daily diffs to `kpi_consistency_checks`.
+- [Done] P0a) KPI Alignment & CAC Consistency (Do Before/With Canary) — Cross‑check adapter KPIs vs BigQuery Ads aggregates: Done (`kpi_crosscheck.py` → `kpi_crosscheck_daily`)
+- [Done] P0a) KPI Alignment & CAC Consistency (Do Before/With Canary) — Verification scripts: Done
+- [Unknown] P0a) KPI Alignment & CAC Consistency (Do Before/With Canary) — `AELP2/scripts/assess_headroom.py` for baseline CAC/ROAS, tail shares, and top offenders.
+- [Unknown] P0a) KPI Alignment & CAC Consistency (Do Before/With Canary) — Add KPI action introspection query (include_in_conversions, category) to ops runbook.
+- [Done] 1) Data Ingestion & Telemetry — Ads → BigQuery loader (campaign metrics incl. impression_share): Done
+- [Done] 1) Data Ingestion & Telemetry — GA4 aggregates → BigQuery loader (Data API, daily aggregates): Done
+- [Pending] 1) Data Ingestion & Telemetry — Note: VM SA currently lacks GA4 analytics.readonly scope → grant property access to SA or provide OAuth refresh token (Pending). See AELP2/docs/GA4_AUTH_SETUP.md
+- [Done] 1) Data Ingestion & Telemetry — Calibration reference builder (from Ads in BQ): Done
+- [Done] 1) Data Ingestion & Telemetry — Episode/safety telemetry → BigQuery: Done
+- [Done] 1) Data Ingestion & Telemetry — Bidding events telemetry → BigQuery (for Auctions Monitor): Done
+- [Unknown] 1) Data Ingestion & Telemetry — `bidding_events` table + writer (guarded by `AELP2_BIDDING_EVENTS_ENABLE=1`)
+- [Unknown] 1) Data Ingestion & Telemetry — `bidding_events_per_minute` view (auto-created when table exists)
+- [In Progress] 1) Data Ingestion & Telemetry — Recent aggregates + replay APIs in dashboard: In Progress
+- [Done] 1) Data Ingestion & Telemetry — Ads conversion actions loader (definitions → ads_conversion_actions): Done
+- [Done] 1) Data Ingestion & Telemetry — Ads ad performance loader (creatives → ads_ad_performance): Done
+- [Done] 1) Data Ingestion & Telemetry — Ads assets ingestion (assets → ads_assets): Done (stub runner added with --dry_run; BQ table ensure idempotent)
+- [Done] 1) Data Ingestion & Telemetry — MCC coordinator script (`AELP2/scripts/run_ads_ingestion.sh`): Done
+- [Done] 1) Data Ingestion & Telemetry — Ads account discovery utility (`google_ads_discover_accounts.py`): Done
+- [Done] 1) Data Ingestion & Telemetry — Ads (all accounts under MCC): Done
+- [Unknown] 1) Data Ingestion & Telemetry — Enumerate child client accounts via MCC; iterate loads per `customer_id`
+- [Unknown] 1) Data Ingestion & Telemetry — Tables to produce (date‑partitioned):
+- [Unknown] 1) Data Ingestion & Telemetry — `ads_campaign_performance` (exists)
+- [Unknown] 1) Data Ingestion & Telemetry — `ads_ad_group_performance`, `ads_ad_performance`
+- [Unknown] 1) Data Ingestion & Telemetry — `ads_keyword_performance`, `ads_search_terms`
+- [Unknown] 1) Data Ingestion & Telemetry — `ads_geo_device_performance`
+- [Unknown] 1) Data Ingestion & Telemetry — `ads_conversion_actions`
+- [Unknown] 1) Data Ingestion & Telemetry — Columns: include `customer_id`; redact free‑text (campaign/ad names, search terms) with SHA‑256 hashes
+- [In Progress] 1) Data Ingestion & Telemetry — Backfill 3 years (respect API quotas); incremental daily thereafter: In Progress (script added)
+- [Unknown] 1) Data Ingestion & Telemetry — DDL + indexes in DATA_CONTRACTS.md; IAM least privilege
+- [Done] 1) Data Ingestion & Telemetry — GA4 (full data): Done
+- [Unknown] 1) Data Ingestion & Telemetry — Preferred: Enable native GA4→BigQuery export for property `properties/308028264` to `analytics_308028264`
+- [Unknown] 1) Data Ingestion & Telemetry — Create staging views in `${BIGQUERY_TRAINING_DATASET}` for sessions/events/conversions
+- [Unknown] 1) Data Ingestion & Telemetry — Continue Data API aggregates until export is active; backfill once export available
+- [In Progress] 1) Data Ingestion & Telemetry — Google Ads Creatives & Assets: In Progress
+- [Unknown] 1) Data Ingestion & Telemetry — Ingest Ads Assets (text/image/video/media bundle) into `${BIGQUERY_TRAINING_DATASET}.ads_assets` with fields: `asset_id, type, text, youtube_id, image_url/full_size, policy_topics, created_at`.
+- [Unknown] 1) Data Ingestion & Telemetry — Ingest Ad↔Asset links into `${BIGQUERY_TRAINING_DATASET}.ads_ad_asset_links` with `ad_id, asset_id, field_type, pinned, performance_label`.
+- [Unknown] 1) Data Ingestion & Telemetry — Optional: mirror images to GCS (`gs://${GOOGLE_CLOUD_PROJECT}-aelp2-assets/...`) and store `gcs_uri`; respect TOS and use only advertiser‑owned assets.
+- [Unknown] 1) Data Ingestion & Telemetry — Compute creative embeddings (CLIP/Vertex AI Multimodal) → `${BIGQUERY_TRAINING_DATASET}.creative_embeddings` with vectors + text features; join with performance for modeling.
+- [Pending] AI Creative Generation & Experimentation (New) — Data & Storage: Pending
+- [Unknown] AI Creative Generation & Experimentation (New) — Define tables: `${BIGQUERY_TRAINING_DATASET}.ab_experiments` (experiment_id, variant_id, platform, campaign_id, ad_group_id, start/end, status, metrics), `${BIGQUERY_TRAINING_DATASET}.creative_variants` (variant_id, source_asset_ids, gen_method, prompts, policy_flags, embedding_ref), `${BIGQUERY_TRAINING_DATASET}.creative_embeddings` (vector, text_features, model_info).
+- [Unknown] AI Creative Generation & Experimentation (New) — Asset store: optional GCS bucket for generated images/video + metadata (rights/usage, expiry), with references in BQ.
+- [Pending] AI Creative Generation & Experimentation (New) — Generation Pipeline (LLM/Multimodal): Pending
+- [Unknown] AI Creative Generation & Experimentation (New) — Copy: LLM prompt templates with brand constraints; controls for tone/length; supports human guidance and self‑guided modes.
+- [Unknown] AI Creative Generation & Experimentation (New) — Visual: image/video generation via Vertex AI / external model with safety filters; auto‑resize/crop for platform specs.
+- [Unknown] AI Creative Generation & Experimentation (New) — Policy linting: toxicity, restricted topics, IP/rights checks; surface issues in UI; block or require approval.
+- [Pending] AI Creative Generation & Experimentation (New) — Workflow & Safety: Pending
+- [Unknown] AI Creative Generation & Experimentation (New) — Propose → lint → human review (HITL) → approve → shadow publish as experiment → measure → promote/demote.
+- [Unknown] AI Creative Generation & Experimentation (New) — Approvals queue in dashboard (audit to `safety_events`); quotas and guardrails per platform.
+- [Pending] AI Creative Generation & Experimentation (New) — Experiment Orchestration: Pending
+- [Unknown] AI Creative Generation & Experimentation (New) — Unified A/B interface: create variants, assign traffic, schedule, and stop low performers automatically.
+- [Unknown] AI Creative Generation & Experimentation (New) — Bandit/subagent loop: allow exploration under spend/variance constraints; write results to `ab_experiments` and feed RL features.
+- [Pending] AI Creative Generation & Experimentation (New) — Dashboard Creative Studio: Pending
+- [Unknown] AI Creative Generation & Experimentation (New) — Import/visualize creatives (thumbnails, previews, policy flags, performance badges).
+- [Unknown] AI Creative Generation & Experimentation (New) — Generative tab: side‑by‑side diff, prompt controls, variant library, “promote to live” with approvals.
+- [Unknown] AI Creative Generation & Experimentation (New) — Cross‑platform push: field mapping per platform; compatibility checks; shadow mode default.
+- [Pending] AI Creative Generation & Experimentation (New) — RL/Training Integration: Pending
+- [Unknown] AI Creative Generation & Experimentation (New) — Use creative embeddings and variant IDs as context features in training episodes.
+- [Unknown] AI Creative Generation & Experimentation (New) — Add creative metrics to reconciliation/fidelity slices; track lift attribution to variants.
+- [Done] 2) Calibration & Validation — Auction calibration (target win‑rate 10–30%): Done (achieved ~23.4%)
+- [In Progress] 2) Calibration & Validation — Reference validation gates (KS/MSE) + thresholds: In Progress (relaxed to KS=0.35, MSE=1.5)
+- [Pending] 2) Calibration & Validation — Stratified references (by channel/device) if gates fail: Pending
+- [Pending] 2) Calibration & Validation — Auto‑recalibration on drift; write safety events on failure: Pending
+- [Done] 2) Calibration & Validation — Floor inference fix (use first winning bid ≥ target_min; fallback to any win / max probe): Done
+- [Done] 2) Calibration & Validation — Dynamic bid floor auto‑tuner to hit target win‑rate (adjust `AELP2_CALIBRATION_FLOOR_RATIO` based on recent win‑rate bands): Done
+- [Pending] 2) Calibration & Validation — BQ Tables: Pending
+- [Unknown] 2) Calibration & Validation — `${BIGQUERY_TRAINING_DATASET}.bidding_events` (timestamp, session_id, episode_id, step, channel, segment, device, context_hash, our_bid, floor_applied, target_wr_band, win, price_paid, competitor_top_bid, q_value, epsilon, safety_flags, calibration_floor_ratio, decision_meta JSON)
+- [Unknown] 2) Calibration & Validation — `${BIGQUERY_TRAINING_DATASET}.ads_auction_insights` (date, customer_id, campaign_id, ad_group_id, metrics from Auction Insights API: overlap_rate, position_above_rate, top_of_page_rate, abs_top_of_page_rate, outranking_share, domain)
+- [Pending] 2) Calibration & Validation — Views: Pending
+- [Unknown] 2) Calibration & Validation — `bidding_events_minutely` (per minute aggregates: win_rate, avg_bid, price_paid, floor, epsilon)
+- [Unknown] 2) Calibration & Validation — `bidding_events_by_channel_device` (win_rate, spend, price_paid distribution by channel/device)
+- [Unknown] 2) Calibration & Validation — `calibration_history_daily` (floor ratio, target bands, KS/MSE scores)
+- [Pending] 2) Calibration & Validation — Streaming: Pending
+- [Unknown] 2) Calibration & Validation — Optional Pub/Sub path to stream `bidding_events` with Cloud Run subscriber to BQ; fallback to batch inserts during training.
+- [Pending] 2) Calibration & Validation — Safety & Gates: Pending
+- [Unknown] 2) Calibration & Validation — Write gate violations + guard activations with event links into safety_events; cross-link in dashboard.
+- [Done] 18) GA4 Attribution Integration (Lag-Aware) — GA4 aggregates loader (Data API) and views: Done (runner added)
+- [Done] 18) GA4 Attribution Integration (Lag-Aware) — GA4 native export (events) enablement and staging views: Done (staging views auto-created via create_bq_views when `GA4_EXPORT_DATASET` set)
+- [Done] 18) GA4 Attribution Integration (Lag-Aware) — GA4→Attribution importer: Done (`AELP2/pipelines/ga4_lagged_attribution.py` produces `ga4_lagged_attribution` → `ga4_lagged_daily`)
+- [Done] 18) GA4 Attribution Integration (Lag-Aware) — Post‑hoc reconciliation: Done (`AELP2/pipelines/training_posthoc_reconciliation.py` writes `training_episodes_posthoc` with lag‑aware CAC/ROAS)
+- [In Progress] 18) GA4 Attribution Integration (Lag-Aware) — Fidelity: In Progress (fidelity_evaluation uses GA4 context; add KS on lag distributions later)
+- [Done] 3) Orchestrator & Safety/HITL — Orchestrator CLI + env config (episodes/steps/budget): Done
+- [Done] 3) Orchestrator & Safety/HITL — Enforce real auctions + inject outcomes: Done
+- [Done] 3) Orchestrator & Safety/HITL — Gates: min win‑rate, CAC, ROAS, spend‑velocity: Done
+- [Done] 3) Orchestrator & Safety/HITL — HITL and policy checks (approval lifecycle, safety events): Done
+- [Done] 3) Orchestrator & Safety/HITL — BQ soft‑fail (train continues; logs guidance): Done
+- [Done] 3) Orchestrator & Safety/HITL — Stable user_id for journeys (consistent impressions→conversions linking): Done
+- [Done] 3) Orchestrator & Safety/HITL — HITL approval controls for bids/warmup via env (min step, on‑gate‑fail‑for‑bids): Done
+- [Done] 3) Orchestrator & Safety/HITL — BQ writer schema reconciliation + NaN/Infinity sanitization for telemetry: Done
+- [Done] 3) Orchestrator & Safety/HITL — Adaptive HITL throttling (reduce approval volume during failing periods; restore on recovery): Done
+- [Done] 4) Creative Learning & AB Testing — Detect `creative_change` actions; enforce policy + HITL; log AB: Done
+- [Pending] 4) Creative Learning & AB Testing — Google Ads adapter: real creative updates behind `ALLOW_REAL_CREATIVE=1`: Pending
+- [Pending] 4) Creative Learning & AB Testing — Creative bandit head (UCB/Thompson per segment/channel): Pending
+- [Pending] 4) Creative Learning & AB Testing — AB dashboards/queries (lift, CTR/CVR/ROAS, CAC impact): Pending
+- [Pending] 5) Subagents (Parallel) — Creative Ideation Subagent (suggest, score, HITL): Pending
+- [Done] 5) Subagents (Parallel) — Budget Rebalancer Subagent (cross‑channel/segment shift): Done (shadow + guardrails/quotas)
+- [Pending] 5) Subagents (Parallel) — Targeting Discovery Subagent (queries/audiences → HITL): Pending
+- [Done] 5) Subagents (Parallel) — Calibration/Drift Monitor Subagent (KS/MSE monitor, trigger): Done (shadow proposals)
+- [Pending] 5) Subagents (Parallel) — Attribution Diagnostics Subagent (AOV vs LTV, lag windows): Pending
+- [Pending] 5) Subagents (Parallel) — Decide architecture: Parallel subagents orchestrator vs Mixture‑of‑Experts (MoE) head inside RL policy: Pending
+- [Pending] 5) Subagents (Parallel) — Design doc: scheduling, concurrency model, message schema, backpressure, and HITL gates: Pending
+- [Done] 5) Subagents (Parallel) — Implement base subagent orchestrator (flags, metrics, safety hooks, BQ telemetry): Done
+- [In Progress] 5) Subagents (Parallel) — Resource guards: per‑subagent quotas, rate limits, sandboxing: In Progress (guardrails/quotas added)
+- [Pending] 5) Subagents (Parallel) — Training interplay: off‑policy data ingestion from subagents, reward shaping boundaries: Pending
+- [Unknown] 5) Subagents (Parallel) — Map existing AELP creative selector/ideation into AELP2 via adapters (no legacy edits)
+- [Unknown] 5) Subagents (Parallel) — Use existing budget pacer for Budget Rebalancer subagent proposals (HITL enforced)
+- [Unknown] 5) Subagents (Parallel) — Reuse discovery engine outputs (segments/keywords) for Targeting Discovery proposals
+- [Unknown] 5) Subagents (Parallel) — Integrate convergence monitor hooks for stability alerts to safety_events
+- [Done] 5) Subagents (Parallel) — Subagent orchestrator skeleton added: `AELP2/core/agents/subagent_orchestrator.py` (flags, safety/HITL, BQ telemetry): Done
+- [In Progress] 5) Subagents (Parallel) — Architecture doc added: `AELP2/docs/SUBAGENTS_ARCHITECTURE.md`: In Progress
+- [Done] 5) Subagents (Parallel) — Subagent orchestrator wired into training loop (flag‑gated): Done
+- [Done] 5) Subagents (Parallel) — Drift Monitor subagent (prototype; shadow): Done (shadow proposals)
+- [Done] 5) Subagents (Parallel) — Wire orchestrator into training loop (flag‑gated): Done
+- [Unknown] 5) Subagents (Parallel) — Call `SubagentOrchestrator.run_once(state, episode_id, step, metrics)` every `AELP2_SUBAGENTS_CADENCE_STEPS` steps
+- [Unknown] 5) Subagents (Parallel) — Flags: `AELP2_SUBAGENTS_ENABLE=1`, `AELP2_SUBAGENTS_LIST`, `AELP2_SUBAGENTS_SHADOW=1`
+- [Pending] 5) Subagents (Parallel) — Implement Drift Monitor subagent: Pending
+- [Unknown] 5) Subagents (Parallel) — Inputs: `training_episodes`, `fidelity_evaluations`, calibration artifacts
+- [Unknown] 5) Subagents (Parallel) — Outputs: safety events + optional recalibration proposals (HITL)
+- [Pending] 5) Subagents (Parallel) — Implement Budget Rebalancer subagent: Pending
+- [Unknown] 5) Subagents (Parallel) — Inputs: daily CAC/ROAS by campaign/segment/device (BQ views)
+- [Unknown] 5) Subagents (Parallel) — Guardrails: max delta %, spend caps, pacer integration; HITL required
+- [Pending] 5) Subagents (Parallel) — Implement Creative Ideation subagent: Pending
+- [Unknown] 5) Subagents (Parallel) — Propose variant creatives per segment/device; AB‑log; policy checks + HITL; no live until `ALLOW_REAL_CREATIVE=1`
+- [Pending] 5) Subagents (Parallel) — Implement Targeting Discovery subagent: Pending
+- [Unknown] 5) Subagents (Parallel) — Surface new keywords/audiences/negatives from Ads tables; proposals to HITL
+- [Pending] 5) Subagents (Parallel) — BQ views for subagents: Pending
+- [Unknown] 5) Subagents (Parallel) — `training_episodes_daily` (steps, spend, revenue, conversions, win_rate)
+- [Unknown] 5) Subagents (Parallel) — `ads_campaign_daily` (impressions, clicks, cost, conversions, value, ctr, cvr, cac, roas, impression_share)
+- [Unknown] 5) Subagents (Parallel) — Optional slices by segment/device/channel for faster reads
+- [Unknown] 5) Subagents (Parallel) — Add rate limits/quotas per subagent (env)
+- [Done] 6) Security Hardening — Redact sensitive fields at ingest (campaign names hashed): Done
+- [Pending] 6) Security Hardening — Rotate any committed secrets (Ads OAuth, tokens): Pending (urgent)
+- [In Progress] 6) Security Hardening — Least‑privilege BigQuery IAM (dataset‑level roles): In Progress (audit stub writes to `iam_audit`)
+- [In Progress] 6) Security Hardening — VPC Service Controls perimeter for BigQuery (optional, recommended): In Progress (tracked in `iam_audit` notes)
+- [Pending] 6) Security Hardening — Enable Admin Activity + Data Access logs: Pending
+- [In Progress] 7) Quality Signal & Gates — Add quality metric proxy (trial→paid, 7‑day retention) to telemetry: In Progress (`quality_signal_daily.py` writes stub)
+- [Pending] 7) Quality Signal & Gates — Optional soft‑gate on quality score with alerts: Pending
+- [In Progress] 8) Simulation Fidelity vs IRL (Requested) — Predictive evaluation pipeline: In Progress
+- [Unknown] 8) Simulation Fidelity vs IRL (Requested) — Baseline evaluation script added: `AELP2/pipelines/fidelity_evaluation.py`
+- [Unknown] 8) Simulation Fidelity vs IRL (Requested) — Compares RL telemetry (training_episodes) vs Ads (campaign performance) across dates
+- [Unknown] 8) Simulation Fidelity vs IRL (Requested) — Metrics: MAPE/ RMSE for ROAS & CAC; KS for win‑rate vs impression_share
+- [Unknown] 8) Simulation Fidelity vs IRL (Requested) — Writes results to `${BIGQUERY_TRAINING_DATASET}.fidelity_evaluations`
+- [Unknown] 8) Simulation Fidelity vs IRL (Requested) — Next: add GA4 aggregates to evaluation and dashboards (Looker)
+- [In Progress] 9) Shadow‑Readiness & KPI Verification — Google Ads adapter KPI mapping verification (shadow mode): In Progress (unit mapping test added)
+- [Pending] 9) Shadow‑Readiness & KPI Verification — Cross‑check adapter KPIs vs BigQuery Ads aggregates: Pending
+- [Unknown] 10) Gaps For True Media Buying (Assessment → Action Items) — Cross‑campaign portfolio optimizer: Stub added (`portfolio_optimizer.py`) → `portfolio_allocations`
+- [Unknown] 10) Gaps For True Media Buying (Assessment → Action Items) — Bid landscape modeling: Stub added (`bid_landscape_modeling.py`) → `bid_landscape_curves`
+- [Unknown] 10) Gaps For True Media Buying (Assessment → Action Items) — Competitive intelligence: Stub created table (`competitive_intel_ingest.py`) → `ads_auction_insights`
+- [Unknown] 10) Gaps For True Media Buying (Assessment → Action Items) — Dayparting optimizer: Stub added (`dayparting_optimizer.py`) → `dayparting_schedules`
+- [Done] 10) Gaps For True Media Buying (Assessment → Action Items) — Creative testing framework (variant generation, AB logging, HITL approvals): Done (`creative_ab_planner.py`, AB table/API/panel)
+- [Done] 10) Gaps For True Media Buying (Assessment → Action Items) — Ad copy optimization loop (headline/description scoring; policy‑safe): Done (`copy_optimizer_stub.py` → `copy_suggestions`; dashboard panel)
+- [Done] 10) Gaps For True Media Buying (Assessment → Action Items) — Creative fatigue detection (CTR/CVR decay alerts, rotation proposals): Done (`creative_fatigue_alerts.py`) → `creative_fatigue_alerts`
+- [Done] 10) Gaps For True Media Buying (Assessment → Action Items) — Landing page A/B hooks (UTM cohorting, GA4 goals): Done (`lp_ab_hooks_stub.py` → `lp_ab_candidates`; dashboard panel)
+- [Done] 10) Gaps For True Media Buying (Assessment → Action Items) — Audience expansion tooling (keyword and audience discovery from BQ): Done (`audience_expansion.py` → `audience_expansion_candidates`)
+- [Done] 10) Gaps For True Media Buying (Assessment → Action Items) — Integrate Google Ads Recommendations API for quick wins (assets/keywords/budget): Done (scanner enhanced; logs to `platform_skeletons` and `recs_quickwins` when BQ available; safe fallback)
+- [Done] 10) Gaps For True Media Buying (Assessment → Action Items) — Reach Planner estimates for YouTube; planner constraints surfaced to dashboard: Done (`youtube_reach_planner.py` + dashboard)
+- [Unknown] 11) RL Lab Integration (Policy Hints Only) — Define `policy_hints` BQ schema and writer (exploration sets, budget tilts, opportunity candidates)
+- [Done] 11) RL Lab Integration (Policy Hints Only) — Status: Done (`policy_hints_writer.py`)
+- [Unknown] 11) RL Lab Integration (Policy Hints Only) — Add RL replay/off‑policy eval pipeline; compare hints vs realized outcomes on dashboard
+- [Done] 11) RL Lab Integration (Policy Hints Only) — Status: Done (`offpolicy_eval.py` + dashboard API/panel)
+- [Unknown] 11) RL Lab Integration (Policy Hints Only) — HITL workflow: allow promotion of selected hints into shadow proposals (no direct control)
+- [Done] 11) RL Lab Integration (Policy Hints Only) — Status: Done (`hints_to_proposals.py` writes to `bandit_change_proposals`)
+- [Unknown] 11) RL Lab Integration (Policy Hints Only) — Lookalike/seed audience builder (when platforms allow; start with Google signals proxies)
+- [Unknown] 11) RL Lab Integration (Policy Hints Only) — Intent signal ingestion (site search, on‑page events → segments)
+- [Unknown] 11) RL Lab Integration (Policy Hints Only) — Cross‑device graph lift usage (identity resolver → segmenting only; no PII stored)
+- [Unknown] 11) RL Lab Integration (Policy Hints Only) — Real‑time budget pacing subagent (intra‑day guardrails; tiny caps): Stub added (`realtime_budget_pacer.py`) → `budget_pacing_proposals`
+- [Unknown] 11) RL Lab Integration (Policy Hints Only) — Optional automated rule engine (policy‑safe, HITL required for structural changes): Stub added (`rule_engine.py`) → `rule_engine_actions`
+- [Unknown] 11) RL Lab Integration (Policy Hints Only) — Live bid submission phase (ad‑group/keyword max CPC): Proposals only, HITL required for live (panel present)
+- [Unknown] 11) RL Lab Integration (Policy Hints Only) — Streamed monitoring: Auctions minutely panel and API added
+- [Unknown] 11) RL Lab Integration (Policy Hints Only) — Immediate: Deploy budgets‑only canary on existing campaigns (shadow → tiny live)
+- [Unknown] 11) RL Lab Integration (Policy Hints Only) — 30 days: Add portfolio optimizer + creative testing + audience discovery
+- [Unknown] 11) RL Lab Integration (Policy Hints Only) — 90 days: Add real‑time pacing + optional live bid edits; expand to Meta/TikTok
+- [Unknown] 11) RL Lab Integration (Policy Hints Only) — Keep all subagents behind HITL and daily caps; log to BQ with rollback data
+- [Unknown] 11) RL Lab Integration (Policy Hints Only) — Prefer GA4 Sandbox for measurement; avoid Ads conversion tagging until legal approves
+- [In Progress] 11) AELP Migration & Refactor (Endgame) — Inventory all legacy AELP modules currently used at runtime (env, agent helpers, discovery, budget pacer, attribution, auction wrappers): In Progress
+- [In Progress] 11) AELP Migration & Refactor (Endgame) — Copy and refactor into AELP2 namespaces (no absolute paths, no hardcoding): In Progress
+- [Pending] 11) AELP Migration & Refactor (Endgame) — Replace imports across AELP2 to use refactored modules; remove legacy path hacks: Pending
+- [Pending] 11) AELP Migration & Refactor (Endgame) — Add acceptance tests to validate parity (episodes, win‑rate, CAC/ROAS, safety telemetry): Pending
+- [Pending] 11) AELP Migration & Refactor (Endgame) — Freeze legacy usage and document deprecation plan: Pending
+- [Done] 11) AELP Migration & Refactor (Endgame) — `AELP2/core/optimization/budget_optimizer.py` (GAELP budget optimizer): Done
+- [Done] 11) AELP Migration & Refactor (Endgame) — `AELP2/core/explainability/bid_explainability_system.py` (bid explainability + wrapper): Done
+- [Done] 11) AELP Migration & Refactor (Endgame) — `AELP2/core/monitoring/gaelp_success_criteria_monitor.py`: Done
+- [Done] 11) AELP Migration & Refactor (Endgame) — `AELP2/core/monitoring/convergence_monitoring_integration_demo.py`: Done
+- [In Progress] 11) AELP Migration & Refactor (Endgame) — Wire budget optimizer + success/convergence monitors behind env flags; no prod behavior change: In Progress
+- [Pending] 11) AELP Migration & Refactor (Endgame) — Backend selector flag `AELP2_SIM_BACKEND={auctiongym|enhanced|recsim}` default `auctiongym`: Pending
+- [In Progress] 12) Multi‑Platform Plumbing (Adapters & Orchestrator) — Validate adapter interface sufficiency for non‑Google platforms (Meta, TikTok, LinkedIn): In Progress
+- [In Progress] 12) Multi‑Platform Plumbing (Adapters & Orchestrator) — Add stub adapters (shadow‑only) with health checks + KPI normalization tests: In Progress (Meta/TikTok/LinkedIn stubs added)
+- [In Progress] 12) Multi‑Platform Plumbing (Adapters & Orchestrator) — Define cross‑platform KPI mappings and budget broker (per‑platform spend guards + consolidated safety gates): In Progress (`core/orchestration/budget_broker.py` writes `broker_allocations`)
+- [Pending] 12) Multi‑Platform Plumbing (Adapters & Orchestrator) — Extend orchestrator context/action schemas to be platform‑agnostic; add per‑platform HITL policies: Pending
+- [Done] 12) Multi‑Platform Plumbing (Adapters & Orchestrator) — Author PLATFORM_PLUMBING.md design doc and rollout plan: Done (initial spec)
+- [Done] 10) Dashboards & Runbook — Queries for episodes, safety, CAC/ROAS/win‑rate, epsilon: Done (docs/queries.md)
+- [In Progress] 10) Dashboards & Runbook — Dashboard Suite (Next.js app): In Progress (see `AELP2/docs/DASHBOARD_SUITE.md`, `AELP2/docs/FRONTEND_STACK.md`)
+- [Pending] 10) Dashboards & Runbook — Creative Center (creatives library, approvals/HITL, AB hub; import ads; AI variants in shadow): Pending
+- [Pending] 10) Dashboards & Runbook — Training Center (episodes/metrics, calibration/fidelity, safety timeline, subagents view): Pending
+- [Pending] 10) Dashboards & Runbook — Training Center Learning Avatar (optional visual): Pending
+- [Unknown] 10) Dashboards & Runbook — Implement 2D animated avatar mapping win-rate/CAC/ROAS/epsilon/safety/fidelity to visual cues (toggle)
+- [Unknown] 10) Dashboards & Runbook — Prototype in Streamlit (Plotly/Canvas), later 3D (Three.js) if value > complexity
+- [Pending] 10) Dashboards & Runbook — Exec Dashboard (KPIs: CAC/ROAS/spend/win‑rate/impression share; trends): Pending
+- [In Progress] 10) Dashboards & Runbook — Auctions Monitor v1 (win‑rate gauge, price‑paid trend, bid histogram, replay inspector): In Progress
+- [In Progress] 10) Dashboards & Runbook — Page + API routes added; wired to `bidding_events_per_minute` and `bidding_events`: In Progress
+- [Unknown] 10) Dashboards & Runbook — Requires training with `AELP2_BIDDING_EVENTS_ENABLE=1` to populate data
+- [Done] 10) Dashboards & Runbook — BQ Views: `training_episodes_daily`, `ads_campaign_daily`, `subagents_daily`, `ga4_daily` (if present): Done; slices: Pending
+- [Done] 10) Dashboards & Runbook — Dataset switcher (Prod/Sandbox) + write safety (block writes on prod): Done
+- [Done] 10) Dashboards & Runbook — Sandbox control surface (safe buttons; dataset guard): Done (`docs/SANDBOX_CONTROL_SURFACE.md`)
+- [Done] 10) Dashboards & Runbook — Test account ingestion flow: Done (`docs/TEST_ACCOUNT_INGEST.md` + /api/control/ads-ingest)
+- [Done] 10) Dashboards & Runbook — Cloud Build from repo root (`AELP2/apps/dashboard/cloudbuild.yaml`) + `.gcloudignore` to shrink upload: Done
+- [Done] 10) Dashboards & Runbook — Service separation: deploy to `aelp2-dashboard-hari` (Sandbox) and `aelp2-dashboard-rnd` (R&D) only: Done (guarded in script)
+- [Pending] 10) Dashboards & Runbook — UX/Stack: Select FE stack (Lovable.dev/React + Three.js preferred), API layer, and Auth (Google Workspace SSO): Pending
+- [Pending] 10) Dashboards & Runbook — Live Updates: WebSocket/SSE channel for near‑real‑time episode metrics and safety events: Pending
+- [Pending] 10) Dashboards & Runbook — Approvals Console: Dedicated HITL queue with filters, bulk actions, audit trail: Pending
+- [Pending] 10) Dashboards & Runbook — Safety Heatmap: Gate violations by segment/channel/device, drill‑downs: Pending
+- [Pending] 10) Dashboards & Runbook — Data Freshness: Pipeline health + table freshness indicators and SLAs: Pending
+- [Pending] 10) Dashboards & Runbook — Budget Pacer View: Spend velocity vs caps/targets, anomalies, suggested rebalances: Pending
+- [Pending] 10) Dashboards & Runbook — Attribution Flow: Sankey of touchpoints→conversions with model selection (time‑decay/position/data‑driven): Pending
+- [Pending] 10) Dashboards & Runbook — Creative Diff & Policy Linting: Side‑by‑side, policy highlights, toxicity/sensitive‑term scan: Pending
+- [Pending] 10) Dashboards & Runbook — Anomaly Alerts: ROAS/CAC/win‑rate anomalies with suggested actions (subagent proposals): Pending
+- [In Progress] 10) Dashboards & Runbook — Runbook (ops playbook, failure modes, escalation): In Progress (nightly jobs + emergency stop documented)
+- [Pending] 10) Dashboards & Runbook — Conversational Copilot (LLM): Pending
+- [Unknown] 10) Dashboards & Runbook — Natural-language assistant embedded in Creative Studio and Landing Labs to: create/edit creatives, generate variants (text/video), set up A/B tests, publish to platforms (shadow -> approved live), and summarize performance.
+- [Unknown] 10) Dashboards & Runbook — Intent routing to backend actions (e.g., "create landing variant with headline X", "launch A/B test on Google Ads", "refresh GA4 lag-aware attribution").
+- [Unknown] 10) Dashboards & Runbook — Guardrails: approvals/HITL, policy lint, and audit to `safety_events`; dry-run by default, real mutations only with approvals and configured adapters.
+- [Unknown] 10) Dashboards & Runbook — Demo mode toggle: synthetic outputs allowed without external API calls; clear privacy/consent messaging.
+- [Pending] 10) Dashboards & Runbook — Platform Placeholders & Connectors: Pending
+- [Unknown] 10) Dashboards & Runbook — Add platform switcher and placeholders for Meta, TikTok, LinkedIn, Snap, Reddit, Pinterest, YouTube, X/Twitter in Exec + Creative views.
+- [Unknown] 10) Dashboards & Runbook — OAuth/keys connection page per platform (least privilege); secrets in Secret Manager; status badges in UI.
+- [Unknown] 10) Dashboards & Runbook — Unified publish API across platforms for creatives and A/B tests; start in shadow mode.
+- [Pending] 10) Dashboards & Runbook — Landing‑Driven RL Loop: Pending
+- [Unknown] 10) Dashboards & Runbook — Instrument Landing Labs events (consented) and feed to RL reward/attribution (AOV/LTV aligned); ensure GA4 events and lag-aware credit reflect landing conversions.
+- [Unknown] 10) Dashboards & Runbook — Treat landing A/B variants as context features in episodes; log to `training_episodes` and `ab_experiments`.
+- [Unknown] 10) Dashboards & Runbook — Privacy first: consented APIs only; no scraping; demo mode for showcases.
+- [Pending] 10) Dashboards & Runbook — Dashboard Control Surface (Marketer‑friendly): Pending
+- [Unknown] 10) Dashboards & Runbook — Expose common AELP/AELP2 actions via UI (no CLI): lock KPI IDs, refresh views, run Ads ingest/backfill, run GA4 lag-aware attribution, start stabilization training, run KPI-only fidelity, enable/disable canary, adjust budget caps, emergency stop (with confirmation + audit).
+- [Unknown] 10) Dashboards & Runbook — RBAC + SSO enforcement for actions based on role (viewer/approver/editor/admin).
+- [Pending] 10) Dashboards & Runbook — Observability & Change Logs: Pending
+- [Unknown] 10) Dashboards & Runbook — Data Health: freshness badges + SLAs for Ads/GA4/training datasets; pipeline status and last run times.
+- [Unknown] 10) Dashboards & Runbook — Changefeed: human-readable events for budgets, creatives, experiments, and platform mutations; audit to `safety_events`.
+- [Pending] 10) Dashboards & Runbook — Theme & UX: Pending
+- [Unknown] 10) Dashboards & Runbook — Modern health-tech theme (brandable); light/dark modes; tasteful motion; cohesive design system.
+- [In Progress] 13) Ops & Orchestration — Scheduler for pipelines (Composer/Cloud Run Jobs) with retries/backoff: In Progress (scripts provided)
+- [Pending] 13) Ops & Orchestration — Alerting & SLOs via Cloud Monitoring (ingestion failures, training write failures, safety spikes, spend velocity anomalies): Pending
+- [Pending] 13) Ops & Orchestration — Cost monitoring/budgets + alerts: Pending
+- [In Progress] 13) Ops & Orchestration — Emergency stop controls (API/UI), drill and verification: In Progress (`AELP2/scripts/emergency_stop.py`)
+- [Done] 13) Ops & Orchestration — Ads ingestion runner script (`run_ads_ingestion.sh`) to coordinate MCC tasks: Done
+- [Pending] 17) Performance & Scaling (Parallelization) — Parallelize calibration probes/validation via Ray or multiprocessing (env-driven workers): Pending
+- [Pending] 17) Performance & Scaling (Parallelization) — Parallelize fidelity evaluation (by date shards) and MCC ingestion (safe fanout): Pending
+- [Pending] 17) Performance & Scaling (Parallelization) — Optional: vectorized rollouts (2–4 env actors) with single learner; gated I/O + HITL non-blocking: Pending
+- [Pending] 14) Data Contracts & Quality — Versioned data contracts for all BQ tables; evolution process: Pending
+- [Pending] 14) Data Contracts & Quality — Data quality checks (null/negative/outliers) for Ads/GA4/training_episodes; freshness SLAs and dashboard: Pending
+- [Pending] 14) Data Contracts & Quality — Privacy audits for redaction (campaign/ad/search-term fields) with periodic checks: Pending
+- [Done] 15) Model/Agent Registry & Reproducibility — Persist run configs (env, seeds), calibration artifacts, attribution settings per session (BQ/GCS): Done (BQ table `training_runs`)
+- [Pending] 15) Model/Agent Registry & Reproducibility — Model/agent registry entries for checkpoints/metrics (W&B or internal): Pending
+- [Pending] 15) Model/Agent Registry & Reproducibility — Reproducibility script to rehydrate a past run end‑to‑end: Pending
+- [Pending] 16) CI/CD & Testing — Unit tests for orchestrator, calibration, safety, BQ writer; integration tests for pipelines (dry‑run): Pending
+- [Pending] 16) CI/CD & Testing — Pre‑commit hooks (lint/format/type checks) and CI pipeline (GitHub Actions/Cloud Build): Pending
+- [Pending] 16) CI/CD & Testing — Release checklist + change log; gated deploy to prod: Pending
+- [In Progress] Current Focus — Monitor BigQuery telemetry during the ongoing run (episodes + safety): In Progress
+- [In Progress] Current Focus — Post‑run tasks: Run fidelity evaluation over last 14 days and record to BQ: In Progress (script added)
+- [Done] Current Focus — GA4 scopes + load aggregates (optional short‑term): Done (aggregates loader) / In Progress (native export views)
+- [In Progress] Current Focus — Subagents Phase 1 (shadow‑only): In Progress (guardrails/quotas; proposals logged)
+- [Pending] Legacy Integration Plan (GAELP → AELP2) — Phase 0 — Backend Switch (compat): Pending
+- [Unknown] Legacy Integration Plan (GAELP → AELP2) — Add `AELP2_SIM_BACKEND={auctiongym|enhanced|recsim}` (default: auctiongym).
+- [Unknown] Legacy Integration Plan (GAELP → AELP2) — If `enhanced`, allow selecting enhanced_simulator_fixed backend (persistent users + delayed conversions behind flag).
+- [Unknown] Legacy Integration Plan (GAELP → AELP2) — Flags: `AELP2_USE_RECSIM=0/1`, `AELP2_BIDDING_EVENTS_ENABLE=0/1`.
+- [Pending] Legacy Integration Plan (GAELP → AELP2) — Phase 1 — Quick Wins (3–5 days): Pending
+- [Unknown] Legacy Integration Plan (GAELP → AELP2) — Port budget optimizer/pacer → `core/optimization/budget_optimizer.py`; wire pacing, exhaustion checks, reallocation.
+- [Unknown] Legacy Integration Plan (GAELP → AELP2) — Port bid explainability → `core/explainability/bid_explainability.py`; surface in Auctions Monitor (bid replay).
+- [Unknown] Legacy Integration Plan (GAELP → AELP2) — Port success/convergence monitors → `core/monitoring`; add dashboard tiles.
+- [Unknown] Legacy Integration Plan (GAELP → AELP2) — Add `bidding_events` writes (flag) and ship Auctions Monitor v1 (win‑rate gauge, price‑paid trend, bid histogram, replay).
+- [Unknown] Legacy Integration Plan (GAELP → AELP2) — Keep KPI‑only fidelity and GA4 lag‑aware alignment unchanged.
+- [Pending] Legacy Integration Plan (GAELP → AELP2) — Phase 2 — Consolidation (2–4 days): Pending
+- [Unknown] Legacy Integration Plan (GAELP → AELP2) — Merge GAELP orchestrator deltas (budget optimizer hooks, explainability, success criteria) into AELP2 orchestrator.
+- [Unknown] Legacy Integration Plan (GAELP → AELP2) — Standardize telemetry via AELP2 BQ writer (episodes, safety, A/B, bidding_events, fidelity).
+- [Unknown] Legacy Integration Plan (GAELP → AELP2) — Keep single orchestrator; remove duplicate env/orchestrator codepaths.
+- [Pending] Legacy Integration Plan (GAELP → AELP2) — Phase 3 — Pretraining & Persona Sim (Optional): Pending
+- [Unknown] Legacy Integration Plan (GAELP → AELP2) — Stage Criteo loader/trainer for CTR pretraining; add job runner.
+- [Unknown] Legacy Integration Plan (GAELP → AELP2) — Persona‑based sim (AuraCampaign) as optional sim target for Landing Labs demos.
+- [In Progress] User Journeys & Attribution (Legacy Modules) — Persistent User Database: In Progress
+- [Unknown] User Journeys & Attribution (Legacy Modules) — Port `persistent_user_database(.py|_batched.py)` to `core/persistence`; unify with AELP2 BQ writer.
+- [Unknown] User Journeys & Attribution (Legacy Modules) — Tables: `gaelp_users.persistent_users`, `journey_sessions`, `persistent_touchpoints`, `competitor_exposures` (already ensured by legacy).
+- [Unknown] User Journeys & Attribution (Legacy Modules) — Expose journey inspect endpoints for dashboard (latest sessions/touchpoints, funnel stats).
+- [Pending] User Journeys & Attribution (Legacy Modules) — Delayed Conversions: Pending
+- [Unknown] User Journeys & Attribution (Legacy Modules) — Port `delayed_conversion_system` (from training_orchestrator) and gate behind sim/backend flags.
+- [Unknown] User Journeys & Attribution (Legacy Modules) — Align with GA4 lag‑aware attribution window (3–14d) for training reward shaping.
+- [Pending] User Journeys & Attribution (Legacy Modules) — Attribution Engine: Pending
+- [Unknown] User Journeys & Attribution (Legacy Modules) — Port `attribution_system.py` + `attribution_models.py` into `core/intelligence/attribution`.
+- [Unknown] User Journeys & Attribution (Legacy Modules) — Ensure parity with GA4 lag‑aware daily aggregates; keep KPI‑only fidelity the source of truth.
+- [Pending] User Journeys & Attribution (Legacy Modules) — RL Training Modes: Pending
+- [Unknown] User Journeys & Attribution (Legacy Modules) — Modes: offline pretraining (Criteo/RecSim), online training (sim), shadow mode, live canary (budget/bid deltas with approvals).
+- [Unknown] User Journeys & Attribution (Legacy Modules) — Flags to control mode; dashboard control surface to switch and run jobs.
+- [Pending] Dashboard Parity (GAELP Enhanced Dashboard) — Mirror sections from `gaelp_live_dashboard_enhanced.py`: Pending
+- [Unknown] Dashboard Parity (GAELP Enhanced Dashboard) — Auctions Monitor: live win‑rate gauge vs target band; bid histogram; price‑paid trend; bid replay inspector; calibration panel (KS/MSE, floor ratio).
+- [Unknown] Dashboard Parity (GAELP Enhanced Dashboard) — Budget/Pacing: optimizer status, pacing multiplier, exhaustion risk; per‑hour allocations.
+- [Unknown] Dashboard Parity (GAELP Enhanced Dashboard) — Convergence/Success: tiles for convergence status/gates; latest fidelity row; alerts.
+- [Unknown] Dashboard Parity (GAELP Enhanced Dashboard) — Creative Performance: KPI badges per creative/asset; trends; policy lint flags.
+- [Unknown] Dashboard Parity (GAELP Enhanced Dashboard) — Control Surface: one‑click KPI lock, Ads ingest/backfill, GA4 lag attribution, training, KPI‑only fidelity (Prod/Sandbox).
+- [Unknown] Dashboard Parity (GAELP Enhanced Dashboard) — Environment Switcher: Prod vs Sandbox dataset routing for queries and actions.
+- [Unknown] Personal Sandbox Mode (New) — Goal: End‑to‑end testing in a personal Google Ads account with separate budget, while attributing performance to Aura’s GA4 property (via a distinct GA4 web data stream) and keeping data cleanly segmented.
+- [Unknown] Personal Sandbox Mode (New) — Setup:
+- [Unknown] Personal Sandbox Mode (New) — Google Ads: create a personal Ads account; link it to the existing MCC (Account access → Link to Manager). Use personal billing; isolate campaigns for testing.
+- [Unknown] Personal Sandbox Mode (New) — GA4: in the Aura GA4 property, create a separate Web data stream for the sandbox domain/subdomain; instrument test landing pages with that measurement ID. Mark conversions and set “Include in Conversions”.
+- [Unknown] Personal Sandbox Mode (New) — Optional Ads↔GA4 link: link the personal Ads account to the Aura GA4 property to import conversions (requires GA4 Admin approval). If not linking, rely on GA4 + BigQuery joins for KPI.
+- [Unknown] Personal Sandbox Mode (New) — BigQuery: create `${PROJECT}.gaelp_sandbox` dataset for all sandbox telemetry and views.
+- [Unknown] Personal Sandbox Mode (New) — Pipeline controls:
+- [Unknown] Personal Sandbox Mode (New) — Allowlist the sandbox Ads account in ingestion: `run_ads_ingestion.sh --only <PERSONAL_CUSTOMER_ID>`; write to `gaelp_sandbox`.
+- [Unknown] Personal Sandbox Mode (New) — Lock KPI IDs from sandbox data; refresh KPI views in `gaelp_sandbox`.
+- [Unknown] Personal Sandbox Mode (New) — RL training/fidelity runs point at `gaelp_sandbox`; GA4 lagged attribution runs against Aura GA4 property but is filtered by stream/host if needed.
+- [Unknown] Personal Sandbox Mode (New) — Mutation safety: default to shadow mode; enforce allowlist for campaign IDs; require approvals for any live change.
+- [Unknown] Personal Sandbox Mode (New) — Dashboard:
+- [Unknown] Personal Sandbox Mode (New) — Add environment switcher (Prod vs Sandbox) to select dataset and route actions.
+- [Unknown] Personal Sandbox Mode (New) — Data Health shows freshness per environment.
+- [Unknown] Personal Sandbox Mode (New) — Compliance:
+- [Unknown] Personal Sandbox Mode (New) — GA4 linking to a personal Ads account is allowed; must be approved by GA4 Admin. Prefer separate GA4 stream to avoid contaminating prod metrics; use filters by stream_id/hostname in views.
+- [Unknown] Personal Sandbox Mode (New) — Respect privacy/consent; no scraping; demo mode only for social‑handle concepts until APIs are approved.
+- [Pending] Sandbox/Test Accounts & Config UI (New) — Connections UI: Pending
+- [Unknown] Sandbox/Test Accounts & Config UI (New) — Dashboard page to add/manage test accounts: Google Ads (now), Meta/TikTok placeholders.
+- [Unknown] Sandbox/Test Accounts & Config UI (New) — Store credentials/tokens in Secret Manager; test connection; show connection status + scopes.
+- [Unknown] Sandbox/Test Accounts & Config UI (New) — Map each connection to a target dataset (e.g., `gaelp_sandbox`) and allowed customer/campaign IDs.
+- [Unknown] Sandbox/Test Accounts & Config UI (New) — RBAC guard: only admins can add/edit connections.
+- [Pending] Sandbox/Test Accounts & Config UI (New) — Environment/Dataset Switcher: Pending
+- [Unknown] Sandbox/Test Accounts & Config UI (New) — Global selector (Prod vs Sandbox) used across Exec, Training, Creative, and actions.
+- [Unknown] Sandbox/Test Accounts & Config UI (New) — Persist selection per user (localStorage) and in server session; all BQ queries route to chosen dataset.
+- [Pending] Sandbox/Test Accounts & Config UI (New) — UTM/algo_id Tracking & Reporting: Pending
+- [Unknown] Sandbox/Test Accounts & Config UI (New) — Landing snippet (GTM or JS) to capture UTMs + `algo_id` from URL, store cookie, and attach to GA4 conversion event.
+- [Unknown] Sandbox/Test Accounts & Config UI (New) — GA4 custom dimension (event scope): `Algorithm ID` (event parameter `algo_id`).
+- [Unknown] Sandbox/Test Accounts & Config UI (New) — BigQuery views:
+- [Unknown] Sandbox/Test Accounts & Config UI (New) — `ga4_purchases_by_utm_algo` (from GA4 export events) with date, utm_source/medium/campaign/content, algo_id, conversions/revenue.
+- [Unknown] Sandbox/Test Accounts & Config UI (New) — `ads_cost_by_day` from Ads campaigns; sandbox joins via date and campaign when applicable.
+- [Unknown] Sandbox/Test Accounts & Config UI (New) — `kpi_by_utm_algo` view for CAC/ROAS by utm/algo_id (used in RL/fidelity slices and dashboard).
+- [Pending] Sandbox/Test Accounts & Config UI (New) — Test Account Ingestion Flow: Pending
+- [Unknown] Sandbox/Test Accounts & Config UI (New) — Ads: limit ingestion to allowlisted personal `customer_id` via `--only`; write to sandbox dataset.
+- [Unknown] Sandbox/Test Accounts & Config UI (New) — GA4: use sandbox stream measurement ID on test pages; ensure events flow to Aura GA4; lag-aware attribution runs across property but dashboard filters by stream/host.
+- [Unknown] Sandbox/Test Accounts & Config UI (New) — Training/Fidelity: point env vars to sandbox dataset; keep mutation mode shadow unless approved.
+- [Pending] Sandbox/Test Accounts & Config UI (New) — Dashboard Control Surface (Sandbox): Pending
+- [Unknown] Sandbox/Test Accounts & Config UI (New) — Buttons: ingest Ads, run GA4 attribution, lock KPI IDs, run training, run KPI-only fidelity — all targeting the sandbox dataset.
+- [Unknown] Sandbox/Test Accounts & Config UI (New) — Canary actions disabled in Sandbox by default or limited to allowlisted campaigns.
+- [Pending] Sandbox/Test Accounts & Config UI (New) — IAM & Safety: Pending
+- [Unknown] Sandbox/Test Accounts & Config UI (New) — Cloud Run runtime SA: roles/bigquery.{jobUser,dataViewer} for both datasets; editor only where writes are needed.
+- [Unknown] Sandbox/Test Accounts & Config UI (New) — Canary applier: require allowlist + approvals; refuse mutations outside allowlist.
+- [Unknown] Sandbox/Test Accounts & Config UI (New) — Audit all actions to `safety_events` with environment tag.
+- [Unknown] Notes — ROAS basis for gates is LTV (conversions × 600) with AOV=100 (telemetry remains explicit).
+- [Unknown] P0) Off‑the‑Shelf Integrations (Accelerators) — MMM (Primary): LightweightMMM runner (Prefect/Cloud Run) with credible intervals → writes `mmm_curves`
+- [Done] P0) Off‑the‑Shelf Integrations (Accelerators) — Status: Done
+- [Unknown] P0) Off‑the‑Shelf Integrations (Accelerators) — Implemented `AELP2/pipelines/mmm_lightweightmmm.py` with dependency detection and fallback to v1 + bootstrap CIs
+- [Unknown] P0) Off‑the‑Shelf Integrations (Accelerators) — Wrote CI arrays into `mmm_curves.diagnostics` (ci_conv_p10/ci_conv_p90)
+- [Unknown] P0) Off‑the‑Shelf Integrations (Accelerators) — Added Prefect weekly task `aelp2-weekly-mmm` in `AELP2/ops/prefect_flows.py` with BQ ops logging
+- [Unknown] P0) Off‑the‑Shelf Integrations (Accelerators) — MMM (Validator): Robyn weekly job (containerized R) → compare curves/elasticities to LightweightMMM
+- [Done] P0) Off‑the‑Shelf Integrations (Accelerators) — Status: Done
+- [Unknown] P0) Off‑the‑Shelf Integrations (Accelerators) — Added `AELP2/pipelines/robyn_validator.py` (Python wrapper; docker/R detection; BQ summary writer)
+- [Unknown] P0) Off‑the‑Shelf Integrations (Accelerators) — Added container stub at `AELP2/pipelines/robyn/` with `Dockerfile` and `run_robyn.R`
+- [Unknown] P0) Off‑the‑Shelf Integrations (Accelerators) — Linked into Prefect weekly flow `aelp2-weekly-mmm` with retries + ops logging
+- [Unknown] P0) Off‑the‑Shelf Integrations (Accelerators) — Bandits engine: Use MABWiser for TS/UCB policies inside `bandit_service.py`; keep our logging/guards
+- [Done] P0) Off‑the‑Shelf Integrations (Accelerators) — Status: Done
+- [Unknown] P0) Off‑the‑Shelf Integrations (Accelerators) — Enabled MABWiser ThompsonSampling path with automatic fallback
+- [Unknown] P0) Off‑the‑Shelf Integrations (Accelerators) — Added `--dry_run` mode; wrote smoke test `AELP2/tests/test_bandit_service.py`
+- [Unknown] P0) Off‑the‑Shelf Integrations (Accelerators) — Data Quality: Great Expectations suites for `ads_*`, `ga4_*`, `gaelp_users.*`; fail hard on schema regressions
+- [In Progress] P0) Off‑the‑Shelf Integrations (Accelerators) — Status: In Progress (GX scaffolding added; Prefect pre-checks via run_checks.py)
+- [Unknown] P0) Off‑the‑Shelf Integrations (Accelerators) — Orchestration: Prefect flows for MMM/Bandit/Uplift/Opportunity Scanner; retries, SLAs, observability
+- [In Progress] P0) Off‑the‑Shelf Integrations (Accelerators) — Status: In Progress (flows scaffold added; retries + simple failure summary)
+- [Unknown] P0) Off‑the‑Shelf Integrations (Accelerators) — Experimentation/HITL: GrowthBook gating for live mutations; flags in dashboard; exposure logs to BQ
+- [Done] P0) Off‑the‑Shelf Integrations (Accelerators) — Status: Done
+- [Unknown] P0) Off‑the‑Shelf Integrations (Accelerators) — Added server-side gating on apply endpoints using env flags (AELP2_ALLOW_* + GATES_ENABLED)
+- [Unknown] P0) Off‑the‑Shelf Integrations (Accelerators) — Ensured exposure logs API writes to BQ (`ab_exposures`), added GET `/api/bq/ab-exposures` and control panel viewer
+- [Unknown] P0) Off‑the‑Shelf Integrations (Accelerators) — Attribution sanity checks: ChannelAttribution (R) Markov/Shapley weekly summary → BQ for dashboards
+- [Done] P0) Off‑the‑Shelf Integrations (Accelerators) — Status: Done
+- [Unknown] P0) Off‑the‑Shelf Integrations (Accelerators) — Added Python wrapper `AELP2/pipelines/channel_attribution_r.py` with docker/R detection and BQ writer
+- [Unknown] P0) Off‑the‑Shelf Integrations (Accelerators) — Added container stub `AELP2/pipelines/channel_attribution/` (Dockerfile + run_ca.R)
+- [Unknown] P0) Off‑the‑Shelf Integrations (Accelerators) — Linked into Prefect weekly flow `aelp2-weekly-mmm`
+- [Unknown] P0) Opportunity Scanner (Google First) — Headroom scans (Search: Brand vs Non‑Brand) and inventory candidates (YouTube/Demand Gen/PMax)
+- [Unknown] P0) Opportunity Scanner (Google First) — Implement BQ heuristics and integrate Google Ads Recommendations/Reach Planner APIs
+- [Unknown] P0) Opportunity Scanner (Google First) — Log candidates → `platform_skeletons` with rationale and expected CAC/volume
+- [Unknown] P0) Opportunity Scanner (Google First) — Dashboard panel with HITL approve/deny and post‑hoc outcome tracking
+- [Done] P0) Opportunity Scanner (Google First) — Status: Done
+- [Unknown] P0) Opportunity Scanner (Google First) — Exec panel shows opportunities and supports Approve/Deny via `/api/control/opportunity-approve` (gated by `AELP2_ALLOW_OPPORTUNITY_APPROVALS`)
+- [Unknown] P0) Opportunity Scanner (Google First) — Approvals stored in `opportunity_approvals` (post‑hoc tracking)
+- [Pending] P0) Opportunity Scanner (Google First) — Recommendations scanner scaffold present; Reach Planner estimates runner added (`youtube_reach_planner.py`) and dashboard controls; richer rationale pending
+- [Unknown] P0) Bandit Orchestrator (Shadow + HITL) — Turn bandit decisions into executable proposals (enable/pause/split), enforce 10% exploration and CAC caps
+- [Unknown] P0) Bandit Orchestrator (Shadow + HITL) — Log to changefeed; surface in dashboard for HITL approval; no live until approved
+- [Done] P0) Bandit Orchestrator (Shadow + HITL) — Status: Done (shadow proposals to `bandit_change_proposals` with CAC caps)
+- [Unknown] P0) Value‑Based Bidding Bridge — Offline conversions upload with predicted value (Google EC/Enhanced Conversions; Meta/TikTok/LinkedIn CAPI)
+- [Unknown] P0) Value‑Based Bidding Bridge — Validate platform bid response (shadow metrics first); document mapping and hashing rules
+- [Done] P0) Value‑Based Bidding Bridge — Status: Done (staging payload stubs; dashboard endpoints under HITL; logs to `value_uploads_log`)
+- [Unknown] P0) Journeys/Segments Activation — Populate `gaelp_users.journey_sessions` and `persistent_touchpoints` from GA4 export + server events (gclid/fbclid, user_id, hashed email)
+- [Unknown] P0) Journeys/Segments Activation — Train weekly propensity/uplift model (CausalML) → write `segment_scores_daily`
+- [Unknown] P0) Journeys/Segments Activation — Map top segments to audiences (GA4/Ads/Meta) for routing and reporting (shadow first)
+- [In Progress] P0) Journeys/Segments Activation — Status: In Progress (journeys_populate + segment_scores bootstrap added)
+- [Unknown] P0) Journeys/Segments Activation — Ads campaign names are redacted by default (`AELP2_REDACT_CAMPAIGN_NAMES=1`).
+- [Unknown] P0) Journeys/Segments Activation — All thresholds and dataset names are env‑driven—no hardcoding.

@@ -1,0 +1,10 @@
+query: |
+  antivirus; vpn; identity protection; credit monitoring; phishing; dark web; password manager
+country: United States
+language: English
+networks: [Facebook, Instagram]
+os: [iOS, Android]
+dedup: Advertiser
+sort: Relevance
+only_new: false
+

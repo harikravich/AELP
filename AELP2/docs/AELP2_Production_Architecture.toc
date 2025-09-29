@@ -1,0 +1,28 @@
+\contentsline {chapter}{Executive Summary}{1}{chapter*.1}%
+\contentsline {chapter}{\numberline {1}Production Architecture: What Actually Runs}{3}{chapter.1}%
+\contentsline {section}{\numberline {1.1}The Three-Layer Architecture}{3}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Production Data Flow}{4}{section.1.2}%
+\contentsline {chapter}{\numberline {2}Core Components in Production}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}What's Really Running vs Research Mode}{5}{section.2.1}%
+\contentsline {section}{\numberline {2.2}The Real Algorithm: Thompson Sampling Bandit}{5}{section.2.2}%
+\contentsline {chapter}{\numberline {3}Actual Performance Metrics}{6}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Placement-Specific Baselines}{6}{section.3.1}%
+\contentsline {section}{\numberline {3.2}30-Day Projections with Uncertainty}{7}{section.3.2}%
+\contentsline {chapter}{\numberline {4}Critical Insights \& Findings}{8}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Top 5 Production Insights}{8}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Production vs Research Performance}{9}{section.4.2}%
+\contentsline {chapter}{\numberline {5}Implementation Playbook}{10}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Daily Production Pipeline}{10}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Configuration \& Flags}{11}{section.5.2}%
+\contentsline {chapter}{\numberline {6}Production Results \& Validation}{12}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Actual Campaign Performance}{12}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Model Accuracy Validation}{12}{section.6.2}%
+\contentsline {chapter}{\numberline {7}Future Enhancements}{13}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Planned Improvements (Maintaining Simplicity)}{13}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Success Metrics}{13}{section.7.2}%
+\contentsline {chapter}{\numberline {8}Conclusion}{14}{chapter.8}%
+\contentsline {section}{\numberline {8.1}The Power of Simplicity}{14}{section.8.1}%
+\contentsline {chapter}{\numberline {A}Technical Reference}{15}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Pipeline Scripts}{15}{section.A.1}%
+\contentsline {section}{\numberline {A.2}API Endpoints}{15}{section.A.2}%
+\contentsline {section}{\numberline {A.3}Key Metrics Definitions}{15}{section.A.3}%

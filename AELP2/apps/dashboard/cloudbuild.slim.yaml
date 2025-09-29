@@ -1,0 +1,14 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    dir: '.'
+    args:
+      - 'build'
+      - '-f'
+      - 'Dockerfile.slim'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/${_SERVICE}:${_IMAGE_TAG}'
+      - '.'
+images:
+  - 'gcr.io/$PROJECT_ID/${_SERVICE}:${_IMAGE_TAG}'
+options:
+  logging: CLOUD_LOGGING_ONLY

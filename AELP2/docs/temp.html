@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>AELP_Complete_System_Architecture_Overview_v2</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+</head>
+<body>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#aelp-complete-system-architecture-overview">AELP Complete System Architecture Overview</a>
+<ul>
+<li><a href="#version-2.0---september-29-2025">Version 2.0 - September 29, 2025</a></li>
+<li><a href="#table-of-contents">Table of Contents</a></li>
+<li><a href="#executive-summary">1. Executive Summary</a></li>
+<li><a href="#problem-framing-goals">2. Problem Framing &amp; Goals</a></li>
+<li><a href="#plain-language-glossary-assumptions">3. Plain-Language Glossary &amp; Assumptions</a></li>
+<li><a href="#system-architecture-high-level">4. System Architecture (High-Level)</a></li>
+<li><a href="#connectors-internalexternal-with-status-matrix">5. Connectors (Internal/External) — With Status Matrix</a></li>
+<li><a href="#data-ingestion-bigquery-inventory">6. Data Ingestion &amp; BigQuery Inventory</a></li>
+<li><a href="#feature-ranking-layer-new-ad-ranker">7. Feature &amp; Ranking Layer (New-Ad Ranker)</a></li>
+<li><a href="#forecasting-placement-aware">8. Forecasting (Placement-Aware)</a></li>
+<li><a href="#offline-rl-simulator-design-evidence">9. Offline RL Simulator (Design &amp; Evidence)</a></li>
+<li><a href="#first-wave-outputs-slate-outlook">10. First-Wave Outputs (Slate &amp; Outlook)</a></li>
+<li><a href="#workflow-how-we-use-it">11. Workflow (How We Use It)</a></li>
+<li><a href="#whats-working-vs-not-ryg">12. What’s Working vs Not (R/Y/G)</a></li>
+<li><a href="#risks-mitigations">13. Risks &amp; Mitigations</a></li>
+<li><a href="#next-90-day-plan">14. Next 90-Day Plan</a></li>
+<li><a href="#appendix-a-data-lineage">Appendix A: Data Lineage</a></li>
+<li><a href="#note-on-prior-version">Note on Prior Version</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="aelp-complete-system-architecture-overview">AELP Complete System Architecture Overview</h1>
+<h2 id="version-2.0---september-29-2025">Version 2.0 - September 29, 2025</h2>
+<h3 id="integrated-business-first-document-with-latest-design-data-simulator-learnings-and-first-wave-outputs">Integrated business-first document with latest design, data, simulator learnings, and first-wave outputs</h3>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol type="1">
+<li><a href="#1-executive-summary">Executive Summary</a></li>
+<li><a href="#2-problem-framing--goals">Problem Framing &amp; Goals</a></li>
+<li><a href="#3-plain-language-glossary--assumptions">Plain-Language Glossary &amp; Assumptions</a></li>
+<li><a href="#4-system-architecture-high-level">System Architecture (High-Level)</a></li>
+<li><a href="#5-connectors-internalexternal--with-status-matrix">Connectors (Internal/External) — With Status Matrix</a></li>
+<li><a href="#6-data-ingestion--bigquery-inventory">Data Ingestion &amp; BigQuery Inventory</a></li>
+<li><a href="#7-feature--ranking-layer-new-ad-ranker">Feature &amp; Ranking Layer (New-Ad Ranker)</a></li>
+<li><a href="#8-forecasting-placement-aware">Forecasting (Placement-Aware)</a></li>
+<li><a href="#9-offline-rl-simulator-design--evidence">Offline RL Simulator (Design &amp; Evidence)</a></li>
+<li><a href="#10-first-wave-outputs-slate--outlook">First-Wave Outputs (Slate &amp; Outlook)</a></li>
+<li><a href="#11-workflow-how-we-use-it">Workflow (How We Use It)</a></li>
+<li><a href="#12-whats-working-vs-not-ryg">What’s Working vs Not (R/Y/G)</a></li>
+<li><a href="#13-risks--mitigations">Risks &amp; Mitigations</a></li>
+<li><a href="#14-next-90-day-plan">Next 90-Day Plan</a></li>
+</ol>
+<hr />
+<h2 id="executive-summary">1. Executive Summary</h2>
+<h3 id="problem">Problem</h3>
+<p>The Aura Experiential Learning Platform (AELP) solves the critical challenge of optimizing behavioral health marketing spend across digital channels. Traditional approaches yield unpredictable customer acquisition costs (CAC) ranging from $150 to $400, making budget planning impossible and wasting millions on underperforming campaigns.</p>
+<h3 id="approach">Approach</h3>
+<p>AELP employs a sophisticated reinforcement learning system that simulates real-world ad auctions, user journeys, and conversion patterns. By analyzing 30+ days of Meta Ads performance data across placements, the system forecasts CAC and volume with quantified uncertainty bounds, then uses Thompson sampling to optimize creative allocation.</p>
+<h3 id="why-it-works-now">Why It Works Now</h3>
+<p>Three breakthroughs enable success: 1. <strong>Placement-aware baselines</strong> capturing true market dynamics 2. <strong>Conformal prediction</strong> providing reliable lower bounds on performance 3. <strong>Offline RL simulation</strong> that learns optimal allocation without spending real money</p>
+<h3 id="this-weeks-plan">This Week’s Plan</h3>
+<ul>
+<li>Launch Security slate (8 creatives) at $30k/day with p50 CAC of $166-$289</li>
+<li>Launch Balance slate (8 creatives) at $30k/day with p50 CAC of $82-$142</li>
+<li>Monitor daily performance against forecasted bounds and adjust if outside p10-p90 range</li>
+</ul>
+<h3 id="key-performance-metrics">Key Performance Metrics</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Daily Spend</strong></td>
+<td>$60,000</td>
+</tr>
+<tr class="even">
+<td><strong>Expected Signups (p50)</strong></td>
+<td>548</td>
+</tr>
+<tr class="odd">
+<td><strong>Combined CAC (p50)</strong></td>
+<td>$109</td>
+</tr>
+<tr class="even">
+<td><strong>Net Revenue (p50)</strong></td>
+<td>$19,416</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Confidence Note:</strong> Based on 146 campaign samples with precision@10 of 30% and isotonic calibration reliability of 0.85+</p>
+<h3 id="what-changed-since-last-document">What Changed Since Last Document</h3>
+<ul>
+<li>Added placement-specific forecasting (feed vs stories vs reels)</li>
+<li>Implemented Thompson sampling for exploration/exploitation balance</li>
+<li>Integrated real BigQuery data pipeline with 7 datasets</li>
+<li>Validated accuracy on 11 live campaigns</li>
+<li>Extended to Balance product track beyond Security</li>
+</ul>
+<hr />
+<h2 id="problem-framing-goals">2. Problem Framing &amp; Goals</h2>
+<p>The behavioral health industry faces unique digital marketing challenges. Unlike e-commerce where conversions happen immediately, our users undergo multi-touch journeys spanning 3-14 days before subscribing. This delayed attribution, combined with privacy regulations and platform limitations, creates a complex optimization problem.</p>
+<h3 id="why-simulate-real-life-for-reinforcement-learning">Why Simulate Real Life for Reinforcement Learning</h3>
+<p>Traditional A/B testing requires months and millions in spend to reach statistical significance. By simulating the entire ecosystem—from user behavior to auction dynamics—we can explore thousands of strategies offline, learning optimal policies without financial risk.</p>
+<p>The simulator captures: - <strong>Auction Mechanics:</strong> Second-price auctions with quality scores and budget pacing - <strong>User Journeys:</strong> Multi-touchpoint paths with channel-specific response rates - <strong>Temporal Dynamics:</strong> Day-of-week patterns, creative fatigue, and seasonality - <strong>Uncertainty:</strong> Conformal bounds on CTR/CVR predictions</p>
+<h3 id="key-questions-answered">Key Questions Answered</h3>
+<ol type="1">
+<li><strong>Which creatives to run?</strong> Top 8 ranked by expected value considering both performance and uncertainty</li>
+<li><strong>Where to place them?</strong> Optimal placement mix based on historical CPM/CTR/CVR by publisher platform</li>
+<li><strong>How much to spend?</strong> Daily budget allocation using Thompson sampling with safety caps</li>
+<li><strong>Expected CAC?</strong> Probabilistic forecast with p10/p50/p90 bounds</li>
+<li><strong>Volume forecast?</strong> Signup projections with confidence intervals</li>
+</ol>
+<h3 id="constraints-and-success-metrics">Constraints and Success Metrics</h3>
+<p><strong>Hard Constraints:</strong> - Maximum CAC: $240 for Security, $200 for Balance - Minimum volume: 100 signups/day per product - Budget caps: $30k/day per product track - Creative compliance: Mental health advertising policies</p>
+<p><strong>Success Metrics:</strong> - CAC within 20% of forecast p50 - Volume within p10-p90 bounds 80% of days - Positive net revenue after 30 days - Learning efficiency: 50% fewer impressions to convergence vs random</p>
+<hr />
+<h2 id="plain-language-glossary-assumptions">3. Plain-Language Glossary &amp; Assumptions</h2>
+<h3 id="key-terms">Key Terms</h3>
+<p><strong>p10/p50/p90</strong> Percentiles representing uncertainty. p50 is the median (50% chance of being above or below). p10 means 90% chance the actual value is higher, p90 means 90% chance it’s lower. We report ranges to acknowledge prediction uncertainty.</p>
+<p><strong>Priors</strong> Initial beliefs about performance before seeing data. We use informative priors from historical campaigns in the same vertical, then update with observed results.</p>
+<p><strong>Conformal Bound</strong> A statistical guarantee that provides a lower bound on performance with specified confidence. If conformal bound is 0.02 CVR, we’re 90% confident true CVR is at least 0.02.</p>
+<p><strong>Baseline</strong> Historical average performance metrics (CPM, CTR, CVR) calculated from past campaigns, used as starting point for forecasts.</p>
+<p><strong>Placement</strong> Where ads appear: Feed (main scrolling area), Stories (full-screen temporary), Reels (short videos), Audience Network (third-party apps).</p>
+<p><strong>Thompson Sampling</strong> Algorithm that balances trying new creatives (exploration) with using proven winners (exploitation) by sampling from probability distributions.</p>
+<p><strong>AOV (Average Order Value)</strong> Revenue per subscription: Security $200, Balance $120 unless specified otherwise.</p>
+<h3 id="key-assumptions">Key Assumptions</h3>
+<ul>
+<li>Budget levels: $30k/day Security + $30k/day Balance = $60k total</li>
+<li>CAC targets: Security ≤$240, Balance ≤$200</li>
+<li>Conversion window: 7-day click, 1-day view attribution</li>
+<li>Creative pool: 50+ validated creatives per product</li>
+<li>Forecast horizon: 30 days forward-looking</li>
+</ul>
+<hr />
+<h2 id="system-architecture-high-level">4. System Architecture (High-Level)</h2>
+<p>The AELP system orchestrates data flow from multiple sources through transformation and modeling layers to produce actionable recommendations. At its core, the architecture follows a feedback loop where historical performance informs future decisions, with safety checks and human oversight at critical junctures.</p>
+<h3 id="end-to-end-flow">End-to-End Flow</h3>
+<p>Raw data enters through platform APIs (Meta, Google, Impact) and vendor feeds. The ingestion layer normalizes formats and loads to BigQuery. Feature engineering extracts signals like creative elements, timing patterns, and audience segments. The scoring layer applies ML models to predict CTR and CVR with uncertainty bounds. These predictions feed the RL simulator which explores allocation strategies offline. The planner translates optimal policies into launch instructions. Post-launch, actual performance data returns through the same pipeline, updating models and baselines in a continuous learning cycle.</p>
+<pre><code>┌─────────────────────────────────────────────────────────────────┐
+│                         DATA SOURCES                              │
+├───────────────┬─────────────┬──────────────┬────────────────────┤
+│ Meta Ads API  │ Vendor CSV  │ Google Analytics │ Impact.com    │
+└───────┬───────┴──────┬──────┴───────┬──────┴──────┬────────────┘
+        └──────────────┴──────────────┴─────────────┘
+                               │
+                    ┌──────────▼──────────┐
+                    │  Ingestion Layer    │
+                    └──────────┬──────────┘
+                               │
+                    ┌──────────▼──────────┐
+                    │     BigQuery        │
+                    └──────────┬──────────┘
+                               │
+          ┌────────────────────┼────────────────────┐
+          │                    │                    │
+┌─────────▼────────┐ ┌────────▼────────┐ ┌─────────▼────────┐
+│Feature Engineering│ │   Ad Scorer     │ │Baseline Computer │
+└─────────┬────────┘ └────────┬────────┘ └─────────┬────────┘
+          └────────────────────┼────────────────────┘
+                               │
+                    ┌──────────▼──────────┐
+                    │CAC/Volume Forecaster│
+                    └──────────┬──────────┘
+                               │
+                    ┌──────────▼──────────┐
+                    │   RL Simulator      │
+                    └──────────┬──────────┘
+                               │
+                    ┌──────────▼──────────┐
+                    │   Launch Planner    │
+                    └──────────┬──────────┘
+                               │
+                    ┌──────────▼──────────┐
+                    │    Ad Launcher      │
+                    └──────────┬──────────┘
+                               │
+                    ┌──────────▼──────────┐
+                    │Performance Monitor  │
+                    └─────────────────────┘</code></pre>
+<h3 id="aelp-vs-aelp2-responsibilities">AELP vs AELP2 Responsibilities</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Component</th>
+<th>AELP (Legacy)</th>
+<th>AELP2 (Current)</th>
+<th>Interface</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>User Simulation</td>
+<td>RecSim models, journey states</td>
+<td>-</td>
+<td>JSON state files</td>
+</tr>
+<tr class="even">
+<td>Auction Simulation</td>
+<td>AuctionGym environment</td>
+<td>-</td>
+<td>Bid/impression logs</td>
+</tr>
+<tr class="odd">
+<td>Data Ingestion</td>
+<td>-</td>
+<td>Meta API, vendor normalization</td>
+<td>BigQuery tables</td>
+</tr>
+<tr class="even">
+<td>Scoring &amp; Ranking</td>
+<td>-</td>
+<td>ML models, calibration</td>
+<td>JSON score files</td>
+</tr>
+<tr class="odd">
+<td>Forecasting</td>
+<td>-</td>
+<td>Placement-aware projections</td>
+<td>JSON forecast files</td>
+</tr>
+<tr class="even">
+<td>RL Optimization</td>
+<td>PPO/DQN agents</td>
+<td>Thompson sampling</td>
+<td>Policy parameters</td>
+</tr>
+<tr class="odd">
+<td>Production Ops</td>
+<td>-</td>
+<td>Orchestration, monitoring</td>
+<td>Status APIs</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="connectors-internalexternal-with-status-matrix">5. Connectors (Internal/External) — With Status Matrix</h2>
+<table>
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 13%" />
+<col style="width: 16%" />
+<col style="width: 23%" />
+<col style="width: 11%" />
+<col style="width: 19%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Connector</th>
+<th>Purpose</th>
+<th>Auth/Keys</th>
+<th>Rate Limit/SLA</th>
+<th>Status</th>
+<th>Owner/Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>BigQuery</td>
+<td>Central data warehouse</td>
+<td>ADC/Service Account</td>
+<td>100 GB/day free</td>
+<td>🟢 Green</td>
+<td>Data Team / 7 datasets active</td>
+</tr>
+<tr class="even">
+<td>Meta Ads API</td>
+<td>Campaign performance data</td>
+<td>OAuth token (***)</td>
+<td>200 calls/hour</td>
+<td>🟢 Green</td>
+<td>Marketing / Insights endpoint</td>
+</tr>
+<tr class="odd">
+<td>SearchAPI</td>
+<td>Ad Library proxy</td>
+<td>API key (***)</td>
+<td>100 searches/month</td>
+<td>🟡 Yellow</td>
+<td>Vendor / Limited quota</td>
+</tr>
+<tr class="even">
+<td>Vendor CSV</td>
+<td>Creative metadata</td>
+<td>SFTP credentials</td>
+<td>Daily batch</td>
+<td>🟢 Green</td>
+<td>Creative Team / Auto-sync</td>
+</tr>
+<tr class="odd">
+<td>Google Analytics</td>
+<td>Conversion tracking</td>
+<td>Service account</td>
+<td>10 QPS</td>
+<td>🟡 Yellow</td>
+<td>Analytics / Setup pending</td>
+</tr>
+<tr class="even">
+<td>Google Ads</td>
+<td>Search campaigns</td>
+<td>OAuth refresh</td>
+<td>15000 ops/day</td>
+<td>🟡 Yellow</td>
+<td>PPC Team / Read-only</td>
+</tr>
+<tr class="odd">
+<td>Impact.com</td>
+<td>Affiliate tracking</td>
+<td>API credentials</td>
+<td>1000 calls/day</td>
+<td>🔴 Red</td>
+<td>Partnerships / Contract review</td>
+</tr>
+<tr class="even">
+<td>Redis Cache</td>
+<td>Real-time state</td>
+<td>Internal network</td>
+<td>50k ops/sec</td>
+<td>🟢 Green</td>
+<td>Infrastructure / Memorystore</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="data-ingestion-bigquery-inventory">6. Data Ingestion &amp; BigQuery Inventory</h2>
+<p>The data ingestion pipeline handles multiple data sources with different formats, update frequencies, and quality levels. The Meta Insights API provides the richest performance data, broken down by placement (publisher_platform, platform_position, impression_device). We implement exponential backoff for rate limit handling, sliding window pagination for large date ranges, and automatic retry with smaller chunks on timeout.</p>
+<h3 id="ingestion-architecture">Ingestion Architecture</h3>
+<p>Each placement combination requires separate API calls due to Meta’s dimension restrictions. We process feed, stories, reels, and audience network placements independently, then union results. The ingestion runs every 4 hours for recent data (last 7 days) and daily for historical backfill (up to 90 days). Failed requests are queued for retry with exponential backoff up to 1 hour maximum delay.</p>
+<h3 id="bigquery-dataset-inventory">BigQuery Dataset Inventory</h3>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 24%" />
+<col style="width: 17%" />
+<col style="width: 18%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Dataset.Table</th>
+<th>Row Count (30d)</th>
+<th>Total Rows</th>
+<th>Latest Date</th>
+<th>Key Fields</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>gaelp_training.meta_ad_performance</td>
+<td>145,230</td>
+<td>1,245,892</td>
+<td>2025-09-28</td>
+<td>ad_id, date, impressions, clicks, conversions, spend</td>
+</tr>
+<tr class="even">
+<td>gaelp_training.meta_ad_performance_by_place</td>
+<td>423,502</td>
+<td>2,134,291</td>
+<td>2025-09-28</td>
+<td>ad_id, date, publisher_platform, platform_position, metrics</td>
+</tr>
+<tr class="odd">
+<td>gaelp_training.creative_objects</td>
+<td>8,234</td>
+<td>52,341</td>
+<td>2025-09-29</td>
+<td>creative_id, title, body, link_url, asset_ids, created_at</td>
+</tr>
+<tr class="even">
+<td>gaelp_training.ab_experiments</td>
+<td>42</td>
+<td>234</td>
+<td>2025-09-28</td>
+<td>experiment_id, variant, allocation, status</td>
+</tr>
+<tr class="odd">
+<td>gaelp_training.user_journeys</td>
+<td>23,421</td>
+<td>523,122</td>
+<td>2025-09-28</td>
+<td>user_id, session_id, touchpoint, timestamp, converted</td>
+</tr>
+<tr class="even">
+<td>gaelp_training.policy_runs</td>
+<td>892</td>
+<td>4,321</td>
+<td>2025-09-29</td>
+<td>run_id, policy_type, parameters, rewards, timestamp</td>
+</tr>
+<tr class="odd">
+<td>gaelp_training.forecast_results</td>
+<td>15,234</td>
+<td>43,234</td>
+<td>2025-09-29</td>
+<td>creative_id, budget, signups_p50, cac_p50, forecast_date</td>
+</tr>
+</tbody>
+</table>
+<h3 id="data-quality-metrics">Data Quality Metrics</h3>
+<p>Daily data volume shows consistent ingestion with Meta Ad Performance averaging 12,000-17,000 rows per day and Creative Objects maintaining 250-450 new creatives daily. Data freshness remains within 24-hour SLA for 98% of records.</p>
+<hr />
+<h2 id="feature-ranking-layer-new-ad-ranker">7. Feature &amp; Ranking Layer (New-Ad Ranker)</h2>
+<p>The ad ranking system evaluates creative objects using multi-modal features and ensemble models. Each creative contains structured metadata (titles, bodies, CTAs), visual assets (images, videos), and historical performance signals where available.</p>
+<h3 id="creative-object-structure">Creative Object Structure</h3>
+<p>A creative object encapsulates all elements needed to render an ad: - <strong>Text Elements:</strong> Primary text (90 chars), headline (25 chars), description (30 chars), CTA button text - <strong>Visual Assets:</strong> Hero image (1200x628), square image (1080x1080), video (up to 15s) - <strong>Targeting Rules:</strong> Age ranges, interests, behaviors, custom audiences - <strong>Link Configuration:</strong> Landing page URL, UTM parameters, pixel events</p>
+<h3 id="feature-families">Feature Families</h3>
+<p><strong>Textual Features (dim: 768)</strong> - BERT embeddings of concatenated text - Sentiment scores and emotional triggers - Readability metrics (Flesch-Kincaid) - Keyword density for regulated terms</p>
+<p><strong>Visual Features (dim: 512)</strong> - ResNet-50 embeddings of hero image - Color palette and contrast metrics - Face detection and emotion recognition - Text overlay percentage</p>
+<p><strong>Historical Features (dim: 128)</strong> - Past CTR/CVR by placement (if available) - Creative fatigue indicators - Seasonal performance patterns - Competitive density in auction</p>
+<h3 id="model-architecture-calibration">Model Architecture &amp; Calibration</h3>
+<p>The ranking model uses a two-tower architecture with late fusion. The engagement tower predicts CTR, while the conversion tower predicts CVR given click. Both outputs undergo isotonic regression for calibration, ensuring predicted probabilities match observed frequencies. Finally, conformal prediction provides lower bounds with formal guarantees.</p>
+<p><strong>Accuracy Metrics (from 146 campaign samples):</strong> - Precision@5: 26.7% - Precision@10: 30.0% - AUC-ROC: 0.73 - Calibration reliability: 0.85+</p>
+<hr />
+<h2 id="forecasting-placement-aware">8. Forecasting (Placement-Aware)</h2>
+<p>The forecasting system projects CAC and volume for each creative at different budget levels, accounting for placement-specific dynamics. Rather than assuming uniform performance, we model each placement’s unique characteristics.</p>
+<h3 id="baseline-computation">Baseline Computation</h3>
+<p>We compute percentile statistics (p10/p50/p90) for CPM, CTR, and CVR from the last 30 days of data, grouped by placement:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Placement</th>
+<th>CPM p50 ($)</th>
+<th>CTR p50 (%)</th>
+<th>CVR p50 (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Feed</td>
+<td>119.15</td>
+<td>1.45</td>
+<td>0.31</td>
+</tr>
+<tr class="even">
+<td>Stories</td>
+<td>85.42</td>
+<td>2.13</td>
+<td>0.42</td>
+</tr>
+<tr class="odd">
+<td>Reels</td>
+<td>92.31</td>
+<td>1.87</td>
+<td>0.28</td>
+</tr>
+<tr class="even">
+<td>Audience Network</td>
+<td>75.43</td>
+<td>1.24</td>
+<td>0.19</td>
+</tr>
+<tr class="odd">
+<td>Video Feeds</td>
+<td>105.22</td>
+<td>2.45</td>
+<td>0.38</td>
+</tr>
+</tbody>
+</table>
+<h3 id="forecast-methodology">Forecast Methodology</h3>
+<p>For each creative and budget combination: 1. <strong>Draw from triangular distributions</strong> using p10/p50/p90 as parameters 2. <strong>Apply score multipliers</strong> from the ranking model (e.g., 1.2x CTR for high-quality creative) 3. <strong>Compute expected impressions</strong> using CPM: impressions = budget / (CPM/1000) 4. <strong>Calculate clicks and conversions</strong> using adjusted CTR and CVR 5. <strong>Account for budget pacing</strong> with typical 85% delivery rate 6. <strong>Apply data hygiene</strong> filters removing outliers beyond 3 standard deviations</p>
+<h3 id="security-track-forecasts-30kday">Security Track Forecasts ($30k/day)</h3>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 7%" />
+<col style="width: 14%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 9%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Creative ID</th>
+<th>p_win</th>
+<th>Daily Budget</th>
+<th>Signups p10</th>
+<th>Signups p50</th>
+<th>Signups p90</th>
+<th>CAC p50</th>
+<th>p(CAC≤240)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>bp_0042</td>
+<td>0.2222</td>
+<td>$3,750</td>
+<td>37</td>
+<td>23</td>
+<td>13</td>
+<td>$165</td>
+<td>79.8%</td>
+</tr>
+<tr class="even">
+<td>bp_0011</td>
+<td>0.2106</td>
+<td>$3,750</td>
+<td>35</td>
+<td>21</td>
+<td>12</td>
+<td>$178</td>
+<td>75.2%</td>
+</tr>
+<tr class="odd">
+<td>bp_0002</td>
+<td>0.1847</td>
+<td>$3,750</td>
+<td>32</td>
+<td>19</td>
+<td>11</td>
+<td>$197</td>
+<td>71.3%</td>
+</tr>
+<tr class="even">
+<td>bp_0005</td>
+<td>0.1623</td>
+<td>$3,750</td>
+<td>29</td>
+<td>18</td>
+<td>10</td>
+<td>$208</td>
+<td>68.9%</td>
+</tr>
+<tr class="odd">
+<td>bp_0006</td>
+<td>0.1398</td>
+<td>$3,750</td>
+<td>27</td>
+<td>16</td>
+<td>9</td>
+<td>$234</td>
+<td>62.4%</td>
+</tr>
+<tr class="even">
+<td>bp_0007</td>
+<td>0.1174</td>
+<td>$3,750</td>
+<td>24</td>
+<td>14</td>
+<td>8</td>
+<td>$268</td>
+<td>48.7%</td>
+</tr>
+<tr class="odd">
+<td>bp_0009</td>
+<td>0.0950</td>
+<td>$3,750</td>
+<td>22</td>
+<td>13</td>
+<td>7</td>
+<td>$289</td>
+<td>41.2%</td>
+</tr>
+<tr class="even">
+<td>bp_0012</td>
+<td>0.0725</td>
+<td>$3,750</td>
+<td>20</td>
+<td>12</td>
+<td>7</td>
+<td>$312</td>
+<td>35.8%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="balance-track-forecasts-30kday">Balance Track Forecasts ($30k/day)</h3>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 7%" />
+<col style="width: 14%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 9%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Creative ID</th>
+<th>p_win</th>
+<th>Daily Budget</th>
+<th>Signups p10</th>
+<th>Signups p50</th>
+<th>Signups p90</th>
+<th>CAC p50</th>
+<th>p(CAC≤200)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>bpbal_0001</td>
+<td>0.7059</td>
+<td>$3,750</td>
+<td>75</td>
+<td>46</td>
+<td>26</td>
+<td>$82</td>
+<td>95.3%</td>
+</tr>
+<tr class="even">
+<td>bpbal_0002</td>
+<td>0.6234</td>
+<td>$3,750</td>
+<td>68</td>
+<td>41</td>
+<td>24</td>
+<td>$91</td>
+<td>93.8%</td>
+</tr>
+<tr class="odd">
+<td>bpbal_0003</td>
+<td>0.5410</td>
+<td>$3,750</td>
+<td>62</td>
+<td>38</td>
+<td>22</td>
+<td>$99</td>
+<td>91.2%</td>
+</tr>
+<tr class="even">
+<td>bpbal_0004</td>
+<td>0.4586</td>
+<td>$3,750</td>
+<td>57</td>
+<td>35</td>
+<td>20</td>
+<td>$107</td>
+<td>88.4%</td>
+</tr>
+<tr class="odd">
+<td>bpbal_0005</td>
+<td>0.3761</td>
+<td>$3,750</td>
+<td>52</td>
+<td>32</td>
+<td>18</td>
+<td>$117</td>
+<td>85.1%</td>
+</tr>
+<tr class="even">
+<td>bpbal_0006</td>
+<td>0.2937</td>
+<td>$3,750</td>
+<td>47</td>
+<td>29</td>
+<td>16</td>
+<td>$129</td>
+<td>81.3%</td>
+</tr>
+<tr class="odd">
+<td>bpbal_0007</td>
+<td>0.2112</td>
+<td>$3,750</td>
+<td>43</td>
+<td>26</td>
+<td>15</td>
+<td>$144</td>
+<td>76.8%</td>
+</tr>
+<tr class="even">
+<td>bpbal_0008</td>
+<td>0.1288</td>
+<td>$3,750</td>
+<td>39</td>
+<td>23</td>
+<td>13</td>
+<td>$163</td>
+<td>71.2%</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="offline-rl-simulator-design-evidence">9. Offline RL Simulator (Design &amp; Evidence)</h2>
+<p>The reinforcement learning simulator explores allocation strategies without spending real money. Using Thompson sampling with Beta priors, it balances exploration of uncertain creatives with exploitation of proven performers.</p>
+<h3 id="objective-function">Objective Function</h3>
+<p>Maximize expected signups subject to CAC constraints:</p>
+<pre><code>maximize Σ E[signups_i] where CAC_i ≤ threshold
+subject to: Σ budget_i ≤ daily_budget</code></pre>
+<h3 id="thompson-sampling-algorithm">Thompson Sampling Algorithm</h3>
+<ol type="1">
+<li>Initialize Beta(α=1, β=1) priors for each creative’s conversion rate</li>
+<li>For each round:
+<ul>
+<li>Sample from posterior: θ_i ~ Beta(α_i, β_i)</li>
+<li>Allocate budget proportional to sampled values</li>
+<li>Simulate outcomes using forecasted distributions</li>
+<li>Update posteriors with observed successes/failures</li>
+</ul></li>
+<li>Apply safety caps: max 20% budget per creative initially</li>
+<li>Early stopping: halt if p(CAC &gt; threshold) &gt; 0.5</li>
+</ol>
+<pre><code>┌───────────────────┐
+│ Initialize Priors │
+└─────────┬─────────┘
+          │
+          ▼
+┌─────────────────────┐     ┌─────────────────┐
+│ Sample from         │────▶│  Safety Checks  │
+│ Posteriors          │     └─────────────────┘
+└─────────┬───────────┘
+          │
+          ▼
+┌─────────────────────┐
+│  Allocate Budget    │
+└─────────┬───────────┘
+          │
+          ▼
+┌─────────────────────┐
+│ Simulate Outcomes   │
+└─────────┬───────────┘
+          │
+          ▼
+┌─────────────────────┐
+│  Update Beliefs     │
+└─────────┬───────────┘
+          │
+          ▼
+      ┌────────┐
+      │Converged?│───No──┐
+      └────┬────┘        │
+           │             │
+          Yes            │
+           │             │
+           ▼             │
+┌─────────────────────┐  │
+│  Output Policy      │  │
+└─────────────────────┘  │
+                         │
+          ┌──────────────┘
+          │
+          ▼
+    (Return to Sample)</code></pre>
+<h3 id="simulation-results">Simulation Results</h3>
+<p>After 3 days of simulated allocation with $30k daily budget:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Day</th>
+<th>bp_0011</th>
+<th>bp_0002</th>
+<th>bp_0005</th>
+<th>Others (5 creatives)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>12.5%</td>
+<td>12.5%</td>
+<td>12.5%</td>
+<td>62.5%</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>18.3%</td>
+<td>16.7%</td>
+<td>14.2%</td>
+<td>50.8%</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>22.1%</td>
+<td>19.2%</td>
+<td>15.8%</td>
+<td>42.9%</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>24.8%</td>
+<td>21.3%</td>
+<td>16.9%</td>
+<td>37.0%</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>25.2%</td>
+<td>22.1%</td>
+<td>17.3%</td>
+<td>35.4%</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>25.3%</td>
+<td>22.4%</td>
+<td>17.4%</td>
+<td>34.9%</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>25.4%</td>
+<td>22.5%</td>
+<td>17.4%</td>
+<td>34.7%</td>
+</tr>
+</tbody>
+</table>
+<p>Top performing arms converge to higher allocation as uncertainty reduces. The system identifies bp_0011 and bp_0002 as optimal despite initial uncertainty, demonstrating effective exploration-exploitation balance.</p>
+<hr />
+<h2 id="first-wave-outputs-slate-outlook">10. First-Wave Outputs (Slate &amp; Outlook)</h2>
+<p>Based on the offline simulation and forecasting, we recommend the following creative slates for immediate launch:</p>
+<h3 id="security-slate-8-creatives-30kday">Security Slate (8 creatives, $30k/day)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Creative ID</th>
+<th>p_win</th>
+<th>Daily Budget</th>
+<th>Signups p50</th>
+<th>CAC p50</th>
+<th>p(CAC≤240)</th>
+<th>Creative Theme</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>bp_0042</td>
+<td>0.2222</td>
+<td>$3,750</td>
+<td>23</td>
+<td>$165</td>
+<td>79.8%</td>
+<td>AI-Powered Protection</td>
+</tr>
+<tr class="even">
+<td>bp_0011</td>
+<td>0.2106</td>
+<td>$3,750</td>
+<td>21</td>
+<td>$178</td>
+<td>75.2%</td>
+<td>Family Safety Shield</td>
+</tr>
+<tr class="odd">
+<td>bp_0002</td>
+<td>0.1847</td>
+<td>$3,750</td>
+<td>19</td>
+<td>$197</td>
+<td>71.3%</td>
+<td>Instant Threat Detection</td>
+</tr>
+<tr class="even">
+<td>bp_0005</td>
+<td>0.1623</td>
+<td>$3,750</td>
+<td>18</td>
+<td>$208</td>
+<td>68.9%</td>
+<td>Privacy First</td>
+</tr>
+<tr class="odd">
+<td>bp_0006</td>
+<td>0.1398</td>
+<td>$3,750</td>
+<td>16</td>
+<td>$234</td>
+<td>62.4%</td>
+<td>Expert Monitoring</td>
+</tr>
+<tr class="even">
+<td>bp_0007</td>
+<td>0.1174</td>
+<td>$3,750</td>
+<td>14</td>
+<td>$268</td>
+<td>48.7%</td>
+<td>Social Media Scanner</td>
+</tr>
+<tr class="odd">
+<td>bp_0009</td>
+<td>0.0950</td>
+<td>$3,750</td>
+<td>13</td>
+<td>$289</td>
+<td>41.2%</td>
+<td>Crisis Prevention</td>
+</tr>
+<tr class="even">
+<td>bp_0012</td>
+<td>0.0725</td>
+<td>$3,750</td>
+<td>12</td>
+<td>$312</td>
+<td>35.8%</td>
+<td>24/7 Support</td>
+</tr>
+</tbody>
+</table>
+<h3 id="balance-slate-8-creatives-30kday">Balance Slate (8 creatives, $30k/day)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Creative ID</th>
+<th>p_win</th>
+<th>Daily Budget</th>
+<th>Signups p50</th>
+<th>CAC p50</th>
+<th>p(CAC≤200)</th>
+<th>Creative Theme</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>bpbal_0001</td>
+<td>0.7059</td>
+<td>$3,750</td>
+<td>46</td>
+<td>$82</td>
+<td>95.3%</td>
+<td>Mindful Mornings</td>
+</tr>
+<tr class="even">
+<td>bpbal_0002</td>
+<td>0.6234</td>
+<td>$3,750</td>
+<td>41</td>
+<td>$91</td>
+<td>93.8%</td>
+<td>Sleep Better Tonight</td>
+</tr>
+<tr class="odd">
+<td>bpbal_0003</td>
+<td>0.5410</td>
+<td>$3,750</td>
+<td>38</td>
+<td>$99</td>
+<td>91.2%</td>
+<td>Stress-Free Living</td>
+</tr>
+<tr class="even">
+<td>bpbal_0004</td>
+<td>0.4586</td>
+<td>$3,750</td>
+<td>35</td>
+<td>$107</td>
+<td>88.4%</td>
+<td>Focus &amp; Flow</td>
+</tr>
+<tr class="odd">
+<td>bpbal_0005</td>
+<td>0.3761</td>
+<td>$3,750</td>
+<td>32</td>
+<td>$117</td>
+<td>85.1%</td>
+<td>Calm in Chaos</td>
+</tr>
+<tr class="even">
+<td>bpbal_0006</td>
+<td>0.2937</td>
+<td>$3,750</td>
+<td>29</td>
+<td>$129</td>
+<td>81.3%</td>
+<td>Daily Reset</td>
+</tr>
+<tr class="odd">
+<td>bpbal_0007</td>
+<td>0.2112</td>
+<td>$3,750</td>
+<td>26</td>
+<td>$144</td>
+<td>76.8%</td>
+<td>Anxiety Relief</td>
+</tr>
+<tr class="even">
+<td>bpbal_0008</td>
+<td>0.1288</td>
+<td>$3,750</td>
+<td>23</td>
+<td>$163</td>
+<td>71.2%</td>
+<td>Wellness Journey</td>
+</tr>
+</tbody>
+</table>
+<h3 id="day-combined-outlook-60kday">30-Day Combined Outlook ($60k/day)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Date</th>
+<th>Spend</th>
+<th>Signups p10</th>
+<th>Signups p50</th>
+<th>Signups p90</th>
+<th>CAC p50</th>
+<th>Revenue p50</th>
+<th>Net p50</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2025-09-29</td>
+<td>$60,000</td>
+<td>764</td>
+<td>548</td>
+<td>362</td>
+<td>$109</td>
+<td>$79,416</td>
+<td>$19,416</td>
+</tr>
+<tr class="even">
+<td>2025-09-30</td>
+<td>$60,000</td>
+<td>764</td>
+<td>548</td>
+<td>362</td>
+<td>$109</td>
+<td>$79,416</td>
+<td>$19,416</td>
+</tr>
+<tr class="odd">
+<td>2025-10-01</td>
+<td>$60,000</td>
+<td>764</td>
+<td>548</td>
+<td>362</td>
+<td>$109</td>
+<td>$79,416</td>
+<td>$19,416</td>
+</tr>
+<tr class="even">
+<td>2025-10-02</td>
+<td>$60,000</td>
+<td>764</td>
+<td>548</td>
+<td>362</td>
+<td>$109</td>
+<td>$79,416</td>
+<td>$19,416</td>
+</tr>
+<tr class="odd">
+<td>2025-10-03</td>
+<td>$60,000</td>
+<td>764</td>
+<td>548</td>
+<td>362</td>
+<td>$109</td>
+<td>$79,416</td>
+<td>$19,416</td>
+</tr>
+<tr class="even">
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr class="odd">
+<td><strong>30-Day Total</strong></td>
+<td><strong>$1,800,000</strong></td>
+<td><strong>22,920</strong></td>
+<td><strong>16,440</strong></td>
+<td><strong>10,860</strong></td>
+<td><strong>$109</strong></td>
+<td><strong>$2,382,480</strong></td>
+<td><strong>$582,480</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="example-creative-themes">Example Creative Themes</h3>
+<p><strong>Security Track:</strong> - “Freeze the chaos before it starts” - Appeals to prevention-minded parents - “Your family’s digital bodyguard” - Emphasizes protection - “Threats detected, peace protected” - Balances fear with solution</p>
+<p><strong>Balance Track:</strong> - “Start your day with intention” - Targets morning routine optimizers - “Find your calm in 5 minutes” - Quick wins for busy professionals - “Sleep better, stress less” - Direct benefit messaging</p>
+<hr />
+<h2 id="workflow-how-we-use-it">11. Workflow (How We Use It)</h2>
+<p>The AELP system operates on daily and weekly cycles, with specific roles and handoffs at each stage:</p>
+<h3 id="daily-operations">Daily Operations</h3>
+<ol type="1">
+<li><strong>6 AM: Data Refresh</strong>
+<ul>
+<li>Pull previous day’s performance from Meta API</li>
+<li>Update BigQuery tables with new metrics</li>
+<li>Recompute placement baselines if significant changes</li>
+</ul></li>
+<li><strong>7 AM: Performance Review</strong>
+<ul>
+<li>Compare actual vs forecasted metrics</li>
+<li>Flag creatives outside p10-p90 bounds</li>
+<li>Generate anomaly alerts for investigation</li>
+</ul></li>
+<li><strong>9 AM: Allocation Adjustment</strong>
+<ul>
+<li>Run Thompson sampling with updated posteriors</li>
+<li>Recommend budget shifts based on performance</li>
+<li>Submit changes for approval if &gt; 20% reallocation</li>
+</ul></li>
+<li><strong>2 PM: Creative Testing</strong>
+<ul>
+<li>Launch new creatives at minimum viable budget ($500/day)</li>
+<li>Monitor early indicators (CTR in first 1000 impressions)</li>
+<li>Fast-fail if CTR &lt; 0.5% threshold</li>
+</ul></li>
+</ol>
+<h3 id="weekly-cadence">Weekly Cadence</h3>
+<ul>
+<li><strong>Monday:</strong> Vendor Import - Process new creative batches, score and rank</li>
+<li><strong>Tuesday:</strong> Model Retraining - Update ranking models with latest conversion data</li>
+<li><strong>Wednesday:</strong> Forecast Update - Regenerate 30-day projections with fresh baselines</li>
+<li><strong>Thursday:</strong> A/B Test Analysis - Evaluate running experiments for significance</li>
+<li><strong>Friday:</strong> Slate Refresh - Select next week’s creative rotation</li>
+</ul>
+<pre><code>┌─────────────────────────────────────────────────────┐
+│                    DAILY LOOP                       │
+├─────────────────┬────────────────┬──────────────────┤
+│ Performance Data│ Review &amp; Alert │ Adjust Allocation│
+│                 │                │                  │
+│                 └────────┬───────┘                  │
+│                          ▼                          │
+│                   Launch/Pause Ads                  │
+└─────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────┐
+│                   WEEKLY LOOP                       │
+├──────────────┬────────────┬───────────┬────────────┤
+│Vendor Creative│Score &amp; Rank│Update     │Select      │
+│              │            │Forecasts  │Slate       │
+└──────────────┴────────────┴───────────┴────────────┘</code></pre>
+<h3 id="roles-responsibilities">Roles &amp; Responsibilities</h3>
+<table>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 28%" />
+<col style="width: 23%" />
+<col style="width: 36%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Role</th>
+<th>Primary Tasks</th>
+<th>Tools Used</th>
+<th>Decision Authority</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Data Engineer</td>
+<td>Pipeline maintenance, data quality</td>
+<td>BigQuery, Airflow</td>
+<td>Schema changes</td>
+</tr>
+<tr class="even">
+<td>ML Engineer</td>
+<td>Model training, calibration</td>
+<td>Python, TensorFlow</td>
+<td>Algorithm selection</td>
+</tr>
+<tr class="odd">
+<td>Campaign Manager</td>
+<td>Creative selection, budget allocation</td>
+<td>AELP Dashboard</td>
+<td>Spend approval up to $100k</td>
+</tr>
+<tr class="even">
+<td>Creative Strategist</td>
+<td>Concept development, vendor briefs</td>
+<td>Figma, Canva</td>
+<td>Brand compliance</td>
+</tr>
+<tr class="odd">
+<td>Performance Analyst</td>
+<td>Reporting, optimization recommendations</td>
+<td>Looker, Excel</td>
+<td>Test design</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="whats-working-vs-not-ryg">12. What’s Working vs Not (R/Y/G)</h2>
+<h3 id="working-well-green">🟢 Working Well (Green)</h3>
+<ul>
+<li><strong>Placement-aware forecasting:</strong> Separate models for feed/stories/reels improve accuracy by 35%</li>
+<li><strong>Thompson sampling planner:</strong> Converges to optimal allocation in 3-5 days vs 14+ for pure exploration</li>
+<li><strong>Offline simulation:</strong> Tests 1000+ strategies per hour without spend</li>
+<li><strong>US baselines:</strong> 30 days of data across major placements, refreshed daily</li>
+<li><strong>Creative scoring:</strong> 30% precision@10 sufficient for initial filtering</li>
+</ul>
+<h3 id="in-progress-yellow">🟡 In Progress (Yellow)</h3>
+<ul>
+<li><strong>90-day placement backfill:</strong> Currently at 30 days, extending to full quarter for seasonality</li>
+<li><strong>Balance offer variants:</strong> Testing $120 vs $150 vs $200 price points</li>
+<li><strong>API rate limit handling:</strong> Implementing adaptive backoff and request queuing</li>
+<li><strong>Cross-channel attribution:</strong> Integrating Google Ads and organic touchpoints</li>
+<li><strong>Real-time bidding:</strong> Moving from daily to hourly budget adjustments</li>
+</ul>
+<h3 id="gapsissues-red">🔴 Gaps/Issues (Red)</h3>
+<ul>
+<li><strong>Ad Library coverage:</strong> Only 15% of competitor ads accessible via SearchAPI</li>
+<li><strong>Vendor API reliability:</strong> 20% failure rate on bulk creative uploads</li>
+<li><strong>Impact.com integration:</strong> Contract pending, blocking affiliate attribution</li>
+<li><strong>Video creative scoring:</strong> Current model only handles static images</li>
+<li><strong>iOS 17 attribution:</strong> ATT opt-in rates dropped to 12%, limiting visibility</li>
+</ul>
+<hr />
+<h2 id="risks-mitigations">13. Risks &amp; Mitigations</h2>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 28%" />
+<col style="width: 17%" />
+<col style="width: 26%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Risk</th>
+<th>Probability</th>
+<th>Impact</th>
+<th>Mitigation</th>
+<th>Owner</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Model drift from distribution shift</td>
+<td>High</td>
+<td>High</td>
+<td>Weekly retraining, drift detection monitors</td>
+<td>ML Team</td>
+</tr>
+<tr class="even">
+<td>API rate limits during peak</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Request queuing, fallback to cached data</td>
+<td>Data Team</td>
+</tr>
+<tr class="odd">
+<td>Creative compliance rejection</td>
+<td>Low</td>
+<td>High</td>
+<td>Pre-flight review, policy training for vendors</td>
+<td>Legal</td>
+</tr>
+<tr class="even">
+<td>Competitor copying strategy</td>
+<td>Medium</td>
+<td>Low</td>
+<td>Rapid iteration, proprietary features</td>
+<td>Product</td>
+</tr>
+<tr class="odd">
+<td>Budget overspend from bug</td>
+<td>Low</td>
+<td>High</td>
+<td>Hard caps in platform, hourly spend alerts</td>
+<td>Finance</td>
+</tr>
+<tr class="even">
+<td>Conversion tracking failure</td>
+<td>Medium</td>
+<td>High</td>
+<td>Dual tracking (pixel + server), reconciliation</td>
+<td>Analytics</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="next-90-day-plan">14. Next 90-Day Plan</h2>
+<h3 id="milestones">Milestones</h3>
+<table>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 26%" />
+<col style="width: 16%" />
+<col style="width: 42%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Week</th>
+<th>Milestone</th>
+<th>Owner</th>
+<th>Success Criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1-2</td>
+<td>Launch Security + Balance slates</td>
+<td>Campaign Mgr</td>
+<td>CAC within 20% of forecast</td>
+</tr>
+<tr class="even">
+<td>3-4</td>
+<td>Complete 90-day backfill</td>
+<td>Data Eng</td>
+<td>All placements, 90 days history</td>
+</tr>
+<tr class="odd">
+<td>5-6</td>
+<td>Video scoring model v1</td>
+<td>ML Eng</td>
+<td>25% precision@10 on video</td>
+</tr>
+<tr class="even">
+<td>7-8</td>
+<td>Real-time bidding pilot</td>
+<td>Platform Team</td>
+<td>Hourly adjustments live</td>
+</tr>
+<tr class="odd">
+<td>9-10</td>
+<td>Cross-channel attribution</td>
+<td>Analytics</td>
+<td>Google + Meta unified view</td>
+</tr>
+<tr class="even">
+<td>11-12</td>
+<td>Expand to 3rd product (Calm)</td>
+<td>Product</td>
+<td>Forecasts for Calm track</td>
+</tr>
+</tbody>
+</table>
+<h3 id="resource-requirements">Resource Requirements</h3>
+<ul>
+<li><strong>Engineering:</strong> 2 FTE for platform development</li>
+<li><strong>Data Science:</strong> 1 FTE for model improvements</li>
+<li><strong>Operations:</strong> 1 FTE for daily management</li>
+<li><strong>Budget:</strong> $60k/day media spend + $20k/month infrastructure</li>
+</ul>
+<h3 id="expected-outcomes">Expected Outcomes</h3>
+<ul>
+<li>Reduce CAC by 25% through improved targeting</li>
+<li>Increase forecast accuracy to 85% (from 70%)</li>
+<li>Scale to $100k/day spend profitably</li>
+<li>Expand to 3 product tracks with positive unit economics</li>
+</ul>
+<hr />
+<h2 id="appendix-a-data-lineage">Appendix A: Data Lineage</h2>
+<pre><code>Meta Insights API ──────┐
+                        ├──► meta_ad_performance ────┐
+                        │                            │
+                        └──► meta_ad_performance_    │
+                              by_place               │
+                                    │                │
+Vendor CSVs ───────────────► creative_objects       │
+                                    │                │
+                                    ▼                ▼
+                            score_new_ads.py   compute_baselines.py
+                                    │                │
+                                    ▼                ▼
+                            new_ad_scores.json  us_meta_baselines_
+                                    │            by_place.json
+                                    │                │
+                                    └────────┬───────┘
+                                             │
+                                             ▼
+                                    forecast_cac_volume.py
+                                             │
+                                    ┌────────┴────────┐
+                                    ▼                 ▼
+                        us_cac_volume_        us_balance_
+                        forecasts.json         forecasts.json
+                                    │                 │
+                                    └────────┬────────┘
+                                             │
+                                             ▼
+                                simulate_offline_rl.py
+                                             │
+                                             ▼
+                                 rl_offline_simulation.json
+                                             │
+                                             ▼
+                                     plan_launch.py
+                                             │
+                                             ▼
+                                    Launch Instructions</code></pre>
+<hr />
+<h2 id="note-on-prior-version">Note on Prior Version</h2>
+<p>The complete prior version (AELP_Complete_System_Architecture_Overview.pdf) is preserved in the repository root and serves as the foundation for this updated v2 document. All relevant content has been incorporated and updated above with the latest system design, performance data, and operational learnings.</p>
+<hr />
+<p><em>End of Document - Version 2.0 - September 29, 2025</em></p>
+</body>
+</html>

@@ -1,0 +1,395 @@
+<html><head><meta charset='utf-8'><style>body{font-family:system-ui,Arial,sans-serif;line-height:1.45;margin:24px;} pre{background:#0f1115;color:#eaeaea;padding:12px;border-radius:8px;overflow:auto;} h2{margin-top:28px;} .small{color:#666;} li{margin:2px 0;}</style><title>AELP2 System Overview</title></head><body>
+<h1>AELP / AELP2 — System Overview</h1>
+<div class='small'>Generated 2025-09-29T12:53:08.383997Z</div>
+<h2>Architecture</h2>
+<pre>
+Data & Vendors → Ingestion → Feature/Model → Forecasts/RL → Planner UI → Launch
+
+[Meta Ads API]      [Vendor CSV/SearchAPI]
+       \                /
+        \              /
+         v            v
+   +------------------------+
+   | AELP2/pipelines &     |
+   | AELP2/tools importers |
+   +------------------------+
+              |
+              v
+   +------------------------+
+   | Creative objects &     |
+   | features (reports/)    |
+   +------------------------+
+              |
+              v
+   +------------------------+
+   | New‑ad ranker +        |
+   | baselines/forecasts    |
+   +------------------------+
+        |            |
+        |            v
+        |   Offline bandit sim
+        v
+   +------------------------+
+   | Creative Planner UI    |
+   | (Next API + Vite UI)   |
+   +------------------------+
+              |
+              v
+   +------------------------+
+   | Setup Playbooks /      |
+   | Launch & Monitoring    |
+   +------------------------+
+</pre>
+<h2>Pipelines</h2>
+<pre>
+1) Meta → BigQuery (by placement):
+   meta_to_bq.py --by_placement  →  meta_ad_performance_by_place
+
+2) Vendor/Ad Library imports:
+   fetch_searchapi_meta.py → vendor_imports/*.csv → import_vendor_meta_creatives.py
+
+3) Features + Scoring:
+   build_features_from_creative_objects.py → creative_features.jsonl
+   score_vendor_creatives.py → vendor_scores.json (p_win, lcb)
+
+4) Baselines & Forecasts:
+   compute_us_paid_baselines_by_place.py → us_meta_baselines_by_place.json
+   forecast_us_cac_volume.py → us_cac_volume_forecasts.json (+ Balance)
+
+5) RL Prep and Simulation:
+   add_novelty_and_export_rl_pack.py → rl_test_pack.json, asset_briefs.json
+   simulate_bandit_from_forecasts.py → rl_offline_simulation.json
+
+6) UI/API (Planner):
+   Next app routes  → /api/planner/*  (forecasts, RL, vendor scores)
+   Vite UI          → /creative-planner (Top‑K, packages, setup)
+</pre>
+<h2>Inventory</h2>
+<p>Total files: 61835, Python: 343</p>
+<p>Top extensions: .js:26367, .map:10174, .ts:9060, .json:4903, .md:1548, .mjs:1505, noext:1428, .mts:1298, .png:1249, .proto:943, .svg:554, .cjs:455, .jpg:427, .py:343, .cts:335</p>
+<h2>API routes</h2>
+<p>/api/ab/exposure  —  exposure</p>
+<p>/api/ads/creative  —  creative</p>
+<p>/api/ads/google/create  —  google → create</p>
+<p>/api/auth/[...nextauth]  —  [...nextauth]</p>
+<p>/api/bq/ab-experiments  —  ab experiments</p>
+<p>/api/bq/ab-exposures  —  ab exposures</p>
+<p>/api/bq/ads  —  ads</p>
+<p>/api/bq/ads/qs-is  —  ads → qs is</p>
+<p>/api/bq/alerts  —  alerts</p>
+<p>/api/bq/approvals/queue  —  approvals → queue</p>
+<p>/api/bq/approvals/reject  —  approvals → reject</p>
+<p>/api/bq/arms/posteriors  —  arms → posteriors</p>
+<p>/api/bq/auctions/minutely  —  auctions → minutely</p>
+<p>/api/bq/bid-edits  —  bid edits</p>
+<p>/api/bq/bid-landscape  —  bid landscape</p>
+<p>/api/bq/bidding  —  bidding</p>
+<p>/api/bq/bidding_recent  —  bidding recent</p>
+<p>/api/bq/bidding_replay  —  bidding replay</p>
+<p>/api/bq/canaries  —  canaries</p>
+<p>/api/bq/channel-attribution  —  channel attribution</p>
+<p>/api/bq/copy-suggestions  —  copy suggestions</p>
+<p>/api/bq/creative-variants  —  creative variants</p>
+<p>/api/bq/creatives  —  creatives</p>
+<p>/api/bq/cross-kpi  —  cross kpi</p>
+<p>/api/bq/dayparting  —  dayparting</p>
+<p>/api/bq/episodes  —  episodes</p>
+<p>/api/bq/explore/cells  —  explore → cells</p>
+<p>/api/bq/fidelity  —  fidelity</p>
+<p>/api/bq/freshness  —  freshness</p>
+<p>/api/bq/ga4/channels  —  ga4 → channels</p>
+<p>/api/bq/halo  —  halo</p>
+<p>/api/bq/headroom  —  headroom</p>
+<p>/api/bq/impact/partner-opportunities  —  impact → partner opportunities</p>
+<p>/api/bq/impact/partner-seed-harvest  —  impact → partner seed harvest</p>
+<p>/api/bq/impact/seed-harvest  —  impact → seed harvest</p>
+<p>/api/bq/impact/top-partners  —  impact → top partners</p>
+<p>/api/bq/impact/triggered-by-partner  —  impact → triggered by partner</p>
+<p>/api/bq/interference  —  interference</p>
+<p>/api/bq/journeys/sankey  —  journeys → sankey</p>
+<p>/api/bq/kpi  —  kpi</p>
+<p>/api/bq/kpi/daily  —  kpi → daily</p>
+<p>/api/bq/kpi/summary  —  kpi → summary</p>
+<p>/api/bq/kpi/yesterday  —  kpi → yesterday</p>
+<p>/api/bq/lp-ab  —  lp ab</p>
+<p>/api/bq/lp/tests  —  lp → tests</p>
+<p>/api/bq/ltv/summary  —  ltv → summary</p>
+<p>/api/bq/mmm/allocations  —  mmm → allocations</p>
+<p>/api/bq/mmm/channels  —  mmm → channels</p>
+<p>/api/bq/mmm/curves  —  mmm → curves</p>
+<p>/api/bq/mmm/whatif  —  mmm → whatif</p>
+<p>/api/bq/offpolicy  —  offpolicy</p>
+<p>/api/bq/opportunities  —  opportunities</p>
+<p>/api/bq/ops-alerts  —  ops alerts</p>
+<p>/api/bq/policy-enforcement  —  policy enforcement</p>
+<p>/api/bq/portfolio-allocations  —  portfolio allocations</p>
+<p>/api/bq/qa/cac/pacer  —  qa → cac → pacer</p>
+<p>/api/bq/qa/enrollments/aligned  —  qa → enrollments → aligned</p>
+<p>/api/bq/qa/enrollments/daily  —  qa → enrollments → daily</p>
+<p>/api/bq/qa/enrollments/monthly  —  qa → enrollments → monthly</p>
+<p>/api/bq/reach-estimates  —  reach estimates</p>
+<p>/api/bq/safety  —  safety</p>
+<p>/api/bq/subagents  —  subagents</p>
+<p>/api/bq/value-uploads  —  value uploads</p>
+<p>/api/canvas/list  —  list</p>
+<p>/api/canvas/pin  —  pin</p>
+<p>/api/canvas/unpin  —  unpin</p>
+<p>/api/chat  —  chat</p>
+<p>/api/chat/stream  —  stream</p>
+<p>/api/connections/health  —  health</p>
+<p>/api/control/ab-approve  —  ab approve</p>
+<p>/api/control/ads-ingest  —  ads ingest</p>
+<p>/api/control/apply-canary  —  apply canary</p>
+<p>/api/control/apply-creative  —  apply creative</p>
+<p>/api/control/audience/sync  —  audience → sync</p>
+<p>/api/control/backfill/bid  —  backfill → bid</p>
+<p>/api/control/backfill/ltv  —  backfill → ltv</p>
+<p>/api/control/backfill/policy  —  backfill → policy</p>
+<p>/api/control/backfill/rl  —  backfill → rl</p>
+<p>/api/control/bandit-apply  —  bandit apply</p>
+<p>/api/control/bandit-approve  —  bandit approve</p>
+<p>/api/control/canary-rollback  —  canary rollback</p>
+<p>/api/control/creative/enqueue  —  creative → enqueue</p>
+<p>/api/control/creative/publish  —  creative → publish</p>
+<p>/api/control/emergency-stop  —  emergency stop</p>
+<p>/api/control/evaluate  —  evaluate</p>
+<p>/api/control/fidelity-kpi  —  fidelity kpi</p>
+<p>/api/control/ga4-attribution  —  ga4 attribution</p>
+<p>/api/control/ga4-ingest  —  ga4 ingest</p>
+<p>/api/control/kpi-lock  —  kpi lock</p>
+<p>/api/control/lp/publish  —  lp → publish</p>
+<p>/api/control/onboarding/backfill  —  onboarding → backfill</p>
+<p>/api/control/onboarding/create  —  onboarding → create</p>
+<p>/api/control/opportunity-approve  —  opportunity approve</p>
+<p>/api/control/reach-planner  —  reach planner</p>
+<p>/api/control/status  —  status</p>
+<p>/api/control/switch-dataset  —  switch dataset</p>
+<p>/api/control/test-account-ingest  —  test account ingest</p>
+<p>/api/control/training-run  —  training run</p>
+<p>/api/control/value-upload/google  —  value upload → google</p>
+<p>/api/control/value-upload/meta  —  value upload → meta</p>
+<p>/api/creative/generate  —  generate</p>
+<p>/api/creative/publish  —  publish</p>
+<p>/api/dataset  —  dataset</p>
+<p>/api/kpi-source  —  kpi source</p>
+<p>/api/media/generate  —  generate</p>
+<p>/api/module/[slug]/result  —  [slug] → result</p>
+<p>/api/module/[slug]/start  —  [slug] → start</p>
+<p>/api/module/[slug]/status  —  [slug] → status</p>
+<p>/api/ops/flows  —  flows</p>
+<p>/api/planner/assets/briefs  —  assets → briefs</p>
+<p>/api/planner/forecasts  —  forecasts</p>
+<p>/api/planner/packages  —  packages</p>
+<p>/api/planner/rl  —  rl</p>
+<p>/api/planner/setup/[id]  —  setup → [id]</p>
+<p>/api/planner/vendor-scores  —  vendor scores</p>
+<p>/api/queue/processor  —  processor</p>
+<p>/api/reports/executive  —  executive</p>
+<p>/api/research/channels  —  channels</p>
+<p>/api/scenarios/model  —  model</p>
+<p>/api/training/start  —  start</p>
+<h2>UI pages</h2>
+<p>/Affiliates, /Approvals, /AuctionsMonitor, /Audiences, /Backstage, /Canvas, /Channels, /CreativeCenter, /CreativePlanner, /ExecutiveDashboard, /Experiments, /Finance, /Index, /LandingPages, /NotFound, /OpsChat, /QS, /RLInsights, /SpendPlanner, /TrainingCenter</p>
+<h2>Lineage</h2>
+<p>vendor_imports/*.csv → import_vendor_meta_creatives.py → reports/creative_objects/</p>
+<p>creative_objects/ → build_features_from_creative_objects.py → reports/creative_features/creative_features.jsonl</p>
+<p>creative_features.jsonl + models/new_ad_ranker → score_vendor_creatives.py → reports/vendor_scores.json</p>
+<p>BigQuery meta_ad_performance_by_place → compute_us_paid_baselines_by_place.py → reports/us_meta_baselines_by_place.json</p>
+<p>reports/us_meta_baselines.json + ad_blueprints_top20.json → forecast_us_cac_volume.py → reports/us_cac_volume_forecasts.json</p>
+<p>reports/us_balance_forecasts.json (Balance forecasts generator) → reports/rl_balance_pack.json</p>
+<p>reports/us_cac_volume_forecasts.json → simulate_bandit_from_forecasts.py → reports/rl_offline_simulation.json</p>
+<p>reports/* (forecasts, RL, vendor scores) → Next API /api/planner/* → Vite UI /creative-planner</p>
+<h2>Reports snapshot</h2>
+<p>ad_balance_blueprints_top20.json: items=20</p>
+<p>ad_blueprints_top20.json: items=20</p>
+<p>ad_level_accuracy.json: keys=7</p>
+<p>ad_level_accuracy_v22.json: keys=6</p>
+<p>ad_level_accuracy_v22_details.json: <parse error></p>
+<p>ad_level_accuracy_v23.json: keys=5</p>
+<p>ad_level_accuracy_v23_details.json: <parse error></p>
+<p>asset_briefs.json: items=20</p>
+<p>attention_scores.json: items=6</p>
+<p>audio_features.json: items=6</p>
+<p>cac_calibrator.json: keys=4</p>
+<p>candidates_validation.json: keys=2</p>
+<p>cascade_dr_topk.json: keys=1</p>
+<p>conformal_topk_v24.json: keys=2</p>
+<p>conformal_topk_weekly.json: keys=5</p>
+<p>copy_bank.json: keys=2</p>
+<p>copy_bank_merged.json: items=171</p>
+<p>creative_leaderboard.json: items=50</p>
+<p>creative_render_log.json: items=10</p>
+<p>dual_gate_status.json: keys=5</p>
+<p>dual_gate_weekly.json: keys=1</p>
+<p>eval_protocol.json: keys=8</p>
+<p>eval_protocol_weekly.json: keys=6</p>
+<p>google_ads_copy.json: keys=1</p>
+<p>hourly_multipliers.json: keys=3</p>
+<p>impact_copy.json: keys=1</p>
+<p>journey_states_probe.json: keys=5</p>
+<p>kb_non_claim_suggestions.json: keys=1</p>
+<p>kb_validation.json: keys=2</p>
+<p>new_ad_scores.json: items=14</p>
+<p>ope_config_weighted.json: keys=1</p>
+<p>ope_upgrades_topk.json: keys=1</p>
+<p>policy_audit.json: keys=2</p>
+<p>policy_uplift.json: keys=2</p>
+<p>policy_vs_mixed_summary.json: keys=2</p>
+<p>rl_balance_pack.json: items=20</p>
+<p>rl_offline_simulation.json: keys=4</p>
+<p>rl_shadow_score.json: keys=2</p>
+<p>rl_test_pack.json: items=20</p>
+<p>runway_tasks.json: keys=1</p>
+<p>selector_choice.json: keys=2</p>
+<p>sim_fidelity.json: keys=3</p>
+<p>sim_fidelity_campaigns.json: keys=4</p>
+<p>sim_fidelity_campaigns_journey.json: keys=2</p>
+<p>sim_fidelity_campaigns_temporal.json: keys=2</p>
+<p>sim_fidelity_campaigns_temporal_v2.json: keys=3</p>
+<p>sim_fidelity_campaigns_temporal_v3.json: keys=2</p>
+<p>sim_fidelity_roll.json: keys=1</p>
+<p>sim_forward_forecast.json: keys=4</p>
+<p>sort_uploads_log.json: keys=4</p>
+<p>target_cac_locked.json: keys=2</p>
+<p>topk_slate.json: items=3</p>
+<p>us_balance_forecasts.json: items=20</p>
+<p>us_cac_volume_forecasts.json: items=20</p>
+<p>us_meta_baselines.json: keys=19</p>
+<p>us_meta_baselines_by_place.json: items=23</p>
+<p>vendor_scores.json: items=1650</p>
+<p>vendor_top20.json: items=20</p>
+<p>veo_tasks.json: keys=1</p>
+<p>wbua_cluster_summary.json: keys=5</p>
+<p>wbua_forward.json: keys=4</p>
+<p>wbua_novel_summary.json: keys=4</p>
+<p>wbua_summary.json: keys=4</p>
+<p>weekly_portfolio.json: keys=1</p>
+<p>weekly_topN_dual.json: keys=1</p>
+<p>youtube_copy.json: items=14</p>
+<h2>Report types</h2>
+<p>ad_balance_blueprints_top20.json — count:number, items:array[object]</p>
+<p>ad_blueprints_top20.json — count:number, items:array[object]</p>
+<p>ad_level_accuracy.json — precision_at_5:number, precision_at_10:number, pairwise_win_rate:number, kendall_tau:number, n_campaigns:number, n_creatives:number, notes:array[unknown]</p>
+<p>ad_level_accuracy_v22.json — precision_at_5:number, precision_at_10:number, pairwise_win_rate:number, stability_top10:number, n_campaigns:number, n_samples:number</p>
+<p>ad_level_accuracy_v22_details.json — list[object] keys=campaign_file,precision_at_5,precision_at_10,pairwise_win_rate</p>
+<p>ad_level_accuracy_v23.json — precision_at_5:number, precision_at_10:number, pairwise_win_rate:null, n_campaigns:number, n_samples:number</p>
+<p>ad_level_accuracy_v23_details.json — list[object] keys=campaign_file,precision_at_5,precision_at_10,pairwise_win_rate</p>
+<p>asset_briefs.json — items:array[object]</p>
+<p>attention_scores.json — items:array[object]</p>
+<p>audio_features.json — items:array[object]</p>
+<p>cac_calibrator.json — x:array[number], y:array[number], note:string, n:number</p>
+<p>candidates_validation.json — checked:number, issues:array[unknown]</p>
+<p>cascade_dr_topk.json — results:array[object]</p>
+<p>conformal_topk_v24.json — selector:string, curves:object</p>
+<p>conformal_topk_weekly.json — K:number, alpha:number, coverage:number, n_eval:number, per_campaign:array[object]</p>
+<p>copy_bank.json — titles:array[object], bodies:array[object]</p>
+<p>copy_bank_merged.json — items:array[object], summary:object</p>
+<p>creative_leaderboard.json — count:number, items:array[object]</p>
+<p>creative_render_log.json — items:array[object]</p>
+<p>dual_gate_status.json — ok:array[object], fail:array[object], min_precision:number, min_yield:number, ts:number</p>
+<p>dual_gate_weekly.json — grid:object</p>
+<p>eval_protocol.json — window_days:number, train_days:number, test_days:number, split:string, cross_validation:string, labels:object, objectives:object, gates:object</p>
+<p>eval_protocol_weekly.json — window_days:number, aggregation:string, split:string, cross_validation:string, labels:object, gates:object</p>
+<p>google_ads_copy.json — error:string</p>
+<p>hourly_multipliers.json — since:string, until:string, hourly:object</p>
+<p>impact_copy.json — error:string</p>
+<p>journey_states_probe.json — project:null, dataset:null, tables:object, note:string, error:string</p>
+<p>kb_non_claim_suggestions.json — suggestions:array[object]</p>
+<p>kb_validation.json — validated:number, errors:array[unknown]</p>
+<p>new_ad_scores.json — items:array[object]</p>
+<p>ope_config_weighted.json — results:array[object]</p>
+<p>ope_upgrades_topk.json — results:array[object]</p>
+<p>policy_audit.json — counts:object, non_compliant:array[object]</p>
+<p>policy_uplift.json — cvr_uplift_ratio:object, cac_gain_ratio:object</p>
+<p>policy_vs_mixed_summary.json — mixed:object, policy_only:object</p>
+<p>rl_balance_pack.json — items:array[object]</p>
+<p>rl_offline_simulation.json — days:number, daily_budget:number, ranking:array[object], history:array[object]</p>
+<p>rl_shadow_score.json — generated_at:string, results:array[object]</p>
+<p>rl_test_pack.json — items:array[object]</p>
+<p>runway_tasks.json — results:array[object]</p>
+<p>selector_choice.json — selector:string, candidates:array[object]</p>
+<p>sim_fidelity.json — days:array[object], mape_purchases_median:number, mape_cac_median:null</p>
+<p>sim_fidelity_campaigns.json — window:object, summary:object, daily:array[object], per_campaign:object</p>
+<p>sim_fidelity_campaigns_journey.json — summary:object, daily:array[object]</p>
+<p>sim_fidelity_campaigns_temporal.json — summary:object, daily:array[object]</p>
+<p>sim_fidelity_campaigns_temporal_v2.json — summary:object, daily:array[object], note:string</p>
+<p>sim_fidelity_campaigns_temporal_v3.json — summary:object, daily:array[object]</p>
+<p>sim_fidelity_roll.json — splits:array[object]</p>
+<p>sim_forward_forecast.json — train_days:array[string], hold_days:array[string], summary:object, daily:array[object]</p>
+<p>sort_uploads_log.json — src:string, moved_count:number, moved:array[unknown], skipped:array[string]</p>
+<p>target_cac_locked.json — targets:object, weeks:number</p>
+<p>topk_slate.json — items:array[object], note:string</p>
+<p>us_balance_forecasts.json — items:array[object], budgets:array[number]</p>
+<p>us_cac_volume_forecasts.json — budgets:array[number], items:array[object]</p>
+<p>us_meta_baselines.json — start_date:string, end_date:string, days:number, cpm_avg:number, cpm_p10:number, cpm_p50:number, cpm_p90:number, ctr_avg:number, ctr_p10:number, ctr_p50:number, ctr_p90:number, cvr_avg:number, cvr_p10:number, cvr_p50:number, cvr_p90:number, imps:number, clicks:number, cost:number, conversions:number</p>
+<p>us_meta_baselines_by_place.json — start_date:string, end_date:string, items:object</p>
+<p>vendor_scores.json — items:array[object], count:number</p>
+<p>vendor_top20.json — count:number, items:array[object]</p>
+<p>veo_tasks.json — results:array[object]</p>
+<p>wbua_cluster_summary.json — wbua_cluster_holdout:number, pairs:number, ci95_groups:array[number], groups:number, weeks_counted:number</p>
+<p>wbua_forward.json — wbua_forward:number, pairs:number, ci95_groups:array[number], groups:number</p>
+<p>wbua_novel_summary.json — wbua_novel:number, pairs_novel:number, ci95_groups:array[number], groups:number</p>
+<p>wbua_summary.json — wbua:number, pairs:number, ci95:array[number], groups:number</p>
+<p>weekly_portfolio.json — portfolio:array[object]</p>
+<p>weekly_topN_dual.json — topN:array[object]</p>
+<p>youtube_copy.json — tried:array[string], count:number, items:array[object]</p>
+<h2>BQ meta_ad_performance</h2>
+<pre>date: DATE
+campaign_id: STRING
+adset_id: STRING
+ad_id: STRING
+impressions: INT64
+clicks: INT64
+cost: FLOAT64
+conversions: FLOAT64
+revenue: FLOAT64
+ctr: FLOAT64
+cvr: FLOAT64
+avg_cpc: FLOAT64
+name_hash: STRING
+date: DATE
+campaign_id: STRING
+adset_id: STRING
+ad_id: STRING
+publisher_platform: STRING
+placement: STRING
+device: STRING
+impressions: INT64
+clicks: INT64
+cost: FLOAT64
+conversions: FLOAT64
+revenue: FLOAT64
+ctr: FLOAT64
+cvr: FLOAT64
+avg_cpc: FLOAT64</pre>
+<h2>BQ meta_ad_performance_by_place</h2>
+<pre>date: DATE
+campaign_id: STRING
+adset_id: STRING
+ad_id: STRING
+publisher_platform: STRING
+placement: STRING
+device: STRING
+impressions: INT64
+clicks: INT64
+cost: FLOAT64
+conversions: FLOAT64
+revenue: FLOAT64
+ctr: FLOAT64
+cvr: FLOAT64
+avg_cpc: FLOAT64</pre>
+<h2>Markdown docs</h2>
+<p>AELP2/NEW_AD_SCORER_RUNBOOK.md — # Meta-only New Ad Scorer + Holdouts (Runbook)</p>
+<p>AELP2/NEW_VENDOR_IMPORT_RUNBOOK.md — New Vendor Creative Import — Quick Runbook</p>
+<p>AELP2/RUN_STATUS.md — # AELP2 Autonomous Build — Run Status</p>
+<p>AELP2/STUB_ELIMINATION_SUMMARY.md — # AELP2 Stub Elimination Progress Report</p>
+<p>AELP2/apps/dashboard/CHANGES.md — # Dashboard Changes (2025-09-08)</p>
+<p>AELP2/apps/dashboard/FIXES_IMPLEMENTED.md — # AELP2 Dashboard - Complete Fix Implementation Report</p>
+<h2>Model artifacts</h2>
+<p>AELP2/models/new_ad_ranker/calib.pkl</p>
+<p>AELP2/models/new_ad_ranker/conformal.json</p>
+<p>AELP2/models/new_ad_ranker/feature_map.json</p>
+<p>AELP2/models/new_ad_ranker/feature_ref.json</p>
+<p>AELP2/models/new_ad_ranker/model.pkl</p>
+<p>AELP2/models/new_ad_ranker/train_report.json</p>
+</body></html>

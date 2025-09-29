@@ -1,0 +1,44 @@
+\contentsline {chapter}{\numberline {1}Executive Summary}{3}{chapter.1}%
+\contentsline {section}{\numberline {1.1}The Challenge}{3}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Our Solution}{3}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Why It Works Now}{3}{section.1.3}%
+\contentsline {section}{\numberline {1.4}This Week's Plan}{3}{section.1.4}%
+\contentsline {section}{\numberline {1.5}What Changed Since Last Document}{4}{section.1.5}%
+\contentsline {chapter}{\numberline {2}Problem Framing \& Goals}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Why Simulate Real Life for Reinforcement Learning}{5}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Key Questions Answered}{5}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Constraints and Success Metrics}{5}{section.2.3}%
+\contentsline {chapter}{\numberline {3}Plain-Language Glossary \& Assumptions}{7}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Key Terms}{7}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Key Assumptions}{7}{section.3.2}%
+\contentsline {chapter}{\numberline {4}System Architecture}{8}{chapter.4}%
+\contentsline {section}{\numberline {4.1}End-to-End Flow}{8}{section.4.1}%
+\contentsline {section}{\numberline {4.2}AELP vs AELP2 Responsibilities}{9}{section.4.2}%
+\contentsline {chapter}{\numberline {5}Connectors Status Matrix}{10}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Data Ingestion \& BigQuery Inventory}{11}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Ingestion Architecture}{11}{section.6.1}%
+\contentsline {section}{\numberline {6.2}BigQuery Dataset Inventory}{11}{section.6.2}%
+\contentsline {chapter}{\numberline {7}Feature \& Ranking Layer}{12}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Feature Families}{12}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Model Accuracy}{13}{section.7.2}%
+\contentsline {chapter}{\numberline {8}Forecasting (Placement-Aware)}{14}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Baseline Metrics by Placement}{14}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Security Track Forecasts (\$30k/day)}{15}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Balance Track Forecasts (\$30k/day)}{15}{section.8.3}%
+\contentsline {chapter}{\numberline {9}Offline RL Simulator}{16}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Thompson Sampling Algorithm}{16}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Budget Allocation Evolution}{17}{section.9.2}%
+\contentsline {chapter}{\numberline {10}First-Wave Outputs}{18}{chapter.10}%
+\contentsline {section}{\numberline {10.1}30-Day Combined Outlook}{18}{section.10.1}%
+\contentsline {chapter}{\numberline {11}Workflow}{19}{chapter.11}%
+\contentsline {section}{\numberline {11.1}Daily Operations Timeline}{19}{section.11.1}%
+\contentsline {section}{\numberline {11.2}Weekly Cadence}{19}{section.11.2}%
+\contentsline {chapter}{\numberline {12}Status Overview}{20}{chapter.12}%
+\contentsline {section}{\numberline {12.1}\leavevmode {\color {aelpgreen}\textbf {Working Well (Green)}}}{20}{section.12.1}%
+\contentsline {section}{\numberline {12.2}\leavevmode {\color {aelpyellow}\textbf {In Progress (Yellow)}}}{20}{section.12.2}%
+\contentsline {section}{\numberline {12.3}\leavevmode {\color {aelpred}\textbf {Gaps/Issues (Red)}}}{20}{section.12.3}%
+\contentsline {chapter}{\numberline {13}Risk Matrix}{21}{chapter.13}%
+\contentsline {chapter}{\numberline {14}90-Day Roadmap}{22}{chapter.14}%
+\contentsline {section}{\numberline {14.1}Resource Requirements}{22}{section.14.1}%
+\contentsline {section}{\numberline {14.2}Expected Outcomes}{22}{section.14.2}%
+\contentsline {chapter}{\numberline {A}Data Lineage}{23}{appendix.A}%

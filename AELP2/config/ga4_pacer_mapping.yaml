@@ -1,0 +1,46 @@
+## GA4 → Pacer metrics mapping (defaults; adjust as needed)
+## Each key defines one pacer metric and how to count it from GA4.
+## You can use one of:
+##  - event_name: <GA4 event name>
+##  - or: a list of event filters (event_name + optional parameter filter)
+## Optional filters: channel_group, source, medium, device_category, platform_scope (session|event),
+##                   source_medium (exact), property_type (web|app|both).
+
+free_trial_starts:
+  # Better proxy: form_submit on trial LPs (GA4 event list shows form_submit)
+  event_name: form_submit
+  contains_page:
+    - free-teen-social-scan
+    - aura-vs-bark-behavioral
+    - teen-behavioral-crisis-help
+    - iphone-family-wellness
+    - free-trial
+    - start-trial
+
+app_trial_starts:
+  event_name: form_submit
+  device_category: mobile
+  contains_page:
+    - free-teen-social-scan
+    - aura-vs-bark-behavioral
+    - teen-behavioral-crisis-help
+    - iphone-family-wellness
+    - free-trial
+    - start-trial
+
+d2p_starts:
+  # Treat both GA4 variants of checkout as D2P starts; no page filter to avoid misses
+  or:
+    - event_name: begin_checkout
+    - event_name: Checkout
+  distinct_user: true
+
+post_trial_subscribers:
+  event_name: purchase   # TODO: replace if you have a distinct post-trial conversion event
+
+mobile_subscribers:
+  event_name: purchase
+  device_category: mobile
+
+d2c_total_subscribers:
+  event_name: purchase

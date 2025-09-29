@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Minimal color palette with premium shadows */
+    --background: 0 0% 8%;
+    --foreground: 0 0% 98%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 65%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 98%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 98%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    
+    /* Primary green for success/positive metrics */
+    --primary: 142 71% 45%;
+    --primary-foreground: 0 0% 98%;
+    
+    /* Neutral secondary */
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 98%;
+    
+    /* Warning amber for caution */
+    --warning: 45 93% 55%;
+    --warning-foreground: 0 0% 8%;
+    
+    /* Destructive red for negative */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    
+    /* Accent blue for highlights */
+    --accent: 217 91% 60%;
+    --accent-foreground: 0 0% 98%;
+    
+    --ring: 142 71% 45%;
+    --radius: 0.75rem;
+
+    /* Premium shadows and effects */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    --shadow-executive: 0 25px 50px -12px hsl(142 71% 45% / 0.15);
+    --shadow-glow: 0 0 20px hsl(142 71% 45% / 0.3);
+  }
+
+  .dark {
+    --background: 0 0% 8%;
+    --foreground: 0 0% 98%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 65%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 98%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 98%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --primary: 142 71% 45%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 98%;
+    --accent: 217 91% 60%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --ring: 142 71% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}

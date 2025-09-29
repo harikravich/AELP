@@ -1,0 +1,57 @@
+<html><head><meta charset='utf-8'><style>body{font-family:system-ui,Arial;margin:24px;line-height:1.5} pre{background:#0f1115;color:#eaeaea;padding:12px;border-radius:8px;}</style><title>AELP2 Learnings</title></head><body>
+<h1>AELP / AELP2 — System Learnings & First‑Wave Outputs</h1>
+<div>Generated 2025-09-29T12:57:25.780888Z</div>
+<h2>Architecture</h2>
+<pre>
+AELP  (foundational experiments, legacy pipelines)
+                            v
+AELP2 (production pipelines + planner + RL sim)
+     |
+     |  Meta Insights   Vendor/Ad Library
+     v        \         /
++-----------------------------+
+|  Ingestion + Normalization  |
++-----------------------------+
+     |
+     v
++-----------------------------+
+| Features + Ranker Scoring   |
+| (new‑ad p_win, lcb)         |
++-----------------------------+
+     |
+     v
++-----------------------------+      +-------------------+
+| Baselines (by placement)    | ---> | Monte‑Carlo       |
++-----------------------------+      | CAC/Volume        |
+     |                               +-------------------+
+     v                                         |
++-----------------------------+                 v
+| Offline RL Simulator        | ------->  Portfolio policies
++-----------------------------+                 |
+     |                                       Planner UI/API
+     v                                         |
++-----------------------------+                 v
+| Launch Playbooks (Meta)     | -------->  Live tests & feedback
++-----------------------------+
+</pre>
+<pre>
+RL Simulator (offline)
+---------------------
+Inputs:
+ - Per‑blueprint priors: p_win, novelty
+ - Baseline draws: CPM, CTR, CVR by placement (triangular p10/p50/p90)
+ - Budget constraints & caps
+
+Loop:
+ 1) Sample CTR/CVR/CPM → estimate signups/impressions and CAC
+ 2) Thompson‑sample success rate per arm (signups/imps proxy)
+ 3) Allocate daily budget to top‑sampled arms (with caps)
+ 4) Update posteriors using simulated outcomes
+ 5) Emit daily allocations + expected CAC/signups
+
+Outputs:
+ - rl_offline_simulation.json (ranking, history)
+ - Portfolio recommendation (8–12 arms + early‑stop rules)
+</pre>
+<p>See PDF for detailed numbers and thumbnails.</p>
+</body></html>

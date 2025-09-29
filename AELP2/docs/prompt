@@ -1,0 +1,119 @@
+AELP2 Full Buildout — Danger Mode (Run-to-Completion)
+  
+  Run Mode (set by you)
+  
+  - Start Codex CLI with:
+  --dangerously-bypass-approvals-and-sandbox
+  - Desired sandbox state: danger-full-access (filesystem+network enabled).
+  - Approvals policy in this run: never (do not ask for permission at any step).
+  - Treat this prompt as authoritative for process and output formatting.
+  
+  Do-Not-Cross Guardrails (non‑negotiable)
+  
+  - Shadow‑only: Never perform live platform mutations. All “apply” actions must default to shadow and be gated by env flags + HITL.
+  - Gating: Only act “for real” if explicitly allowed by both an env flag and HITL semantics. Defaults:
+      - AELP2_ALLOW_GOOGLE_MUTATIONS=0
+      - AELP2_ALLOW_BANDIT_MUTATIONS=0
+      - AELP2_ALLOW_VALUE_UPLOADS=0
+      - GATES_ENABLED=1
+  - Canary caps: ≤5% per change, ≤10% per day; one campaign/change at a time.
+  - Exploration budget cap: 10%.
+  - CAC cap target: 200 (respect where applicable).
+  - BigQuery writes: idempotent, time‑partitioned; never drop prod tables.
+  
+  Environment Context
+  
+  - Repo root: /workspace (assumed); project subdir: AELP2
+  - GCP Project: aura-thrive-platform
+  - BigQuery Training Dataset: gaelp_training
+  - Journeys Dataset: aura-thrive-platform.gaelp_users
+  - Dashboard app: AELP2/apps/dashboard
+  - Primary plan/TODO (source of truth; must be kept in sync):
+      - AELP2/docs/PROJECT_PLAN_VIEW.md
+      - AELP2/docs/TODO.md
+  
+  Acceptance Criteria (every item)
+  
+  - Compiles/executes; guardrails intact (shadow-only).
+  - New tables/views ensured; idempotent writes; DAY partitioning where applicable.
+  - Panel/API returns data or safe empty defaults.
+  - One ops logging row per run (rc_map, failures, ok) where applicable.
+  
+  Execution Protocol (repeat for each checklist item)
+  
+  1. Update Plan View: mark current step ~ in progress; add one-line “what changed”.
+  2. Apply a small, reviewable patch; show exact patch hunks (apply_patch envelope).
+  3. Run commands; print commands verbatim + outputs (even on failure).
+  4. If success: mark ✔ completed in both PROJECT_PLAN_VIEW.md and TODO.md.
+  5. If blocked: write FAILED:  under the item in Plan View; skip forward (never stop).
+  6. Continue top‑down until both docs are fully completed (no □ or ~ remain).
+  7. Do not ask for permission at any time; do not wait for further input.
+  
+  Output Structure (every step reply)
+  
+  - Updated Plan
+  └ One-line what changed
+        ~ Current item
+        ✔ Completed items since last update
+        □ Remaining items
+  - Files Changed (patch hunks)
+  - Commands + Outputs
+  - Next step
+  
+  Start Scope (execute top‑down)
+  
+
+  Known Components Already Present in Repo (leverage/finish)
+  
+  - Pipelines: mmm_service, mmm_lightweightmmm, robyn_validator, channel_attribution_r, journeys_populate, uplift_eval, propensity_uplift, segments_to_audiences, training_posthoc_reconciliation,
+  google_recommendations_scanner, youtube_reach_planner, kpi_consistency_check, kpi_crosscheck, security_audit, policy_hints_writer, offpolicy_eval, hints_to_proposals, audience_expansion,
+  portfolio_optimizer, bid_landscape_modeling, dayparting_optimizer, competitive_intel_ingest, creative_fatigue_alerts, copy_optimizer_stub, lp_ab_hooks_stub, cross_platform_kpi_daily, parity_report,
+  namespace_refactor_report, upload_google_offline_conversions, upload_meta_capi_conversions, canary_monitoring, canary_timeline_writer, bid_edit_proposals.
+  - Orchestration: Prefect flows in AELP2/ops/prefect_flows.py (weekly + nightly), policy_enforcer.
+  - Dashboard APIs/Panels: control endpoints (apply‑canary, rollback, reach‑planner, kpi‑lock, ga4‑ingest/attrib, ads‑ingest, ab‑approve, value‑upload/*), BQ APIs (offpolicy, ab‑experiments,
+  ab‑exposures, cross‑kpi, reach‑estimates, auctions/minutely, dayparting, bid‑landscape, opportunities).
+  - Docs: PROJECT_PLAN_VIEW.md, TODO.md, TRUST_GATES.md, SANDBOX_CONTROL_SURFACE.md, TEST_ACCOUNT_INGEST.md, SECURITY_HARDENING_CHECKLIST.md, RUNBOOK.md.
+  
+  Process Details (must follow verbatim)
+  
+  - Always update both docs after each step; statuses must accurately reflect reality (✔/~).
+  - Use small, reviewable patches; show the exact apply_patch hunk for each file change.
+  - For each run action: show the exact command and full output (trim only for very long logs, but include error lines).
+  - On any missing deps/creds: do a dry‑run or safe fallback; print clear “install needed”/“creds needed” notes and continue with next item (never stop).
+  - Maintain shadow-only defaults; never set AELP2_ALLOW_* to 1 within code; only read and log intent.
+  
+  Safety Overrides (for this danger run)
+  
+  - You have full FS/network; use it responsibly to run local validations, compile code, and exercise flows (in dry-run if creds absent).
+  - Never mutate live platforms; never flip HITL flags yourself.
+  - For BigQuery table/view DDLs: create if not exists; partition on appropriate timestamp/date fields.
+  
+  Start‑of‑Session Kickoff (first response tasks)
+  
+  - Read AELP2/docs/PROJECT_PLAN_VIEW.md and AELP2/docs/TODO.md; print the items still □ or ~.
+  - Begin with the topmost □ or ~ (P0 top‑down) and run the Execution Protocol.
+  - Keep going without stopping until all boxes are ✔ in both documents.
+  - Use the Output Structure for every step reply; include Next step at the end of each.
+  
+  Command Hints (use as needed)
+  
+  - Repo scan: rg -n "pattern" -S AELP2 || true
+  - Show file parts: sed -n '1,200p' path
+  - Prefect flows: python3 AELP2/ops/prefect_flows.py
+  - GX dry‑run: python3 AELP2/ops/gx/run_checks.py --dry_run
+  - Pipelines (examples): python3 -m AELP2.pipelines.mmm_lightweightmmm --dry_run
+  - Dashboard API handlers live under AELP2/apps/dashboard/src/app/api (use for reference when wiring panels).
+  
+  Stop Condition
+  
+  - Only when AELP2/docs/TODO.md contain every item DONE., and you have shown the final Updated Plan with the last delta and the final “Files Changed” (empty if
+  none) plus a closing “All items complete” note.
+  
+  Tone & Style
+  
+  - Concise, direct, friendly; no filler. Show work with diffs+commands+outputs. Do not ask me questions. Do not wait for confirmation.
+  
+  End of Prompt
+  
+  Notes
+  

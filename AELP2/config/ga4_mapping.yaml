@@ -1,0 +1,24 @@
+# GA4 Derived Mapping for AELP2
+# This file controls cohort windows and regex filters for building GA-derived KPIs.
+
+# Trial page signal used to seed cohorts (form_submit on these URLs)
+trial_page_regex: |
+  /enrollment/|/onboarding-path/|free[-_]?trial|start[-_]?trial|freetools|(^|[=_-])ft([0-9]|$)|ftupsell|/trial
+
+# Cohort windows (days)
+post_trial_window_days: 7
+d2p_lookback_days: 14
+
+# Mobile subscribers heuristic (until app export is linked)
+mobile_rules:
+  # Match GA 'cc' param values containing these tokens (case-insensitive)
+  cc_regex: '(?i)mob|mobile|mobcart|app|ios|android'
+  # Optionally match GA 'plan_code' values
+  plan_code_regex: '(?i)mobile|app|ios|android'
+  # If purchase rows contain device.category=mobile, include those too (export often has WEB only)
+  include_device_mobile: true
+
+# Build horizon
+# Number of days back to (re)compute from export
+days_back: 450
+
