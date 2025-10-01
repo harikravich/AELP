@@ -52,6 +52,8 @@ checkpoints/
 wandb/
 d3rlpy_logs/
 
+venv-*/
+
 # Temporary
 *.tmp
 *.bak
