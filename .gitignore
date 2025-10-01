@@ -24,11 +24,12 @@ secrets/
 outputs/
 vendor_imports/
 reports/
-*.env.local
-*.envrc
 # Env files (never commit)
 *.env
 *.env.*
+*.envrc
+# Allow .env.local.example to be committed
+!.env.local.example
 .google_ads_credentials.env
 **/__pycache__/
 *.pytest_cache/
