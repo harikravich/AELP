@@ -1,0 +1,18 @@
+import pandas as pd
+u = pd.read_parquet('artifacts/marketing/unified_ctr.parquet')
+u['date']=pd.to_datetime(u['date'])
+maxd=u['date'].max()
+cur=u[(u['date']==maxd)&(u['impressions']>0)][['date','ad_id','impressions','link_clicks']].copy()
+cur['actual_link_ctr']=cur['link_clicks']/cur['impressions']
+clf = pd.read_parquet('artifacts/predictions/ctr_scores.parquet')
+reg = pd.read_parquet('artifacts/predictions/ctr_scores_reg.parquet')
+clf = clf.rename(columns={'pred_ctr':'p_click_gt0'})
+reg = reg.rename(columns={'pred_ctr':'pred_link_ctr'})
+cur['ad_id']=cur['ad_id'].astype(str)
+clf['ad_id']=clf['ad_id'].astype(str)
+reg['ad_id']=reg['ad_id'].astype(str)
+cur = cur.merge(clf[['ad_id','p_click_gt0']], on='ad_id', how='left')
+cur = cur.merge(reg[['ad_id','pred_link_ctr']], on='ad_id', how='left')
+cur = cur.sort_values(['pred_link_ctr','p_click_gt0'], ascending=False)
+print('Max date:', maxd.strftime('%Y-%m-%d'), 'rows:', len(cur))
+print(cur.head(20).to_string(index=False))

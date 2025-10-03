@@ -1,0 +1,18 @@
+landers:
+  - slug: aura-balance-parental-controls
+    ga_measurement_id: G-XXXXXXX
+    title: Aura Balance Parental Controls
+    brand: Aura Balance
+    headline: Set Healthy Screen Time Habits
+    subhead: Flexible controls that build trust between parents and teens.
+    cta_text: Start your 14-day free trial
+    bullets:
+      - Create screen time schedules that fit your family
+      - Block unsuitable apps while allowing essentials
+      - Get insights and guidance from experts
+    faqs:
+      - q: Will my teen lose access to important apps?
+        a: You can whitelist essentials like messaging and school portals.
+      - q: Do I need to monitor constantly?
+        a: No—Balance focuses on healthy habits over surveillance.
+

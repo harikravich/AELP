@@ -1,0 +1,29 @@
+version: 1
+defaults:
+  brand: "Aura Balance"
+  tone: "supportive, empowering, trustworthy"
+  target_audience: "Parents of teens (13-17)"
+  call_to_action: "Start your 14-day free trial"
+templates:
+  - id: safety_education
+    format: "video"
+    duration: 15
+    prompt: |
+      Create a {duration}s video ad for {brand} in a {tone} tone.
+      Focus on {target_audience} learning how to set healthy screen time boundaries.
+      Include on-screen text with 3 tips and end with CTA: "{call_to_action}".
+  - id: crisis_support
+    format: "video"
+    duration: 30
+    prompt: |
+      Produce a {duration}s compassionate video for {brand} helping parents navigate teen online crises.
+      Emphasize privacy, flexible controls, and expert guidance.
+      Close with CTA: "{call_to_action}".
+  - id: features_carousel
+    format: "image-carousel"
+    frames: 4
+    prompt: |
+      Generate a {frames}-frame image carousel highlighting {brand}'s top features:
+      screen time schedules, app blocking, content filters, and family agreements.
+      Maintain {tone} voice and end each frame with micro-CTA.
+
